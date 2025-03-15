@@ -1,0 +1,78 @@
+#day la comment, bo qua cac dong co dau # khi doc
+
+[TEXTURES]
+#----GAMEOBJECT----
+# id	file_path	
+0 resource/Simon.png
+# map_id file_path
+
+# id left top right bottom texture_id
+[SPRITES]
+#----SIMON-----
+#idle
+50000 12 4 44 64 0
+#walk
+50001 78 2 102 64 0
+50002 136 4 166 64 0
+50003 196 3 220 64 0
+#jump/duck
+50004 252 18 284 64 0
+#attack/use subweabon (standing)
+51000 312 4 360 64 0
+51001 372 4 404 64 0
+51002 421 6 464 64 0
+#attack (sit)
+51100 432 84 480 130 0
+51101 12 150 44 196 0
+51102 60 152 104 196 0
+#attack (downstair)
+52000 130 134 178 196 0
+52001 190 134 222 196 0
+52002 241 136 282 196 0
+#attack (upstair)
+52100 312 134 360 196 0
+52101 372 134 404 196 0
+52102 420 136 464 196 0
+#idle up
+53000 252 68 282 130 0
+#idle down
+53001 190 68 214 130 0
+#go downstair
+53100 190 68 214 130 0
+53101 315 68 339 130 0
+#go upstair
+53200 252 68 282 130 0
+53201 130 68 162 130 0
+#hurt
+54000 315 207 347 264 0
+#death
+54100 374 220 406 264 0
+54101 240 236 300 258 0
+#intro
+55000 80 66 112 130 0
+
+# ani_id 	sprite1_id	time1	sprite2_id	time2	sprite3_id	time3 ....
+[ANIMATIONS]
+#----SIMON----
+#idle 
+1000 50000 100
+#walk 
+1001 50001 100 50002 100 50003 100
+#jump 
+1002 50004 100
+#sit 
+1003 50004 100
+#attack 
+1004 51000 100 51001 100 51002 100
+
+#----ITEMS----
+
+# texture_id	ani_id1		ani_id2		ani_id3 	....
+[ANIMATIONS_SETS]
+#----SIMON----
+0 1000 1001 1002 1003 1004
+#----WEAPONS----
+#----ENEMIES----
+#----OBJECTS----
+#----ITEMS----
+
