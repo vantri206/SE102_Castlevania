@@ -135,21 +135,25 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Panther.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Ghoul.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Enemies.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Panther.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Sprite.h" />
@@ -157,6 +161,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Ghoul.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

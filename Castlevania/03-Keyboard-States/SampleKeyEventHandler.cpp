@@ -23,15 +23,22 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	CGame* game = CGame::GetInstance();
 
-	if (game->IsKeyDown(DIK_RIGHT))
+	if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))
 	{
-		simon->SetDirection(1);
-		simon->SetState(SIMON_STATE_WALK);
+		if (simon->GetState() != SIMON_STATE_SIT)
+		{
+			simon->SetState(SIMON_STATE_WALK);
+		}
+		if (game->IsKeyDown(DIK_RIGHT)) simon->SetDirection(1);
+		else simon->SetDirection(-1);
 	}
-	else if (game->IsKeyDown(DIK_LEFT))
+	else if (game->IsKeyDown(DIK_A))
 	{
-		simon->SetDirection(-1);
-		simon->SetState(SIMON_STATE_WALK);
+		simon->SetState(SIMON_STATE_ATTACK);
+	}
+	else if (game->IsKeyDown(DIK_DOWN))
+	{
+		simon->SetState(SIMON_STATE_SIT);
 	}
 	else
 		simon->SetState(SIMON_STATE_IDLE);

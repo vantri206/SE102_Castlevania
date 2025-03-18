@@ -7,12 +7,10 @@
 void CSimon::Update(DWORD dt)
 {
 	x += vx * dt;
-
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
+
 	if (x <= 0 || x >= BackBufferWidth - SIMON_WIDTH) {
-
 		vx = -vx;
-
 		if (x <= 0)
 		{
 			x = 0;
@@ -21,21 +19,13 @@ void CSimon::Update(DWORD dt)
 		{
 			x = (float)(BackBufferWidth - SIMON_WIDTH);
 		}
+		nx = -nx;
 	}
+
 }
 void CSimon::Render()
 {
-	int aniId = -1;
-
-	if (state == SIMON_STATE_IDLE)
-	{
-		aniId = ID_ANI_SIMON_IDLE;
-	}
-	else if (state == SIMON_STATE_WALK)
-	{
-		aniId = ID_ANI_SIMON_WALK;
-	}
-	animation_set->at(aniId)->Render(x, y, nx);
+	animation_set->at(this->GetAniId(state))->Render(x, y, nx);
 }
 
 void CSimon::SetState(int state)
@@ -44,20 +34,81 @@ void CSimon::SetState(int state)
 	{
 		case SIMON_STATE_IDLE:
 		{
-			vx = 0;
+			this->SimonIdle();
 			break;
 		}
 		case SIMON_STATE_WALK:
 		{
-			if (nx > 0) vx = SIMON_WALKING_SPEED;
-			else vx = -SIMON_WALKING_SPEED;
+			this->SimonWalk();
+			break;
+		}
+		case SIMON_STATE_ATTACK:
+		{
+			this->SimonAttack();
+			break;
+		}
+		case SIMON_STATE_SIT:
+		{
+			this->SimonSit();
 			break;
 		}
 	}
 	CGameObject::SetState(state);
 }
 
-void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+int CSimon::GetState()
 {
-	return;
+	return this->state;
+}
+
+int CSimon::GetAniId(int state)
+{
+	switch (state)
+	{
+		case SIMON_STATE_IDLE:
+		{
+			return ID_ANI_SIMON_IDLE;
+			break;
+		}
+		case SIMON_STATE_WALK:
+		{
+			return ID_ANI_SIMON_WALK;
+			break;
+		}
+		case SIMON_STATE_ATTACK:
+		{
+			return ID_ANI_SIMON_ATTACK;
+			break;
+		}
+		case SIMON_STATE_SIT:
+		{
+			return ID_ANI_SIMON_SIT;
+			break;
+		}
+	}
+}
+
+void CSimon::SimonWalk()
+{
+	if (nx > 0) vx = SIMON_WALKING_SPEED;
+	else vx = -SIMON_WALKING_SPEED;
+}
+
+void CSimon::SimonAttack()
+{
+
+}
+
+void CSimon::SimonIdle()
+{
+	vx = 0;
+}
+
+void CSimon::SimonSit()
+{
+	vx = 0;
+}
+void GetBoundingBox()
+{
+
 }

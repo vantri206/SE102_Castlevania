@@ -133,12 +133,12 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	from texture to sprite every time we need to draw it
 */	
 void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom) {
-	if (tex == NULL) return;  // Nếu không có texture, không làm gì cả.
+	if (tex == NULL) return;  // Nếu không có texture, không làm gì cả
 
-	int spriteWidth = right - left + 1;  // Tính chiều rộng của sprite.
-	int spriteHeight = bottom - top + 1;  // Tính chiều cao của sprite.
+	int spriteWidth = right - left + 1;  // Tính chiều rộng của sprite
+	int spriteHeight = bottom - top + 1;  // Tính chiều cao của sprite
 
-	D3DX10_SPRITE sprite;  // Khởi tạo sprite.
+	D3DX10_SPRITE sprite;  // Khởi tạo sprite
 
 
 	sprite.pTexture = tex->getShaderResourceView();

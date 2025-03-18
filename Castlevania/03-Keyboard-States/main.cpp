@@ -22,6 +22,7 @@
 #include "Sprites.h"
 
 #include "Simon.h"
+#include "Ghoul.h"
 
 #include "SampleKeyEventHandler.h"
 #include <fstream>
@@ -53,6 +54,7 @@
 #define LOAD_RESOURCE_SPRITES 4
 
 #define SIMON_ANI_SET_ID 0
+#define GHOUL_ANI_SET_ID 1
 
 CSimon* simon = NULL;
 
@@ -88,7 +90,6 @@ void _ParseSection_TEXTURES(string line)
 	int texID = atoi(tokens[0].c_str());
 	wstring path = ToWSTR(tokens[1]);
 
-	DebugOut(L"Day la danh dau %d\n", texID);
 	CTextures::GetInstance()->Add(texID, path.c_str());
 }
 
@@ -96,9 +97,8 @@ void _ParseSection_SPRITES(string line)
 {
 	vector<string> tokens = split(line);
 
-	DebugOut(L"Day la danh dau %d\n", tokens.size());
 
-	if (tokens.size() < 6) return; // skip invalid lines
+	if (tokens.size() < 6) return; 
 
 	int ID = atoi(tokens[0].c_str());
 	int l = atoi(tokens[1].c_str());
@@ -127,7 +127,7 @@ void _ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation(0);
 
 	int ani_id = atoi(tokens[0].c_str());
-	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	for (int i = 1; i < tokens.size(); i += 2)
 	{
 		int sprite_id = atoi(tokens[i].c_str());
 		int frame_time = atoi(tokens[i + 1].c_str());
@@ -219,9 +219,10 @@ void LoadResources()
 
 	int ani_set_id = SIMON_ANI_SET_ID;
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-	DebugOut(L"[INFO] Simon animations set loaded! %d\n", ani_set[1]);
 	simon->SetAnimationSet(ani_set);
 	simon->SetState(SIMON_STATE_IDLE);
+
+	
 	objects.push_back(simon);
 }
 

@@ -36,6 +36,7 @@ protected:
 	float ax, ay;
 	float startx, starty;
 	int nx;
+	bool isSitting;
 public:
 	CSimon(float x, float y) : CGameObject(x, y)
 	{
@@ -44,12 +45,19 @@ public:
 		ax = 0.0f;
 		ay = 0.0f;
 		nx = 1;
+		isSitting = false;
 	}
 	void SetDirection(int direction) { nx = direction; }
     int GetDirection() { return nx; }
 	void Update(DWORD dt);
 	void Render();
+	int GetAniId(int state);
 	void SetState(int state);
-	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	int GetState();
+
+	void SimonIdle();
+	void SimonWalk();
+	void SimonAttack();
+	void SimonSit();
 
 };

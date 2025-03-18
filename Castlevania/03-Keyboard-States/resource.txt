@@ -4,6 +4,7 @@
 #----GAMEOBJECT----
 # id	file_path	
 0 resource/Simon.png
+1 resource/Enemies.png
 # map_id file_path
 
 # id left top right bottom texture_id
@@ -50,12 +51,25 @@
 54101 240 236 300 258 0
 #intro
 55000 80 66 112 130 0
-
+#----ENEMIES----#
+#----GHOULS----#
+#idle 
+60000 9 2 25 34 1
+#walk
+60001 9 2 25 34 1
+60002 34 2 50 34 1
+#----PANTHERS----
+#idle 
+61000 65 14 89 29 1
+#run
+61001 95 13 123 29 1
+61002 130 13 160 29 1
+61003 165 14 197 27 1
 # ani_id 	sprite1_id	time1	sprite2_id	time2	sprite3_id	time3 ....
 [ANIMATIONS]
 #----SIMON----
 #idle 
-1000 50000 100
+1000 50000 0
 #walk 
 1001 50001 100 50002 100 50003 100
 #jump 
@@ -63,14 +77,37 @@
 #sit 
 1003 50004 100
 #attack 
-1004 51000 100 51001 100 51002 100
-
+1004 51000 200 51001 200 51002 200
+#idle up
+1005 53000 0
+#idle down
+1006 53001 0
+#go up
+1007 53200 100 53201 100
+#go down
+1008 53100 100 53101 100
+#----ENEMIES----#
+#----GHOULS----#
+#idle 
+2000 60000 0
+#walk 
+2001 60001 100 60002 100
+#----PANTHERS----
+#idle 
+2100 61000 0
+#walk
+2101 61001 100 61002 100 61001 100
 #----ITEMS----
 
 # texture_id	ani_id1		ani_id2		ani_id3 	....
 [ANIMATIONS_SETS]
 #----SIMON----
 0 1000 1001 1002 1003 1004
+#----ENEMIES----#
+#----GHOULS----
+1 2000 2001
+#----PANTHERS----
+1 2100 2101
 #----WEAPONS----
 #----ENEMIES----
 #----OBJECTS----
