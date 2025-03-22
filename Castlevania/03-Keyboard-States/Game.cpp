@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Texture.h"
+#include "Textures.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -133,6 +134,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	from texture to sprite every time we need to draw it
 */	
 void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom) {
+	DebugOut(L"Draw: %f %f %d %d %d %d\n", x, y, left, top, right, bottom);
 	if (tex == NULL) return;  // Nếu không có texture, không làm gì cả
 
 	int spriteWidth = right - left + 1;  // Tính chiều rộng của sprite
@@ -239,6 +241,11 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
+}
+
+int CGame::IsKeyUp(int KeyCode)
+{
+	return (keyStates[KeyCode] & 0x80) < 0;
 }
 
 void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)

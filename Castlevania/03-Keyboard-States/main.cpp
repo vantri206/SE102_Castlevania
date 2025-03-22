@@ -1,14 +1,3 @@
-/* =============================================================
-	INTRODUCTION TO GAME PROGRAMMING SE102
-	
-	SAMPLE 03 - KEYBOARD AND OBJECT STATE
-
-	This sample illustrates how to:
-
-		1/ Process keyboard input
-		2/ Control object state with keyboard events
-================================================================ */
-
 #include <windows.h>
 
 #include "debug.h"
@@ -20,6 +9,7 @@
 #include "Animations.h"
 #include "Sprite.h"
 #include "Sprites.h"
+#include "Scene.h"
 
 #include "Simon.h"
 #include "Ghoul.h"
@@ -37,8 +27,8 @@
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 400
+#define SCREEN_WIDTH 360
+#define SCREEN_HEIGHT 270
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_ENEMY 10
@@ -46,7 +36,7 @@
 
 
 #define SIMON_START_X 50.0f
-#define SIMON_START_Y 100.0f
+#define SIMON_START_Y 200.0f
 
 #define LOAD_RESOURCE_TEXTURES 1
 #define LOAD_RESOURCE_ANIMATIONS 2
@@ -54,7 +44,6 @@
 #define LOAD_RESOURCE_SPRITES 4
 
 #define SIMON_ANI_SET_ID 0
-#define GHOUL_ANI_SET_ID 1
 
 CSimon* simon = NULL;
 
@@ -83,7 +72,6 @@ void _ParseSection_TEXTURES(string line)
 {
 	vector<string> tokens = split(line);
 
-	DebugOut(L"Day la danh dau %d\n", tokens.size());
 
 	if (tokens.size() < 2) return;
 
@@ -96,7 +84,6 @@ void _ParseSection_TEXTURES(string line)
 void _ParseSection_SPRITES(string line)
 {
 	vector<string> tokens = split(line);
-
 
 	if (tokens.size() < 6) return; 
 
@@ -213,6 +200,10 @@ void LoadResources()
 
 	DebugOut(L"[INFO] Done loading game resources %s\n", RESOURCE_FILE_PATH);
 
+
+	CScene* scene1 = new CScene(1, L"scene1.txt");
+
+
 	simon = new CSimon(SIMON_START_X, SIMON_START_Y);
 
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
@@ -222,8 +213,8 @@ void LoadResources()
 	simon->SetAnimationSet(ani_set);
 	simon->SetState(SIMON_STATE_IDLE);
 
-	
 	objects.push_back(simon);
+
 }
 
 /*

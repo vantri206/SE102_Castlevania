@@ -2,7 +2,7 @@
 
 #include "debug.h"
 #include "Game.h"
-#include "textures.h"
+#include "Textures.h"
 
 CTextures* CTextures::__instance = nullptr;
 
@@ -27,5 +27,11 @@ LPTEXTURE CTextures::Get(unsigned int id)
     return nullptr;
 }
 
+int CTextures::AddTileset(LPCWSTR filePath)
+{
+    int id = ++tilesetId;
+    Add(id, filePath);  
+    return id;
+}
 
 

@@ -35,7 +35,7 @@ public:
 	CGhoul(float x, float y) : CGameObject(x, y)
 	{
 		maxVx = GHOUL_WALKING_SPEED;
-		vy = GHOUL_WALKING_SPEED;
+		maxVy = GHOUL_WALKING_SPEED;
 		ax = 0.0f;
 		ay = 0.0f;
 		nx = 1, ny = 1;

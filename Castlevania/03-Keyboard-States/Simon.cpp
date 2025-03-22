@@ -7,10 +7,11 @@
 void CSimon::Update(DWORD dt)
 {
 	x += vx * dt;
+	y += vy * dt;
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
+	int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
 
 	if (x <= 0 || x >= BackBufferWidth - SIMON_WIDTH) {
-		vx = -vx;
 		if (x <= 0)
 		{
 			x = 0;
@@ -19,13 +20,22 @@ void CSimon::Update(DWORD dt)
 		{
 			x = (float)(BackBufferWidth - SIMON_WIDTH);
 		}
-		nx = -nx;
 	}
 
+	if (y <= 0 || y >= BackBufferHeight - SIMON_HEIGHT) {
+		if (y <= 0)
+		{
+			y = 0;
+		}
+		else if (y >= BackBufferHeight - SIMON_HEIGHT)
+		{
+			y = (float)(BackBufferHeight - SIMON_HEIGHT);
+		}
+	}
 }
 void CSimon::Render()
 {
-	animation_set->at(this->GetAniId(state))->Render(x, y, nx);
+	animation_set->at(ani_id)->Render(x, y, nx);
 }
 
 void CSimon::SetState(int state)
@@ -35,21 +45,25 @@ void CSimon::SetState(int state)
 		case SIMON_STATE_IDLE:
 		{
 			this->SimonIdle();
+			ani_id = ID_ANI_SIMON_IDLE;
 			break;
 		}
 		case SIMON_STATE_WALK:
 		{
 			this->SimonWalk();
+			ani_id = ID_ANI_SIMON_WALK;
 			break;
 		}
 		case SIMON_STATE_ATTACK:
 		{
 			this->SimonAttack();
+			ani_id = ID_ANI_SIMON_ATTACK;
 			break;
 		}
-		case SIMON_STATE_SIT:
+		case SIMON_STATE_WALK_UP:
 		{
-			this->SimonSit();
+			this->SimonWalkUp();
+			ani_id = ID_ANI_SIMON_WALK_UP;
 			break;
 		}
 	}
@@ -61,52 +75,36 @@ int CSimon::GetState()
 	return this->state;
 }
 
-int CSimon::GetAniId(int state)
+void CSimon::SimonWalkUp()
 {
-	switch (state)
-	{
-		case SIMON_STATE_IDLE:
-		{
-			return ID_ANI_SIMON_IDLE;
-			break;
-		}
-		case SIMON_STATE_WALK:
-		{
-			return ID_ANI_SIMON_WALK;
-			break;
-		}
-		case SIMON_STATE_ATTACK:
-		{
-			return ID_ANI_SIMON_ATTACK;
-			break;
-		}
-		case SIMON_STATE_SIT:
-		{
-			return ID_ANI_SIMON_SIT;
-			break;
-		}
-	}
+	vx = 0;
+	if (ny > 0) vy = -SIMON_WALKING_SPEED;
+	else vy = SIMON_WALKING_SPEED;
 }
 
 void CSimon::SimonWalk()
 {
+	vy = 0;
 	if (nx > 0) vx = SIMON_WALKING_SPEED;
 	else vx = -SIMON_WALKING_SPEED;
 }
 
 void CSimon::SimonAttack()
 {
-
+	vx = 0;
+	vy = 0;
 }
 
 void CSimon::SimonIdle()
 {
 	vx = 0;
+	vy = 0;
 }
 
 void CSimon::SimonSit()
 {
 	vx = 0;
+	vy = 0;
 }
 void GetBoundingBox()
 {

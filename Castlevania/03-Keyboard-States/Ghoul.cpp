@@ -49,7 +49,7 @@ void CGhoul::Render()
     }
     case GHOUL_STATE_WALK:
     {
-        ani_id = ANI_ID_GHOUL_IDLE;
+        ani_id = ANI_ID_GHOUL_WALK;
         break;
     }
     }
@@ -60,20 +60,20 @@ void CGhoul::SetState(int state)
 {
     switch (state)
     {
-    case GHOUL_STATE_IDLE:
-    {
-        vx = 0;
-        vy = 0;
-        break;
-    }
-    case GHOUL_STATE_WALK:
-    {
-        if (nx > 0) vx = maxVx;
-        else vx = -maxVx;
-        if (ny > 0) vy = maxVx;
-        else vy = -maxVx;
-        break;
-    }
+        case GHOUL_STATE_IDLE:
+        {
+            vx = 0;
+            vy = 0;
+            break;
+        }
+        case GHOUL_STATE_WALK:
+        {
+            if (nx > 0) vx = maxVx;
+            else vx = -maxVx;
+            if (ny > 0) vy = maxVy;
+            else vy = -maxVy;
+            break;
+        }
     }
     CGameObject::SetState(state);
 }

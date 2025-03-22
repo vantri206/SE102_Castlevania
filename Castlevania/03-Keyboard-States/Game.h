@@ -46,6 +46,7 @@ class CGame
 
 	HINSTANCE hInstance;
 
+	int currentMapId = 1;
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd,HINSTANCE hInstance);
@@ -61,6 +62,7 @@ public:
 	// Keyboard related functions 
 	void InitKeyboard(LPKEYEVENTHANDLER handler);
 	int IsKeyDown(int KeyCode);
+	int IsKeyUp(int KeyCode);
 	void ProcessKeyboard();
 
 	ID3D10Device* GetDirect3DDevice() {
@@ -77,6 +79,8 @@ public:
 
 	int GetBackBufferWidth() { return backBufferWidth; }
 	int GetBackBufferHeight() { return backBufferHeight; }
+
+	int GetCurrentMap() { return currentMapId; }
 
 	static CGame* GetInstance();
 
