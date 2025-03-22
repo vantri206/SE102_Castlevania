@@ -62,9 +62,11 @@ void CScene::_ParseSection_INFO(string line)
 
 	int width = atoi(tokens[0].c_str());
 	int height = atoi(tokens[1].c_str());
+	int offset = atoi(tokens[2].c_str());
 
 	this->map_width = width;
 	this->map_height = height;
+	this->offset = offset;
 }
 
 void CScene::_ParseSection_TILE(string line)
@@ -74,21 +76,20 @@ void CScene::_ParseSection_TILE(string line)
 	LPTEXTURE texture = CTextures::GetInstance()->Get(currentMapId);
 
 
-
 	vector<string> map_tile = split(line);
+
 
 	for (int i = 0; i < map_tile.size(); i++)
 	{
 		int tile_index = atoi(map_tile[i].c_str());
 		float x = i * TILE_WIDTH;
-
-		float y = col * TILE_HEIGHT;
+		float y = offset;
 
 		int tilesheetWidth = texture->getWidth();
 		int tilesheetHeight = texture->getHeight();
 
-		int tileX = float(tile_index % (tilesheetWidth / TILE_WIDTH)) * TILE_WIDTH;
-		int tileY = float(tile_index / (tilesheetWidth / TILE_WIDTH)) * TILE_HEIGHT;
+		int tileX = (tile_index % (tilesheetWidth / TILE_WIDTH)) * TILE_WIDTH;
+		int tileY = (tile_index / (tilesheetWidth / TILE_WIDTH)) * TILE_HEIGHT;
 
 		int left = tileX;
 		int top = tileY;
@@ -98,13 +99,11 @@ void CScene::_ParseSection_TILE(string line)
 		CTile* tile = new CTile(x, y, left, top, right, bottom);
 		map.push_back(tile);
 	}
-
-	col++;
+	offset += TILE_HEIGHT;
 }
 
 void CScene::Render()
 {
-	DebugOut(L"Map size: %d \n", map.size());
 	for (int i = 0; i < map.size(); i++)
 		map[i]->Render();
 }

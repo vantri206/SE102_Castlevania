@@ -7,7 +7,7 @@
 10 resource/Enemies.png
 #----MAP----
 # id file_path
-1 resource/Map/Stage1.png
+1 resource/Map/Stage1.bmp
 
 # id left top right bottom texture_id
 [SPRITES]

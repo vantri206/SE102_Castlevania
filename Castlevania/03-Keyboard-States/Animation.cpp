@@ -10,7 +10,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	frames.push_back(frame);
 }
 
-void CAnimation::Render(float x, float y, int nx)
+void CAnimation::Render(float x, float y, int nx, float size)
 {
 	DWORD now = GetTickCount64();
 	if (currentFrame == -1)
@@ -31,6 +31,6 @@ void CAnimation::Render(float x, float y, int nx)
 
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(x, y, nx);
+	frames[currentFrame]->GetSprite()->Draw(x, y, nx, 1);
 }
 

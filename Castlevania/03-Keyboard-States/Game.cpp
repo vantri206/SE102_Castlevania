@@ -133,8 +133,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	NOTE: This function is very inefficient because it has to convert
 	from texture to sprite every time we need to draw it
 */	
-void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom) {
-	DebugOut(L"Draw: %f %f %d %d %d %d\n", x, y, left, top, right, bottom);
+void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size) {
 	if (tex == NULL) return;  // Nếu không có texture, không làm gì cả
 
 	int spriteWidth = right - left + 1;  // Tính chiều rộng của sprite
@@ -144,7 +143,6 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 
 
 	sprite.pTexture = tex->getShaderResourceView();
-
 
 	sprite.TexCoord.x = left / (float)tex->getWidth();
 	sprite.TexCoord.y = top / (float)tex->getHeight();
@@ -168,13 +166,13 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 
 	
 	D3DXMATRIX matScaling;
-	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+	D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
 
 
 	sprite.matWorld = matScaling * matTranslation;
 
-
 	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
+
 }
 
 LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)

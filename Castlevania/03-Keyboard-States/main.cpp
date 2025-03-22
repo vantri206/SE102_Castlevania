@@ -25,7 +25,8 @@
 #define RESOURCE_FILE_PATH L"resource.txt"
 
 
-#define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
+#define BACKGROUND_COLOR D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f)
+
 
 #define SCREEN_WIDTH 360
 #define SCREEN_HEIGHT 270
@@ -46,6 +47,7 @@
 #define SIMON_ANI_SET_ID 0
 
 CSimon* simon = NULL;
+CScene* scene = NULL;
 
 CSampleKeyHandler* keyHandler;
 
@@ -85,7 +87,7 @@ void _ParseSection_SPRITES(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 6) return; 
+	if (tokens.size() < 6) return;
 
 	int ID = atoi(tokens[0].c_str());
 	int l = atoi(tokens[1].c_str());
@@ -93,6 +95,7 @@ void _ParseSection_SPRITES(string line)
 	int r = atoi(tokens[3].c_str());
 	int b = atoi(tokens[4].c_str());
 	int texID = atoi(tokens[5].c_str());
+
 
 	LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
 
@@ -104,6 +107,7 @@ void _ParseSection_SPRITES(string line)
 
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 }
+
 
 void _ParseSection_ANIMATIONS(string line)
 {
@@ -201,8 +205,9 @@ void LoadResources()
 	DebugOut(L"[INFO] Done loading game resources %s\n", RESOURCE_FILE_PATH);
 
 
-	CScene* scene1 = new CScene(1, L"scene1.txt");
+	scene = new CScene(1, L"scene1.txt");
 
+	scene->Load();
 
 	simon = new CSimon(SIMON_START_X, SIMON_START_Y);
 
@@ -245,6 +250,8 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
+	scene->Render();
+
 	for (int i = 0; i < (int)objects.size(); i++)
 	{
 		objects[i]->Render();
@@ -252,6 +259,7 @@ void Render()
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
+
 }
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)

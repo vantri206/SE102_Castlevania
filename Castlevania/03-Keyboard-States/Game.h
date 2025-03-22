@@ -55,7 +55,7 @@ public:
 	// Draw a portion or ALL the texture at position (x,y) on the screen
 	// rect : if NULL, the whole texture will be drawn
 	//        if NOT NULL, only draw that portion of the texture 
-	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b);
+	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b, float size);
 
 	LPD3DX10SPRITE GetSpriteHandler() { return this->spriteHandler; }
 

@@ -35,9 +35,10 @@ public:
 	void CTile::Render()
 	{
 		int mapId = CGame::GetInstance()->GetCurrentMap();
+
 		LPTEXTURE tex = CTextures::GetInstance()->Get(mapId);
-		DebugOut(L"Tile: %f %f %d %d %d %d\n", x, y, left, top, right, bottom);
-		CGame::GetInstance()->Draw(x, y, 1, tex, left, top, right, bottom);
+
+		CGame::GetInstance()->Draw(x, y, -1, tex, left, top, right, bottom, 1);
 	}
 };
 
@@ -53,14 +54,13 @@ protected:
 	int id;
 	LPCWSTR sceneFilePath;
 
-	int col;
+	int offset;
 
 public:
 	CScene(int _id, LPCWSTR filePath)
 	{
 		id = _id;
 		sceneFilePath = filePath;
-		col = 0;
 	}
 
 	void Load();
