@@ -25,7 +25,7 @@ void CSimon::Update(DWORD dt)
 }
 void CSimon::Render()
 {
-	animation_set->at(ani_id)->Render(x, y, nx, 0.5);
+	animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
 }
 
 void CSimon::SetState(int state)
@@ -50,10 +50,10 @@ void CSimon::SetState(int state)
 			ani_id = ID_ANI_SIMON_ATTACK;
 			break;
 		}
-		case SIMON_STATE_WALK_UP:
+		case SIMON_STATE_GO_UP:
 		{
 			this->SimonWalkUp();
-			ani_id = ID_ANI_SIMON_WALK_UP;
+			ani_id = ID_ANI_SIMON_GO_UP;
 			break;
 		}
 	}

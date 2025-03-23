@@ -1,79 +1,42 @@
 #pragma once
-#include <vector>
-#include <string>
 
-#include "Sprite.h"
-#include "Textures.h"
-#include "debug.h"
+#include "KeyEventHandler.h"
 
-
-using namespace std;
-
-class CTile
-{
-protected:
-	float x;
-	float y;
-
-	int left;
-	int top;
-	int right;
-	int bottom;
-
-public:
-
-	CTile::CTile(float _x, float _y, int _left, int _top, int _right, int _bottom)
-	{
-		x = _x;
-		y = _y;
-		left = _left;
-		top = _top;
-		right = _right;
-		bottom = _bottom;
-	}	
-
-	void CTile::Render()
-	{
-		int mapId = CGame::GetInstance()->GetCurrentMap();
-
-		LPTEXTURE tex = CTextures::GetInstance()->Get(mapId);
-
-		CGame::GetInstance()->Draw(x, y, -1, tex, left, top, right, bottom, 1);
-	}
-};
-
+/*
+*  Abstract class for a game scene
+*/
 class CScene
 {
 protected:
-
-	vector<CTile*> map;
-
-	int map_width;
-	int map_height;
-
+	LPKEYEVENTHANDLER key_handler;
 	int id;
 	LPCWSTR sceneFilePath;
 
-	int offset;
+public:
+	CScene()
+	{
+		id = -1;
+	}
+	CScene(int _id, LPCWSTR filePath);
+
+	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
+	virtual void Load() = 0;
+	virtual void Update(DWORD dt) = 0;
+	virtual void Render() = 0;
+};
+typedef CScene* LPSCENE;
+
+
+class CSceneKeyHandler : public CKeyEventHandler
+{
+protected:
+	CScene* scence;
 
 public:
-	CScene(int _id, LPCWSTR filePath)
-	{
-		id = _id;
-		sceneFilePath = filePath;
-	}
-
-	void Load();
-	void Render();
-
-	int GetWidth(){ return map_width; };
-	int GetHeight() { return map_height; };
-
-	int GetSceneId() { return id; }
-
-	void _ParseSection_INFO(string line);
-	void _ParseSection_TILE(string line);
-
-	~CScene();
-
+	virtual void KeyState(BYTE* states) = 0;
+	virtual void OnKeyDown(int KeyCode) = 0;
+	virtual void OnKeyUp(int KeyCode) = 0;
+	CSceneKeyHandler(LPSCENE s) :CKeyEventHandler() { scence = s; }
 };
+
+typedef CSceneKeyHandler* LPSCENEKEYHANDLER;
