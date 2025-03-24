@@ -12,33 +12,27 @@
 
 using namespace std;
 
-class CTile
+class CTile : public CGameObject
 {
 protected:
-	float x;
-	float y;
-
 	int left;
 	int top;
 	int right;
 	int bottom;
 
 public:
-
-	CTile::CTile(float _x, float _y, int _left, int _top, int _right, int _bottom)
+	CTile(float _x, float _y, int _left, int _top, int _right, int _bottom)
+		: CGameObject(_x, _y), left(_left), top(_top), right(_right), bottom(_bottom)
 	{
-		x = _x;
-		y = _y;
-		left = _left;
-		top = _top;
-		right = _right;
-		bottom = _bottom;
+		width = right - left;  
+		height = bottom - top; 
 	}
 
-	void CTile::Render()
-	{
-		int sceneId = CGame::GetInstance()->GetSceneId();
+	void Update(DWORD dt) override {
+	}
 
+	void Render() override {
+		int sceneId = CGame::GetInstance()->GetSceneId();
 		LPTEXTURE tex = CTextures::GetInstance()->Get(sceneId);
 
 		CGame::GetInstance()->Draw(x, y, -1, tex, left, top, right, bottom, 1);

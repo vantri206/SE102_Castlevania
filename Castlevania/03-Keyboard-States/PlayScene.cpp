@@ -4,7 +4,7 @@
 #include "Utils.h"
 #include "GameObject.h"
 #include "GameDefine.h"
-
+#include "Camera.h"
 #include <fstream>
 
 #define LOAD_RESOURCE_PLAYER 0
@@ -132,20 +132,29 @@ void CPlayScene::_ParseSection_TILE(string line)
 	}
 	offset += TILE_HEIGHT;
 }
-
 void CPlayScene::Update(DWORD dt)
-{
+{	
+	
 	for (int i = 0; i < (int)objects.size(); i++)
 	{
 		objects[i]->Update(dt);
 	}
+	if (player != NULL)
+		CCamera::GetInstance()->Update(dt, player,this->map_width,this->map_height);
 }
 void CPlayScene::Render()
 {
-	for (int i = 0; i < map.size(); i++)
-		map[i]->Render();
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
+	for (int i = 0; i < map.size(); i++) {
+		if (CCamera::GetInstance()->IsInCamera(map[i])) {
+			map[i]->Render();
+		}
+	}
+
+	for (int i = 0; i < objects.size(); i++) {
+		if (CCamera::GetInstance()->IsInCamera(objects[i])) {
+			objects[i]->Render();
+		}
+	}
 }
 
 CPlayScene* CPlayScene::GetInstance()

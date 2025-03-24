@@ -12,7 +12,7 @@
 
 #include "Simon.h"
 #include "Ghoul.h"
-
+#include "Camera.h"
 #include "SampleKeyEventHandler.h"
 #include "Utils.h"
 
@@ -363,8 +363,7 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 	int spriteHeight = bottom - top + 1;  // Tính chiều cao của sprite
 
 	D3DX10_SPRITE sprite;  
-
-
+	
 	sprite.pTexture = tex->getShaderResourceView();
 
 	sprite.TexCoord.x = left / (float)tex->getWidth();
@@ -384,9 +383,10 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 	}
 
 
-	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, x, (backBufferHeight - y), 0.1f);  
 
+	D3DXMATRIX matTranslation;
+	D3DXMatrixTranslation(&matTranslation, x-CCamera::GetInstance()->GetX(), (backBufferHeight - (y - CCamera::GetInstance()->GetY())), 0.1f);
+	
 	
 	D3DXMATRIX matScaling;
 	D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
@@ -395,7 +395,7 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 	sprite.matWorld = matScaling * matTranslation;
 
 	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
-
+	DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
 }
 /*
 	Load all game resources

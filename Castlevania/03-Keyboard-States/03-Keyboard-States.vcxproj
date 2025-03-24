@@ -132,6 +132,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Bat.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Bat.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="KeyEventHandler.h" />
