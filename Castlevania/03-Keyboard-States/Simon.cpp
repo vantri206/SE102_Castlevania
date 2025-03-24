@@ -1,6 +1,6 @@
 #include <algorithm>
 #include "debug.h"
-
+#include "PlayScene.h"
 #include "Simon.h"
 
 
@@ -8,21 +8,19 @@ void CSimon::Update(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
-	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
+	int mapwidth = (((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetWidth());
 
-
-	if (y <= 0 || y >= BackBufferHeight - SIMON_HEIGHT) {
-		if (y <= 0)
+	if (x <= 0 || x >= mapwidth - SIMON_WIDTH) {
+		if (x <= 0)
 		{
-			y = 0;
+			x = 0;
 		}
-		else if (y >= BackBufferHeight - SIMON_HEIGHT)
+		else if (x >= mapwidth - SIMON_WIDTH)
 		{
-			y = (float)(BackBufferHeight - SIMON_HEIGHT);
+			x = (float)(mapwidth - SIMON_WIDTH);
 		}
 	}
-	
+
 }
 void CSimon::Render()
 {

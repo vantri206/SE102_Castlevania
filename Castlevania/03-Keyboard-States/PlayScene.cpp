@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "GameDefine.h"
 #include "Camera.h"
+
 #include <fstream>
 
 #define LOAD_RESOURCE_PLAYER 0
