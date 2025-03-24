@@ -7,7 +7,7 @@
 10 resource/Enemies.png
 #----MAP----
 # id file_path
-1 resource/Map/Stage1.png
+1 resource/Map/Stage1.bmp
 
 # id left top right bottom texture_id
 [SPRITES]
@@ -92,7 +92,7 @@
 # texture_id	ani_id1		ani_id2		ani_id3 	....
 [ANIMATIONS_SETS]
 #----SIMON----
-0 1000 1001 1002 1003 1004
+0 1000 1001 1002 1003 1004 1005 1006 1007 1008
 #----ENEMIES----#
 #----GHOULS----
 1 2000 2001

@@ -5,7 +5,7 @@
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-
+#include "Scene.h"
 
 #include "KeyEventHandler.h"
 #include "d3dx9core.h"
@@ -44,9 +44,11 @@ class CGame
 
 	LPKEYEVENTHANDLER keyHandler;
 
+	LPSCENE scenes[100];
+
 	HINSTANCE hInstance;
 
-	int currentMapId = 1;
+	int currentSceneId = 1;
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd,HINSTANCE hInstance);
@@ -55,21 +57,31 @@ public:
 	// Draw a portion or ALL the texture at position (x,y) on the screen
 	// rect : if NULL, the whole texture will be drawn
 	//        if NOT NULL, only draw that portion of the texture 
-	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b);
+	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b)
+	{
+		this->Draw(x, y, nx, tex, l, t, r, b, 1.0f);
+	}
+	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b, float size);
 
 	LPD3DX10SPRITE GetSpriteHandler() { return this->spriteHandler; }
 
 	// Keyboard related functions 
-	void InitKeyboard(LPKEYEVENTHANDLER handler);
+	void InitKeyboard();
 	int IsKeyDown(int KeyCode);
 	int IsKeyUp(int KeyCode);
 	void ProcessKeyboard();
+	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
+
+	void LoadResources();
+	void SwitchScene(int sceneId);
 
 	ID3D10Device* GetDirect3DDevice() {
 		return pD3DDevice;
 	}
 
-	LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath);
+	LPSCENE GetCurrentScene() { return scenes[currentSceneId]; }
+
+	LPTEXTURE LoadTexture(LPCWSTR texturePath);
 
 	IDXGISwapChain* GetSwapChain() { return this->pSwapChain; }
 	ID3D10RenderTargetView* GetRenderTargetView() { return this->pRenderTargetView; }
@@ -80,7 +92,7 @@ public:
 	int GetBackBufferWidth() { return backBufferWidth; }
 	int GetBackBufferHeight() { return backBufferHeight; }
 
-	int GetCurrentMap() { return currentMapId; }
+	int GetSceneId() { return currentSceneId; }
 
 	static CGame* GetInstance();
 

@@ -10,21 +10,25 @@
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1
-#define SIMON_STATE_JUMP 2
-#define SIMON_STATE_SIT 3
-#define SIMON_STATE_ATTACK 4
-#define SIMON_STATE_WALK_UP 5
+#define SIMON_STATE_JUMP	2
+#define SIMON_STATE_SIT		3
+#define SIMON_STATE_ATTACK	4
+#define SIMON_STATE_GO_UP	5
+#define SIMON_STATE_GO_DOWN 6
 
 
 
-#pragma region ANIMATION_ID
+#pragma region ANIMATION_ID		//xem thu tu animation trong resource
 
-#define ID_ANI_SIMON_IDLE 0
-#define ID_ANI_SIMON_WALK 1
-#define ID_ANI_SIMON_JUMP 2
-#define ID_ANI_SIMON_SIT 3
-#define ID_ANI_SIMON_ATTACK 4
-#define ID_ANI_SIMON_WALK_UP 1
+#define ID_ANI_SIMON_IDLE		0
+#define ID_ANI_SIMON_WALK		1
+#define ID_ANI_SIMON_JUMP		2
+#define ID_ANI_SIMON_SIT		3
+#define ID_ANI_SIMON_ATTACK		4
+#define ID_ANI_SIMON_UP_IDLE	5
+#define ID_ANI_SIMON_DOWN_IDLE	6
+#define ID_ANI_SIMON_GO_UP		7
+#define ID_ANI_SIMON_GO_DOWN	8
 
 #define SIMON_WIDTH 15
 #define SIMON_HEIGHT 30
@@ -49,8 +53,8 @@ public:
 		isSitting = false;
 		ani_id = 0;
 	}
-	void SetDirection(int direction) { nx = direction; }
-    int GetDirection() { return nx; }
+	void SetDirectionX(int direction) { nx = direction; }
+    int GetDirectionX() { return nx; }
 	void SetDirectionY(int direction) { ny = direction; }
 	int GetDirectionY() { return ny; }
 	void Update(DWORD dt);

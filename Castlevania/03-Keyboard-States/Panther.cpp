@@ -53,7 +53,7 @@ void CPANTHER::Render()
         break;
     }
     }
-    animation_set->at(ani_id)->Render(x, y, nx);
+    animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
 }
 
 void CPANTHER::SetState(int state)

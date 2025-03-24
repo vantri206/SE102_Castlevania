@@ -11,16 +11,6 @@ void CSimon::Update(DWORD dt)
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
 	int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
 
-	if (x <= 0 || x >= BackBufferWidth - SIMON_WIDTH) {
-		if (x <= 0)
-		{
-			x = 0;
-		}
-		else if (x >= BackBufferWidth - SIMON_WIDTH)
-		{
-			x = (float)(BackBufferWidth - SIMON_WIDTH);
-		}
-	}
 
 	if (y <= 0 || y >= BackBufferHeight - SIMON_HEIGHT) {
 		if (y <= 0)
@@ -35,7 +25,7 @@ void CSimon::Update(DWORD dt)
 }
 void CSimon::Render()
 {
-	animation_set->at(ani_id)->Render(x, y, nx);
+	animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
 }
 
 void CSimon::SetState(int state)
@@ -60,10 +50,10 @@ void CSimon::SetState(int state)
 			ani_id = ID_ANI_SIMON_ATTACK;
 			break;
 		}
-		case SIMON_STATE_WALK_UP:
+		case SIMON_STATE_GO_UP:
 		{
 			this->SimonWalkUp();
-			ani_id = ID_ANI_SIMON_WALK_UP;
+			ani_id = ID_ANI_SIMON_GO_UP;
 			break;
 		}
 	}

@@ -67,11 +67,11 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{d169877c-5fd8-4708-be02-111dd883f207}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Map">
-      <UniqueIdentifier>{139cbaee-64a1-429d-8585-9b9dcbce18e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{4f104623-d2f2-41f3-b7f8-e8dd9e422ecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{139cbaee-64a1-429d-8585-9b9dcbce18e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +121,9 @@
       <Filter>Source Files\GameObjects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -180,7 +183,13 @@
       <Filter>Header Files\GameObjects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files\Map</Filter>
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
