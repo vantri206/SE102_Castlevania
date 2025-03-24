@@ -25,6 +25,7 @@
 // Animation Sets (xem trong resource.txt)
 
 #define SIMON_ANI_SET_ID 0
+#define WHIP_ANI_SET_ID 10
 
 // Scene define
 #define SCENE1 1
