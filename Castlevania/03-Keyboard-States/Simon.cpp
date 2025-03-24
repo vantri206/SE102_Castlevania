@@ -1,102 +1,104 @@
 #include <algorithm>
 #include "debug.h"
-
 #include "Simon.h"
-
+#include "Game.h"
 
 void CSimon::Update(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
-	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
+    x += vx * dt;
+    y += vy * dt;
 
+    // Cập nhật cây roi
+    whip->Update(dt);
 
-	if (y <= 0 || y >= BackBufferHeight - SIMON_HEIGHT) {
-		if (y <= 0)
-		{
-			y = 0;
-		}
-		else if (y >= BackBufferHeight - SIMON_HEIGHT)
-		{
-			y = (float)(BackBufferHeight - SIMON_HEIGHT);
-		}
-	}
+    int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
+    int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
+
+    if (y <= 0 || y >= BackBufferHeight - SIMON_HEIGHT) {
+        if (y <= 0)
+            y = 0;
+        else if (y >= BackBufferHeight - SIMON_HEIGHT)
+            y = (float)(BackBufferHeight - SIMON_HEIGHT);
+    }
 }
+
 void CSimon::Render()
 {
-	animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
+    if (animation_set == nullptr) {
+        DebugOut(L"[ERROR] Simon animation set is null!\n");
+        return;
+    }
+    animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
+    whip->Render();  // Render cây roi
 }
 
 void CSimon::SetState(int state)
 {
-	switch (state)
-	{
-		case SIMON_STATE_IDLE:
-		{
-			this->SimonIdle();
-			ani_id = ID_ANI_SIMON_IDLE;
-			break;
-		}
-		case SIMON_STATE_WALK:
-		{
-			this->SimonWalk();
-			ani_id = ID_ANI_SIMON_WALK;
-			break;
-		}
-		case SIMON_STATE_ATTACK:
-		{
-			this->SimonAttack();
-			ani_id = ID_ANI_SIMON_ATTACK;
-			break;
-		}
-		case SIMON_STATE_GO_UP:
-		{
-			this->SimonWalkUp();
-			ani_id = ID_ANI_SIMON_GO_UP;
-			break;
-		}
-	}
-	CGameObject::SetState(state);
-}
-
-int CSimon::GetState()
-{
-	return this->state;
+    CGameObject::SetState(state);
+    switch (state)
+    {
+        case SIMON_STATE_IDLE:
+        {
+            this->SimonIdle();
+            ani_id = ID_ANI_SIMON_IDLE;
+            whip->Deactivate();
+            break;
+        }
+        case SIMON_STATE_WALK:
+        {
+            this->SimonWalk();
+            ani_id = ID_ANI_SIMON_WALK;
+            whip->Deactivate();
+            break;
+        }
+        case SIMON_STATE_ATTACK:
+        {
+            this->SimonAttack();
+            ani_id = ID_ANI_SIMON_ATTACK;
+            whip->Activate();  // Kích hoạt cây roi khi tấn công
+            break;
+        }
+        case SIMON_STATE_GO_UP:
+        {
+            this->SimonWalkUp();
+            ani_id = ID_ANI_SIMON_GO_UP;
+            whip->Deactivate();
+            break;
+        }
+    }
 }
 
 void CSimon::SimonWalkUp()
 {
-	vx = 0;
-	if (ny > 0) vy = -SIMON_WALKING_SPEED;
-	else vy = SIMON_WALKING_SPEED;
+    vx = 0;
+    if (ny > 0) vy = -SIMON_WALKING_SPEED;
+    else vy = SIMON_WALKING_SPEED;
 }
 
 void CSimon::SimonWalk()
 {
-	vy = 0;
-	if (nx > 0) vx = SIMON_WALKING_SPEED;
-	else vx = -SIMON_WALKING_SPEED;
+    vy = 0;
+    if (nx > 0) vx = SIMON_WALKING_SPEED;
+    else vx = -SIMON_WALKING_SPEED;
 }
 
 void CSimon::SimonAttack()
 {
-	vx = 0;
-	vy = 0;
+    vx = 0;
+    vy = 0;
 }
 
 void CSimon::SimonIdle()
 {
-	vx = 0;
-	vy = 0;
+    vx = 0;
+    vy = 0;
 }
 
 void CSimon::SimonSit()
 {
-	vx = 0;
-	vy = 0;
-}
-void GetBoundingBox()
+    vx = 0;
+    vy = 0;
+}void GetBoundingBox()
 {
 
 }

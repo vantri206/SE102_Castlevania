@@ -1,9 +1,8 @@
 #pragma once
 #include "GameObject.h"
-
 #include "Animation.h"
 #include "Animations.h"
-
+#include "Whip.h"  // Include Whip.h
 #include "debug.h"
 
 #define SIMON_WALKING_SPEED		0.1f
@@ -33,40 +32,49 @@
 #define SIMON_WIDTH 15
 #define SIMON_HEIGHT 30
 
-
 class CSimon : public CGameObject
 {
 protected:
-	float maxVx;
-	float ax, ay;
-	float startx, starty;
-	bool isSitting;
-	int ani_id;
+    float maxVx;
+    float ax, ay;
+    float startx, starty;
+    bool isSitting;
+    int ani_id;
+    CWhip* whip;  // Thêm cây roi
+
 public:
-	CSimon(float x, float y) : CGameObject(x, y)
-	{
-		startx = x; starty = y;
-		ax = 0.0f;
-		ay = 0.0f;
-		nx = 1;
-		ny = 1;
-		isSitting = false;
-		ani_id = 0;
-	}
-	void SetDirectionX(int direction) { nx = direction; }
+    CSimon(float x, float y) : CGameObject(x, y)
+    {
+        startx = x; starty = y;
+        ax = 0.0f;
+        ay = 0.0f;
+        nx = 1;
+        ny = 1;
+        isSitting = false;
+        ani_id = 0;
+        whip = new CWhip(this);  // Khởi tạo cây roi
+    }
+
+    ~CSimon() {
+        delete whip;  // Giải phóng bộ nhớ
+    }
+
+    void SetDirectionX(int direction) { nx = direction; }
     int GetDirectionX() { return nx; }
-	void SetDirectionY(int direction) { ny = direction; }
-	int GetDirectionY() { return ny; }
-	void Update(DWORD dt);
-	void Render();
-	void SetState(int state);
-	int GetState();
-	int GetVx() { return vx; };
+    void SetDirectionY(int direction) { ny = direction; }
+    int GetDirectionY() { return ny; }
+    void Update(DWORD dt) override;
+    void Render() override;
+    void SetState(int state) override;
+    int GetState() { return state; }
+    int GetVx() { return vx; }
+	float GetX() { return x; }
+    float GetY() { return y; }
+    CWhip* GetWhip() { return whip; }  // Getter cho whip
 
-	void SimonIdle();
-	void SimonWalk();
-	void SimonAttack();
-	void SimonSit();
-	void SimonWalkUp();
-
+    void SimonIdle();
+    void SimonWalk();
+    void SimonAttack();
+    void SimonSit();
+    void SimonWalkUp();
 };
