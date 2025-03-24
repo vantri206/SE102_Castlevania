@@ -11,9 +11,8 @@
 #define LOAD_RESOURCE_INFO 1
 #define LOAD_RESOURCE_TILE 2
 
-
-#define TILE_HEIGHT 32
-#define TILE_WIDTH 32
+#define TILE_HEIGHT 16
+#define TILE_WIDTH 16
 
 vector<LPGAMEOBJECT> objects;
 
@@ -124,8 +123,8 @@ void CPlayScene::_ParseSection_TILE(string line)
 
 		int left = tileX;
 		int top = tileY;
-		int right = tileX + TILE_WIDTH;
-		int bottom = tileY + TILE_HEIGHT;
+		int right = tileX + TILE_WIDTH - 1;
+		int bottom = tileY + TILE_HEIGHT - 1;
 
 		CTile* tile = new CTile(x, y, left, top, right, bottom);
 		map.push_back(tile);
@@ -134,7 +133,7 @@ void CPlayScene::_ParseSection_TILE(string line)
 }
 void CPlayScene::Update(DWORD dt)
 {	
-	
+	if (player->GetX() >= 700 && CGame::GetInstance()->GetSceneId() == 1) CGame::GetInstance()->SwitchScene(2);
 	for (int i = 0; i < (int)objects.size(); i++)
 	{
 		objects[i]->Update(dt);
@@ -157,6 +156,12 @@ void CPlayScene::Render()
 	}
 }
 
+void CPlayScene::UnLoad()
+{
+	map.clear();
+	objects.clear();
+	player = NULL;
+}
 CPlayScene* CPlayScene::GetInstance()
 {
 	if (__instance == NULL) __instance = new CPlayScene();

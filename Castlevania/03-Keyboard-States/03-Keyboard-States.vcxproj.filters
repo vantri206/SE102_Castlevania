@@ -73,6 +73,12 @@
     <Filter Include="Header Files\Scene">
       <UniqueIdentifier>{139cbaee-64a1-429d-8585-9b9dcbce18e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObjects\Objects">
+      <UniqueIdentifier>{a5d3f2f5-28c9-44b8-ab01-0db8903c5429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects\Objects">
+      <UniqueIdentifier>{e9b2fe40-def2-40fb-ba0e-61e44260da7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -127,7 +133,7 @@
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\Scene</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +201,7 @@
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\Scene</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

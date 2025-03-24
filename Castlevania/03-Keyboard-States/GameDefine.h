@@ -20,9 +20,17 @@
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_ENEMY 10
+#define ID_TEX_WHIP 20
 
 // Animation Sets (xem trong resource.txt)
 
 #define SIMON_ANI_SET_ID 0
 
+// Scene define
+#define SCENE1 1
+#define SCENE2 2
+// Map resource
+
+#define STAGE1_FILE_PATH L"scene1.txt"
+#define STAGE2_FILE_PATH L"scene2.txt"
 

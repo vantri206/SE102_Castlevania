@@ -20,19 +20,25 @@
 
 #pragma region ANIMATION_ID		//xem thu tu animation trong resource
 
-#define ID_ANI_SIMON_IDLE		0
-#define ID_ANI_SIMON_WALK		1
-#define ID_ANI_SIMON_JUMP		2
-#define ID_ANI_SIMON_SIT		3
-#define ID_ANI_SIMON_ATTACK		4
-#define ID_ANI_SIMON_UP_IDLE	5
-#define ID_ANI_SIMON_DOWN_IDLE	6
-#define ID_ANI_SIMON_GO_UP		7
-#define ID_ANI_SIMON_GO_DOWN	8
+#define ID_ANI_SIMON_IDLE			0
+#define ID_ANI_SIMON_WALK			1
+#define ID_ANI_SIMON_JUMP			2
+#define ID_ANI_SIMON_SIT			3
+#define ID_ANI_SIMON_ATTACK			4
+#define ID_ANI_SIMON_UP_IDLE		5
+#define ID_ANI_SIMON_DOWN_IDLE		6
+#define ID_ANI_SIMON_GO_UP			7
+#define ID_ANI_SIMON_GO_DOWN		8
+#define ID_ANI_SIMON_ATTACK_DOWN	9
+#define ID_ANI_SIMON_ATTACK_UP		10
+#define ID_ANI_SIMON_HURT			11
+#define ID_ANI_SIMON_DIE			12
+#define ID_ANI_SIMON_POWER_UP		13
 
 #define SIMON_WIDTH 15
 #define SIMON_HEIGHT 30
 
+#define SIMON_SIZE 0.7f
 
 class CSimon : public CGameObject
 {

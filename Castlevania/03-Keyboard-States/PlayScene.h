@@ -35,7 +35,7 @@ public:
 		int sceneId = CGame::GetInstance()->GetSceneId();
 		LPTEXTURE tex = CTextures::GetInstance()->Get(sceneId);
 
-		CGame::GetInstance()->Draw(x, y, -1, tex, left, top, right, bottom, 1);
+		CGame::GetInstance()->Draw(x, y, -1, tex, left, top, right, bottom);
 	}
 };
 
@@ -67,6 +67,7 @@ public:
 	}
 
 	void Load();
+	void UnLoad();
 
 	void Render();
 

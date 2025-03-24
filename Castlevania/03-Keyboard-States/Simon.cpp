@@ -12,11 +12,21 @@ void CSimon::Update(DWORD dt)
 	int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
 
 
+	if (y <= 0 || y >= BackBufferHeight - SIMON_HEIGHT) {
+		if (y <= 0)
+		{
+			y = 0;
+		}
+		else if (y >= BackBufferHeight - SIMON_HEIGHT)
+		{
+			y = (float)(BackBufferHeight - SIMON_HEIGHT);
+		}
+	}
 	
 }
 void CSimon::Render()
 {
-	animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
+	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
 }
 
 void CSimon::SetState(int state)

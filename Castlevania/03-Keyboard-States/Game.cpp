@@ -538,8 +538,17 @@ void CGame::LoadResources()
 
 void CGame::SwitchScene(int sceneId)
 {
-	scene = new CPlayScene(sceneId, L"scene1.txt");
-	scenes[1] = scene;
+	this->currentSceneId = sceneId;
+	if(scene != NULL) scene->UnLoad();
+	switch(sceneId)
+	{
+	case SCENE1:
+		scene = new CPlayScene(sceneId, STAGE1_FILE_PATH); break;
+	case SCENE2:
+		scene = new CPlayScene(sceneId, STAGE2_FILE_PATH); break;
+		break;
+	}
+	scenes[sceneId] = scene;
 	this->SetKeyHandler(scene->GetKeyEventHandler());
 	scene->Load();
 }
