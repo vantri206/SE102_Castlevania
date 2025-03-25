@@ -29,7 +29,11 @@ void CSimon::Render()
         return;
     }
     animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
-    whip->Render();  // Render cây roi
+
+    // Chỉ render cây roi khi ở trạng thái tấn công
+    if (state == SIMON_STATE_ATTACK) {
+        whip->Render();
+    }
 }
 
 void CSimon::SetState(int state)
@@ -37,34 +41,30 @@ void CSimon::SetState(int state)
     CGameObject::SetState(state);
     switch (state)
     {
-        case SIMON_STATE_IDLE:
-        {
-            this->SimonIdle();
-            ani_id = ID_ANI_SIMON_IDLE;
-            whip->Deactivate();
-            break;
-        }
-        case SIMON_STATE_WALK:
-        {
-            this->SimonWalk();
-            ani_id = ID_ANI_SIMON_WALK;
-            whip->Deactivate();
-            break;
-        }
-        case SIMON_STATE_ATTACK:
-        {
-            this->SimonAttack();
-            ani_id = ID_ANI_SIMON_ATTACK;
-            whip->Activate();  // Kích hoạt cây roi khi tấn công
-            break;
-        }
-        case SIMON_STATE_GO_UP:
-        {
-            this->SimonWalkUp();
-            ani_id = ID_ANI_SIMON_GO_UP;
-            whip->Deactivate();
-            break;
-        }
+    case SIMON_STATE_IDLE:
+    {
+        this->SimonIdle();
+        ani_id = ID_ANI_SIMON_IDLE;
+        break;
+    }
+    case SIMON_STATE_WALK:
+    {
+        this->SimonWalk();
+        ani_id = ID_ANI_SIMON_WALK;
+        break;
+    }
+    case SIMON_STATE_ATTACK:
+    {
+        this->SimonAttack();
+        ani_id = ID_ANI_SIMON_ATTACK;
+        break;
+    }
+    case SIMON_STATE_GO_UP:
+    {
+        this->SimonWalkUp();
+        ani_id = ID_ANI_SIMON_GO_UP;
+        break;
+    }
     }
 }
 

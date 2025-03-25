@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
-#include "Whip.h"  // Include Whip.h
+#include "Whip.h"
 #include "debug.h"
 
 #define SIMON_WALKING_SPEED		0.1f
@@ -14,10 +14,6 @@
 #define SIMON_STATE_ATTACK	4
 #define SIMON_STATE_GO_UP	5
 #define SIMON_STATE_GO_DOWN 6
-
-
-
-#pragma region ANIMATION_ID		//xem thu tu animation trong resource
 
 #define ID_ANI_SIMON_IDLE		0
 #define ID_ANI_SIMON_WALK		1
@@ -68,8 +64,6 @@ public:
     void SetState(int state) override;
     int GetState() { return state; }
     int GetVx() { return vx; }
-	float GetX() { return x; }
-    float GetY() { return y; }
     CWhip* GetWhip() { return whip; }  // Getter cho whip
 
     void SimonIdle();
