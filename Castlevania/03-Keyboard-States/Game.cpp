@@ -239,48 +239,49 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 	return new CTexture(tex, gSpriteTextureRV);
 }
 
-void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size)
-{
-	if (tex == NULL) return;  // Nếu không có texture, không làm gì cả
+	void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size)
+	{
+		if (tex == NULL) return; 
 
-	int spriteWidth = right - left + 1;  // Tính chiều rộng của sprite
-	int spriteHeight = bottom - top + 1;  // Tính chiều cao của sprite
+		int spriteWidth = right - left + 1;  
+		int spriteHeight = bottom - top + 1;  
 
-	D3DX10_SPRITE sprite;  
+		D3DX10_SPRITE sprite;  
 	
-	sprite.pTexture = tex->getShaderResourceView();
+		sprite.pTexture = tex->getShaderResourceView();
 
-	sprite.TexCoord.x = (float)left / tex->getWidth();
-	sprite.TexCoord.y = (float)top / tex->getHeight();
+		sprite.TexCoord.x = (float)left / tex->getWidth();
+		sprite.TexCoord.y = (float)top / tex->getHeight();
 
-	sprite.TexSize.x = (float)spriteWidth / tex->getWidth();
-	sprite.TexSize.y = (float)spriteHeight / tex->getHeight();
+		sprite.TexSize.x = (float)spriteWidth / tex->getWidth();
+		sprite.TexSize.y = (float)spriteHeight / tex->getHeight();
 
 
-	sprite.TextureIndex = 0;  
-	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);  
+		sprite.TextureIndex = 0;  
+		sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);  
 
-	if (nx > 0) {
+		if (nx > 0) {
 
-		sprite.TexCoord.x = (right / (float)tex->getWidth());  
-		sprite.TexSize.x = -sprite.TexSize.x;
+			sprite.TexCoord.x = (right / (float)tex->getWidth());  
+			sprite.TexSize.x = -sprite.TexSize.x;
+		}
+		float cx = (FLOAT)floor(CCamera::GetInstance()->GetX());
+		float cy = (FLOAT)floor(CCamera::GetInstance()->GetY());
+
+
+		D3DXMATRIX matTranslation;
+		D3DXMatrixTranslation(&matTranslation, x-cx, (y - cy), 0.1f);
+	
+	
+		D3DXMATRIX matScaling;
+		D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
+
+
+		sprite.matWorld = matScaling * matTranslation;
+
+		spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
+		DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
 	}
-
-
-
-	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, x-CCamera::GetInstance()->GetX(), (y - CCamera::GetInstance()->GetY()), 0.1f);
-	
-	
-	D3DXMATRIX matScaling;
-	D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
-
-
-	sprite.matWorld = matScaling * matTranslation;
-
-	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
-//	DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
-}
 
 int CGame::IsKeyDown(int KeyCode)
 {

@@ -10,7 +10,7 @@ void CSimon::Update(DWORD dt)
 {
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
-
+	
 	x += vx * dt;
 	y += vy * dt;
 	if (x <= 0 || x >= mapwidth - SIMON_WIDTH) {

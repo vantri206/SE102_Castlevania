@@ -12,7 +12,7 @@
 #include "Map.h"
 #include "SampleKeyEventHandler.h"
 #include "Utils.h"
-
+#include "Camera.h"
 #include "GameDefine.h"
 #include "Simon.h"
 
@@ -59,6 +59,7 @@ void Update(DWORD dt)
 	{
 		objects[i]->Update(dt);
 	}
+
 }
 
 
