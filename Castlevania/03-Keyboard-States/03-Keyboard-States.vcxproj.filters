@@ -79,6 +79,12 @@
     <Filter Include="Header Files\GameObjects\Objects">
       <UniqueIdentifier>{e9b2fe40-def2-40fb-ba0e-61e44260da7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TileMap">
+      <UniqueIdentifier>{0880c459-6732-4282-932c-0f05fce80908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{48bc5975-0b26-422f-80b0-a129c794fddb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -134,6 +140,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\TileMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

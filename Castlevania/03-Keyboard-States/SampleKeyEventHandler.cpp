@@ -1,3 +1,4 @@
+#pragma once
 #include "SampleKeyEventHandler.h"
 
 #include "debug.h"
@@ -5,6 +6,7 @@
 #include "Simon.h"
 #include "PlayScene.h"
 
+extern CSimon* simon;
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
@@ -14,7 +16,6 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 
 void CSampleKeyHandler::OnKeyUp(int KeyCode)
 {
-	CSimon* simon = CPlayScene::GetInstance()->getPlayer();
 	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 }
@@ -22,7 +23,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	CGame* game = CGame::GetInstance();
-	CSimon* simon = (CSimon*)(((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->getPlayer());
+//	CSimon* simon = (CSimon*)(((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->getPlayer());
 	if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))
 	{
 		simon->SetState(SIMON_STATE_WALK);

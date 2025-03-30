@@ -1,6 +1,9 @@
 ﻿#pragma once
 
-//define
+
+
+#define SIMON_START_X 0
+#define SIMON_START_Y 30
 
 #define MAX_TXT_LINE 1024
 
@@ -16,13 +19,13 @@
 #define SCREEN_WIDTH 360
 #define SCREEN_HEIGHT 270
 
-// Texture (xem trong resource.txt)
+// Texture 
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_WHIP 20
 
-// Animation Sets (xem trong resource.txt)
+// Animation Sets 
 
 #define SIMON_ANI_SET_ID 0
 #define WHIP_ANI_SET_ID 10
@@ -30,8 +33,8 @@
 // Scene define
 #define SCENE1 1
 #define SCENE2 2
+
 // Map resource
 
-#define STAGE1_FILE_PATH L"scene1.txt"
-#define STAGE2_FILE_PATH L"scene2.txt"
+#define STAGE1_FILE_PATH L"./resource/Map/Stage1.txt"
 

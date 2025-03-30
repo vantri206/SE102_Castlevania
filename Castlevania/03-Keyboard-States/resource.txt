@@ -4,13 +4,11 @@
 #----GAMEOBJECT----
 # id	file_path	
 0 resource/Simon.png
-10 resource/Enemies.png
-20 resource/Whip.png
+20 resource/Enemies.png
+30 resource/Whip.png
 #----MAP----
 # id file_path
 1 resource/Map/Stage1.bmp
-2 resource/Map/Stage2.bmp
-
 
 # id left top right bottom texture_id
 [SPRITES]

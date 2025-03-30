@@ -1,3 +1,4 @@
+#pragma once
 #include "Sprites.h"
 #include "Game.h"
 #include "debug.h"

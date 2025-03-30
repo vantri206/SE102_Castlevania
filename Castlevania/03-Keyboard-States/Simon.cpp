@@ -1,15 +1,18 @@
+#pragma once
 #include <algorithm>
 #include "debug.h"
 #include "PlayScene.h"
 #include "Simon.h"
-
+#include "Camera.h"
+#include "Textures.h"
 
 void CSimon::Update(DWORD dt)
 {
+	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
+	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
+
 	x += vx * dt;
 	y += vy * dt;
-	int mapwidth = (((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetWidth());
-
 	if (x <= 0 || x >= mapwidth - SIMON_WIDTH) {
 		if (x <= 0)
 		{
@@ -20,7 +23,7 @@ void CSimon::Update(DWORD dt)
 			x = (float)(mapwidth - SIMON_WIDTH);
 		}
 	}
-
+	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
 }
 void CSimon::Render()
 {
@@ -67,8 +70,8 @@ int CSimon::GetState()
 void CSimon::SimonWalkUp()
 {
 	vx = 0;
-	if (ny > 0) vy = -SIMON_WALKING_SPEED;
-	else vy = SIMON_WALKING_SPEED;
+	if (ny > 0) vy = SIMON_WALKING_SPEED;
+	else vy = -SIMON_WALKING_SPEED;
 }
 
 void CSimon::SimonWalk()

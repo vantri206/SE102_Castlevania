@@ -1,13 +1,14 @@
 ﻿#pragma once
 #include "GameObject.h"
 #include <algorithm>
+
 class CCamera {
 	static CCamera* __instance;
 private: 
 	float x, y;
 	float width, height;
 public:
-	CCamera(float _x = 0, float _y = 0, float _width = 360, float _height = 270)
+	CCamera(float _x = 0, float _y = 0, float _width = 360, float _height = 192)
 		: x(_x), y(_y), width(_width), height(_height) {
 	}
 	static CCamera* GetInstance();

@@ -1,4 +1,6 @@
-﻿#include "debug.h"
+﻿#pragma once
+
+#include "debug.h"
 #include "Game.h"
 #include "Sprite.h"
 #include "Texture.h"
@@ -27,8 +29,6 @@
 #define LOAD_RESOURCE_SPRITES 4
 
 CGame* CGame::__instance = NULL;
-CPlayScene* scene = NULL;
-
 /*
 	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
 	rendering 2D images
@@ -239,17 +239,55 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 	return new CTexture(tex, gSpriteTextureRV);
 }
 
+void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size)
+{
+	if (tex == NULL) return;  // Nếu không có texture, không làm gì cả
+
+	int spriteWidth = right - left + 1;  // Tính chiều rộng của sprite
+	int spriteHeight = bottom - top + 1;  // Tính chiều cao của sprite
+
+	D3DX10_SPRITE sprite;  
+	
+	sprite.pTexture = tex->getShaderResourceView();
+
+	sprite.TexCoord.x = (float)left / tex->getWidth();
+	sprite.TexCoord.y = (float)top / tex->getHeight();
+
+	sprite.TexSize.x = (float)spriteWidth / tex->getWidth();
+	sprite.TexSize.y = (float)spriteHeight / tex->getHeight();
+
+
+	sprite.TextureIndex = 0;  
+	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);  
+
+	if (nx > 0) {
+
+		sprite.TexCoord.x = (right / (float)tex->getWidth());  
+		sprite.TexSize.x = -sprite.TexSize.x;
+	}
+
+
+
+	D3DXMATRIX matTranslation;
+	D3DXMatrixTranslation(&matTranslation, x-CCamera::GetInstance()->GetX(), (y - CCamera::GetInstance()->GetY()), 0.1f);
+	
+	
+	D3DXMATRIX matScaling;
+	D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
+
+
+	sprite.matWorld = matScaling * matTranslation;
+
+	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
+//	DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
+}
+
 int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-int CGame::IsKeyUp(int KeyCode)
-{
-	return (keyStates[KeyCode] & 0x80) < 0;
-}
-
-void CGame::InitKeyboard()
+void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 {
 	HRESULT hr = DirectInput8Create(this->hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&di, NULL);
 	if (hr != DI_OK)
@@ -304,6 +342,8 @@ void CGame::InitKeyboard()
 		return;
 	}
 
+	this->keyHandler = handler;
+
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
@@ -327,7 +367,7 @@ void CGame::ProcessKeyboard()
 		}
 		else
 		{
-			//DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
 			return;
 		}
 	}
@@ -355,52 +395,6 @@ void CGame::ProcessKeyboard()
 	}
 }
 
-void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size)
-{
-	if (tex == NULL) return;  // Nếu không có texture, không làm gì cả
-
-	int spriteWidth = right - left + 1;  // Tính chiều rộng của sprite
-	int spriteHeight = bottom - top + 1;  // Tính chiều cao của sprite
-
-	D3DX10_SPRITE sprite;  
-	
-	sprite.pTexture = tex->getShaderResourceView();
-
-	sprite.TexCoord.x = left / (float)tex->getWidth();
-	sprite.TexCoord.y = top / (float)tex->getHeight();
-
-
-	sprite.TexSize.x = spriteWidth / (float)tex->getWidth();
-	sprite.TexSize.y = spriteHeight / (float)tex->getHeight();
-
-	sprite.TextureIndex = 0;  
-	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);  
-
-	if (nx > 0) {
-
-		sprite.TexCoord.x = (right / (float)tex->getWidth());  
-		sprite.TexSize.x = -sprite.TexSize.x;
-	}
-
-
-
-	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, x-CCamera::GetInstance()->GetX(), (backBufferHeight - (y - CCamera::GetInstance()->GetY())), 0.1f);
-	
-	
-	D3DXMATRIX matScaling;
-	D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
-
-
-	sprite.matWorld = matScaling * matTranslation;
-
-	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
-	DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
-}
-/*
-	Load all game resources
-	In this example: load textures, sprites, animations and simon object
-*/
 void _ParseSection_TEXTURES(string line)
 {
 	vector<string> tokens = split(line);
@@ -536,22 +530,7 @@ void CGame::LoadResources()
 
 }
 
-void CGame::SwitchScene(int sceneId)
-{
-	this->currentSceneId = sceneId;
-	if(scene != NULL) scene->UnLoad();
-	switch(sceneId)
-	{
-	case SCENE1:
-		scene = new CPlayScene(sceneId, STAGE1_FILE_PATH); break;
-	case SCENE2:
-		scene = new CPlayScene(sceneId, STAGE2_FILE_PATH); break;
-		break;
-	}
-	scenes[sceneId] = scene;
-	this->SetKeyHandler(scene->GetKeyEventHandler());
-	scene->Load();
-}
+
 CGame::~CGame()
 {
 	pBlendStateAlpha->Release();

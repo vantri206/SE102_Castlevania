@@ -6,7 +6,7 @@
 
 #include "debug.h"
 
-#define SIMON_WALKING_SPEED		0.1f
+#define SIMON_WALKING_SPEED		0.2f
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1

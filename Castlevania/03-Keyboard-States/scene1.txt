@@ -1,6 +1,6 @@
 [PLAYER]
 #start_x start_y
-50 185
+0 0
 [INFO]
 #map_width map_heights offset (chua khoang cach de lam status)
 768 192 50

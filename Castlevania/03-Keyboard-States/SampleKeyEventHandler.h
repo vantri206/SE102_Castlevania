@@ -1,12 +1,10 @@
 #pragma once
 
-#include "Scene.h"
+#include "KeyEventHandler.h"
 
-class CSampleKeyHandler : public CSceneKeyHandler
+class CSampleKeyHandler : public CKeyEventHandler
 {
-public:
 	virtual void KeyState(BYTE* states);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
-	CSampleKeyHandler(LPSCENE s) :CSceneKeyHandler(s) {};
 };
