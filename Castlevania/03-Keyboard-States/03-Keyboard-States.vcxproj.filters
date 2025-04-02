@@ -67,12 +67,6 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{d169877c-5fd8-4708-be02-111dd883f207}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scene">
-      <UniqueIdentifier>{4f104623-d2f2-41f3-b7f8-e8dd9e422ecf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Scene">
-      <UniqueIdentifier>{139cbaee-64a1-429d-8585-9b9dcbce18e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GameObjects\Objects">
       <UniqueIdentifier>{a5d3f2f5-28c9-44b8-ab01-0db8903c5429}</UniqueIdentifier>
     </Filter>
@@ -132,12 +126,6 @@
     <ClCompile Include="Bat.cpp">
       <Filter>Source Files\GameObjects\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -146,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonIdle.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonWalking.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,14 +197,8 @@
     <ClInclude Include="Bat.h">
       <Filter>Header Files\GameObjects\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="GameDefine.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
@@ -220,6 +208,15 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonIdle.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonState.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonWalking.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,8 @@
 
 #include "Animation.h"
 #include "Animations.h"
+#include "SimonState.h"
+#include "SimonIdle.h"
 
 #include "debug.h"
 
@@ -43,36 +45,35 @@
 class CSimon : public CGameObject
 {
 protected:
-	float maxVx;
 	float ax, ay;
 	float startx, starty;
-	bool isSitting;
-	int ani_id;
+
+	CSimonState* currentState;
+
 public:
 	CSimon(float x, float y) : CGameObject(x, y)
 	{
-		startx = x; starty = y;
+		startx = x;
+		starty = y;
 		ax = 0.0f;
 		ay = 0.0f;
 		nx = 1;
 		ny = 1;
-		isSitting = false;
-		ani_id = 0;
+		
+		currentState = new CSimonIdle();
 	}
+
 	void SetDirectionX(int direction) { nx = direction; }
     int GetDirectionX() { return nx; }
 	void SetDirectionY(int direction) { ny = direction; }
 	int GetDirectionY() { return ny; }
-	void Update(DWORD dt);
-	void Render();
-	void SetState(int state);
-	int GetState();
-	int GetVx() { return vx; };
 
-	void SimonIdle();
-	void SimonWalk();
-	void SimonAttack();
-	void SimonSit();
-	void SimonWalkUp();
+	void Update(DWORD dt);
+	void OnKeyDown(int keyCode);
+	void OnKeyUp(int keyCode);
+	void Render();
+
+	CSimonState* GetState();
+	void SetState(CSimonState* state);
 
 };

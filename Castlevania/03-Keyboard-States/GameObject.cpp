@@ -15,4 +15,5 @@ CGameObject::CGameObject()
 }
 CGameObject::~CGameObject()
 {
+
 }

@@ -75,5 +75,5 @@ void CPANTHER::SetState(int state)
         break;
     }
     }
-    CGameObject::SetState(state);
+    //CGameObject::SetState(state);
 }

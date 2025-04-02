@@ -280,12 +280,17 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 		sprite.matWorld = matScaling * matTranslation;
 
 		spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
-		DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
+		//DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
 	}
 
 int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
+}
+
+int CGame::IsKeyUp(int KeyCode)
+{
+	return (keyStates[KeyCode] & 0x80) == 0;
 }
 
 void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)

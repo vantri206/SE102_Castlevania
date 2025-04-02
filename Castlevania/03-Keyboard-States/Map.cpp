@@ -29,7 +29,6 @@ void CMap::LoadMap()
 {
 	ifstream f;
 	f.open(mapFile);
-	DebugOut(L"[INFO] Start loading game from : %s \n", mapFile);
 
 	if (!f.is_open())
 	{
@@ -41,7 +40,7 @@ void CMap::LoadMap()
 	string loine;
 	vector<string> tokens;
 
-	//doc width, height
+	//width, height
 
 	f.getline(str, MAX_TXT_LINE);
 	string line(str);
@@ -55,6 +54,8 @@ void CMap::LoadMap()
 
 	tilesetRows = CTextures::GetInstance()->Get(this->mapId)->getHeight() / TILE_HEIGHT;
 	tilesetColumns = CTextures::GetInstance()->Get(this->mapId)->getWidth() / TILE_WIDTH;
+
+	//tile map
 
 	for (int i = 0; i < tileRows; i++)
 	{

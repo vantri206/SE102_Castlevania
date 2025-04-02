@@ -22,6 +22,7 @@ protected:
     int ny;
 
     int state;
+    int ani_id;
 
     CAnimationSet animations;
     LPANIMATION_SET animation_set;
@@ -36,8 +37,11 @@ public:
     void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
     void SetSpeed(float vx, float vy) { this->vx = vx; this->vy = vy; }
 
+    void SetAniId(int ani_id) { this->ani_id = ani_id; }
+    int GetAniId() { return this->ani_id; }
+
+    int GetState() { return state; }
     void SetState(int state) { this->state = state; }
-    int GetState() { return this->state; }
 
     CGameObject();
     CGameObject(float x, float y) : CGameObject() { this->x = x; this->y = y; }

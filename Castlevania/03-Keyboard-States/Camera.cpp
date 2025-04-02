@@ -46,7 +46,8 @@ bool CCamera::IsInCamera(CGameObject* obj) {
     return (objX + objWidth >= x && objX <= x + width &&
         objY + objHeight >= y && objY <= y + height);
 }
-void CCamera::Update(DWORD dt, CGameObject* target, float mapWidth, float mapHeight) {
+void CCamera::Update(DWORD dt, CGameObject* target, float mapWidth, float mapHeight)
+{
     CGame* game = CGame::GetInstance();
     float cx = target->GetX() - game->GetBackBufferWidth() / 2;
     float cy = target->GetY() - game->GetBackBufferHeight() / 2;

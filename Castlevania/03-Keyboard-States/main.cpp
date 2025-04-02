@@ -41,18 +41,14 @@ void LoadResources()
 
 	simon = new CSimon(SIMON_START_X, SIMON_START_Y);
 	LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID);
-
 	simon->SetAnimationSet(ani_set);
-	simon->SetState(SIMON_STATE_IDLE);
+
 	objects.push_back(simon);
 
 	map = new CMap(1, STAGE1_FILE_PATH);
 	CGame::GetInstance()->SetCurrentMap(1, map->GetWidth(), map->GetHeight());
 }
-/*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
-*/
+
 void Update(DWORD dt)
 {
 	for (int i = 0; i < (int)objects.size(); i++)
