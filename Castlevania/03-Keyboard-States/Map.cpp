@@ -37,7 +37,6 @@ void CMap::LoadMap()
 	}
 
 	char str[MAX_TXT_LINE];
-	string loine;
 	vector<string> tokens;
 
 	//width, height
@@ -108,7 +107,7 @@ void CMap::Render()
 			float x = j * tileWidth;
 			float y = (tileRows - i) * tileHeight;
 
-			DebugOut(L"i, j : %f, %f, %d \n", x, y, tile_index);
+			//DebugOut(L"i, j : %f, %f, %d \n", x, y, tile_index);
 			CTexture* tileTexture = CTextures::GetInstance()->Get(mapId * 1000 + tile_index);
 			CGame::GetInstance()->Draw(x, y, -1, tileTexture, 0, 0, tileWidth  - 1, tileHeight - 1);
 		}

@@ -11,6 +11,9 @@ using namespace std;
 class CGameObject
 {
 protected:
+
+    int type;
+
     float x;
     float y;
     float width;
@@ -34,7 +37,9 @@ public:
     float GetHeight() { return height; }
 
     void SetPosition(float x, float y) { this->x = x; this->y = y; }
+	void SetSize(float width, float height) { this->width = width; this->height = height; }
     void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
+	void GetSize(float& width, float& height) { width = this->width; height = this->height; }
     void SetSpeed(float vx, float vy) { this->vx = vx; this->vy = vy; }
 
     void SetAniId(int ani_id) { this->ani_id = ani_id; }
@@ -44,13 +49,13 @@ public:
     void SetState(int state) { this->state = state; }
 
     CGameObject();
-    CGameObject(float x, float y) : CGameObject() { this->x = x; this->y = y; }
 
     void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 
     virtual void Update(DWORD dt) = 0;
     virtual void Render() = 0;
 
+	virtual void GetBoundingBox(float& l, float& t, float& r, float& b) = 0;
     virtual ~CGameObject();
 };
 

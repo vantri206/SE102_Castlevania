@@ -19,8 +19,7 @@
 CSampleKeyHandler* keyHandler;
 
 CSimon* simon = NULL;
-CMap* map = NULL;
-vector<CGameObject*> objects;
+CScene* scene = NULL;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -43,21 +42,15 @@ void LoadResources()
 	LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID);
 	simon->SetAnimationSet(ani_set);
 
-	objects.push_back(simon);
-
-	map = new CMap(1, STAGE1_FILE_PATH);
-	CGame::GetInstance()->SetCurrentMap(1, map->GetWidth(), map->GetHeight());
+	scene = new CScene(SCENE1, 1, STAGE1_FILE_PATH, STAGE1_OBJECT_FILE_PATH);
+	CGame::GetInstance()->SetCurrentMap(1, 768, 192);
 }
 
 void Update(DWORD dt)
 {
-	for (int i = 0; i < (int)objects.size(); i++)
-	{
-		objects[i]->Update(dt);
-	}
-
+	scene->Update(dt);
+	simon->Update(dt);
 }
-
 
 void Render()
 {
@@ -75,12 +68,8 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	map->Render();
-
-	for (int i = 0; i < (int)objects.size(); i++)
-	{
-		objects[i]->Render();
-	}
+	scene->Render();
+	simon->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);

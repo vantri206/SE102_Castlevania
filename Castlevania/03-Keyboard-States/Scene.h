@@ -1,42 +1,31 @@
 #pragma once
-//
-//#include "KeyEventHandler.h"
-//
-///*
-//*  Abstract class for a game scene
-//*/
-//class CScene
-//{
-//protected:
-//	LPKEYEVENTHANDLER key_handler;
-//	int id;
-//	LPCWSTR sceneFilePath;
-//
-//public:
-//	CScene()
-//	{
-//		id = -1;
-//	}
-//	CScene(int _id, LPCWSTR filePath);
-//
-//	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
-//	virtual void Load() = 0;
-//	virtual void Update(DWORD dt) = 0;
-//	virtual void Render() = 0;
-//};
-//typedef CScene* LPSCENE;
-//
-//
-//class CSceneKeyHandler : public CKeyEventHandler
-//{
-//protected:
-//	CScene* scence;
-//
-//public:
-//	virtual void KeyState(BYTE* states) = 0;
-//	virtual void OnKeyDown(int KeyCode) = 0;
-//	virtual void OnKeyUp(int KeyCode) = 0;
-//	CSceneKeyHandler(LPSCENE s) :CKeyEventHandler() { scence = s; }
-//};
-//
-//typedef CSceneKeyHandler* LPSCENEKEYHANDLER;
+
+#include <Windows.h>
+#include "Map.h"
+class CMap;
+
+class CScene
+{
+protected:
+	int SceneId;
+
+	LPCWSTR objectFile;
+
+	CMap* SceneBG;
+
+public:
+	CScene(int Id, int mapId, LPCWSTR mapFile, LPCWSTR objectFile)
+	{
+		this->SceneId = Id;
+
+		this->objectFile = objectFile;
+
+		this->SceneBG = new CMap(mapId, mapFile);
+
+		this->LoadScene();
+	}
+
+	void LoadScene();
+	void Update(DWORD dt);
+	void Render();
+};

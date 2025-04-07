@@ -79,6 +79,18 @@
     <Filter Include="Source Files\Map">
       <UniqueIdentifier>{48bc5975-0b26-422f-80b0-a129c794fddb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\QuadTree">
+      <UniqueIdentifier>{6fedbc57-d413-4df3-b069-34819a774287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QuadTree">
+      <UniqueIdentifier>{c2b08799-d73d-40c3-97d1-0d6ab843fabd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{42c6d7cd-ffc8-44b0-a5c9-8ab99b287973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{1678154f-835d-4b4c-a266-dba25203a659}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -141,6 +153,24 @@
     <ClCompile Include="SimonWalking.cpp">
       <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="QNode.cpp">
+      <Filter>Source Files\QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Source Files\QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="CTreeObject.cpp">
+      <Filter>Source Files\QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Torch.cpp">
+      <Filter>Source Files\GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Source Files\GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -160,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Simon.h">
       <Filter>Header Files\GameObjects\Characters</Filter>
@@ -217,6 +244,27 @@
     </ClInclude>
     <ClInclude Include="SimonWalking.h">
       <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="QNode.h">
+      <Filter>Header Files\QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Header Files\QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CTreeObject.h">
+      <Filter>Header Files\QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Torch.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

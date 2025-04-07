@@ -32,7 +32,7 @@ protected:
 	float startx, starty;
 	int nx, ny;
 public:
-	CGhoul(float x, float y) : CGameObject(x, y)
+	CGhoul(float x, float y)
 	{
 		maxVx = GHOUL_WALKING_SPEED;
 		maxVy = GHOUL_WALKING_SPEED;

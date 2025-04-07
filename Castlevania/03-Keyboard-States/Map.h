@@ -6,7 +6,6 @@
 #include "Texture.h"
 #include "Textures.h"
 
-
 using namespace std;
 
 class CMap

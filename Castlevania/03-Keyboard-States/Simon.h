@@ -45,16 +45,16 @@
 class CSimon : public CGameObject
 {
 protected:
+
 	float ax, ay;
-	float startx, starty;
 
 	CSimonState* currentState;
 
 public:
-	CSimon(float x, float y) : CGameObject(x, y)
+	CSimon(float x, float y)
 	{
-		startx = x;
-		starty = y;
+		this->x = x;
+		this->y = y;
 		ax = 0.0f;
 		ay = 0.0f;
 		nx = 1;
@@ -75,5 +75,7 @@ public:
 
 	CSimonState* GetState();
 	void SetState(CSimonState* state);
+
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
 
 };

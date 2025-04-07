@@ -56,4 +56,10 @@ void CSimon::Render()
 	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
 }
 
-
+void CSimon::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x;
+	t = y;
+	r = x + SIMON_WIDTH;
+	b = y + SIMON_HEIGHT;
+}

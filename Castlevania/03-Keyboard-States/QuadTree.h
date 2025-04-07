@@ -3,7 +3,7 @@
 #include "QNode.h"
 
 #define MAX_DEPTH 5
-#define MIN_NODE_SIZE 256 // Camera size ho?c t??ng ???ng
+#define MIN_NODE_SIZE 256 
 
 class QuadTree
 {

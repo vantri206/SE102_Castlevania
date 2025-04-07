@@ -3,7 +3,7 @@
 
 
 #define SIMON_START_X 50
-#define SIMON_START_Y 50
+#define SIMON_START_Y 150
 
 #define MAX_TXT_LINE 1024
 
@@ -19,6 +19,15 @@
 #define SCREEN_WIDTH 360
 #define SCREEN_HEIGHT 270
 
+//Object type 
+
+#define OBJECT_TYPE_SIMON 0
+#define OBJECT_TYPE_ENEMIES 1
+#define OBJECT_TYPE_WEAPON 2
+#define OBJECT_TYPE_ITEM 3
+#define OBJECT_TYPE_BRICK 4
+#define OBJECT_TYPE_OTHERS 5
+
 // Texture 
 
 #define ID_TEX_SIMON 0
@@ -28,7 +37,16 @@
 // Animation Sets 
 
 #define SIMON_ANI_SET_ID 0
-#define WHIP_ANI_SET_ID 10
+#define WHIP_ANI_SET_ID 1
+#define TORCH_ANI_SET_ID 2
+
+// Id objects
+
+#define SIMON_OBJECTS 0
+#define WHIP_OBJECTS 1
+#define TORCH_OBJECTS 2
+#define BRICK_OBJECTS 3
+
 
 // Scene define
 #define SCENE1 1
@@ -37,4 +55,4 @@
 // Map resource
 
 #define STAGE1_FILE_PATH L"./resource/Map/Stage1.txt"
-
+#define STAGE1_OBJECT_FILE_PATH L"./resource/Map/Stage1Objects.txt"

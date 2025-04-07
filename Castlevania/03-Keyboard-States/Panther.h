@@ -32,7 +32,7 @@ protected:
 	float startx, starty;
 	int nx, ny;
 public:
-	CPANTHER(float x, float y) : CGameObject(x, y)
+	CPANTHER(float x, float y)
 	{
 		maxVx = PANTHER_WALKING_SPEED;
 		vy = PANTHER_WALKING_SPEED;
