@@ -41,7 +41,7 @@ public:
     void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void GetSize(float& width, float& height) { width = this->width; height = this->height; }
     void SetSpeed(float vx, float vy) { this->vx = vx; this->vy = vy; }
-
+	void SetVy(float vy) { this->vy = vy; }
     void SetAniId(int ani_id) { this->ani_id = ani_id; }
     int GetAniId() { return this->ani_id; }
 

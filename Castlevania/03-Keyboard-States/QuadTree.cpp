@@ -1,8 +1,8 @@
-#include "QuadTree.h"
+﻿#include "QuadTree.h"
 
 QuadTree::QuadTree(int mapWidth, int mapHeight, std::vector<LPGAMEOBJECT>& gameObjects)
 {
-    // T�m bounding square
+    // Tìm bounding square
     int size = max(mapWidth, mapHeight);
     int bound = 1;
     while (bound < size) bound *= 2;
@@ -84,8 +84,35 @@ std::vector<LPGAMEOBJECT> QuadTree::GetObjectsInView(RECT cam)
     Retrieve(root, cam, result);
     return result;
 }
+void QuadTree::PrintNode(QNode* node, int level)
+{
+    if (!node) return;
+
+    // Tạo indent theo cấp độ
+    std::string indent(level * 2, ' ');
+
+    // In thông tin node
+    DebugOut(L"%sNode: (%d,%d)-(%d,%d), %d objects\n",
+        ToLPCWSTR(indent),
+        node->x0, node->y0, node->x1, node->y1,
+        (int)node->objects.size());
+
+    // Đệ quy các node con
+    PrintNode(node->lt, level + 1);
+    PrintNode(node->rt, level + 1);
+    PrintNode(node->lb, level + 1);
+    PrintNode(node->rb, level + 1);
+}
+
+void QuadTree::PrintTree()
+{
+    DebugOut(L"===== QuadTree Structure =====\n");
+    PrintNode(root, 0);
+    DebugOut(L"==============================\n");
+}
+
 /*
-C�ch d�ng trong PlayScene.cpp
+Cách dùng trong PlayScene.cpp
 #include "QuadTree.h"
 
 QuadTree* quadtree;
@@ -105,4 +132,12 @@ void CPlayScene::Update(DWORD dt)
         obj->Update(dt, &activeObjects);
 }
 
+*/
+/*
+Trong PlayScene::Load() sau khi khởi tạo cây:
+
+quadtree = new QuadTree(mapWidth, mapHeight, allObjects);
+
+// Debug: In cây ra màn hình console hoặc file log
+quadtree->PrintTree();
 */

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <Windows.h>
 class CSimon;
 
 class CSimonState
