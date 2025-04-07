@@ -6,10 +6,12 @@
 #include "GameDefine.h"
 #include "Brick.h"
 #include "Torch.h"
-
+#include "QuadTree.h"
 #include <fstream>
-
+#include "Camera.h"
+QuadTree* quadtree = NULL;
 vector<CGameObject*> objects;
+
 void CScene::LoadScene()
 {
 	ifstream f;
@@ -55,14 +57,21 @@ void CScene::LoadScene()
 			DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectId, x, y);
 		}
 	}
+	f.close();
+	int mapWidth = SceneBG->GetWidth();
+	int mapHeight = SceneBG->GetHeight();
+	quadtree = new QuadTree(mapWidth, mapHeight, objects);
+	DebugOut(L"[INFO] Load scene %d objects\n", (int)objects.size());
+	quadtree->PrintTree();
 }
 
 void CScene::Update(DWORD dt)
 {
-	for (int i = 0; i < (int)objects.size(); i++)
-	{
-		objects[i]->Update(dt);
-	}
+	RECT cam = CCamera::GetInstance()->GetCamRect();
+	auto activeObjects = quadtree->GetObjectsInView(cam);
+
+	for (auto obj : activeObjects)
+		obj->Update(dt);
 }
 
 void CScene::Render()

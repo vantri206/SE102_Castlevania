@@ -40,14 +40,12 @@ void CSimon::OnKeyUp(int keyCode)
 
 void CSimon::SetState(CSimonState* state) 
 {
-	if(currentState != NULL) 
-		delete currentState;
-	currentState = state;
+	currentState.reset(state);
 }
 
 CSimonState* CSimon::GetState()
 {
-	return this->currentState;
+	return currentState.get();
 }
 
 void CSimon::Render()

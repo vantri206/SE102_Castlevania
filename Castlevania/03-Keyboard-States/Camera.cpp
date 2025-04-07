@@ -53,3 +53,12 @@ void CCamera::Update(DWORD dt, CGameObject* target, float mapWidth, float mapHei
     float cy = target->GetY() - game->GetBackBufferHeight() / 2;
     SetPosition(cx, 0, mapWidth, mapHeight);
 }
+RECT CCamera::GetCamRect()
+{
+	RECT camRect;
+	camRect.left = (int)x;
+	camRect.top = (int)y;
+	camRect.right = (int)(x + width);
+	camRect.bottom = (int)(y + height);
+	return camRect;
+}

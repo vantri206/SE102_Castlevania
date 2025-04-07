@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include <memory>
 #include "Animation.h"
 #include "Animations.h"
 #include "SimonState.h"
@@ -52,7 +52,7 @@ protected:
 
 	float ax, ay;
 
-	CSimonState* currentState;
+	unique_ptr<CSimonState> currentState;
 
 public:
 	CSimon(float x, float y)
@@ -64,7 +64,7 @@ public:
 		nx = 1;
 		ny = 1;
 		
-		currentState = new CSimonIdle();
+		currentState = make_unique<CSimonIdle>();
 	}
 
 	void SetDirectionX(int direction) { nx = direction; }

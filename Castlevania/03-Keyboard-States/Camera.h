@@ -21,5 +21,6 @@ public:
     float GetWidth();
     float GetHeight();
     bool IsInCamera(CGameObject* obj);
+    RECT GetCamRect();
     void Update(DWORD dt, CGameObject* target, float mapWidth, float mapHeight);
 };
