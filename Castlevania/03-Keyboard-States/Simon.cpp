@@ -14,7 +14,6 @@ void CSimon::Update(DWORD dt)
 	
 	x += vx * dt;
 	y += vy * dt;
-
 	if (x <= 0 || x >= mapwidth - SIMON_WIDTH)
 	{
 		if (x <= 0)

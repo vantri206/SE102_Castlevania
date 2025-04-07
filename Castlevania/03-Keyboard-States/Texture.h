@@ -38,6 +38,41 @@ public:
 	int getWidth() { return this->_width; }
 	int getHeight() { return this->_height; }
 
+    CTexture* Cut(int left, int top, int right, int bottom, ID3D10Device* device)
+    {
+        D3D10_TEXTURE2D_DESC desc;
+        _tex->GetDesc(&desc);
+
+        D3D10_TEXTURE2D_DESC subDesc = desc;
+        subDesc.Width = right - left;
+        subDesc.Height = bottom - top;
+        subDesc.MipLevels = 1;
+        subDesc.ArraySize = 1;
+        subDesc.Format = desc.Format;
+        subDesc.SampleDesc.Count = 1;
+        subDesc.SampleDesc.Quality = 0;
+        subDesc.Usage = D3D10_USAGE_DEFAULT;
+        subDesc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+
+        ID3D10Texture2D* subTexture = nullptr;
+        HRESULT hr = device->CreateTexture2D(&subDesc, nullptr, &subTexture);
+
+        D3D10_BOX sourceRegion;
+        sourceRegion.left = left;
+        sourceRegion.top = top;
+        sourceRegion.front = 0;
+        sourceRegion.right = right;
+        sourceRegion.bottom = bottom;
+        sourceRegion.back = 1;
+
+        device->CopySubresourceRegion(subTexture, 0, 0, 0, 0, _tex, 0, &sourceRegion);
+
+        ID3D10ShaderResourceView* subRsview = nullptr;
+        hr = device->CreateShaderResourceView(subTexture, nullptr, &subRsview);
+
+        return new CTexture(subTexture, subRsview);
+    }
+
 	~CTexture()
 	{
 		if (_rsview != NULL) this->_rsview->Release();

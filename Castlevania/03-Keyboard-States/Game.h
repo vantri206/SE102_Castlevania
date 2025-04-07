@@ -54,6 +54,10 @@ public:
 
 	void Init(HWND hWnd,HINSTANCE hInstance);
 
+	void Draw(float x, float y, LPTEXTURE tex, int l, int t, int r, int b)
+	{
+		this->Draw(x, y, 1, tex, l, t, r, b, 1.0f);
+	}
 	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b)
 	{
 		this->Draw(x, y, nx, tex, l, t, r, b, 1.0f);

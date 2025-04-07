@@ -3,14 +3,17 @@
 #include <vector>
 #include <string>
 
-#include "Tile.h"
+#include "Texture.h"
+#include "Textures.h"
+
 
 using namespace std;
 
 class CMap
 {
 protected:
-	vector<CTile*> map;
+
+	vector<vector<int>> mapBackground;
 
 	int mapId;
 
@@ -19,11 +22,16 @@ protected:
 	int mapWidth;
 	int mapHeight;
 
+	int tileWidth;
+	int tileHeight;
+
 	int tileRows;
 	int tileColumns;
 
 	int tilesetRows;
 	int tilesetColumns;
+
+	int tileCount;
 
 public:
 	CMap(int mapId, LPCWSTR mapFile);
