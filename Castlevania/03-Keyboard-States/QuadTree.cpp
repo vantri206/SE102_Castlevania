@@ -1,4 +1,6 @@
 ﻿#include "QuadTree.h"
+#include "debug.h"
+#include "Utils.h"
 
 QuadTree::QuadTree(int mapWidth, int mapHeight, std::vector<LPGAMEOBJECT>& gameObjects)
 {
