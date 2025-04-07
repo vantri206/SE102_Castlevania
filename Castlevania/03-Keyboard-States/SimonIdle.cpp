@@ -16,7 +16,6 @@ void CSimonIdle::KeyUpHandle(CSimon* simon, int keyCode)
 
 void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
 {
-<<<<<<< HEAD
 	DebugOut(L"Keycode: %d\n", keyCode);
     if (keyCode == DIK_RIGHT) {
         simon->SetDirectionX(1);
@@ -35,19 +34,6 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
     else if (keyCode == DIK_A) {
         simon->SetState(new CSimonAttack());
     }
-=======
-	//DebugOut(L"Keycode: %d\n", keyCode);
-	if (keyCode == DIK_RIGHT)
-	{
-		simon->SetDirectionX(1);
-		simon->SetState(new CSimonWalking());
-	}
-	else if (keyCode == DIK_LEFT)
-	{
-		simon->SetDirectionX(-1);
-		simon->SetState(new CSimonWalking());
-	}
->>>>>>> af7611cda69662e00bb48f34d2b8076d279e708d
 } 
 
 void CSimonIdle::Update(CSimon* simon)
