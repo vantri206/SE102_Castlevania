@@ -7,14 +7,14 @@
 
 void CSimonIdle::KeyUpHandle(CSimon* simon, int keyCode)
 {
-	DebugOut(L"Keycode: %d\n", keyCode);
+	//DebugOut(L"Keycode: %d\n", keyCode);
 
 }
 
 
 void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
 {
-	DebugOut(L"Keycode: %d\n", keyCode);
+	//DebugOut(L"Keycode: %d\n", keyCode);
 	if (keyCode == DIK_RIGHT)
 	{
 		simon->SetDirectionX(1);

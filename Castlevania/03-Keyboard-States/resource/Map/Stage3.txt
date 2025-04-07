@@ -2,7 +2,7 @@
 16 16 # Tile size
 32 12 # Matrix size
 33 # Unique tiles
-6 x 6 # Unique tiles grid
+6 6 # Unique tiles grid
 0 1 1 1 1 1 2 3 1 1 1 1 1 1 1 1 4 5 1 1 4 5 1 1 1 1 1 1 1 1 6 6
 7 1 1 8 1 1 2 5 1 1 9 1 9 1 9 1 2 5 1 8 2 3 1 1 1 1 9 1 9 1 1 7
 7 1 10 11 1 1 4 5 1 1 1 1 1 1 1 1 4 5 10 11 2 3 1 1 1 1 1 1 1 1 1 7

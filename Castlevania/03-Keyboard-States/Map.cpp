@@ -5,22 +5,22 @@
 #include "Sprites.h"
 #include "debug.h"
 #include "Utils.h"
+#include "GameDefine.h"
 
 #include <fstream>
 #include "Camera.h"
 
-#define TILE_HEIGHT 16
-#define TILE_WIDTH 16
+#define MAP_SIZE 0
+#define TILE_SIZE 1
+#define MATRIX_SIZE 2
+#define TILES_COUNT 3
+#define TILE_GRID_SIZE 4
 
-#define MAX_TXT_LINE 1024
 
 CMap::CMap(int mapId, LPCWSTR mapFile)
 {
 	this->mapId = mapId;
 	this->mapFile = mapFile;
-
-	mapWidth = 0;
-	mapHeight = 0;
 
 	LoadMap();
 }
@@ -42,57 +42,76 @@ void CMap::LoadMap()
 
 	//width, height
 
-	f.getline(str, MAX_TXT_LINE);
-	string line(str);
-	tokens = split(line);
+	for (int i = 0; i < 5;i++)
+	{
+		f.getline(str, MAX_TXT_LINE);
+		string line(str);
+		tokens = split(line);
+		switch (i)
+		{
+		case MAP_SIZE:
+			mapWidth = atoi(tokens[0].c_str());
+			mapHeight = atoi(tokens[1].c_str());
+			break;
+		case TILE_SIZE:
+			tileWidth = atoi(tokens[0].c_str());
+			tileHeight = atoi(tokens[1].c_str());
+			break;
+		case MATRIX_SIZE:
+			tileColumns = atoi(tokens[0].c_str());
+			tileRows = atoi(tokens[1].c_str());
+			break;
+		case TILES_COUNT:
+			tileCount = atoi(tokens[0].c_str());
+			break;
+		case TILE_GRID_SIZE:
+			tilesetColumns = atoi(tokens[0].c_str());
+			tilesetRows = atoi(tokens[1].c_str());
+			break;
+		}
+	}
 
-	mapWidth = atoi(tokens[0].c_str());
-	mapHeight = atoi(tokens[1].c_str());
-
-	tileRows = mapHeight / TILE_HEIGHT;
-	tileColumns = mapWidth / TILE_WIDTH;
-
-	tilesetRows = CTextures::GetInstance()->Get(this->mapId)->getHeight() / TILE_HEIGHT;
-	tilesetColumns = CTextures::GetInstance()->Get(this->mapId)->getWidth() / TILE_WIDTH;
-
-	//tile map
-
+	CTextures::GetInstance()->AddTilesMap(mapId, tileWidth, tileHeight, tilesetColumns, tileCount);
 	for (int i = 0; i < tileRows; i++)
 	{
 		f.getline(str, MAX_TXT_LINE);
 		string line(str);
 		tokens = split(line);
 
+		vector<int> row;
 		for (int j = 0; j < tileColumns; j++)
 		{
 			int tile_index = atoi(tokens[j].c_str());
-
-			float x = j * TILE_WIDTH;
-			float y = (tileRows - i - 1) * TILE_HEIGHT;
-
-			int tileX = (tile_index % tilesetColumns) * TILE_WIDTH;
-			int tileY = (tile_index / tilesetColumns) * TILE_HEIGHT;
-
-			int left = tileX;
-			int top = tileY;
-			int right = tileX + TILE_WIDTH - 1;
-			int bottom = tileY + TILE_HEIGHT - 1;
-
-			CTile* tile = new CTile(x, y, left, top, right, bottom);
-			map.push_back(tile);
+			row.push_back(tile_index);
 		}
+
+		mapBackground.push_back(row);
 	}
 }
 
 void CMap::Render()
 {
-	for (int i = 0; i < map.size(); i++) 
-	{
-		if (CCamera::GetInstance()->IsInCamera(map[i])) 
+	int cam_left = CCamera::GetInstance()->GetX();
+	int cam_bottom = CCamera::GetInstance()->GetY();
+	int cam_right = cam_left + CCamera::GetInstance()->GetWidth();
+	int cam_top = cam_bottom + CCamera::GetInstance()->GetHeight();
+
+	int columnleft = max(0, cam_left / tileWidth);
+	int columnright = min(tileColumns, cam_right / tileWidth + 1);
+	int rowtop = min(tileRows, cam_top / tileHeight);
+	int rowbottom = max(0, cam_bottom / tileHeight + 1);
+
+	for(int i = rowbottom; i < rowtop; i++)
+		for (int j = columnleft; j < columnright; j++)
 		{
-			map[i]->Render();
+			int tile_index = mapBackground[i][j];
+			float x = j * tileWidth;
+			float y = (tileRows - i) * tileHeight;
+
+			DebugOut(L"i, j : %f, %f, %d \n", x, y, tile_index);
+			CTexture* tileTexture = CTextures::GetInstance()->Get(mapId * 1000 + tile_index);
+			CGame::GetInstance()->Draw(x, y, -1, tileTexture, 0, 0, tileWidth  - 1, tileHeight - 1);
 		}
-	}
 }
 
 int CMap::GetWidth()
@@ -107,5 +126,7 @@ int CMap::GetHeight()
 
 CMap::~CMap()
 {
-	map.clear();
+	for (int i = 0; i < tileRows; i++)
+		mapBackground[i].clear();
+	mapBackground.clear();
 }

@@ -8,7 +8,11 @@
 30 resource/Whip.png
 #----MAP----
 # id file_path
-1 resource/Map/Stage1.bmp
+1 resource/Map/Stage1_tiles.png
+2 resource/Map/Stage2_tiles.png
+3 resource/Map/Stage3_tiles.png
+4 resource/Map/Stage4_tiles.png
+5 resource/Map/Stage5_tiles.png
 
 # id left top right bottom texture_id
 [SPRITES]

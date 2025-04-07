@@ -147,6 +147,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	StateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
 	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
 
+	CTextures::GetInstance()->SetDevice(pD3DDevice);
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
 
 	return;

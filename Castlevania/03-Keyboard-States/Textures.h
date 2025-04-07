@@ -16,7 +16,7 @@ public:
     CTextures() {}
     static void SetDevice(ID3D10Device* device) { pD3DDevice = device; }
     void Add(int id, LPCWSTR filePath);
-    int AddTileset(LPCWSTR filePath);
+	void AddTilesMap(int mapId, int tileWidth, int tileHeight, int tilesetColumns, int tileCount);
     LPTEXTURE Get(unsigned int id);
     static CTextures* GetInstance();
 };
