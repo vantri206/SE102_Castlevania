@@ -43,7 +43,6 @@ void LoadResources()
 	simon->SetAnimationSet(ani_set);
 
 	scene = new CScene(SCENE1, 1, STAGE1_FILE_PATH, STAGE1_OBJECT_FILE_PATH);
-	CGame::GetInstance()->SetCurrentMap(1, 768, 192);
 }
 
 void Update(DWORD dt)
@@ -180,6 +179,7 @@ int WINAPI WinMain(
 
 	LoadResources();
 	
+	CGame::GetInstance()->SetCurrentMap(1, 768, 192);
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

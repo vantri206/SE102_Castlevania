@@ -54,14 +54,14 @@ void CScene::LoadScene()
 			LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(animationSetId);
 			obj->SetAnimationSet(ani_set);
 			objects.push_back(obj);
-			DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectId, x, y);
+			//DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectId, x, y);
 		}
 	}
 	f.close();
 	int mapWidth = SceneBG->GetWidth();
 	int mapHeight = SceneBG->GetHeight();
 	quadtree = new QuadTree(mapWidth, mapHeight, objects);
-	DebugOut(L"[INFO] Load scene %d objects\n", (int)objects.size());
+	//DebugOut(L"[INFO] Load scene %d objects\n");
 	quadtree->PrintTree();
 }
 

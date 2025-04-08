@@ -1,4 +1,4 @@
-#object_id x y width height animation_set_id
+#object_type x y width height animation_set_id
 3 384 24 768 16 -1
 2 95 55 16 30 3
 2 223 55 16 30 3

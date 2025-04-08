@@ -2,8 +2,8 @@
 
 
 
-#define SIMON_START_X 50
-#define SIMON_START_Y 50
+#define SIMON_START_X 0
+#define SIMON_START_Y 0
 
 #define MAX_TXT_LINE 1024
 

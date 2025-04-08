@@ -4,7 +4,7 @@
 
 QuadTree::QuadTree(int mapWidth, int mapHeight, std::vector<LPGAMEOBJECT>& gameObjects)
 {
-    // Tìm bounding square
+    
     int size = max(mapWidth, mapHeight);
     int bound = 1;
     while (bound < size) bound *= 2;
