@@ -8,6 +8,7 @@ QuadTree::QuadTree(int mapWidth, int mapHeight, std::vector<LPGAMEOBJECT>& gameO
     int size = max(mapWidth, mapHeight);
     int bound = 1;
     while (bound < size) bound *= 2;
+
     root = new QNode(0, 0, bound, bound);
 
     for (auto& obj : gameObjects)
@@ -17,6 +18,7 @@ QuadTree::QuadTree(int mapWidth, int mapHeight, std::vector<LPGAMEOBJECT>& gameO
 
     Subdivide(root, 1);
 }
+
 
 QuadTree::~QuadTree()
 {
@@ -56,9 +58,12 @@ void QuadTree::Clip(CTreeObject* obj, QNode* node)
 {
     if (obj->Intersects(node->x0, node->y0, node->x1, node->y1))
     {
+        DebugOut(L"[Clip] Object at (%f, %f) clipped to node (%d,%d)-(%d,%d)\n",
+            obj->x, obj->y, node->x0, node->y0, node->x1, node->y1);
         node->objects.push_back(obj);
     }
 }
+
 
 void QuadTree::Retrieve(QNode* node, RECT camRect, std::vector<LPGAMEOBJECT>& result)
 {

@@ -4,10 +4,11 @@
 class CTreeObject
 {
 public:
-    int x1, y1, x2, y2;         // bounding box (AABB)
-    LPGAMEOBJECT target;        // con trỏ đến object thật trong game
+    LPGAMEOBJECT target;
+    float x, y;
+    float width, height;
 
-    CTreeObject(LPGAMEOBJECT obj);
+    CTreeObject(LPGAMEOBJECT target);
 
-    bool Intersects(int left, int top, int right, int bottom);
+    bool Intersects(float x0, float y0, float x1, float y1);
 };

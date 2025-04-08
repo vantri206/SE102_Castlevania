@@ -1,19 +1,20 @@
-#include "CTreeObject.h"
+﻿#include "CTreeObject.h"
 
-CTreeObject::CTreeObject(LPGAMEOBJECT obj)
+CTreeObject::CTreeObject(LPGAMEOBJECT target)
 {
-    float l, t, r, b;
-    obj->GetBoundingBox(l, t, r, b);
-
-    x1 = (int)l;
-    y1 = (int)t;
-    x2 = (int)r;
-    y2 = (int)b;
-
-    target = obj;
+    this->target = target;
+    target->GetPosition(x, y);
+    target->GetSize(width, height);
 }
 
-bool CTreeObject::Intersects(int left, int top, int right, int bottom)
+bool CTreeObject::Intersects(float x0, float y0, float x1, float y1)
 {
-    return !(x2 < left || x1 > right || y2 < top || y1 > bottom);
+    // Bounding box của object
+    float left = x - width / 2;
+    float right = x + width / 2;
+    float bottom = y - height / 2;
+    float top = y + height / 2;
+
+    // Kiểm tra giao nhau giữa bounding box object và node
+    return !(right < x0 || left > x1 || top < y0 || bottom > y1);
 }

@@ -17,8 +17,9 @@ states = [
 for state in states:
     dot.node(state, state, shape="ellipse", style="filled", fillcolor="lightblue")
 
-# Thêm các cạnh với điều kiện chuyển đổi (đã chỉnh sửa)
+# Thêm các cạnh với điều kiện chuyển đổi (đã chỉnh sửa để tất cả đi qua IDLE)
 transitions = [
+    # Từ IDLE có thể chuyển sang các trạng thái khác
     ("IDLE", "WALKING", "Press left/right"),
     ("IDLE", "JUMPING", "Press X"),
     ("IDLE", "CROUCHING", "Press down"),
@@ -27,40 +28,35 @@ transitions = [
     ("IDLE", "CLIMBING STAIRS", "Near stairs + press up/down"),
     ("IDLE", "USING SUB-WEAPON", "Press C"),
 
+    # Từ WALKING chỉ có thể quay về IDLE hoặc bị tổn thương
     ("WALKING", "IDLE", "Release left/right"),
-    ("WALKING", "JUMPING", "Press X"),
-    ("WALKING", "ATTACKING", "Press Z"),
     ("WALKING", "TAKING DAMAGE", "Get hit"),
-    ("WALKING", "CLIMBING STAIRS", "Near stairs + press up/down"),
-    ("WALKING", "USING SUB-WEAPON", "Press C"),
 
+    # Từ JUMPING chỉ có thể quay về IDLE hoặc bị tổn thương
     ("JUMPING", "IDLE", "Land"),
-    ("JUMPING", "WALKING", "Land + hold left/right"),
-    ("JUMPING", "ATTACKING", "Press Z"),
     ("JUMPING", "TAKING DAMAGE", "Get hit"),
 
+    # Từ ATTACKING chỉ có thể quay về IDLE hoặc bị tổn thương
     ("ATTACKING", "IDLE", "Attack ends"),
-    ("ATTACKING", "WALKING", "Attack ends + hold left/right"),
-    ("ATTACKING", "CROUCHING", "Attack ends + press down"),
     ("ATTACKING", "TAKING DAMAGE", "Get hit"),
-    # Không còn "ATTACKING" -> "USING SUB-WEAPON" trực tiếp
 
+    # Từ CROUCHING chỉ có thể quay về IDLE hoặc bị tổn thương
     ("CROUCHING", "IDLE", "Release down"),
-    ("CROUCHING", "ATTACKING", "Press Z"),
     ("CROUCHING", "TAKING DAMAGE", "Get hit"),
-    ("CROUCHING", "USING SUB-WEAPON", "Press C"),
 
+    # Từ CLIMBING STAIRS chỉ có thể quay về IDLE hoặc bị tổn thương
     ("CLIMBING STAIRS", "IDLE", "Reach stair end"),
-    ("CLIMBING STAIRS", "ATTACKING", "Press Z"),
     ("CLIMBING STAIRS", "TAKING DAMAGE", "Get hit"),
 
+    # Từ USING SUB-WEAPON chỉ có thể quay về IDLE hoặc bị tổn thương
     ("USING SUB-WEAPON", "IDLE", "Action ends"),
-    ("USING SUB-WEAPON", "WALKING", "Action ends + hold left/right"),
     ("USING SUB-WEAPON", "TAKING DAMAGE", "Get hit"),
 
+    # Từ TAKING DAMAGE có thể quay về IDLE hoặc dẫn đến DYING
     ("TAKING DAMAGE", "IDLE", "Animation ends"),
     ("TAKING DAMAGE", "DYING", "Health depleted"),
 
+    # Từ DYING có thể dẫn đến GAME OVER hoặc quay về IDLE (nếu còn mạng)
     ("DYING", "GAME OVER", "No lives left"),
     ("DYING", "IDLE", "Lives remain (checkpoint)"),
 ]
