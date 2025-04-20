@@ -2,7 +2,10 @@
 
 CTreeObject::CTreeObject(LPGAMEOBJECT target)
 {
+    // Gán đối tượng gốc
     this->target = target;
+
+    // Lấy vị trí và kích thước của đối tượng
     target->GetPosition(x, y);
     target->GetSize(width, height);
 }
