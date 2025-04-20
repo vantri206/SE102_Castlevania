@@ -5,7 +5,7 @@
 #include "Game.h"
 #include "Simon.h"
 
-extern CSimon* simon;
+extern CSimon* player;
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
@@ -27,11 +27,11 @@ void CSampleKeyHandler::KeyState(BYTE* states)
     {
         if (game->IsKeyDown(i))
         {
-            simon->OnKeyDown(i);
+            player->OnKeyDown(i);
         }
         if (game->IsKeyUp(i))
         {
-            simon->OnKeyUp(i);
+            player->OnKeyUp(i);
         }
     }
 }

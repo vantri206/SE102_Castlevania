@@ -17,7 +17,7 @@ CTextures* CTextures::GetInstance()
 
 void CTextures::Add(int id, LPCWSTR filePath)
 {
-	DebugOut(L"\n[INFO] Loading texture from file: %s \n", filePath);
+	//DebugOut(L"\n[INFO] Loading texture from file: %s \n", filePath);
     textures[id] = CGame::GetInstance()->LoadTexture(filePath);
 }
 

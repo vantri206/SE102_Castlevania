@@ -24,9 +24,9 @@
 
 
 #define LOAD_RESOURCE_TEXTURES 1
-#define LOAD_RESOURCE_ANIMATIONS 2
-#define LOAD_RESOURCE_ANIMATION_SETS 3
-#define LOAD_RESOURCE_SPRITES 4
+#define LOAD_RESOURCE_SPRITES 2
+#define LOAD_RESOURCE_ANIMATIONS 3
+#define LOAD_RESOURCE_ANIMATION_SETS 4
 
 CGame* CGame::__instance = NULL;
 /*
@@ -162,35 +162,10 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 	ID3D10Resource* pD3D10Resource = NULL;
 	ID3D10Texture2D* tex = NULL;
 
-	// Retrieve image information first 
-	D3DX10_IMAGE_INFO imageInfo;
-	HRESULT hr = D3DX10GetImageInfoFromFile(texturePath, NULL, &imageInfo, NULL);
-	if (FAILED(hr))
-	{
-		DebugOut((wchar_t*)L"[ERROR] D3DX10GetImageInfoFromFile failed for  file: %s with error: %d\n", texturePath, hr);
-		return NULL;
-	}
-
-	D3DX10_IMAGE_LOAD_INFO info;
-	ZeroMemory(&info, sizeof(D3DX10_IMAGE_LOAD_INFO));
-	info.Width = imageInfo.Width;
-	info.Height = imageInfo.Height;
-	info.Depth = imageInfo.Depth;
-	info.FirstMipLevel = 0;
-	info.MipLevels = 1;
-	info.Usage = D3D10_USAGE_DEFAULT;
-	info.BindFlags = D3DX10_DEFAULT;
-	info.CpuAccessFlags = D3DX10_DEFAULT;
-	info.MiscFlags = D3DX10_DEFAULT;
-	info.Format = imageInfo.Format;
-	info.Filter = D3DX10_FILTER_NONE;
-	info.MipFilter = D3DX10_DEFAULT;
-	info.pSrcInfo = &imageInfo;
-
 	// Loads the texture into a temporary ID3D10Resource object
-	hr = D3DX10CreateTextureFromFile(pD3DDevice,
+	HRESULT hr = D3DX10CreateTextureFromFile(pD3DDevice,
 		texturePath,
-		&info,
+		NULL, //&info,
 		NULL,
 		&pD3D10Resource,
 		NULL);
@@ -240,49 +215,49 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 	return new CTexture(tex, gSpriteTextureRV);
 }
 
-	void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size)
-	{
-		if (tex == NULL) return; 
+void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size)
+{
+	if (tex == NULL) return; 
 
-		int spriteWidth = right - left + 1;  
-		int spriteHeight = bottom - top + 1;  
+	int spriteWidth = right - left + 1;  
+	int spriteHeight = bottom - top + 1;  
 
-		D3DX10_SPRITE sprite;  
+	D3DX10_SPRITE sprite;  
 	
-		sprite.pTexture = tex->getShaderResourceView();
+	sprite.pTexture = tex->getShaderResourceView();
 
-		sprite.TexCoord.x = (float)left / tex->getWidth();
-		sprite.TexCoord.y = (float)top / tex->getHeight();
+	sprite.TexCoord.x = (float)left / tex->getWidth();
+	sprite.TexCoord.y = (float)top / tex->getHeight();
 
-		sprite.TexSize.x = (float)spriteWidth / tex->getWidth();
-		sprite.TexSize.y = (float)spriteHeight / tex->getHeight();
-
-
-		sprite.TextureIndex = 0;  
-		sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);  
-
-		if (nx > 0) {
-
-			sprite.TexCoord.x = (right / (float)tex->getWidth());  
-			sprite.TexSize.x = -sprite.TexSize.x;
-		}
-		float cx = (FLOAT)floor(CCamera::GetInstance()->GetX());
-		float cy = (FLOAT)floor(CCamera::GetInstance()->GetY());
+	sprite.TexSize.x = (float)spriteWidth / tex->getWidth();
+	sprite.TexSize.y = (float)spriteHeight / tex->getHeight();
 
 
-		D3DXMATRIX matTranslation;
-		D3DXMatrixTranslation(&matTranslation, x-cx, (y - cy), 0.1f);
-	
-	
-		D3DXMATRIX matScaling;
-		D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
+	sprite.TextureIndex = 0;  
+	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);  
 
+	if (nx > 0) {
 
-		sprite.matWorld = matScaling * matTranslation;
-
-		spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
-		//DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
+		sprite.TexCoord.x = (right / (float)tex->getWidth());  
+		sprite.TexSize.x = -sprite.TexSize.x;
 	}
+	float cx = (FLOAT)floor(CCamera::GetInstance()->GetX());
+	float cy = (FLOAT)floor(CCamera::GetInstance()->GetY());
+
+
+	D3DXMATRIX matTranslation;
+	D3DXMatrixTranslation(&matTranslation, x-cx, (y - cy), 0.1f);
+	
+	
+	D3DXMATRIX matScaling;
+	D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
+
+
+	sprite.matWorld = matScaling * matTranslation;
+
+	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
+	//DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
+}
 
 int CGame::IsKeyDown(int KeyCode)
 {
@@ -402,138 +377,147 @@ void CGame::ProcessKeyboard()
 	}
 }
 
-void _ParseSection_TEXTURES(string line)
+void _ParseSection_TEXTURES(LPCWSTR filepath)
 {
-	vector<string> tokens = split(line);
+	//DebugOut(L"[INFO] Load texture %d from file %s\n", 123, filepath);
+	ifstream f;
+	f.open(filepath);
+	char str[MAX_TXT_LINE];
+	while (f.getline(str, MAX_TXT_LINE))
+	{
+		string line(str);
+		//DebugOut(L"[INFO] Load texture %d from file %s\n", 123, line);
+		if (line[0] == '#') continue;
+		if (line.empty()) continue;
 
+		vector<string> tokens = split(line);
 
-	if (tokens.size() < 2) return;
+		if (tokens.size() < 2) return;
 
-	int texID = atoi(tokens[0].c_str());
-	wstring path = ToWSTR(tokens[1]);
+		int texID = atoi(tokens[0].c_str());
+		wstring path = ToWSTR(tokens[1]);
 
-	CTextures::GetInstance()->Add(texID, path.c_str());
+		CTextures::GetInstance()->Add(texID, path.c_str());
+
+	}
+	f.close();
 }
 
-void _ParseSection_SPRITES(string line)
+void _ParseSection_SPRITES(LPCWSTR filepath)
 {
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 6) return;
-
-	int ID = atoi(tokens[0].c_str());
-	int l = atoi(tokens[1].c_str());
-	int t = atoi(tokens[2].c_str());
-	int r = atoi(tokens[3].c_str());
-	int b = atoi(tokens[4].c_str());
-	int texID = atoi(tokens[5].c_str());
-
-
-	LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
-
-	if (tex == NULL)
+	ifstream f;
+	f.open(filepath);
+	char str[MAX_TXT_LINE];
+	while (f.getline(str, MAX_TXT_LINE))
 	{
-		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
-		return;
-	}
+		string line(str);
+		if (line[0] == '#') continue;
+		if (line.empty()) continue;
+		vector<string> tokens = split(line);
 
-	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+		if (tokens.size() < 6) return;
+
+		int ID = atoi(tokens[0].c_str());
+		int l = atoi(tokens[1].c_str());
+		int t = atoi(tokens[2].c_str());
+		int r = atoi(tokens[3].c_str());
+		int b = atoi(tokens[4].c_str());
+		int texID = atoi(tokens[5].c_str());
+
+
+		LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
+
+		if (tex == NULL)
+		{
+			//DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+			return;
+		}
+
+		//DebugOut(L"[ERROR] Texture ID: 123 + %d!\n", texID);
+		CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+	}
+	f.close();
 }
 
 
-void _ParseSection_ANIMATIONS(string line)
+void _ParseSection_ANIMATIONS(LPCWSTR filepath)
 {
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 3) return;
-
-	LPANIMATION ani = new CAnimation(0);
-
-	int ani_id = atoi(tokens[0].c_str());
-	for (int i = 1; i < tokens.size(); i += 2)
+	ifstream f;
+	f.open(filepath);
+	char str[MAX_TXT_LINE];
+	while (f.getline(str, MAX_TXT_LINE))
 	{
-		int sprite_id = atoi(tokens[i].c_str());
-		int frame_time = atoi(tokens[i + 1].c_str());
-		ani->Add(sprite_id, frame_time);
+		string line(str);
+		if (line[0] == '#') continue;
+		if (line.empty()) continue;
+		vector<string> tokens = split(line);
+
+		if (tokens.size() < 3) return;
+
+		LPANIMATION ani = new CAnimation(0);
+
+		int ani_id = atoi(tokens[0].c_str());
+		for (int i = 1; i < tokens.size(); i += 2)
+		{
+			int sprite_id = atoi(tokens[i].c_str());
+			int frame_time = atoi(tokens[i + 1].c_str());
+			ani->Add(sprite_id, frame_time);
+			//DebugOut(L"[ERROR] Texture ID %d found!\n", sprite_id);
+		}
+		CAnimations::GetInstance()->Add(ani_id, ani);
 	}
-	CAnimations::GetInstance()->Add(ani_id, ani);
+	f.close();
 }
 
-void _ParseSection_ANIMATION_SETS(string line)
+void _ParseSection_ANIMATION_SETS(LPCWSTR filepath)
 {
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-
-
-	int ani_set_id = atoi(tokens[0].c_str());
-
-	LPANIMATION_SET s = new CAnimationSet();
-
-	CAnimations* animations = CAnimations::GetInstance();
-
-	for (int i = 1; i < tokens.size(); i++)
+	ifstream f;
+	f.open(filepath);
+	char str[MAX_TXT_LINE];
+	while (f.getline(str, MAX_TXT_LINE))
 	{
-		int ani_id = atoi(tokens[i].c_str());
+		string line(str);
+		if (line[0] == '#') continue;
+		if (line.empty()) continue;
+		vector<string> tokens = split(line);
 
-		LPANIMATION ani = animations->Get(ani_id);
-		s->push_back(ani);
+		if (tokens.size() < 2) return;
+
+
+		int ani_set_id = atoi(tokens[0].c_str());
+
+		LPANIMATION_SET s = new CAnimationSet();
+
+		CAnimations* animations = CAnimations::GetInstance();
+
+		for (int i = 1; i < tokens.size(); i++)
+		{
+			int ani_id = atoi(tokens[i].c_str());
+
+			LPANIMATION ani = animations->Get(ani_id);
+			s->push_back(ani);
+		}
+
+		CAnimationSets::GetInstance()->Add(ani_set_id, s);
 	}
-
-	CAnimationSets::GetInstance()->Add(ani_set_id, s);
+	f.close();
 }
 
 void CGame::LoadResources()
 {
-	DebugOut(L"[INFO] Start loading game resources from : %s \n", RESOURCE_FILE_PATH);
 
-	ifstream f;
-	f.open(RESOURCE_FILE_PATH);
-
-	if (!f.is_open())
+	for(int i = 1; i <= 4; i++)
 	{
-		DebugOut(L"[ERROR] Load resource file failed\n");
-		return;
+		switch(i)
+		{
+		case LOAD_RESOURCE_TEXTURES: _ParseSection_TEXTURES(TEXTURES_PATH); break;
+		case LOAD_RESOURCE_SPRITES: _ParseSection_SPRITES(SPRITES_PATH); break;
+		case LOAD_RESOURCE_ANIMATIONS: _ParseSection_ANIMATIONS(ANIMATIONS_PATH); break;
+		case LOAD_RESOURCE_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(ANIMATIONS_SET_PATH); break;
+		}
 	}
 
-	int data = -1;
-	char str[MAX_TXT_LINE];
-
-	while (f.getline(str, MAX_TXT_LINE))
-	{
-		string line(str);
-
-		//DebugOut(L"[DEBUG] line: %S\n", line.c_str());
-
-		if (line[0] == '#') continue;
-
-		if (line == "[TEXTURES]")
-		{
-			data = LOAD_RESOURCE_TEXTURES; continue;
-		}
-		if (line == "[SPRITES]")
-		{
-			data = LOAD_RESOURCE_SPRITES; continue;
-		}
-		if (line == "[ANIMATIONS]")
-		{
-			data = LOAD_RESOURCE_ANIMATIONS; continue;
-		}
-		if (line == "[ANIMATIONS_SETS]")
-		{
-			data = LOAD_RESOURCE_ANIMATION_SETS; continue;
-		}
-		switch (data)
-		{
-		case LOAD_RESOURCE_TEXTURES: _ParseSection_TEXTURES(line); break;
-		case LOAD_RESOURCE_SPRITES: _ParseSection_SPRITES(line); break;
-		case LOAD_RESOURCE_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
-		case LOAD_RESOURCE_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
-		}
-	}
-	f.close();
-
-	DebugOut(L"[INFO] Done loading game resources %s\n", RESOURCE_FILE_PATH);
+	//DebugOut(L"[INFO] Done loading game resources");
 
 }
 

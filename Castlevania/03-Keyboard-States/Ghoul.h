@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Animations.h"
 
+#include "GameDefine.h"
 #include "debug.h"
 
 #define GHOUL_WALKING_SPEED	0.15f
@@ -17,33 +18,29 @@
 #define ANI_ID_GHOUL_WALK 1
 
 
-#define GHOUL_WIDTH 15
-#define GHOUL_HEIGHT 30
-
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 400
-
 
 class CGhoul : public CGameObject
 {
 protected:
 	float maxVx, maxVy;
 	float ax, ay;
-	float startx, starty;
 	int nx, ny;
 public:
-	CGhoul(float x, float y)
+	CGhoul() 
 	{
 		maxVx = GHOUL_WALKING_SPEED;
 		maxVy = GHOUL_WALKING_SPEED;
 		ax = 0.0f;
 		ay = 0.0f;
 		nx = 1, ny = 1;
+
+		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(GHOUL_ANI_SET_ID));
 	}
 	void SetDirection(int direction) { nx = direction; }
 	int GetDirection() { return nx; }
 	void Update(DWORD dt);
 	void Render();
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
 	void SetState(int state);
 
 };

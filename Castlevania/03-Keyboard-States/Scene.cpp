@@ -1,16 +1,21 @@
 ﻿#pragma once
 #include "Scene.h"
-#include "debug.h"
 #include "Utils.h"
-#include "GameObject.h"
 #include "GameDefine.h"
+#include "QuadTree.h"
+#include "Camera.h"
+#include <fstream>
+
 #include "Brick.h"
 #include "Torch.h"
-#include "QuadTree.h"
-#include <fstream>
-#include "Camera.h"
+#include "Simon.h"
+#include "Ghoul.h"
+#include "Panther.h"
+#include "Candle.h"
+
 QuadTree* quadtree = NULL;
 vector<CGameObject*> objects;
+CSimon* player = NULL;
 
 void CScene::LoadScene()
 {
@@ -32,29 +37,39 @@ void CScene::LoadScene()
 		if (line[0] == '#') continue;
 		tokens = split(line);
 		int objectId = atoi(tokens[0].c_str());
-		float x = atof(tokens[1].c_str());
-		float y = atof(tokens[2].c_str());
-		float width = atoi(tokens[3].c_str());
-		float height = atoi(tokens[4].c_str());	
-		int animationSetId = atoi(tokens[5].c_str());
+		int objectType = atoi(tokens[1].c_str());
+		float x = atof(tokens[2].c_str());
+		float y = atof(tokens[3].c_str());
+		float width = atoi(tokens[4].c_str());
+		float height = atoi(tokens[5].c_str());	
 		CGameObject* obj = NULL;
-		switch (objectId)
+		switch (objectType)
 		{
-		case BRICK_OBJECTS:
-		obj = new CBrick();
-		break;
-		case TORCH_OBJECTS:
-		obj = new CTorch();
-		break;
+		case BRICK:
+			obj = new CBrick();
+			break;
+		case TORCH:
+			obj = new CTorch();
+			break;
+		case GHOUL:
+			obj = new CGhoul();
+			break;
+		case PANTHER:
+			obj = new CPanther();
+			break;
+		case CANDLE:
+			obj = new CCandle();
+			break;
+		case SIMON:
+			player->SetPosition(x, y);
+			break;
 		}
 		if (obj != NULL)
 		{
 			obj->SetPosition(x, y);
 			obj->SetSize(width, height);
-			LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(animationSetId);
-			obj->SetAnimationSet(ani_set);
 			objects.push_back(obj);
-			//DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectId, x, y);
+			DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectType, x, y);
 		}
 	}
 	f.close();
@@ -65,6 +80,14 @@ void CScene::LoadScene()
 	quadtree->PrintTree();
 }
 
+void CScene::LoadPlayer()
+{
+	player = new CSimon(0, 0);
+	player->SetSize(SIMON_WIDTH, SIMON_HEIGHT);
+	player->SetState(new CSimonIdle());
+	player->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID));
+}
+
 void CScene::Update(DWORD dt)
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
@@ -72,6 +95,7 @@ void CScene::Update(DWORD dt)
 
 	for (auto obj : activeObjects)
 		obj->Update(dt);
+	player->Update(dt);
 }
 
 void CScene::Render()
@@ -81,4 +105,5 @@ void CScene::Render()
 	{
 		objects[i]->Render();
 	}
+	player->Render();
 }

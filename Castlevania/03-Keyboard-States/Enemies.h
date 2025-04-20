@@ -6,13 +6,3 @@
 
 #include "debug.h"
 
-
-
-class CSimon : public CGameObject
-{
-protected:
-	
-public:
-	
-
-};

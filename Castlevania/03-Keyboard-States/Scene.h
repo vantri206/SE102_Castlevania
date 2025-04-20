@@ -1,7 +1,8 @@
 #pragma once
 
-#include <Windows.h>
 #include "Map.h"
+
+class CSimon;
 class CMap;
 
 class CScene
@@ -21,10 +22,14 @@ public:
 		this->objectFile = objectFile;
 
 		this->SceneBG = new CMap(mapId, mapFile);
+		
+		this->LoadPlayer();
 
 		this->LoadScene();
+
 	}
 
+	void LoadPlayer();
 	void LoadScene();
 	void Update(DWORD dt);
 	void Render();

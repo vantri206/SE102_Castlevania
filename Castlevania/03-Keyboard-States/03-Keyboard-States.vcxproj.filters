@@ -91,6 +91,9 @@
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{1678154f-835d-4b4c-a266-dba25203a659}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameObjects\Items">
+      <UniqueIdentifier>{b1e4e1e9-0709-46f8-8982-3389c4a283d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -179,6 +182,12 @@
     </ClCompile>
     <ClCompile Include="SimonSit.cpp">
       <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Candle.cpp">
+      <Filter>Source Files\GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Source Files\GameObjects\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +292,18 @@
     </ClInclude>
     <ClInclude Include="SimonJump.h">
       <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BigHeart.h">
+      <Filter>Header Files\GameObjects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MoneyBag.h">
+      <Filter>Header Files\GameObjects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Candle.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

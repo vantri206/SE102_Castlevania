@@ -1,0 +1,32 @@
+#comment
+#----GAMEOBJECT----#
+# id	file_path	
+20 resource/Characters/Simon.png
+30 resource/Enemies/Enemies.png
+40 resource/Items/Axe.png
+41 resource/Items/BigHeart.png
+42 resource/Items/Bone.png
+43 resource/Items/Boomerang.png
+44 resource/Items/Crown.png
+45 resource/Items/Dagger.png
+46 resource/Items/FireBall.png
+47 resource/Items/HolyWaterBottle.png
+48 resource/Items/InvisbilityPotion.png
+49 resource/Items/MagicCrystal.png
+50 resource/Items/MoneyBag.png
+51 resource/Items/MorningStar.png
+52 resource/Items/PorkChop.png
+53 resource/Items/Rosary.png
+54 resource/Items/SmallHeart.png
+55 resource/Items/StopWatch.png
+56 resource/Items/TripleShot.png
+60 resource/Objects/Torch.png
+61 resource/Objects/Candle.png
+2 
+#----MAP----#
+# id file_path
+1 resource/Map/Stage1_tiles.png
+2 resource/Map/Stage2_tiles.png
+3 resource/Map/Stage3_tiles.png
+4 resource/Map/Stage4_tiles.png
+5 resource/Map/Stage5_tiles.png

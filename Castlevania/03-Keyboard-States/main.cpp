@@ -1,3 +1,4 @@
+#pragma one
 #include <windows.h>
 
 #include "debug.h"
@@ -14,11 +15,9 @@
 #include "Utils.h"
 #include "Camera.h"
 #include "GameDefine.h"
-#include "Simon.h"
 
 CSampleKeyHandler* keyHandler;
 
-CSimon* simon = NULL;
 CScene* scene = NULL;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -38,17 +37,12 @@ void LoadResources()
 {
 	CGame::GetInstance()->LoadResources();
 
-	simon = new CSimon(SIMON_START_X, SIMON_START_Y);
-	LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID);
-	simon->SetAnimationSet(ani_set);
-
-	scene = new CScene(SCENE1, 1, STAGE1_FILE_PATH, STAGE1_OBJECT_FILE_PATH);
+	scene = new CScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);
 }
 
 void Update(DWORD dt)
 {
 	scene->Update(dt);
-	simon->Update(dt);
 }
 
 void Render()
@@ -68,7 +62,6 @@ void Render()
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
 	scene->Render();
-	simon->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
@@ -179,7 +172,7 @@ int WINAPI WinMain(
 
 	LoadResources();
 	
-	CGame::GetInstance()->SetCurrentMap(1, 768, 192);
+	CGame::GetInstance()->SetCurrentMap(1, 1536, 192);
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

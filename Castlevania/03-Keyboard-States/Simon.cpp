@@ -1,9 +1,7 @@
 #pragma once
 #include <algorithm>
-#include "debug.h"
 #include "Simon.h"
 #include "Camera.h"
-#include "Textures.h"
 
 void CSimon::Update(DWORD dt)
 {

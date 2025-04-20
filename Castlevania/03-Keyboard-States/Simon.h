@@ -1,12 +1,11 @@
 #pragma once
 #include "GameObject.h"
 #include <memory>
-#include "Animation.h"
-#include "Animations.h"
 #include "SimonState.h"
 #include "SimonIdle.h"
 
 #include "debug.h"
+
 
 #define SIMON_WALKING_SPEED		0.2f
 
@@ -41,10 +40,10 @@
 #define ID_ANI_SIMON_DIE			12
 #define ID_ANI_SIMON_POWER_UP		13
 
-#define SIMON_WIDTH 15
-#define SIMON_HEIGHT 30
+#define SIMON_WIDTH 16
+#define SIMON_HEIGHT 32
 
-#define SIMON_SIZE 0.7f
+#define SIMON_SIZE 0.5f
 
 class CSimon : public CGameObject
 {

@@ -46,7 +46,7 @@ void CMap::LoadMap()
 		f.getline(str, MAX_TXT_LINE);
 		string line(str);
 		tokens = split(line);
-		switch (i)
+		switch(i)
 		{
 		case MAP_SIZE:
 			mapWidth = atoi(tokens[0].c_str());
@@ -100,17 +100,22 @@ void CMap::Render()
 	int rowtop = min(tileRows, cam_top / tileHeight);
 	int rowbottom = max(0, cam_bottom / tileHeight + 1);
 
-	for(int i = rowbottom; i < rowtop; i++)
+	float x, y;
+
+	for (int i = rowbottom; i < rowtop; i++)
+	{
 		for (int j = columnleft; j < columnright; j++)
 		{
 			int tile_index = mapBackground[i][j];
-			float x = j * tileWidth;
-			float y = (tileRows - i) * tileHeight;
+
+			x = (j + 0.5f) * tileWidth;
+			y = (tileRows - i - 0.5f) * tileHeight;
 
 			//DebugOut(L"i, j : %f, %f, %d \n", x, y, tile_index);
 			CTexture* tileTexture = CTextures::GetInstance()->Get(mapId * 1000 + tile_index);
-			CGame::GetInstance()->Draw(x, y, -1, tileTexture, 0, 0, tileWidth  - 1, tileHeight - 1);
+			CGame::GetInstance()->Draw(x, y, -1, tileTexture, 0, 0, tileWidth - 1, tileHeight - 1);
 		}
+	}
 }
 
 int CMap::GetWidth()

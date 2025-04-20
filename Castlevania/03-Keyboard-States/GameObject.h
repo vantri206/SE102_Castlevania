@@ -13,6 +13,7 @@ class CGameObject
 protected:
 
     int type;
+    int id;
 
     float x;
     float y;
