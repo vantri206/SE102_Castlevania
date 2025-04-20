@@ -107,13 +107,6 @@ vector<LPGAMEOBJECT> QuadTree::GetObjectsInView(RECT cam)
     return result;
 }
 
-
-vector<LPGAMEOBJECT> QuadTree::GetObjectsInView(RECT cam)
-{
-    vector<LPGAMEOBJECT> result;
-    Retrieve(root, cam, result);
-    return result;
-}
 void QuadTree::PrintNode(QNode* node, int level)
 {
     if (!node) return;
