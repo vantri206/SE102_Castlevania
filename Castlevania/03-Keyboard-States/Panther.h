@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Enemy.h"
 
 #include "Animation.h"
 #include "Animations.h"
@@ -18,21 +19,18 @@
 #define ANI_ID_PANTHER_WALK 1
 
 
-class CPanther : public CGameObject
+class CPanther : public CEnemy
 {
 protected:
-	float maxVx, maxVy;
-	float ax, ay;
-	float startx, starty;
-	int nx, ny;
 public:
 	CPanther()
 	{
 		maxVx = PANTHER_WALKING_SPEED;
-		vy = PANTHER_WALKING_SPEED;
+		maxVy = PANTHER_WALKING_SPEED;
 		ax = 0.0f;
 		ay = 0.0f;
 		nx = 1, ny = 1;
+
 		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(PANTHER_ANI_SET_ID));
 	}
 	void SetDirection(int direction) { nx = direction; }
@@ -40,6 +38,7 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
 	void Update(DWORD dt);
 	void Render();
-	void SetState(int state);
+	void SetState(int state) {}
 
+	void LoadExtraSetting(vector<int> extra_settings);
 };

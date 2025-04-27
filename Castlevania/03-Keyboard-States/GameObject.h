@@ -70,6 +70,12 @@ public:
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b) = 0;
     virtual ~CGameObject();
     static bool IsDeleted(const LPGAMEOBJECT& o) { return o->isDeleted; }
+
+    virtual void LoadExtraSetting(vector<int> extra_settings) {}
+
+	void SetType(int type) { this->type = type; }
+	void SetId(int id) { this->id = id; }
+
 };
 
 typedef CGameObject* LPGAMEOBJECT;

@@ -5,6 +5,7 @@
 #include "SimonIdle.h"
 
 #include "debug.h"
+#include "GameDefine.h"
 
 
 #define SIMON_WALKING_SPEED		0.2f
@@ -60,7 +61,7 @@ public:
 		this->y = y;
 		ax = 0.0f;
 		ay = 0.0f;
-		nx = 1;
+		nx = NEGATIVE_DIRECTION;
 		ny = 1;
 		
 		currentState = make_unique<CSimonIdle>();

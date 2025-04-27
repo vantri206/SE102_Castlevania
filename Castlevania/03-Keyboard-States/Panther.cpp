@@ -13,7 +13,8 @@ void CPanther::Render()
 	animation_set->at(ANI_ID_PANTHER_IDLE)->Render(x, y);
 }
 
-void CPanther::SetState(int state)
+void CPanther::LoadExtraSetting(vector<int> extra_settings)
 {
-    
+	if (extra_settings.size() > 0)
+		this->SetDirection(extra_settings[0]);
 }

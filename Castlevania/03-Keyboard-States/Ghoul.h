@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Enemy.h"
 
 #include "Animation.h"
 #include "Animations.h"
@@ -19,12 +20,9 @@
 
 
 
-class CGhoul : public CGameObject
+class CGhoul : public CEnemy
 {
 protected:
-	float maxVx, maxVy;
-	float ax, ay;
-	int nx, ny;
 public:
 	CGhoul() 
 	{
@@ -36,11 +34,9 @@ public:
 
 		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(GHOUL_ANI_SET_ID));
 	}
-	void SetDirection(int direction) { nx = direction; }
-	int GetDirection() { return nx; }
 	void Update(DWORD dt);
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
-	void SetState(int state);
-
+	void SetState(int state) {}
+	void LoadExtraSetting(vector<int> extra_settings);
 };

@@ -13,7 +13,8 @@ void CGhoul::Render()
 	animation_set->at(ANI_ID_GHOUL_WALK)->Render(x, y);
 }
 
-void CGhoul::SetState(int state)
+void CGhoul::LoadExtraSetting(vector<int> extra_settings)
 {
-    
+	if (extra_settings.size() > 0)
+		this->SetDirection(extra_settings[0]);
 }

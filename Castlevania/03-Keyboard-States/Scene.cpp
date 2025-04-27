@@ -17,6 +17,35 @@ QuadTree* quadtree = NULL;
 vector<CGameObject*> objects;
 CSimon* player = NULL;
 
+static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra_settings)
+{
+	CGameObject* obj = NULL;
+	switch (objectType)
+	{
+	case TORCH:
+		obj = new CTorch();
+		break;
+	case CANDLE:
+		obj = new CCandle();
+		break;
+	case GHOUL:
+		obj = new CGhoul();
+		break;
+	case PANTHER:
+		obj = new CPanther();
+		break;
+	case BRICK:
+		obj = new CBrick();
+		break;
+	case PORTAL:
+		obj = new CBrick();
+		break;
+	}
+	obj->SetId(objectId);
+	obj->LoadExtraSetting(extra_settings);
+	return obj;
+}
+
 void CScene::LoadScene()
 {
 	ifstream f;
@@ -42,34 +71,24 @@ void CScene::LoadScene()
 		float y = atof(tokens[3].c_str());
 		float width = atoi(tokens[4].c_str());
 		float height = atoi(tokens[5].c_str());	
-		CGameObject* obj = NULL;
-		switch (objectType)
+
+		vector<int> extra_settings;
+
+		for (size_t i = 6; i < tokens.size(); i++)
 		{
-		case BRICK:
-			obj = new CBrick();
-			break;
-		case TORCH:
-			obj = new CTorch();
-			break;
-		case GHOUL:
-			obj = new CGhoul();
-			break;
-		case PANTHER:
-			obj = new CPanther();
-			break;
-		case CANDLE:
-			obj = new CCandle();
-			break;
-		case SIMON:
-			player->SetPosition(x, y);
-			break;
+			extra_settings.push_back(atoi(tokens[i].c_str()));
 		}
+
+		CGameObject* obj = NULL;
+		if (objectType == SIMON) player->SetPosition(x, y);
+		else obj = CreateObject(objectId, objectType, extra_settings);
+
 		if (obj != NULL)
 		{
 			obj->SetPosition(x, y);
 			obj->SetSize(width, height);
 			objects.push_back(obj);
-			DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectType, x, y);
+			//DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectType, x, y);
 		}
 	}
 	f.close();

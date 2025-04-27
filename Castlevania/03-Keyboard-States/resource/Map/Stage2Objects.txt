@@ -45,24 +45,24 @@
 #Candle, extra setting: item's objectid drop when hit
 26 5 1528 160 15 64 3
 #Portal, extra setting: scene will be changed to
-29 7 172 48 16 32
-#Ghoul
-35 7 1200 48 16 32
-#Ghoul
-36 7 1232 48 16 32
-#Ghoul
-37 7 1280 48 16 32
-#Ghoul
-33 7 204 48 16 32
-#Ghoul
-34 7 236 48 16 32
-#Ghoul
-38 8 700 104 25 16
-#Panther
-39 8 956 104 25 16
-#Panther
-40 8 892 136 25 16
-#Panther
+29 7 172 48 16 32 1
+#Ghoul, extra setting: positive when start
+35 7 1200 48 16 32 1
+#Ghoul, extra setting: positive when start
+36 7 1232 48 16 32 1
+#Ghoul, extra setting: positive when start
+37 7 1280 48 16 32 1
+#Ghoul, extra setting: positive when start
+33 7 204 48 16 32 1
+#Ghoul, extra setting: positive when start
+34 7 236 48 16 32 1
+#Ghoul, extra setting: positive when start
+38 8 700 103 25 16 1
+#Panther, extra setting: positive when start
+39 8 956 103 25 16 1
+#Panther, extra setting: positive when start
+40 8 892 135 25 16 1
+#Panther, extra setting: positive when start
 41 2 2 112 4 160
 #Brick
 42 2 768 24 1536 16

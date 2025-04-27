@@ -12,6 +12,11 @@
 #define SCREEN_WIDTH 360
 #define SCREEN_HEIGHT 270
 
+/*----Direction----*/
+
+#define POSITIVE_DIRECTION -1
+#define NEGATIVE_DIRECTION 1
+
 /*---- Resource file path ----*/
 #define TEXTURES_PATH L"./resource/textures.txt"
 #define ANIMATIONS_PATH L"./resource/animations.txt"

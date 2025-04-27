@@ -94,6 +94,9 @@
     <Filter Include="Header Files\GameObjects\Items">
       <UniqueIdentifier>{b1e4e1e9-0709-46f8-8982-3389c4a283d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Collision">
+      <UniqueIdentifier>{a970c174-3972-4691-8f2a-cae14c3fe966}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -190,7 +193,7 @@
       <Filter>Source Files\GameObjects\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,7 +221,7 @@
     <ClInclude Include="Ghoul.h">
       <Filter>Header Files\GameObjects\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Enemies.h">
+    <ClInclude Include="Enemy.h">
       <Filter>Header Files\GameObjects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
