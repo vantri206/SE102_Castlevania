@@ -67,7 +67,7 @@ public:
 
 	virtual int IsDirectionColliable(int nx, int ny) { return 1; }
 
-	virtual void GetBoundingBox(float& l, float& t, float& r, float& b) = 0;
+    void GetBoundingBox(float& l, float& t, float& r, float& b);
     virtual ~CGameObject();
     static bool IsDeleted(const LPGAMEOBJECT& o) { return o->isDeleted; }
 
@@ -75,6 +75,8 @@ public:
 
 	void SetType(int type) { this->type = type; }
 	void SetId(int id) { this->id = id; }
+	int GetType() { return type; }
+	int GetId() { return id; }
 
 };
 

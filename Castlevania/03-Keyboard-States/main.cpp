@@ -171,8 +171,6 @@ int WINAPI WinMain(
 	game->InitKeyboard(keyHandler);
 
 	LoadResources();
-	
-	CGame::GetInstance()->SetCurrentMap(1, 1536, 192);
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

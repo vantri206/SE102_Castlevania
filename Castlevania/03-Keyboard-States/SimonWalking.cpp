@@ -26,6 +26,6 @@ void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
 
 void CSimonWalking::Update(CSimon* simon)
 {
-	simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirectionX(), 0);
+	simon->SetSpeed(0.2f, 0.0f);
 	simon->SetAniId(ID_ANI_SIMON_WALK);
 }

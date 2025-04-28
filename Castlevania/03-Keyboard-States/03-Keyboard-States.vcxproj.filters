@@ -195,6 +195,9 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="SimonHurt.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -312,6 +315,9 @@
       <Filter>Header Files\GameObjects\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonHurt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

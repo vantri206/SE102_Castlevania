@@ -70,6 +70,7 @@ void CMap::LoadMap()
 		}
 	}
 
+	CGame::GetInstance()->SetCurrentMap(this->mapId, mapWidth, mapHeight);
 	CTextures::GetInstance()->AddTilesMap(mapId, tileWidth, tileHeight, tilesetColumns, tileCount);
 	for (int i = 0; i < tileRows; i++)
 	{

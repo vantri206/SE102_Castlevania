@@ -63,8 +63,6 @@
 #Panther, extra setting: positive when start
 40 8 892 135 25 16 1
 #Panther, extra setting: positive when start
-41 2 2 112 4 160
-#Brick
 42 2 768 24 1536 16
 #Brick
 43 2 832 120 160 16

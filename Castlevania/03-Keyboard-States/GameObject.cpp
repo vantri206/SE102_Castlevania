@@ -10,6 +10,13 @@ CGameObject::CGameObject()
 	nx = 1;	
 	state = -1;
 }
+void CGameObject::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x - width / 2;
+	t = y + height / 2;
+	r = l + width;
+	b = y - height;
+}
 CGameObject::~CGameObject()
 {
 

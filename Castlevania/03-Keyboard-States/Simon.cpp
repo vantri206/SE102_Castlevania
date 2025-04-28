@@ -12,6 +12,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
 	
+	
 	vx += ax * dt;
 	vy += ay * dt;
 	if (vx > maxVx) vx = maxVx;
@@ -30,6 +31,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 void CSimon::OnNoCollision(DWORD dt) {
+
 	x += vx * dt;
 	y += vy * dt;
 	isOnPlatform = false;
@@ -41,16 +43,17 @@ void CSimon::OnCollisionWith(LPCOLLISIONEVENT e) {
 		OnCollisionWithEnemy(e);
 }
 void CSimon::OnCollisionWithBrick(LPCOLLISIONEVENT e) {
+	DebugOut(L"No collision\n");
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
 	else
-		if (e->nx != 0 && e->obj->IsBlocking())
-		{
-			vx = 0;
-		}
+	if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		vx = 0;
+	}
 }
 void CSimon::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 	if (untouchable == 0)
@@ -89,12 +92,4 @@ CSimonState* CSimon::GetState()
 void CSimon::Render()
 {
 	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
-}
-
-void CSimon::GetBoundingBox(float& l, float& t, float& r, float& b)
-{
-	l = x;
-	t = y;
-	r = x + SIMON_WIDTH;
-	b = y + SIMON_HEIGHT;
 }
