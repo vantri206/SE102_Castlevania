@@ -49,10 +49,10 @@ void CSimon::OnCollisionWith(LPCOLLISIONEVENT e) {
 		OnCollisionWithEnemy(e);
 }
 void CSimon::OnCollisionWithBrick(LPCOLLISIONEVENT e) {
-	DebugOut(L"[INFO] Collision with brick\n");
-	if (e->ny != 0 && e->obj->IsBlocking())
+	DebugOut(L"[INFO] Collision with brick, ny: %f\n", e->ny);
+	if (e->ny != 0)
 	{
-		vy = 0;
+		vy = GRAVITY;
 		if (e->ny < 0) isOnPlatform = true;
 	}
 	else
