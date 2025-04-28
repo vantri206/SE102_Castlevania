@@ -10,11 +10,13 @@ void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)
 	if (keyCode == DIK_RIGHT && simon->GetDirectionX() > 0)
 	{
 		simon->SetState(new CSimonIdle());
-		simon->SetSpeed(0, 0);
+		simon->SetAx(0.0f);
+		simon->SetVx(0.0f);
 	}
 	else if (keyCode == DIK_LEFT && simon->GetDirectionX() < 0)
 	{
-		simon->SetSpeed(0, 0);
+		simon->SetAx(0.0f);
+		simon->SetVx(0.0f);
 		simon->SetState(new CSimonIdle());
 	}
 }
@@ -26,6 +28,7 @@ void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
 
 void CSimonWalking::Update(CSimon* simon)
 {
-	simon->SetSpeed(0.2f, 0.0f);
+	simon->SetMaxVx(SIMON_WALKING_SPEED * simon->GetDirectionX());
+	simon->SetAx(SIMON_ACCEL_WALK_X*simon->GetDirectionX());
 	simon->SetAniId(ID_ANI_SIMON_WALK);
 }
