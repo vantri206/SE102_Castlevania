@@ -10,4 +10,5 @@ public:
 	CBrick();
 	void Render() {}
 	void Update(DWORD dt) {}
+	int IsCollidable() { return 1; };
 };

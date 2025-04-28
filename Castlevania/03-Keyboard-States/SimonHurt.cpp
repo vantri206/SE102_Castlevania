@@ -14,6 +14,6 @@ void CSimonHurt::Update(CSimon* simon) {
     }
     if (finishedHurt && simon->IsOnPlatform()) 
     {
-        simon->SetState(new CSimonIdle());
+        simon->SetState (new CSimonIdle());
     }
 }

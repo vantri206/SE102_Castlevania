@@ -14,12 +14,12 @@ typedef CCollisionEvent* LPCOLLISIONEVENT;
 
 struct CCollisionEvent
 {
-	LPGAMEOBJECT src_obj;
-	LPGAMEOBJECT obj;
+	LPGAMEOBJECT src_obj;		// source object : the object from which to calculate collision
+	LPGAMEOBJECT obj;			// the target object
 
 	float t, nx, ny;
 
-	float dx, dy;
+	float dx, dy;				// *RELATIVE* movement distance between this object and obj
 	bool isDeleted;
 
 	CCollisionEvent(float t, float nx, float ny, float dx = 0, float dy = 0,
@@ -48,11 +48,19 @@ class CCollision
 	static CCollision* __instance;
 public:
 	static void SweptAABB(
-		float ml, float mt, float mr, float mb,	//moving box
-		float dx,
-		float dy,
-		float sl, float st, float sr, float sb, //static box
-		float& t, float& nx, float& ny);
+		float ml,			// move left 
+		float mt,			// move top
+		float mr,			// move right 
+		float mb,			// move bottom
+		float dx,			// 
+		float dy,			// 
+		float sl,			// static left
+		float st,
+		float sr,
+		float sb,
+		float& t,
+		float& nx,
+		float& ny);
 
 	LPCOLLISIONEVENT SweptAABB(
 		LPGAMEOBJECT objSrc,
