@@ -22,5 +22,6 @@ public:
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
+	int IsCollidable() { return 1; };
 	virtual void SetState(int state) = 0;
 };

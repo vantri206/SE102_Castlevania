@@ -98,6 +98,7 @@ public:
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 
+	int IsCollidable() { return 1; };
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	BOOLEAN IsOnPlatform() { return isOnPlatform; }
