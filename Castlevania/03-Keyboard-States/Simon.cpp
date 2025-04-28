@@ -11,10 +11,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
-	
-	
+
+
 	vx += ax * dt;
 	vy += ay * dt;
+
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
@@ -37,29 +38,27 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
-void CSimon::OnNoCollision(DWORD dt) {
+void CSimon::OnNoCollision(DWORD dt) 
+{
 	x += vx * dt;
 	y += vy * dt;
 	isOnPlatform = false;
 }
-void CSimon::OnCollisionWith(LPCOLLISIONEVENT e) {
-	if(dynamic_cast<CBrick*>(e->obj))
-		OnCollisionWithBrick(e);
-	else if(dynamic_cast<CEnemy*>(e->obj))
-		OnCollisionWithEnemy(e);
-}
-void CSimon::OnCollisionWithBrick(LPCOLLISIONEVENT e) {
-	DebugOut(L"[INFO] Collision with brick, ny: %f\n", e->ny);
+void CSimon::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	DebugOut(L"Collison \n");
 	if (e->ny != 0)
 	{
-		vy = GRAVITY;
+		vy = 0.0f;
 		if (e->ny < 0) isOnPlatform = true;
 	}
 	else
-	if (e->nx != 0 && e->obj->IsBlocking())
+	if (e->nx != 0)
 	{
 		vx = 0;
 	}
+	 if(dynamic_cast<CEnemy*>(e->obj))
+		OnCollisionWithEnemy(e);
 }
 void CSimon::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 	if (untouchable == 0)

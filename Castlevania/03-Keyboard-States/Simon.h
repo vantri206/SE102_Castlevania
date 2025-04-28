@@ -70,7 +70,7 @@ public:
 		this->y = y;
 		maxVx = 0.0f;
 		ax = 0.0f;
-		ay = -GRAVITY;
+		ay = - GRAVITY;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
