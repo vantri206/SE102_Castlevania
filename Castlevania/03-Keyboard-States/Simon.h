@@ -13,12 +13,12 @@
 
 #define SIMON_HURT_VX 0.2f    // T?c ?? v?ng ngang
 #define SIMON_HURT_VY 0.4f    // T?c ?? v?ng lên
-#define SIMON_HURT_TIME 300   // Th?i gian v?ng ra (ms)
-#define SIMON_UNTOUCHABLE_TIME 1000 // Th?i gian b?t t? sau khi b? th??ng (ms)
+#define SIMON_HURT_TIME 100   // Th?i gian v?ng ra (ms)
+#define SIMON_UNTOUCHABLE_TIME 100 // Th?i gian b?t t? sau khi b? th??ng (ms)
 
 #define SIMON_JUMP_SPEED 0.3f
 #define JUMP_DURATION 500 // ms
-#define GRAVITY 0.001f
+#define GRAVITY 0.002f
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1
@@ -70,7 +70,7 @@ public:
 		this->y = y;
 		maxVx = 0.0f;
 		ax = 0.0f;
-		ay = 0.0f;
+		ay = -GRAVITY;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
