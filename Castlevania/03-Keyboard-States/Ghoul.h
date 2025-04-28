@@ -38,4 +38,5 @@ public:
 	void Render();
 	void SetState(int state) {}
 	void LoadExtraSetting(vector<int> extra_settings);
+	int IsCollidable() { return 1; };
 };

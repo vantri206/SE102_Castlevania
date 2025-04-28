@@ -46,7 +46,7 @@ void CCollision::SweptAABB(
 	float br = dx > 0 ? mr + dx : mr;
 	float bb = dy > 0 ? mb + dy : mb;
 
-	if (br < sl || bl > sr || bb < st || bt > sb) return;
+	if (br < sl || bl > sr || bb > st || bt < sb) return;
 
 
 	if (dx == 0 && dy == 0) return;		// moving object is not moving > obvious no collision
@@ -65,14 +65,15 @@ void CCollision::SweptAABB(
 
 	if (dy > 0)
 	{
-		dy_entry = st - mb;
-		dy_exit = sb - mt;
-	}
-	else if (dy < 0)
-	{
 		dy_entry = sb - mt;
 		dy_exit = st - mb;
 	}
+	else if (dy < 0)
+	{
+		dy_entry = st - mb;
+		dy_exit = sb - mt;
+	}
+
 
 	if (dx == 0)
 	{
@@ -114,7 +115,7 @@ void CCollision::SweptAABB(
 	else
 	{
 		nx = 0.0f;
-		dy > 0 ? ny = -1.0f : ny = 1.0f;
+		dy > 0 ? ny = 1.0f : ny = -1.0f;
 	}
 
 }

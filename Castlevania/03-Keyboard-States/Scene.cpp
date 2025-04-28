@@ -120,7 +120,7 @@ void CScene::Update(DWORD dt)
 	{
 		float l, t, r, b;
 		obj->GetBoundingBox(l, t, r, b);
-		DebugOut(L"[INFO] Object %d at bouding box(): %f, %f, %f, %f\n", obj->GetId(), l, t, r ,b);
+		//DebugOut(L"[INFO] Object %d at bouding box(): %f, %f, %f, %f\n", obj->GetId(), l, t, r ,b);
 	}
 
 }
