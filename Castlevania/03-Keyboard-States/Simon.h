@@ -12,9 +12,9 @@
 #define SIMON_ACCEL_WALK_X	0.0005f
 
 #define SIMON_HURT_VX 0.2f    // T?c ?? v?ng ngang
-#define SIMON_HURT_VY 0.4f    // T?c ?? v?ng lên
-#define SIMON_HURT_TIME 300   // Th?i gian v?ng ra (ms)
-#define SIMON_UNTOUCHABLE_TIME 1000 // Th?i gian b?t t? sau khi b? th??ng (ms)
+#define SIMON_HURT_VY 0.4f    // T?c ?? v?ng lÃªn
+#define SIMON_HURT_TIME 100   // Th?i gian v?ng ra (ms)
+#define SIMON_UNTOUCHABLE_TIME 100 // Th?i gian b?t t? sau khi b? th??ng (ms)
 
 #define SIMON_JUMP_SPEED 0.3f
 #define JUMP_DURATION 500 // ms

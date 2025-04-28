@@ -116,7 +116,7 @@ void CCollision::SweptAABB(
 	else
 	{
 		nx = 0.0f;
-		dy > 0 ? ny = 1.0f : ny = -1.0f;
+		dy > 0 ? ny = -1.0f : ny = 1.0f;
 	}
 
 }

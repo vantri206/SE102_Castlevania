@@ -11,8 +11,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
-	
-	
+
 	vx += ax * dt;
 	vy += ay * dt;
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
@@ -72,7 +71,7 @@ void CSimon::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 		else
 			vx = SIMON_HURT_VX; 
 
-		vy = -SIMON_HURT_VY; 
+		vy = SIMON_HURT_VY; 
 	}
 }
 void CSimon::OnKeyDown(int keyCode)
