@@ -9,9 +9,9 @@ void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)
 {
 	if (keyCode == DIK_RIGHT && simon->GetDirectionX() > 0)
 	{
-		simon->SetState(new CSimonIdle());
 		simon->SetAx(0.0f);
 		simon->SetVx(0.0f);
+		simon->SetState(new CSimonIdle());
 	}
 	else if (keyCode == DIK_LEFT && simon->GetDirectionX() < 0)
 	{

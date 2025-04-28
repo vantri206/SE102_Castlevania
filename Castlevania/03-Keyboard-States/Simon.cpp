@@ -15,7 +15,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	vx += ax * dt;
 	vy += ay * dt;
-	if (vx > maxVx) vx = maxVx;
+	//if (vx > maxVx) vx = maxVx;
+	if (abs(vx) > abs(maxVx)) vx = maxVx;
 	if (x <= 0 || x >= mapwidth - SIMON_WIDTH)
 	{
 		if (x <= 0)
@@ -31,7 +32,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 void CSimon::OnNoCollision(DWORD dt) {
-
 	x += vx * dt;
 	y += vy * dt;
 	isOnPlatform = false;
@@ -43,7 +43,6 @@ void CSimon::OnCollisionWith(LPCOLLISIONEVENT e) {
 		OnCollisionWithEnemy(e);
 }
 void CSimon::OnCollisionWithBrick(LPCOLLISIONEVENT e) {
-	DebugOut(L"No collision\n");
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;

@@ -116,6 +116,13 @@ void CScene::Update(DWORD dt)
 		obj->Update(dt, &activeObjects);   
 	player->Update(dt, &activeObjects);    
 
+	for (auto obj : activeObjects)
+	{
+		float l, t, r, b;
+		obj->GetBoundingBox(l, t, r, b);
+		DebugOut(L"[INFO] Object %d at bouding box(): %f, %f, %f, %f\n", obj->GetId(), l, t, r ,b);
+	}
+
 }
 
 void CScene::Render()
