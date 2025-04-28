@@ -113,8 +113,9 @@ void CScene::Update(DWORD dt)
 	auto activeObjects = quadtree->GetObjectsInView(cam);
 
 	for (auto obj : activeObjects)
-		obj->Update(dt);
-	player->Update(dt);
+		obj->Update(dt, &activeObjects);   
+	player->Update(dt, &activeObjects);    
+
 }
 
 void CScene::Render()

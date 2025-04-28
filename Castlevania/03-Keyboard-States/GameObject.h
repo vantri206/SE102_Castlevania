@@ -55,7 +55,7 @@ public:
 
     void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 
-    virtual void Update(DWORD dt) = 0;
+    virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
     virtual void Render() = 0;
 
     virtual int IsCollidable() { return 0; };
