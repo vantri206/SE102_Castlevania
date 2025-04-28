@@ -63,18 +63,18 @@ void CCollision::SweptAABB(
 		dx_exit = sl - mr;
 	}
 
+	DebugOut(L"mb: %f st: %f mt:%f sb: %f\n", mb, st, mt, sb);
 
 	if (dy > 0)
 	{
 		dy_entry = sb - mt;
-		dy_exit = st - mb;
+		dy_exit = st - mb; 
 	}
 	else if (dy < 0)
 	{
-		dy_entry = st - mb;
+		dy_entry = mb - st;
 		dy_exit = sb - mt;
 	}
-
 
 	if (dx == 0)
 	{
@@ -98,12 +98,12 @@ void CCollision::SweptAABB(
 		ty_exit = dy_exit / dy;
 	}
 
-
+	//DebugOut(L"ty_entry: %f ty_exit: %f\n", ty_entry, ty_exit);
 	if ((tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f) return;
-
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
 
+	//DebugOut(L"t_entry: %f t_exit: %f\n", t_entry, t_exit);
 	if (t_entry > t_exit) return;
 
 	t = t_entry;

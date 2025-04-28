@@ -49,6 +49,7 @@ void CSimon::OnCollisionWith(LPCOLLISIONEVENT e) {
 		OnCollisionWithEnemy(e);
 }
 void CSimon::OnCollisionWithBrick(LPCOLLISIONEVENT e) {
+	DebugOut(L"[INFO] Collision with brick\n");
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
