@@ -30,10 +30,10 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
         simon->SetVx(0.0f);
         simon->SetState(new CSimonWalking());
     }
-    ////else if (keyCode == DIK_X)
-    //{
-    ////    simon->SetState(new CSimonJump());
-    //}
+    else if (keyCode == DIK_S)
+    {
+        simon->SetState(new CSimonJump());
+    }
     else if (keyCode == DIK_DOWN) 
     {
         simon->SetState(new CSimonSit());

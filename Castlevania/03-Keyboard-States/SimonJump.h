@@ -5,6 +5,7 @@ class CSimonJump : public CSimonState {
 private:
     float vy;
     bool jumping;
+	DWORD jumpStartTime;
 public:
     CSimonJump();
     void KeyDownHandle(CSimon* simon, int keyCode) override;

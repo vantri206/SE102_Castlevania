@@ -23,7 +23,10 @@ void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)
 
 void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
 {
-	
+	if (keyCode == DIK_S)
+	{
+		simon->SetState(new CSimonJump());
+	}
 }
 
 void CSimonWalking::Update(CSimon* simon)
