@@ -3,7 +3,7 @@
 
 #include "debug.h"
 
-#define BLOCK_PUSH_FACTOR 0.01f
+#define BLOCK_PUSH_FACTOR 0.1f
 
 CCollision* CCollision::__instance = NULL;
 
@@ -153,7 +153,8 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 		sl, st, sr, sb,
 		t, nx, ny
 	);
-
+	//DebugOut(L"sl: %f st: %f sr: %f sb: %f\n", sl, st, sr, sb);
+	//DebugOut(L"ml: %f mt: %f mr: %f mb: %f\n", ml, mt, mr, mb);
 	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
 	return e;
 }
@@ -197,14 +198,14 @@ void CCollision::Filter(LPGAMEOBJECT objSrc,
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
-		if (c->isDeleted) continue;
-		if (c->obj->IsDeleted) continue;
+		//if (c->isDeleted) continue;
+		//if (c->obj->IsDeleted) continue;
 
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
-		if (filterBlock == 1 && !c->obj->IsBlocking())
+		/*if (filterBlock == 1 && !c->obj->IsBlocking())
 		{
 			continue;
-		}
+		}*/
 
 		if (c->t < min_tx && c->nx != 0 && filterX == 1) {
 			min_tx = c->t; min_ix = i;
@@ -244,18 +245,18 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	else
 	{
 		Filter(objSrc, coEvents, colX, colY);
-
+		DebugOut(L"colY: %f\n", colY->t);
 		float x, y, vx, vy, dx, dy;
 		objSrc->GetPosition(x, y);
 		objSrc->GetSpeed(vx, vy);
 		dx = vx * dt;
 		dy = vy * dt;
-
+		DebugOut(L"y: %f\n",y);
 		if (colX != NULL && colY != NULL)
 		{
 			if (colY->t < colX->t)	// was collision on Y first ?
 			{
-				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+				y -= colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
 				objSrc->SetPosition(x, y);
 
 				objSrc->OnCollisionWith(colY);
@@ -290,7 +291,6 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 			{
 				x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
 				objSrc->SetPosition(x, y);
-
 				objSrc->OnCollisionWith(colX);
 
 				//
@@ -311,34 +311,35 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 
 				if (colY_other != NULL)
 				{
-					y += colY_other->t * dy + colY_other->ny * BLOCK_PUSH_FACTOR;
+					y -= colY_other->t * dy + colY_other->ny * BLOCK_PUSH_FACTOR;
 					objSrc->OnCollisionWith(colY_other);
 				}
 				else
 				{
-					y += dy;
+					y -= dy;
 				}
 			}
 		}
 		else
-			if (colX != NULL)
-			{
-				x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
+		if (colX != NULL)
+		{
+			x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
+			y += dy;
+			objSrc->OnCollisionWith(colX);
+		}
+		else
+		if (colY != NULL)
+		{
+			x += dx;
+			y -= colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+			objSrc->OnCollisionWith(colY);
+			DebugOut(L"ynew: %f\n", y);
+		}
+		else // both colX & colY are NULL 
+		{
+				x += dx;
 				y += dy;
-				objSrc->OnCollisionWith(colX);
-			}
-			else
-				if (colY != NULL)
-				{
-					x += dx;
-					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
-					objSrc->OnCollisionWith(colY);
-				}
-				else // both colX & colY are NULL 
-				{
-					x += dx;
-					y += dy;
-				}
+		}
 
 		objSrc->SetPosition(x, y);
 	}

@@ -18,7 +18,7 @@
 
 #define SIMON_JUMP_SPEED 0.3f
 #define JUMP_DURATION 500 // ms
-#define GRAVITY 0.00002f
+#define GRAVITY 0.002f
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1

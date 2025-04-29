@@ -1,7 +1,7 @@
 #object_id object_type x y width height extra_setting...
-1 0 18 60 16 30
+1 0 980 150 16 30
 #Simon, x y is start position when swich scene
-33 7 204 48 16 32 1
-#Ghoul, extra setting: positive when start
 42 2 768 24 1536 16
+#Brick
+45 2 968 88 80 16
 #Brick

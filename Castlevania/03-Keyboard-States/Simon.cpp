@@ -12,7 +12,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
 
-
+	
 	vx += ax * dt;
 	vy += ay * dt;
 
@@ -46,9 +46,9 @@ void CSimon::OnNoCollision(DWORD dt)
 }
 void CSimon::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	DebugOut(L"Collison \n");
 	if (e->ny != 0)
 	{
+		DebugOut(L"Col\n");
 		vy = 0.0f;
 		if (e->ny < 0) isOnPlatform = true;
 	}

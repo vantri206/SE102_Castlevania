@@ -9,6 +9,7 @@ CGameObject::CGameObject()
 	vx = vy = 0;
 	nx = 1;	
 	state = -1;
+	isDeleted = false;
 }
 void CGameObject::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
