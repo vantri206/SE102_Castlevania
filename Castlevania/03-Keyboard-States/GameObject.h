@@ -64,7 +64,7 @@ public:
     virtual void OnNoCollision(DWORD dt) {};
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 
-	virtual int IsBlocking() { return 0; };
+    virtual int IsBlocking() { return 0; }
 
 	virtual int IsDirectionColliable(int nx, int ny) { return 1; }
 

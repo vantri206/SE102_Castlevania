@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 #include "debug.h"
+#include "GameDefine.h"
 
 #define BLOCK_PUSH_FACTOR 0.001f
 
@@ -42,16 +43,13 @@ void CCollision::SweptAABB(
 	//
 
 	float bl = dx > 0 ? ml : ml + dx;
-	float bt = dy > 0 ? mt : mt + dy;
+	float bt = dy > 0 ? mt + dy : mt;
 	float br = dx > 0 ? mr + dx : mr;
-	float bb = dy > 0 ? mb + dy : mb;
+	float bb = dy > 0 ? mb: mb + dy;
 
 	if (br < sl || bl > sr || bb > st || bt < sb) return;
-	//if (br < sl || bl > sr || bb < st || bt > sb) return;
-
 
 	if (dx == 0 && dy == 0) return;		// moving object is not moving > obvious no collision
-
 	if (dx > 0)
 	{
 		dx_entry = sl - mr;
@@ -62,20 +60,17 @@ void CCollision::SweptAABB(
 		dx_entry = sr - ml;
 		dx_exit = sl - mr;
 	}
-
-	//DebugOut(L"mb: %f st: %f mt:%f sb: %f\n", mb, st, mt, sb);
-
-	if (dy > 0)
+	if (dy < 0)
 	{
-		dy_entry = sb - mt;
-		dy_exit = st - mb; 
-	}
-	else if (dy < 0)
-	{
-		dy_entry = mb - st;
+		dy_entry = st - mb;
 		dy_exit = sb - mt;
 	}
-
+	else if (dy > 0)
+	{
+		dy_entry = sb - mt;
+		dy_exit = st - mb;
+	}
+	
 	if (dx == 0)
 	{
 		tx_entry = -9999999.0f;
@@ -102,7 +97,6 @@ void CCollision::SweptAABB(
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
 
-	//DebugOut(L"t_entry: %f t_exit: %f\n", t_entry, t_exit);
 	if (t_entry > t_exit) return;
 
 	t = t_entry;
@@ -115,7 +109,7 @@ void CCollision::SweptAABB(
 	else
 	{
 		nx = 0.0f;
-		dy > 0 ? ny = 1.0f : ny = -1.0f;
+		dy > 0 ? ny = -1.0f : ny = 1.0f;
 	}
 }
 
@@ -142,7 +136,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 	// NOTE: new m speed = original m speed - collide object speed
 	// 
 	float dx = mdx - sdx;
-	float dy = mdy - sdy;
+	float dy = mdy - sdy;	//dy < 0: going down, dy > 0: going up
 
 	objSrc->GetBoundingBox(ml, mt, mr, mb);
 	objDest->GetBoundingBox(sl, st, sr, sb);
@@ -153,8 +147,6 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 		sl, st, sr, sb,
 		t, nx, ny
 	);
-	//DebugOut(L"sl: %f st: %f sr: %f sb: %f\n", sl, st, sr, sb);
-	//DebugOut(L"ml: %f mt: %f mr: %f mb: %f\n", ml, mt, mr, mb);
 	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
 	return e;
 }
@@ -202,10 +194,10 @@ void CCollision::Filter(LPGAMEOBJECT objSrc,
 		//if (c->obj->IsDeleted) continue;
 
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
-		/*if (filterBlock == 1 && !c->obj->IsBlocking())
+		if (filterBlock == 1 && !c->obj->IsBlocking())
 		{
 			continue;
-		}*/
+		}
 
 		if (c->t < min_tx && c->nx != 0 && filterX == 1) {
 			min_tx = c->t; min_ix = i;
@@ -254,7 +246,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		{
 			if (colY->t < colX->t)	// was collision on Y first ?
 			{
-				y -= colY->t * dy - colY->ny * BLOCK_PUSH_FACTOR;
+				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
 				objSrc->SetPosition(x, y);
 
 				objSrc->OnCollisionWith(colY);
@@ -309,7 +301,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 
 				if (colY_other != NULL)
 				{
-					y -= colY_other->t * dy - colY_other->ny * BLOCK_PUSH_FACTOR;
+					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
 					objSrc->OnCollisionWith(colY_other);
 				}
 				else
@@ -329,7 +321,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		if (colY != NULL)
 		{
 			x += dx;
-			y -= colY->t * dy - colY->ny * BLOCK_PUSH_FACTOR;
+			y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
 			objSrc->OnCollisionWith(colY);
 		}
 		else // both colX & colY are NULL 
@@ -337,7 +329,6 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 				x += dx;
 				y += dy;
 		}
-
 		objSrc->SetPosition(x, y);
 	}
 

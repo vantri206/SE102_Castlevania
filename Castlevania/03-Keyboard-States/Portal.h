@@ -14,4 +14,5 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
 	void SetSceneId(int id) { sceneId = id; }
+	int IsBlocking() { return 0; }
 };

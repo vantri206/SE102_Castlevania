@@ -16,4 +16,5 @@ public:
 	void Render();
 	void Update(DWORD dt) {}
 	void LoadExtraSetting(vector<int> extra_settings);
+	int IsBlocking() { return 0; }
 };

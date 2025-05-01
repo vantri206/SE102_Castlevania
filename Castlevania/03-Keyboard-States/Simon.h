@@ -1,9 +1,15 @@
 #pragma once
 #include "GameObject.h"
 #include <memory>
+
 #include "SimonState.h"
 #include "SimonIdle.h"
 #include "SimonHurt.h"
+#include "SimonFalling.h"
+
+#include "Brick.h"
+#include "Enemy.h"
+
 #include "debug.h"
 #include "GameDefine.h"
 
@@ -17,8 +23,8 @@
 #define SIMON_UNTOUCHABLE_TIME 1000 
 
 #define SIMON_JUMP_SPEED 0.3f
-#define JUMP_DURATION 0.1f
-#define GRAVITY 0.0002f
+#define JUMP_DURATION 50.0f
+#define GRAVITY -0.002f
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1
@@ -62,7 +68,7 @@ protected:
 	unique_ptr<CSimonState> currentState;
 	int untouchable;
 	ULONGLONG untouchable_start;
-	BOOLEAN isOnPlatform;
+	BOOLEAN isOnLanding;
 public:
 	CSimon(float x, float y)
 	{
@@ -70,15 +76,15 @@ public:
 		this->y = y;
 		maxVx = 0.0f;
 		ax = 0.0f;
-		ay = - GRAVITY;
+		ay = 0.0f;
 		untouchable = 0;
 		untouchable_start = -1;
-		isOnPlatform = false;
 		nx = NEGATIVE_DIRECTION;
 		ny = 1;
 		
 		currentState = make_unique<CSimonIdle>();
 	}
+	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
 	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
 	void SetAx(float ax) { this->ax = ax; }
 	void SetAy(float ay) { this->ay = ay; }
@@ -95,13 +101,15 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
-	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
-	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
+	void UpdateMoving(DWORD dt);
 
 	int IsCollidable() { return 1; };
+	int IsBlocking() { return 1; };
+
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
-	BOOLEAN IsOnPlatform() { return isOnPlatform; }
+	void SetOnLanding(bool isonplatform) { this->isOnLanding = isonplatform; };
+	bool IsOnLanding() { return isOnLanding; }
 	CSimonState* GetState();
 	void SetState(CSimonState* state);
 

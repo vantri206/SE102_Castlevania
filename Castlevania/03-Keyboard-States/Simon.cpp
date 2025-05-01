@@ -4,19 +4,21 @@
 #include "Camera.h"
 #include "Enemy.h"
 #include "Brick.h"
+#include "Candle.h"
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	currentState->Update(this);
+	currentState->Update(this, dt);
 
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
 
-	
 	vx += ax * dt;
 	vy += ay * dt;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
@@ -36,43 +38,20 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
-void CSimon::OnNoCollision(DWORD dt) 
+void CSimon::OnNoCollision(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
-	isOnPlatform = false;
+	currentState->OnNoCollision(this, dt);
 }
 void CSimon::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0)
-	{
-		DebugOut(L"Col\n");
-		vy = 0.0f;
-		if (e->ny < 0) isOnPlatform = true;
-	}
-	else
-	if (e->nx != 0)
-	{
-		vx = 0;
-	}
-	 if(dynamic_cast<CEnemy*>(e->obj))
-		OnCollisionWithEnemy(e);
+	if (dynamic_cast<CSimon*>(e->obj)) return;
+	currentState->OnCollisionWith(this, e);
 }
-void CSimon::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
-	if (untouchable == 0)
-	{
-		SetState(new CSimonHurt());
-		StartUntouchable();
-
-		if (x < e->obj->GetX())
-			vx = -SIMON_HURT_VX; 
-		else
-			vx = SIMON_HURT_VX; 
-
-		vy = -SIMON_HURT_VY; 
-	}
+void CSimon::UpdateMoving(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
 }
 void CSimon::OnKeyDown(int keyCode)
 {

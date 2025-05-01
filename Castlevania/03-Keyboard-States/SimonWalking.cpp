@@ -5,19 +5,25 @@
 #include "SimonIdle.h"
 #include "SimonWalking.h"
 #include "SimonJump.h"
+#include "Brick.h"
+#include "Enemy.h"
+
+CSimonWalking::CSimonWalking(CSimon* simon)
+{
+	simon->SetMaxVx(SIMON_WALKING_SPEED * simon->GetDirectionX());
+	simon->SetAccel(SIMON_ACCEL_WALK_X * simon->GetDirectionX(), GRAVITY);
+	simon->SetAniId(ID_ANI_SIMON_WALK);
+}
+
 void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)
 {
 	if (keyCode == DIK_RIGHT && simon->GetDirectionX() > 0)
 	{
-		simon->SetAx(0.0f);
-		simon->SetVx(0.0f);
-		simon->SetState(new CSimonIdle());
+		simon->SetState(new CSimonIdle(simon));
 	}
 	else if (keyCode == DIK_LEFT && simon->GetDirectionX() < 0)
 	{
-		simon->SetAx(0.0f);
-		simon->SetVx(0.0f);
-		simon->SetState(new CSimonIdle());
+		simon->SetState(new CSimonIdle(simon));
 	}
 }
 
@@ -25,13 +31,30 @@ void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
 {
 	if (keyCode == DIK_S)
 	{
-		simon->SetState(new CSimonJump());
+		simon->SetState(new CSimonJump(simon));
 	}
 }
 
-void CSimonWalking::Update(CSimon* simon)
+void CSimonWalking::Update(CSimon* simon, DWORD dt)
 {
-	simon->SetMaxVx(SIMON_WALKING_SPEED * simon->GetDirectionX());
-	simon->SetAx(SIMON_ACCEL_WALK_X*simon->GetDirectionX());
-	simon->SetAniId(ID_ANI_SIMON_WALK);
+
+}
+void CSimonWalking::OnNoCollision(CSimon* simon, DWORD dt)
+{
+	simon->SetState(new CSimonFalling(simon));
+}
+void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		simon->SetState(new CSimonHurt());
+	}
+	if (e->ny != 0 && e->obj->IsBlocking())
+	{
+		simon->SetVy(0.0f);
+	}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		simon->SetVx(0.0f);
+	}
 }

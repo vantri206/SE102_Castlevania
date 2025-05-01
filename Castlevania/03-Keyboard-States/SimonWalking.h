@@ -5,7 +5,10 @@
 class CSimonWalking : public CSimonState
 {
 public:
-    virtual void KeyUpHandle(CSimon* simon, int keyCode) override;
-    virtual void KeyDownHandle(CSimon* simon, int keyCode) override;
-    virtual void Update(CSimon* simon) override;
+    CSimonWalking(CSimon* simon);
+    void KeyDownHandle(CSimon* simon, int keyCode);
+    void KeyUpHandle(CSimon* simon, int keyCode);
+    void Update(CSimon* simon, DWORD dt);
+    void OnNoCollision(CSimon* simon, DWORD dt);
+    void OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e);
 };

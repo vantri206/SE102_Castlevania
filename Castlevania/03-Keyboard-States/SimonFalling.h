@@ -1,11 +1,10 @@
 #pragma once
 #include "SimonState.h"
 
-class CSimonAttack : public CSimonState {
-private:
-    DWORD attackStartTime;
+class CSimonFalling : public CSimonState
+{
 public:
-    CSimonAttack(CSimon* simon);
+    CSimonFalling(CSimon* simon);
     void KeyDownHandle(CSimon* simon, int keyCode);
     void KeyUpHandle(CSimon* simon, int keyCode);
     void Update(CSimon* simon, DWORD dt);

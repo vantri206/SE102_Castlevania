@@ -5,7 +5,11 @@
 class CSimonIdle : public CSimonState
 {
 public:
-    void KeyUpHandle(CSimon* simon, int keyCode) override;
-    void KeyDownHandle(CSimon* simon, int keyCode) override;
-    void Update(CSimon* simon) override;
+    CSimonIdle() {}
+    CSimonIdle(CSimon* simon);
+    void KeyDownHandle(CSimon* simon, int keyCode);
+    void KeyUpHandle(CSimon* simon, int keyCode);
+    void Update(CSimon* simon, DWORD dt);
+    void OnNoCollision(CSimon* simon, DWORD dt);
+    void OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e);
 };

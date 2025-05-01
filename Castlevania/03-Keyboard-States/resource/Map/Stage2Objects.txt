@@ -1,7 +1,76 @@
 #object_id object_type x y width height extra_setting...
-1 0 980 150 16 30
+1 0 18 120 16 30
 #Simon, x y is start position when swich scene
+3 6 32 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+7 6 160 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+8 6 288 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+9 6 416 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+10 6 544 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+15 6 736 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+19 6 928 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+20 6 1056 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+21 6 1120 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+22 6 1180 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+23 6 1244 56 8 16
+#Candle, extra setting: item's objectid drop when hit
+25 6 1440 152 8 16
+#Candle, extra setting: item's objectid drop when hit
+24 6 1372 88 8 16
+#Candle, extra setting: item's objectid drop when hit
+6 6 96 88 8 16
+#Candle, extra setting: item's objectid drop when hit
+11 6 224 88 8 16
+#Candle, extra setting: item's objectid drop when hit
+12 6 352 88 8 16
+#Candle, extra setting: item's objectid drop when hit
+13 6 480 88 8 16
+#Candle, extra setting: item's objectid drop when hit
+14 6 608 88 8 16
+#Candle, extra setting: item's objectid drop when hit
+16 6 672 152 8 16
+#Candle, extra setting: item's objectid drop when hit
+17 6 864 152 8 16
+#Candle, extra setting: item's objectid drop when hit
+18 6 992 152 8 16
+#Candle, extra setting: item's objectid drop when hit
+26 5 1528 160 15 64 3
+#Portal, extra setting: scene will be changed to
+29 7 172 48 16 32 1
+#Ghoul, extra setting: positive when start
+35 7 1200 48 16 32 1
+#Ghoul, extra setting: positive when start
+36 7 1232 48 16 32 1
+#Ghoul, extra setting: positive when start
+37 7 1280 48 16 32 1
+#Ghoul, extra setting: positive when start
+33 7 204 48 16 32 1
+#Ghoul, extra setting: positive when start
+34 7 236 48 16 32 1
+#Ghoul, extra setting: positive when start
+38 8 700 103 25 16 1
+#Panther, extra setting: positive when start
+39 8 956 103 25 16 1
+#Panther, extra setting: positive when start
+40 8 892 135 25 16 1
+#Panther, extra setting: positive when start
 42 2 768 24 1536 16
+#Brick
+43 2 832 120 160 16
 #Brick
 45 2 968 88 80 16
 #Brick
+46 2 1464 120 144 16
+#Brick
+47 2 1528 72 16 80
+#Brick
+44 2 728 88 48 16

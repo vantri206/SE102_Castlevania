@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-
-
 #define WINDOW_CLASS_NAME L"MainWindow"
 #define MAIN_WINDOW_TITLE L"Castlevania-NES"
 #define WINDOW_ICON_PATH L"castlevania.ico"
@@ -16,6 +14,11 @@
 
 #define POSITIVE_DIRECTION -1
 #define NEGATIVE_DIRECTION 1
+
+/*----On Landing----*/
+
+#define ON_LANDING true
+#define NOT_ON_LANDING false
 
 /*---- Resource file path ----*/
 #define TEXTURES_PATH L"./resource/textures.txt"

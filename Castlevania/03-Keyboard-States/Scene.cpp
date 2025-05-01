@@ -42,6 +42,7 @@ static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra
 		break;
 	}
 	obj->SetId(objectId);
+	obj->SetType(objectType);
 	obj->LoadExtraSetting(extra_settings);
 	return obj;
 }
@@ -81,14 +82,17 @@ void CScene::LoadScene()
 
 		CGameObject* obj = NULL;
 		if (objectType == SIMON) player->SetPosition(x, y);
-		else obj = CreateObject(objectId, objectType, extra_settings);
-
-		if (obj != NULL)
+		else
 		{
-			obj->SetPosition(x, y);
-			obj->SetSize(width, height);
-			objects.push_back(obj);
-			//DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectType, x, y);
+			obj = CreateObject(objectId, objectType, extra_settings);
+
+			if (obj != NULL)
+			{
+				obj->SetPosition(x, y);
+				obj->SetSize(width, height);
+				objects.push_back(obj);
+				//DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectType, x, y);
+			}
 		}
 	}
 	f.close();
@@ -103,19 +107,20 @@ void CScene::LoadPlayer()
 {
 	player = new CSimon(0, 0);
 	player->SetSize(SIMON_WIDTH, SIMON_HEIGHT);
-	player->SetState(new CSimonIdle());
+	player->SetType(SIMON);
+	player->SetState(new CSimonIdle(player));
 	player->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID));
 }
 
 void CScene::Update(DWORD dt)
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
-	auto activeObjects = quadtree->GetObjectsInView(cam);
+	auto activeObjects1 = quadtree->GetObjectsInView(cam);
 
+	auto activeObjects = quadtree->GetObjectsInView(cam);
 	for (auto obj : activeObjects)
 		obj->Update(dt, &activeObjects);   
-	player->Update(dt, &activeObjects);    
-
+	player->Update(dt, &activeObjects);
 	for (auto obj : activeObjects)
 	{
 		float l, t, r, b;

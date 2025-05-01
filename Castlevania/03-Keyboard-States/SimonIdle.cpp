@@ -7,12 +7,19 @@
 #include "SimonJump.h"
 #include "SimonAttack.h"
 #include "SimonSit.h"
+#include "Enemy.h"
+
+CSimonIdle::CSimonIdle(CSimon* simon)
+{
+    simon->SetAniId(ID_ANI_SIMON_IDLE);
+    simon->SetAccel(0.0f, GRAVITY);
+    simon->SetSpeed(0.0f, 0.0f);
+}
 void CSimonIdle::KeyUpHandle(CSimon* simon, int keyCode)
 {
 	//DebugOut(L"Keycode: %d\n", keyCode);
 
 }
-
 
 void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
 {
@@ -20,33 +27,48 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
     if (keyCode == DIK_RIGHT)
     {
         simon->SetDirectionX(1);
-        simon->SetAx(0.0f);
-        simon->SetVx(0.0f);
-        simon->SetState(new CSimonWalking());
+        simon->SetState(new CSimonWalking(simon));
     }
     else if (keyCode == DIK_LEFT) {
         simon->SetDirectionX(-1);
-        simon->SetAx(0.0f);
-        simon->SetVx(0.0f);
-        simon->SetState(new CSimonWalking());
+        simon->SetState(new CSimonWalking(simon));
     }
     else if (keyCode == DIK_S)
     {
-        simon->SetState(new CSimonJump());
+        simon->SetState(new CSimonJump(simon));
     }
     else if (keyCode == DIK_DOWN) 
     {
-        simon->SetState(new CSimonSit());
+        simon->SetState(new CSimonSit(simon));
     }
     else if (keyCode == DIK_A) 
     {
-        simon->SetState(new CSimonAttack());
+        simon->SetState(new CSimonAttack(simon));
     }
 } 
 
-void CSimonIdle::Update(CSimon* simon)
+void CSimonIdle::Update(CSimon* simon, DWORD dt)
 {
-    simon->SetAx(0.0f);
-    simon->SetVx(0.0f);
-	simon->SetAniId(ID_ANI_SIMON_IDLE);
+
+}
+
+void CSimonIdle::OnNoCollision(CSimon* simon, DWORD dt)
+{
+    simon->SetState(new CSimonFalling(simon));
+}
+
+void CSimonIdle::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+{
+    if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		simon->SetState(new CSimonHurt());
+	}
+	if (e->ny != 0 && e->obj->IsBlocking())
+	{
+		simon->SetVy(0.0f);
+	}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+        simon->SetVx(0.0f);
+	}
 }

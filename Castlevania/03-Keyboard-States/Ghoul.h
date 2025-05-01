@@ -18,25 +18,25 @@
 #define ANI_ID_GHOUL_IDLE 0
 #define ANI_ID_GHOUL_WALK 1
 
-
-
+#define GRAVITY -0.002f
 class CGhoul : public CEnemy
 {
 protected:
 public:
-	CGhoul() 
+	CGhoul()
 	{
-		maxVx = GHOUL_WALKING_SPEED;
-		maxVy = GHOUL_WALKING_SPEED;
-		ax = 0.0f;
-		ay = 0.0f;
-		nx = 1, ny = 1;
+		vx = 0.0f;
+		vy = GRAVITY;
 
 		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(GHOUL_ANI_SET_ID));
 	}
-	void Update(DWORD dt);
+	void Update(DWORD dt) {};
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state) {}
 	void LoadExtraSetting(vector<int> extra_settings);
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 	int IsCollidable() { return 1; };
+	int IsBlocking() { return 1; };
 };
