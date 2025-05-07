@@ -9,7 +9,7 @@
 CSimonJump::CSimonJump(CSimon* simon)
 {
 	jumpStartTime = GetTickCount64();
-	simon->SetVy(1.0f);
+	simon->SetVy(SIMON_JUMP_SPEED);
 	simon->SetAy(0.0f);
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
 }

@@ -14,7 +14,7 @@
 #include "GameDefine.h"
 
 
-#define SIMON_WALKING_SPEED		0.2f
+#define SIMON_WALKING_SPEED	0.15f
 #define SIMON_ACCEL_WALK_X	0.0005f
 
 #define SIMON_HURT_VX 0.2f    
@@ -22,8 +22,8 @@
 #define SIMON_HURT_TIME 300  
 #define SIMON_UNTOUCHABLE_TIME 1000 
 
-#define SIMON_JUMP_SPEED 0.3f
-#define JUMP_DURATION 50.0f
+#define SIMON_JUMP_SPEED 1.0f
+#define JUMP_DURATION 0.005f
 #define GRAVITY -0.002f
 
 #define SIMON_STATE_IDLE	0
