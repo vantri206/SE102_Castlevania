@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Simon.h"
-
+#include "SimonAttack.h"
 #include "SimonIdle.h"
 #include "SimonWalking.h"
 #include "SimonJump.h"
@@ -32,6 +32,11 @@ void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
 	if (keyCode == DIK_S)
 	{
 		simon->SetState(new CSimonJump(simon));
+	}
+	if (keyCode == DIK_A)
+	{
+		simon->SetState(new CSimonIdle(simon));
+		simon->SetState(new CSimonAttack(simon));
 	}
 }
 
