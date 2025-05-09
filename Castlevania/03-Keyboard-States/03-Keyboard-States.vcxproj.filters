@@ -204,6 +204,9 @@
     <ClCompile Include="SimonFalling.cpp">
       <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="SimonWalkingStairs.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -331,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="Whip.h">
       <Filter>Header Files\GameObjects\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Stairs.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonWalkingStairs.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

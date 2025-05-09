@@ -69,6 +69,7 @@ protected:
 	int untouchable;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnLanding;
+	BOOLEAN isColWithStairs;
 public:
 	CSimon(float x, float y)
 	{
@@ -81,7 +82,7 @@ public:
 		untouchable_start = -1;
 		nx = NEGATIVE_DIRECTION;
 		ny = 1;
-		
+
 		currentState = make_unique<CSimonIdle>();
 	}
 	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
@@ -89,7 +90,7 @@ public:
 	void SetAx(float ax) { this->ax = ax; }
 	void SetAy(float ay) { this->ay = ay; }
 	void SetDirectionX(int direction) { nx = direction; }
-    int GetDirectionX() { return nx; }
+	int GetDirectionX() { return nx; }
 	void SetDirectionY(int direction) { ny = direction; }
 	int GetDirectionY() { return ny; }
 
@@ -108,6 +109,8 @@ public:
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
+	void SetColWithStairs(bool iscolwithstairs) { this->isColWithStairs = iscolwithstairs; };
+	bool IsColWithStairs() { return isColWithStairs; }
 	void SetOnLanding(bool isonplatform) { this->isOnLanding = isonplatform; };
 	bool IsOnLanding() { return isOnLanding; }
 	CSimonState* GetState();

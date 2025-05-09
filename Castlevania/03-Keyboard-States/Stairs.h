@@ -3,10 +3,10 @@
 #include "Animation.h"
 #include "Animations.h"
 
-class CStair : public CGameObject
+class CStairs : public CGameObject
 {
 public:
-	CStair();
+	CStairs();
 	void Update(DWORD dt) {}
 	int IsBlocking() { return 1; }
 	int IsCollidable() { return 1; }
