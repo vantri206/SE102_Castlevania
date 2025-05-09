@@ -33,6 +33,7 @@ void CSimonJump::Update(CSimon* simon, DWORD dt)
 
 void CSimonJump::OnNoCollision(CSimon* simon, DWORD dt)
 {
+	simon->UpdateMoving(dt);
 }
 
 void CSimonJump::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
@@ -41,13 +42,13 @@ void CSimonJump::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 	{
 		simon->SetState(new CSimonHurt());
 	}
-	if (e->ny != 0 && e->obj->IsBlocking())
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{
-		simon->SetVy(0.0f);
+		simon->SetState(new CSimonIdle(simon));
 	}
-	else if (e->nx != 0 && e->obj->IsBlocking())
+	else if (e->ny < 0 && e->obj->IsBlocking())
 	{
-		simon->SetState(new CSimonIdle());
+		simon->SetState(new CSimonFalling(simon));
 	}
 }
 

@@ -64,7 +64,7 @@ void CScene::LoadScene()
 	while (f.getline(str, MAX_TXT_LINE))
 	{
 		string line(str);
-		if (line[0] == '#') continue;
+		if (line[0] == '#' || line.length() < 6) continue;
 		tokens = split(line);
 		int objectId = atoi(tokens[0].c_str());
 		int objectType = atoi(tokens[1].c_str());
