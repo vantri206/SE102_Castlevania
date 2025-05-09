@@ -8,11 +8,15 @@
 #include "Brick.h"
 #include "Enemy.h"
 
+#define SIMON_WALKING_WIDTH 15
+#define SIMON_WALKING_HEIGHT 30
+
 CSimonWalking::CSimonWalking(CSimon* simon)
 {
 	simon->SetMaxVx(SIMON_WALKING_SPEED * simon->GetDirectionX());
 	simon->SetAccel(SIMON_ACCEL_WALK_X * simon->GetDirectionX(), GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_WALK);
+	simon->SetSize(SIMON_WALKING_WIDTH, SIMON_WALKING_HEIGHT);
 }
 
 void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)

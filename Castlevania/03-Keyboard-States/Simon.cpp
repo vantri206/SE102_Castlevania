@@ -5,11 +5,11 @@
 #include "Enemy.h"
 #include "Brick.h"
 #include "Candle.h"
+#include "Whip.h"
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	currentState->Update(this, dt);
-
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
 

@@ -9,11 +9,15 @@
 #include "SimonSit.h"
 #include "Enemy.h"
 
+#define SIMON_IDLE_WIDTH 16
+#define SIMON_IDLE_HEIGHT 30
+
 CSimonIdle::CSimonIdle(CSimon* simon)
 {
     simon->SetAniId(ID_ANI_SIMON_IDLE);
     simon->SetAccel(0.0f, GRAVITY);
     simon->SetSpeed(0.0f, 0.0f);
+    simon->SetSize(SIMON_IDLE_WIDTH, SIMON_IDLE_HEIGHT);
 }
 void CSimonIdle::KeyUpHandle(CSimon* simon, int keyCode)
 {

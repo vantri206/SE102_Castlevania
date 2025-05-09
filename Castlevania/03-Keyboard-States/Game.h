@@ -35,8 +35,6 @@ protected:
 	ID3D10RenderTargetView* pRenderTargetView = NULL;
 	ID3D10BlendState* pBlendStateAlpha = NULL;			// To store alpha blending state
 	
-	
-	
 	LPDIRECTINPUT8       di;		// The DirectInput object         
 	LPDIRECTINPUTDEVICE8 didv;		// The keyboard device 
 

@@ -9,7 +9,7 @@ void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 void CGhoul::Render()
 {
-	animation_set->at(ANI_ID_GHOUL_WALK)->Render(x, y);
+	animation_set->at(ANI_ID_GHOUL_IDLE)->Render(x, y);
 }
 
 void CGhoul::OnNoCollision(DWORD dt)

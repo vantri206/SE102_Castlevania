@@ -5,6 +5,8 @@
 #include "Simon.h"
 #include "SimonFalling.h"
 
+#define SIMON_JUMP_WIDTH 16
+#define SIMON_JUMP_HEIGHT 23
 
 CSimonJump::CSimonJump(CSimon* simon)
 {
@@ -12,6 +14,7 @@ CSimonJump::CSimonJump(CSimon* simon)
 	simon->SetVy(SIMON_JUMP_SPEED);
 	simon->SetAy(0.0f);
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
+	//simon->SetSize(SIMON_JUMP_WIDTH, SIMON_JUMP_HEIGHT);
 }
 void CSimonJump::KeyDownHandle(CSimon* simon, int keyCode) {}
 void CSimonJump::KeyUpHandle(CSimon* simon, int keyCode)

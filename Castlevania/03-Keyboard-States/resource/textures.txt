@@ -2,6 +2,7 @@
 #----GAMEOBJECT----#
 # id	file_path	
 20 resource/Characters/Simon.png
+21 resource/Characters/Whip.png
 30 resource/Enemies/Enemies.png
 40 resource/Items/Axe.png
 41 resource/Items/BigHeart.png

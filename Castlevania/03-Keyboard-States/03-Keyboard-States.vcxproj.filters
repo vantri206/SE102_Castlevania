@@ -97,6 +97,9 @@
     <Filter Include="Source Files\Collision">
       <UniqueIdentifier>{a970c174-3972-4691-8f2a-cae14c3fe966}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameObjects\Weapon">
+      <UniqueIdentifier>{747b81a7-d28a-4bf7-9dcb-23020d49966f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="SimonHurt.h">
       <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Whip.h">
+      <Filter>Header Files\GameObjects\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

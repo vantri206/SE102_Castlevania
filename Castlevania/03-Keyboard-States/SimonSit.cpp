@@ -2,9 +2,13 @@
 #include "SimonIdle.h"
 #include "Simon.h"
 
+#define SIMON_SIT_WIDTH 16
+#define SIMON_SIT_HEIGHT 23
+
 CSimonSit::CSimonSit(CSimon* simon)
 {
     simon->SetAniId(ID_ANI_SIMON_SIT);
+    //simon->SetSize(SIMON_SIT_WIDTH, SIMON_SIT_HEIGHT);
 }
 
 void CSimonSit::KeyDownHandle(CSimon* simon, int keyCode)

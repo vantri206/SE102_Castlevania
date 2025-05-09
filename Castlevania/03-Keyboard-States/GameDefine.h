@@ -15,25 +15,12 @@
 #define POSITIVE_DIRECTION -1
 #define NEGATIVE_DIRECTION 1
 
-/*----On Landing----*/
-
-#define ON_LANDING true
-#define NOT_ON_LANDING false
-
 /*---- Resource file path ----*/
 #define TEXTURES_PATH L"./resource/textures.txt"
 #define ANIMATIONS_PATH L"./resource/animations.txt"
 #define SPRITES_PATH L"./resource/sprites.txt"
 #define ANIMATIONS_SET_PATH L"./resource/animations_set.txt"
 
-/*---- Object Type ----*/
-
-#define OBJECT_TYPE_SIMON 0
-#define OBJECT_TYPE_ENEMIES 1
-#define OBJECT_TYPE_WEAPON 2
-#define OBJECT_TYPE_ITEM 3
-#define OBJECT_TYPE_BRICK 4
-#define OBJECT_TYPE_OTHERS 5
 
 /*---- OBJECT_TYPE_ID ----*/
 
@@ -62,7 +49,7 @@ enum ANIMATION_SET_ID
 	TORCH_ANI_SET_ID = 300,
 	CANDLE_ANI_SET_ID = 301,
 	BIGHEART_ANI_SET_ID = 400,
-	MONEYBAG_ANI_SET_ID = 401
+	MONEYBAG_ANI_SET_ID = 401,
 };
 
 // Scene 
