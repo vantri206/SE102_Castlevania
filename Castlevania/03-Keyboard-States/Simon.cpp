@@ -76,4 +76,5 @@ CSimonState* CSimon::GetState()
 void CSimon::Render()
 {
 	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
+	currentState->Render(this);
 }

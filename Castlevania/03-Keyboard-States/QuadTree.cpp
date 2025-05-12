@@ -1,6 +1,8 @@
 ﻿#include "QuadTree.h"
 #include "debug.h"
 #include "Utils.h"
+#include "Whip.h"
+#include "Ghoul.h"
 
 QuadTree::QuadTree(int mapWidth, int mapHeight, vector<LPGAMEOBJECT>& gameObjects)
 {
@@ -15,6 +17,12 @@ QuadTree::QuadTree(int mapWidth, int mapHeight, vector<LPGAMEOBJECT>& gameObject
     // Đưa tất cả object vào node gốc dưới dạng CTreeObject
     for (auto& obj : gameObjects)
     {
+        // Đặc biệt xử lý cho Whip và Ghoul
+        if (dynamic_cast<CWhip*>(obj) || dynamic_cast<CGhoul*>(obj))
+        {
+            root->objects.push_back(new CTreeObject(obj));
+            continue;
+        }
         root->objects.push_back(new CTreeObject(obj));
     }
 
@@ -86,6 +94,12 @@ void QuadTree::Retrieve(QNode* node, RECT camRect, vector<LPGAMEOBJECT>& result)
     // Thêm các object trong node vào danh sách kết quả
     for (CTreeObject* obj : node->objects)
     {
+        // Đặc biệt xử lý cho Whip và Ghoul
+        if (dynamic_cast<CWhip*>(obj->target) || dynamic_cast<CGhoul*>(obj->target))
+        {
+            result.push_back(obj->target);
+            continue;
+        }
         result.push_back(obj->target);
     }
 
