@@ -7,7 +7,7 @@ CSimonWalkingStairDown::CSimonWalkingStairDown(CSimon* simon)
 {
 	int dir_x = simon->GetDirectionX(), dir_y = simon->GetDirectionY();
 	simon->SetAniId(ID_ANI_SIMON_GO_DOWN);
-	simon->SetSpeed(SIMON_WALKING_STAIR_SPEED * dir_x, SIMON_WALKING_STAIR_SPEED * dir_y);
+	simon->SetSpeed(SIMON_WALKING_STAIR_SPEED * dir_x, SIMON_WALKING_STAIR_SPEED * (-1) * dir_y);
 	simon->SetAccel(0.0f, 0.0f);
 }
 void CSimonWalkingStairDown::KeyDownHandle(CSimon* simon, int keyCode) {}

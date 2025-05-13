@@ -23,9 +23,6 @@ void CSimonHurt::Update(CSimon* simon, DWORD dt)
 }
 void CSimonHurt::OnNoCollision(CSimon* simon, DWORD dt)
 {
-	float vx, vy;
-	simon->GetSpeed(vx, vy);
-	DebugOut(L"Simon vx: %f\n", vx);
 	simon->UpdateMoving(dt);
 }
 void CSimonHurt::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e) {}

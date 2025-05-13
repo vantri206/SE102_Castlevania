@@ -8,6 +8,7 @@
 #include "Brick.h"
 #include "Enemy.h"
 #include "Debug.h"
+#include "SimonHurt.h"
 
 #define SIMON_WALKING_WIDTH 15
 #define SIMON_WALKING_HEIGHT 30

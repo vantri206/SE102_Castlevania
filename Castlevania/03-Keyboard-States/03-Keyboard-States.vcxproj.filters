@@ -195,11 +195,6 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Source Files\GameObjects\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Source Files\Collision</Filter>
-    <ClCompile Include="SimonHurt.cpp">
-      <Filter>Source Files\GameObjects\Characters</Filter>
-    </ClCompile>
     <ClCompile Include="SimonFalling.cpp">
       <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
@@ -220,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonHurt.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="Stair.h">
       <Filter>Header Files\GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonHurt.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

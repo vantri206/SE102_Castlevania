@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Simon.h"
 #include "SimonFalling.h"
+#include "SimonHurt.h"
 
 CSimonJump::CSimonJump(CSimon* simon)
 {
