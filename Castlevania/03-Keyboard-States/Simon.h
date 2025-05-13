@@ -60,7 +60,6 @@
 class CSimon : public CGameObject
 {
 protected:
-
 	float maxVx;
 	float ax, ay;
 
@@ -69,6 +68,8 @@ protected:
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnLanding;
 public:
+	vector<LPGAMEOBJECT>* coObjects;
+
 	CSimon(float x, float y)
 	{
 		this->x = x;
@@ -80,9 +81,14 @@ public:
 		untouchable_start = -1;
 		nx = NEGATIVE_DIRECTION;
 		ny = 1;
+		coObjects = nullptr;
 		
 		currentState = make_unique<CSimonIdle>();
 	}
+
+	void SetCoObjects(vector<LPGAMEOBJECT>* objects) { coObjects = objects; }
+	vector<LPGAMEOBJECT>* GetCoObjects() { return coObjects; }
+
 	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
 	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
 	void SetAx(float ax) { this->ax = ax; }
@@ -112,5 +118,4 @@ public:
 	bool IsOnLanding() { return isOnLanding; }
 	CSimonState* GetState();
 	void SetState(CSimonState* state);
-
 };
