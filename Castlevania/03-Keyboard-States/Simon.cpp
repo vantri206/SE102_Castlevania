@@ -9,6 +9,10 @@
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	this->CheckStairNearby(coObjects);
+
 	currentState->Update(this, dt);
 	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
@@ -17,8 +21,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
-
-	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
@@ -68,6 +70,13 @@ void CSimon::SetState(CSimonState* state)
 	currentState.reset(state);
 }
 
+int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
+{
+	if (dynamic_cast<CBrick*>(objDests) && this->isOnStair == true)
+		return 0;
+	return 1;
+}
+
 CSimonState* CSimon::GetState()
 {
 	return currentState.get();
@@ -78,3 +87,46 @@ void CSimon::Render()
 	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
 	currentState->Render(this);
 }
+
+void CSimon::CheckStairNearby(vector<LPGAMEOBJECT>* coObjects)
+{
+	this->nearbyStair = nullptr;
+	float l, t, r, b;
+	this->GetBoundingBox(l, t, r, b);
+	for (size_t i = 0; i < coObjects->size(); i++)
+	{
+		if (dynamic_cast<CStair*>(coObjects->at(i)))
+		{
+			CStair* stair = dynamic_cast<CStair*>(coObjects->at(i));
+			float l1, t1, r1, b1;
+			stair->GetBoundingBox(l1, t1, r1, b1);
+			if (min(r, r1) >= max(l, l1) && min(t, t1) >= max(b, b1))
+			{
+				this->nearbyStair = stair;
+			}
+		}
+	}
+}
+bool CSimon::IsNearStairUp()
+{
+	if (nearbyStair != nullptr)
+	{
+		if (nearbyStair->GetStairDirection() == UP_STAIR_DIRECTION)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool CSimon::IsNearStairDown()
+{
+	if (nearbyStair != nullptr)
+	{
+		if (nearbyStair->GetStairDirection() == DOWN_STAIR_DIRECTION)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+

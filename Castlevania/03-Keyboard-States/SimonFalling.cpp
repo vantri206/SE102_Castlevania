@@ -4,9 +4,6 @@
 #include "Game.h"
 #include "Simon.h"
 
-#define SIMON_FALLING_WIDTH 16
-#define SIMON_FALLING_HEIGHT 23
-
 CSimonFalling::CSimonFalling(CSimon* simon)
 {
 	simon->SetAccel(0.0f, GRAVITY);
@@ -34,10 +31,6 @@ void CSimonFalling::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 	if (e->ny > 0 && e->obj->IsBlocking())//change
 	{
 		simon->SetState(new CSimonIdle(simon));
-	}
-	else if (e->ny < 0 && e->obj->IsBlocking())
-	{
-		simon->SetState(new CSimonFalling(simon));
 	}
 }
 

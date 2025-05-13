@@ -12,10 +12,13 @@
 
 #include "debug.h"
 #include "GameDefine.h"
+#include "Stair.h"
 
 
-#define SIMON_WALKING_SPEED 0.15f
+#define SIMON_WALKING_SPEED 0.4f
 #define SIMON_ACCEL_WALK_X	0.0005f
+
+#define SIMON_WALKING_STAIR_SPEED 0.03f
 
 #define SIMON_HURT_VX 0.2f    
 #define SIMON_HURT_VY 0.4f   
@@ -67,7 +70,8 @@ protected:
 	unique_ptr<CSimonState> currentState;
 	int untouchable;
 	ULONGLONG untouchable_start;
-	BOOLEAN isOnLanding;
+	CStair* nearbyStair;	
+	bool isOnStair = false;
 public:
 	vector<LPGAMEOBJECT>* coObjects;
 
@@ -114,8 +118,15 @@ public:
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
-	void SetOnLanding(bool isonplatform) { this->isOnLanding = isonplatform; };
-	bool IsOnLanding() { return isOnLanding; }
+	bool IsNearStairUp();
+	bool IsNearStairDown();
+	void CheckStairNearby(vector<LPGAMEOBJECT>* coObjects);
+	CStair* GetNearbyStair() { return nearbyStair; }
+	void SetOnStair(bool isonstair) { this->isOnStair = isonstair; }
+	bool GetOnStair() { return isOnStair; }
+
+	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
+
 	CSimonState* GetState();
 	void SetState(CSimonState* state);
 };

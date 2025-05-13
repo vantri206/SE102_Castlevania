@@ -60,6 +60,7 @@ public:
     virtual void Render() = 0;
 
     virtual int IsCollidable() { return 0; };
+    virtual int CanCollisionWithObj(LPGAMEOBJECT objDests) { return 1; };
 
     virtual void OnNoCollision(DWORD dt) {};
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};

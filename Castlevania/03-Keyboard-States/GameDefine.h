@@ -15,6 +15,8 @@
 #define POSITIVE_DIRECTION -1
 #define NEGATIVE_DIRECTION 1
 
+#define UP_STAIR_DIRECTION 1
+#define DOWN_STAIR_DIRECTION -1
 /*---- Resource file path ----*/
 #define TEXTURES_PATH L"./resource/textures.txt"
 #define ANIMATIONS_PATH L"./resource/animations.txt"
@@ -36,6 +38,7 @@ enum OBJECT_TYPE
 	GHOUL = 7,
 	PANTHER = 8,
 	MONEYBAG = 9,
+	STAIR = 10,
 };
 
 /*---- Animation Set ----*/

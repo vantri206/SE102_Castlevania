@@ -12,6 +12,7 @@
 #include "Ghoul.h"
 #include "Panther.h"
 #include "Candle.h"
+#include "Stair.h"
 
 QuadTree* quadtree = NULL;
 vector<CGameObject*> objects;
@@ -39,6 +40,9 @@ static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra
 		break;
 	case PORTAL:
 		obj = new CBrick();
+		break;
+	case STAIR:
+		obj = new CStair();
 		break;
 	}
 	obj->SetId(objectId);

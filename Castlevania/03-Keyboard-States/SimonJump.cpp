@@ -5,16 +5,12 @@
 #include "Simon.h"
 #include "SimonFalling.h"
 
-#define SIMON_JUMP_WIDTH 16
-#define SIMON_JUMP_HEIGHT 23
-
 CSimonJump::CSimonJump(CSimon* simon)
 {
 	jumpStartTime = GetTickCount64();
 	simon->SetVy(SIMON_JUMP_SPEED);
 	simon->SetAy(0.0f);
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
-	//simon->SetSize(SIMON_JUMP_WIDTH, SIMON_JUMP_HEIGHT);
 }
 void CSimonJump::KeyDownHandle(CSimon* simon, int keyCode) {}
 void CSimonJump::KeyUpHandle(CSimon* simon, int keyCode)
@@ -41,13 +37,11 @@ void CSimonJump::OnNoCollision(CSimon* simon, DWORD dt)
 
 void CSimonJump::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-	/*
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		simon->SetState(new CSimonHurt(simon));
 	}
-	*/
-	if (e->ny > 0 && e->obj->IsBlocking())
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetState(new CSimonIdle(simon));
 	}

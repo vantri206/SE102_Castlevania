@@ -34,7 +34,7 @@ void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)
 
 void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
 {
-	if (keyCode == DIK_S)
+	if (keyCode == DIK_D)
 	{
 		simon->SetState(new CSimonJump(simon));
 	}
@@ -63,10 +63,8 @@ void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 	{
 		simon->SetVx(0.0f);
 	}
-	/*
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		simon->SetState(new CSimonHurt(simon));
 	}
-	*/
 }

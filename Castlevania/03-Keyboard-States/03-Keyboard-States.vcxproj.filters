@@ -197,9 +197,29 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files\Collision</Filter>
+    <ClCompile Include="SimonHurt.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
     <ClCompile Include="SimonFalling.cpp">
       <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonWalkingStairUp.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonWalkingStairDown.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonStairUpIdle.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonStairDownIdle.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Stair.cpp">
+      <Filter>Source Files\GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +345,21 @@
     </ClInclude>
     <ClInclude Include="Whip.h">
       <Filter>Header Files\GameObjects\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonWalkingStairUp.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonWalkingStairDown.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonStairUpIdle.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonStairDownIdle.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Stair.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
