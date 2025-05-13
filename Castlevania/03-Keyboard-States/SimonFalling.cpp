@@ -25,12 +25,13 @@ void CSimonFalling::OnNoCollision(CSimon* simon, DWORD dt)
 }
 void CSimonFalling::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-	
+	/*
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		simon->SetState(new CSimonHurt(simon));
 	}
-	else if (e->ny > 0 && e->obj->IsBlocking())
+	*/
+	if (e->ny > 0 && e->obj->IsBlocking())//change
 	{
 		simon->SetState(new CSimonIdle(simon));
 	}

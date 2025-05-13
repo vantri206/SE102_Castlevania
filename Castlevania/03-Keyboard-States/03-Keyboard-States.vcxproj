@@ -151,7 +151,6 @@
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="SimonAttack.cpp" />
     <ClCompile Include="SimonFalling.cpp" />
-    <ClCompile Include="SimonHurt.cpp" />
     <ClCompile Include="SimonIdle.cpp" />
     <ClCompile Include="SimonJump.cpp" />
     <ClCompile Include="SimonSit.cpp" />
@@ -192,7 +191,6 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="SimonAttack.h" />
     <ClInclude Include="SimonFalling.h" />
-    <ClInclude Include="SimonHurt.h" />
     <ClInclude Include="SimonJump.h" />
     <ClInclude Include="SimonSit.h" />
     <ClInclude Include="SimonState.h" />

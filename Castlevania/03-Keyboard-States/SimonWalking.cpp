@@ -63,8 +63,10 @@ void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 	{
 		simon->SetVx(0.0f);
 	}
+	/*
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		simon->SetState(new CSimonHurt(simon));
 	}
+	*/
 }

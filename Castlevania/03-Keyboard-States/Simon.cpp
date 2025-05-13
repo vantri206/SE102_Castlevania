@@ -75,16 +75,6 @@ CSimonState* CSimon::GetState()
 
 void CSimon::Render()
 {
-	if (untouchable)
-	{
-		DWORD now = GetTickCount64();
-		if ((now / 90) % 2 == 0)
-		{
-			animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
-		}
-	}
-	else
-	{
-		animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
-	}
+	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
+	currentState->Render(this);
 }
