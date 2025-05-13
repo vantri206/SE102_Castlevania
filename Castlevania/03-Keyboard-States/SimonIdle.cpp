@@ -8,6 +8,7 @@
 #include "SimonAttack.h"
 #include "SimonSit.h"
 #include "Enemy.h"
+#include "SimonHurt.h"
 
 #define SIMON_IDLE_WIDTH 16
 #define SIMON_IDLE_HEIGHT 30
@@ -65,7 +66,7 @@ void CSimonIdle::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
 	{
-		simon->SetState(new CSimonHurt());
+		simon->SetState(new CSimonHurt(simon));
 	}
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{

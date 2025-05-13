@@ -7,6 +7,7 @@
 #include "SimonJump.h"
 #include "Brick.h"
 #include "Enemy.h"
+#include "Debug.h"
 
 #define SIMON_WALKING_WIDTH 15
 #define SIMON_WALKING_HEIGHT 30
@@ -54,10 +55,6 @@ void CSimonWalking::OnNoCollision(CSimon* simon, DWORD dt)
 }
 void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CEnemy*>(e->obj))
-	{
-		simon->SetState(new CSimonHurt());
-	}
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
@@ -65,5 +62,9 @@ void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		simon->SetVx(0.0f);
+	}
+	if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		simon->SetState(new CSimonHurt(simon));
 	}
 }

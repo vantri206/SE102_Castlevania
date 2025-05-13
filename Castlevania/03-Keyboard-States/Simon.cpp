@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <algorithm>
 #include "Simon.h"
 #include "Camera.h"
@@ -75,5 +75,16 @@ CSimonState* CSimon::GetState()
 
 void CSimon::Render()
 {
-	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
+	if (untouchable)
+	{
+		DWORD now = GetTickCount64();
+		if ((now / 90) % 2 == 0)
+		{
+			animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
+		}
+	}
+	else
+	{
+		animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
+	}
 }
