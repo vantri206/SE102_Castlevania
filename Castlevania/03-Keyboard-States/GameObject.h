@@ -5,39 +5,81 @@
 #include <vector>
 #include "Animation.h"
 #include "Animations.h"
-
+#include "Collision.h"
 using namespace std;
 
 class CGameObject
 {
 protected:
-	float x; 
-	float y;
 
-	float vx;
-	float vy;
+    int type;
+    int id;
 
-	int nx;	 
-	int ny;
+    float x;
+    float y;
+    float width;
+    float height;
+    float vx;
+    float vy;
 
-	int state;
+    int nx;
+    int ny;
 
-	CAnimationSet animations;
-	LPANIMATION_SET animation_set;
-public: 
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+    int state;
+    int ani_id;
 
-	void SetState(int state) { this->state = state; }
-	int GetState() { return this->state; }
+	bool isDeleted;
 
-	CGameObject();
-	CGameObject(float x, float y):CGameObject() { this->x = x; this->y = y; }
+    CAnimationSet animations;
+    LPANIMATION_SET animation_set;
 
-	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
-	virtual void Update(DWORD dt) = 0;
-	virtual void Render() = 0;
-	~CGameObject();
+public:
+    float GetX() { return x; }
+    float GetY() { return y; }
+    float GetWidth() { return width; }
+    float GetHeight() { return height; }
+    void SetPosition(float x, float y) { this->x = x; this->y = y; }
+	void SetSize(float width, float height) { this->width = width; this->height = height; }
+    void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
+	void GetSize(float& width, float& height) { width = this->width; height = this->height; }
+    void SetSpeed(float vx, float vy) { this->vx = vx; this->vy = vy; }
+	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
+	void SetVx(float vx) { this->vx = vx; }
+	void SetVy(float vy) { this->vy = vy; }
+    void SetAniId(int ani_id) { this->ani_id = ani_id; }
+    int GetAniId() { return this->ani_id; }
+
+    int GetState() { return state; }
+    void SetState(int state) { this->state = state; }
+
+    CGameObject();
+
+    void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+
+    virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
+    virtual void Render() = 0;
+
+    virtual int IsCollidable() { return 0; };
+    virtual int CanCollisionWithObj(LPGAMEOBJECT objDests) { return 1; };
+
+    virtual void OnNoCollision(DWORD dt) {};
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
+
+    virtual int IsBlocking() { return 1; }
+
+	virtual int IsDirectionColliable(int nx, int ny) { return 1; }
+
+    void GetBoundingBox(float& l, float& t, float& r, float& b);
+    virtual ~CGameObject();
+    static bool IsDeleted(const LPGAMEOBJECT& o) { return o->isDeleted; }
+
+    virtual void LoadExtraSetting(vector<int> extra_settings) {}
+
+	void SetType(int type) { this->type = type; }
+	void SetId(int id) { this->id = id; }
+	int GetType() { return type; }
+	int GetId() { return id; }
+
 };
 
 typedef CGameObject* LPGAMEOBJECT;

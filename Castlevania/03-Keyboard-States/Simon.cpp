@@ -1,104 +1,131 @@
+﻿#pragma once
 #include <algorithm>
-#include "debug.h"
 #include "Simon.h"
-#include "Game.h"
+#include "Camera.h"
+#include "Enemy.h"
+#include "Brick.h"
+#include "Candle.h"
+#include "Whip.h"
 
-void CSimon::Update(DWORD dt)
+void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    x += vx * dt;
-    y += vy * dt;
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 
-    // Cập nhật cây roi
-    whip->Update(dt);
+	this->CheckStairNearby(coObjects);
 
-    int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-    int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
+	currentState->Update(this, dt);
+	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
+	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
 
-    if (y <= 0 || y >= BackBufferHeight - SIMON_HEIGHT) {
-        if (y <= 0)
-            y = 0;
-        else if (y >= BackBufferHeight - SIMON_HEIGHT)
-            y = (float)(BackBufferHeight - SIMON_HEIGHT);
-    }
+	vx += ax * dt;
+	vy += ay * dt;
+
+	if (abs(vx) > abs(maxVx)) vx = maxVx;
+
+	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
+	{
+		untouchable_start = 0;
+		untouchable = 0;
+	}
+
+	if (x <= 0 || x >= mapwidth - SIMON_WIDTH)
+	{
+		if (x <= 0)
+		{
+			x = 0;
+		}
+		else if (x >= mapwidth - SIMON_WIDTH)
+		{
+			x = (float)(mapwidth - SIMON_WIDTH);
+		}
+	}
+	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
+}
+void CSimon::OnNoCollision(DWORD dt)
+{
+	currentState->OnNoCollision(this, dt);
+}
+void CSimon::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CSimon*>(e->obj)) return;
+	currentState->OnCollisionWith(this, e);
+}
+void CSimon::UpdateMoving(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+void CSimon::OnKeyDown(int keyCode)
+{
+	currentState->KeyDownHandle(this, keyCode);
+}
+
+void CSimon::OnKeyUp(int keyCode)
+{
+	currentState->KeyUpHandle(this, keyCode);
+}
+
+void CSimon::SetState(CSimonState* state) 
+{
+	currentState.reset(state);
+}
+
+int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
+{
+	if (dynamic_cast<CBrick*>(objDests) && this->isOnStair == true)
+		return 0;
+	return 1;
+}
+
+CSimonState* CSimon::GetState()
+{
+	return currentState.get();
 }
 
 void CSimon::Render()
 {
-    if (animation_set == nullptr) {
-        DebugOut(L"[ERROR] Simon animation set is null!\n");
-        return;
-    }
-    animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
-
-    // Chỉ render cây roi khi ở trạng thái tấn công
-    if (state == SIMON_STATE_ATTACK) {
-        whip->Render();
-    }
+	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
+	currentState->Render(this);
 }
 
-void CSimon::SetState(int state)
+void CSimon::CheckStairNearby(vector<LPGAMEOBJECT>* coObjects)
 {
-    CGameObject::SetState(state);
-    switch (state)
-    {
-    case SIMON_STATE_IDLE:
-    {
-        this->SimonIdle();
-        ani_id = ID_ANI_SIMON_IDLE;
-        break;
-    }
-    case SIMON_STATE_WALK:
-    {
-        this->SimonWalk();
-        ani_id = ID_ANI_SIMON_WALK;
-        break;
-    }
-    case SIMON_STATE_ATTACK:
-    {
-        this->SimonAttack();
-        ani_id = ID_ANI_SIMON_ATTACK;
-        break;
-    }
-    case SIMON_STATE_GO_UP:
-    {
-        this->SimonWalkUp();
-        ani_id = ID_ANI_SIMON_GO_UP;
-        break;
-    }
-    }
+	this->nearbyStair = nullptr;
+	float l, t, r, b;
+	this->GetBoundingBox(l, t, r, b);
+	for (size_t i = 0; i < coObjects->size(); i++)
+	{
+		if (dynamic_cast<CStair*>(coObjects->at(i)))
+		{
+			CStair* stair = dynamic_cast<CStair*>(coObjects->at(i));
+			float l1, t1, r1, b1;
+			stair->GetBoundingBox(l1, t1, r1, b1);
+			if (min(r, r1) >= max(l, l1) && min(t, t1) >= max(b, b1))
+			{
+				this->nearbyStair = stair;
+			}
+		}
+	}
 }
-
-void CSimon::SimonWalkUp()
+bool CSimon::IsNearStairUp()
 {
-    vx = 0;
-    if (ny > 0) vy = -SIMON_WALKING_SPEED;
-    else vy = SIMON_WALKING_SPEED;
+	if (nearbyStair != nullptr)
+	{
+		if (nearbyStair->GetStairDirection() == UP_STAIR_DIRECTION)
+		{
+			return true;
+		}
+	}
+	return false;
 }
-
-void CSimon::SimonWalk()
+bool CSimon::IsNearStairDown()
 {
-    vy = 0;
-    if (nx > 0) vx = SIMON_WALKING_SPEED;
-    else vx = -SIMON_WALKING_SPEED;
-}
-
-void CSimon::SimonAttack()
-{
-    vx = 0;
-    vy = 0;
-}
-
-void CSimon::SimonIdle()
-{
-    vx = 0;
-    vy = 0;
-}
-
-void CSimon::SimonSit()
-{
-    vx = 0;
-    vy = 0;
-}void GetBoundingBox()
-{
-
+	if (nearbyStair != nullptr)
+	{
+		if (nearbyStair->GetStairDirection() == DOWN_STAIR_DIRECTION)
+		{
+			return true;
+		}
+	}
+	return false;
 }

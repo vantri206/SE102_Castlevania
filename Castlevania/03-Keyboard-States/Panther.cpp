@@ -1,79 +1,20 @@
 #include <algorithm>
 #include "debug.h"
-#include "PANTHER.h"
+#include "Panther.h"
 #include <cstdlib>
 
-void CPANTHER::Update(DWORD dt)
+void CPanther::Update(DWORD dt)
 {
-    x += vx * dt;
-    y += vy * dt;
-    int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-    int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
-
-    if (x <= 0 || x >= BackBufferWidth - PANTHER_WIDTH) {
-        vx = -vx;
-        if (x <= 0)
-        {
-            x = 0;
-        }
-        else if (x >= BackBufferWidth - PANTHER_WIDTH)
-        {
-            x = (float)(BackBufferWidth - PANTHER_WIDTH);
-        }
-        nx = -nx;
-    }
-
-    if (y <= 0 || y >= BackBufferHeight - PANTHER_HEIGHT) {
-        vy = -vy;
-        if (y <= 0)
-        {
-            y = 0;
-        }
-        else if (y >= BackBufferHeight - PANTHER_HEIGHT)
-        {
-            y = (float)(BackBufferHeight - PANTHER_HEIGHT);
-        }
-        ny = -ny;
-    }
+   
 }
 
-void CPANTHER::Render()
+void CPanther::Render()
 {
-    int ani_id = -1;
-    switch (state)
-    {
-    case PANTHER_STATE_IDLE:
-    {
-        ani_id = ANI_ID_PANTHER_IDLE;
-        break;
-    }
-    case PANTHER_STATE_WALK:
-    {
-        ani_id = ANI_ID_PANTHER_IDLE;
-        break;
-    }
-    }
-    animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
+	animation_set->at(ANI_ID_PANTHER_IDLE)->Render(x, y);
 }
 
-void CPANTHER::SetState(int state)
+void CPanther::LoadExtraSetting(vector<int> extra_settings)
 {
-    switch (state)
-    {
-    case PANTHER_STATE_IDLE:
-    {
-        vx = 0;
-        vy = 0;
-        break;
-    }
-    case PANTHER_STATE_WALK:
-    {
-        if (nx > 0) vx = maxVx;
-        else vx = -maxVx;
-        if (ny > 0) vy = maxVx;
-        else vy = -maxVx;
-        break;
-    }
-    }
-    CGameObject::SetState(state);
+	if (extra_settings.size() > 0)
+		this->SetDirection(extra_settings[0]);
 }

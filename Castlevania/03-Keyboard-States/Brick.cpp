@@ -1,7 +1,10 @@
 #include "Brick.h"
 
-void CBrick::Render()
+CBrick::CBrick()
 {
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_BRICK)->Render(x,y);
+}
+int CBrick::IsDirectionColliable(int nx, int ny)
+{
+	if (nx !=0 || ny > 0) return 1;
+	return 0;
 }

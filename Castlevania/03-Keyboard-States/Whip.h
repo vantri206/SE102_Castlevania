@@ -1,20 +1,42 @@
 #pragma once
 #include "GameObject.h"
+#include "Enemy.h"
+#include "Ghoul.h"
 #include "Animation.h"
 #include "Animations.h"
-#include "Simon.h"
+#include "GameDefine.h"
+#include "debug.h"
+#include "Collision.h"
 
-#define ID_ANI_WHIP 3000  // ID animation của cây roi từ resources.txt
+#define GHOUL_WALKING_SPEED	0.15f
 
-class CWhip : public CGameObject {
+#define WHIP_STATE_ATTACK 0
+
+#define ANI_ID_WHIP_ATTACK 0
+
+const int whipFrameWidths[] = { 8.5, 16, 22.5 };
+const int whipFrameHeights[] = { 24, 19, 8 };
+
+
+class CWhip : public CGameObject
+{
 protected:
-    CSimon* simon;  // Reference tới Simon
-
+	CSimon* owner;
 public:
-    CWhip(CSimon* owner) : CGameObject(0, 0) {
-        simon = owner;
-    }
+	CWhip();
 
-    void Update(DWORD dt) override;
-    void Render() override;  // Giữ lại để render khi cần
+	void Update(DWORD dt);
+	void UpdateSize(int currentFrameIndex);
+	void UpdatePostition(int currentFrameIndex);
+
+	void OnNoCollision(DWORD dt) {}
+	void OnCollisionWith(LPCOLLISIONEVENT e) {}
+
+	void Render();
+
+	void SetState(int state) {}
+	int IsCollidable();
+	int IsBlocking() { return 0; }
+	void SetOwner(CSimon* simon) { this->owner = simon; }
+	CSimon* GetOwner() { return this->owner; }
 };

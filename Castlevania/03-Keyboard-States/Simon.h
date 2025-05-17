@@ -1,11 +1,33 @@
 #pragma once
 #include "GameObject.h"
-#include "Animation.h"
-#include "Animations.h"
-#include "Whip.h"
-#include "debug.h"
+#include <memory>
 
-#define SIMON_WALKING_SPEED		0.1f
+#include "SimonState.h"
+#include "SimonIdle.h"
+//#include "SimonHurt.h"
+#include "SimonFalling.h"
+
+#include "Brick.h"
+#include "Enemy.h"
+
+#include "debug.h"
+#include "GameDefine.h"
+#include "Stair.h"
+
+
+#define SIMON_WALKING_SPEED 0.4f
+#define SIMON_ACCEL_WALK_X	0.0005f
+
+#define SIMON_WALKING_STAIR_SPEED 0.03f
+
+#define SIMON_HURT_VX 0.2f    
+#define SIMON_HURT_VY 0.4f   
+#define SIMON_HURT_TIME 300  
+#define SIMON_UNTOUCHABLE_TIME 1000 
+
+#define SIMON_JUMP_SPEED 1.0f
+#define JUMP_DURATION 0.005f
+#define GRAVITY -0.002f
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1
@@ -15,60 +37,96 @@
 #define SIMON_STATE_GO_UP	5
 #define SIMON_STATE_GO_DOWN 6
 
-#define ID_ANI_SIMON_IDLE		0
-#define ID_ANI_SIMON_WALK		1
-#define ID_ANI_SIMON_JUMP		2
-#define ID_ANI_SIMON_SIT		3
-#define ID_ANI_SIMON_ATTACK		4
-#define ID_ANI_SIMON_UP_IDLE	5
-#define ID_ANI_SIMON_DOWN_IDLE	6
-#define ID_ANI_SIMON_GO_UP		7
-#define ID_ANI_SIMON_GO_DOWN	8
 
-#define SIMON_WIDTH 15
+
+#pragma region ANIMATION_ID		//xem thu tu animation trong resource
+
+#define ID_ANI_SIMON_IDLE			0
+#define ID_ANI_SIMON_WALK			1
+#define ID_ANI_SIMON_JUMP			2
+#define ID_ANI_SIMON_SIT			3
+#define ID_ANI_SIMON_ATTACK			4
+#define ID_ANI_SIMON_UP_IDLE		5
+#define ID_ANI_SIMON_DOWN_IDLE		6
+#define ID_ANI_SIMON_GO_UP			7
+#define ID_ANI_SIMON_GO_DOWN		8
+#define ID_ANI_SIMON_ATTACK_DOWN	9
+#define ID_ANI_SIMON_ATTACK_UP		10
+#define ID_ANI_SIMON_HURT			11
+#define ID_ANI_SIMON_DIE			12
+#define ID_ANI_SIMON_POWER_UP		13
+
+#define SIMON_WIDTH 16
 #define SIMON_HEIGHT 30
+
+#define SIMON_SIZE 0.5f
 
 class CSimon : public CGameObject
 {
 protected:
-    float maxVx;
-    float ax, ay;
-    float startx, starty;
-    bool isSitting;
-    int ani_id;
-    CWhip* whip;  // Thêm cây roi
+	float maxVx;
+	float ax, ay;
 
+	unique_ptr<CSimonState> currentState;
+	int untouchable;
+	ULONGLONG untouchable_start;
+	CStair* nearbyStair;	
+	bool isOnStair = false;
 public:
-    CSimon(float x, float y) : CGameObject(x, y)
-    {
-        startx = x; starty = y;
-        ax = 0.0f;
-        ay = 0.0f;
-        nx = 1;
-        ny = 1;
-        isSitting = false;
-        ani_id = 0;
-        whip = new CWhip(this);  // Khởi tạo cây roi
-    }
+	vector<LPGAMEOBJECT>* coObjects;
 
-    ~CSimon() {
-        delete whip;  // Giải phóng bộ nhớ
-    }
+	CSimon(float x, float y)
+	{
+		this->x = x;
+		this->y = y;
+		maxVx = 0.0f;
+		ax = 0.0f;
+		ay = 0.0f;
+		untouchable = 0;
+		untouchable_start = -1;
+		nx = NEGATIVE_DIRECTION;
+		ny = 1;
+		coObjects = nullptr;
+		
+		currentState = make_unique<CSimonIdle>();
+	}
 
-    void SetDirectionX(int direction) { nx = direction; }
+	void SetCoObjects(vector<LPGAMEOBJECT>* objects) { coObjects = objects; }
+	vector<LPGAMEOBJECT>* GetCoObjects() { return coObjects; }
+
+	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
+	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
+	void SetAx(float ax) { this->ax = ax; }
+	void SetAy(float ay) { this->ay = ay; }
+	void SetDirectionX(int direction) { nx = direction; }
     int GetDirectionX() { return nx; }
-    void SetDirectionY(int direction) { ny = direction; }
-    int GetDirectionY() { return ny; }
-    void Update(DWORD dt) override;
-    void Render() override;
-    void SetState(int state) override;
-    int GetState() { return state; }
-    int GetVx() { return vx; }
-    CWhip* GetWhip() { return whip; }  // Getter cho whip
+	void SetDirectionY(int direction) { ny = direction; }
+	int GetDirectionY() { return ny; }
 
-    void SimonIdle();
-    void SimonWalk();
-    void SimonAttack();
-    void SimonSit();
-    void SimonWalkUp();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void OnKeyDown(int keyCode);
+	void OnKeyUp(int keyCode);
+	void Render();
+
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+
+	void UpdateMoving(DWORD dt);
+
+	int IsCollidable() { return 1; };
+	int IsBlocking() { return 1; };
+
+	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+
+	bool IsNearStairUp();
+	bool IsNearStairDown();
+	void CheckStairNearby(vector<LPGAMEOBJECT>* coObjects);
+	CStair* GetNearbyStair() { return nearbyStair; }
+	void SetOnStair(bool isonstair) { this->isOnStair = isonstair; }
+	bool GetOnStair() { return isOnStair; }
+
+	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
+
+	CSimonState* GetState();
+	void SetState(CSimonState* state);
 };

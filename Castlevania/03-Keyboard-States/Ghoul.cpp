@@ -1,79 +1,77 @@
 #include <algorithm>
 #include "debug.h"
 #include "Ghoul.h"
+#include "Whip.h"
 #include <cstdlib>
 
-void CGhoul::Update(DWORD dt)
+void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    x += vx * dt;
-    y += vy * dt;
-    int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-    int BackBufferHeight = CGame::GetInstance()->GetBackBufferHeight();
-
-    if (x <= 0 || x >= BackBufferWidth - GHOUL_WIDTH) {
-        vx = -vx;
-        if (x <= 0)
-        {
-            x = 0;
-        }
-        else if (x >= BackBufferWidth - GHOUL_WIDTH)
-        {
-            x = (float)(BackBufferWidth - GHOUL_WIDTH);
-        }
-        nx = -nx;
-    }
-
-    if (y <= 0 || y >= BackBufferHeight - GHOUL_HEIGHT) {
-        vy = -vy;
-        if (y <= 0)
-        {
-            y = 0;
-        }
-        else if (y >= BackBufferHeight - GHOUL_HEIGHT)
-        {
-            y = (float)(BackBufferHeight - GHOUL_HEIGHT);
-        }
-        ny = -ny;
-    }
+	if (isDead) return;
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CGhoul::Render()
 {
-    int ani_id = -1;
-    switch (state)
-    {
-    case GHOUL_STATE_IDLE:
-    {
-        ani_id = ANI_ID_GHOUL_IDLE;
-        break;
-    }
-    case GHOUL_STATE_WALK:
-    {
-        ani_id = ANI_ID_GHOUL_WALK;
-        break;
-    }
-    }
-    animation_set->at(ani_id)->Render(x, y, nx, 0.5f);
+	if (isDead) return;
+	animation_set->at(ANI_ID_GHOUL_IDLE)->Render(x, y);
+	//RenderBoundingBox();
+}
+
+void CGhoul::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	if (isDead)
+	{
+		left = top = right = bottom = 0;
+		return;
+	}
+	left = x - GHOUL_BBOX_WIDTH/2;
+	top = y - GHOUL_BBOX_HEIGHT/2;
+	right = left + GHOUL_BBOX_WIDTH;
+	bottom = top + GHOUL_BBOX_HEIGHT;
+}
+
+void CGhoul::OnNoCollision(DWORD dt)
+{
+	if (isDead) return;
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void CGhoul::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (isDead) return;
+
+	if (dynamic_cast<CGhoul*>(e->obj)) return;
+	if (dynamic_cast<CWhip*>(e->obj))
+	{
+		SetState(GHOUL_STATE_DIE);
+		return;
+	}
+	if (e->ny != 0 && e->obj->IsBlocking())
+	{
+		vy = 0.0f;
+	}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		vx = 0;
+	}
 }
 
 void CGhoul::SetState(int state)
 {
-    switch (state)
-    {
-        case GHOUL_STATE_IDLE:
-        {
-            vx = 0;
-            vy = 0;
-            break;
-        }
-        case GHOUL_STATE_WALK:
-        {
-            if (nx > 0) vx = maxVx;
-            else vx = -maxVx;
-            if (ny > 0) vy = maxVy;
-            else vy = -maxVy;
-            break;
-        }
-    }
-    CGameObject::SetState(state);
+	switch (state)
+	{
+	case GHOUL_STATE_DIE:
+		vx = 0;
+		vy = 0;
+		isDead = true;
+		DebugOut(L"[INFO] Ghoul died\n");
+		break;
+	}
+}
+
+void CGhoul::LoadExtraSetting(vector<int> extra_settings)
+{
+	if (extra_settings.size() > 0)
+		this->SetDirection(extra_settings[0]);
 }

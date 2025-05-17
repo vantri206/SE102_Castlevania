@@ -1,4 +1,5 @@
-#include "..\03-Keyboard-States\Animation.h"
+#pragma once
+#include "Animation.h"
 
 void CAnimation::Add(int spriteId, DWORD time)
 {

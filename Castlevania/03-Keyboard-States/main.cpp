@@ -1,3 +1,4 @@
+#pragma one
 #include <windows.h>
 
 #include "debug.h"
@@ -9,13 +10,15 @@
 #include "Sprites.h"
 #include "GameObject.h"
 #include "PlayScene.h"
-
+#include "Map.h"
 #include "SampleKeyEventHandler.h"
 #include "Utils.h"
-
+#include "Camera.h"
 #include "GameDefine.h"
 
 CSampleKeyHandler* keyHandler;
+
+CScene* scene = NULL;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -30,10 +33,17 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-/*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
-*/
+void LoadResources()
+{
+	CGame::GetInstance()->LoadResources();
+
+	scene = new CScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);
+}
+
+void Update(DWORD dt)
+{
+	scene->Update(dt);
+}
 
 void Render()
 {
@@ -51,7 +61,7 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	CGame::GetInstance()->GetCurrentScene()->Render();
+	scene->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
@@ -131,8 +141,8 @@ int Run()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
+			Update(dt);
 			CGame::GetInstance()->ProcessKeyboard();
-			CGame::GetInstance()->GetCurrentScene()->Update(dt);
 			Render();
 		}
 		else
@@ -153,11 +163,14 @@ int WINAPI WinMain(
 	SetDebugWindow(hWnd);
 
 	CGame* game = CGame::GetInstance();
+	/*game->Init(hWnd, hInstance);
+	game->InitKeyboard();*/
 	game->Init(hWnd, hInstance);
-	game->InitKeyboard();
 
-	game->LoadResources();
-	game->SwitchScene(1);
+	keyHandler = new CSampleKeyHandler();
+	game->InitKeyboard(keyHandler);
+
+	LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

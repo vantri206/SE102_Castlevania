@@ -4,12 +4,13 @@
 #include "Animation.h"
 #include "Animations.h"
 
-#define ID_ANI_BRICK 10000
-#define BRICK_WIDTH 16
-
-class CBrick : public CGameObject {
+class CBrick : public CGameObject
+{
 public:
-	CBrick(float x, float y) : CGameObject(x, y) {}
-	void Render();
+	CBrick();
+	void Render() {}
 	void Update(DWORD dt) {}
+	int IsCollidable() { return 1; };
+	int IsBlocking() { return 1; }
+	int IsDirectionColliable(int nx, int ny);
 };
