@@ -22,16 +22,11 @@ const int whipFrameHeights[] = { 24, 19, 8 };
 class CWhip : public CWeapon
 {
 protected:
-
-public:
-	CWhip();
-
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	CSimon* owner;
 public:
 	CWhip();
 
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateSize(int currentFrameIndex);
 	void UpdatePostition(int currentFrameIndex);
 
