@@ -56,16 +56,16 @@ void CSimonWalking::OnNoCollision(CSimon* simon, DWORD dt)
 }
 void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->obj->IsBlocking())
+	if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		simon->SetState(new CSimonHurt(simon));
+	}
+	else if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		simon->SetVx(0.0f);
-	}
-	if (dynamic_cast<CEnemy*>(e->obj))
-	{
-		simon->SetState(new CSimonHurt(simon));
 	}
 }

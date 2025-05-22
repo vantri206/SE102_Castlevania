@@ -14,8 +14,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	this->CheckStairNearby(coObjects);
 
 	currentState->Update(this, dt);
-	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
-	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
+	int mapwidth = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapWidth();
+	int mapheight = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapHeight();
 
 	vx += ax * dt;
 	vy += ay * dt;
@@ -77,15 +77,15 @@ int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
 	return 1;
 }
 
-CSimonState* CSimon::GetState()
+CSimonState* CSimon::GetSimonState()
 {
 	return currentState.get();
 }
 
 void CSimon::Render()
 {
-	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
-	currentState->Render(this);
+	currentState->Render();
+	animation_set->at(ani_id)->Render(x, y, nx, width, height);
 }
 
 void CSimon::CheckStairNearby(vector<LPGAMEOBJECT>* coObjects)

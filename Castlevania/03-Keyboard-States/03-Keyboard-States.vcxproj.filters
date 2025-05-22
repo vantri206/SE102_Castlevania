@@ -219,6 +219,15 @@
     <ClCompile Include="SimonHurt.cpp">
       <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Whip.cpp">
+      <Filter>Source Files\GameObjects\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\GameObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\GameObjects\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -361,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="SimonHurt.h">
       <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\GameObjects\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

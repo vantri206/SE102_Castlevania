@@ -59,8 +59,6 @@
 #define SIMON_WIDTH 16
 #define SIMON_HEIGHT 30
 
-#define SIMON_SIZE 0.5f
-
 class CSimon : public CGameObject
 {
 protected:
@@ -68,36 +66,35 @@ protected:
 	float ax, ay;
 
 	unique_ptr<CSimonState> currentState;
+
 	int untouchable;
 	ULONGLONG untouchable_start;
+
 	CStair* nearbyStair;	
 	bool isOnStair = false;
+
 public:
 	vector<LPGAMEOBJECT>* coObjects;
 
 	CSimon(float x, float y)
 	{
-		this->x = x;
-		this->y = y;
-		maxVx = 0.0f;
-		ax = 0.0f;
-		ay = 0.0f;
+		this->SetPosition(x, y);
+		this->SetAccel(0.0f, 0.0f);
+		this->maxVx = 0;
+
 		untouchable = 0;
 		untouchable_start = -1;
-		nx = NEGATIVE_DIRECTION;
-		ny = 1;
-		coObjects = nullptr;
-		
-		currentState = make_unique<CSimonIdle>();
 	}
 
 	void SetCoObjects(vector<LPGAMEOBJECT>* objects) { coObjects = objects; }
 	vector<LPGAMEOBJECT>* GetCoObjects() { return coObjects; }
 
-	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
-	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
 	void SetAx(float ax) { this->ax = ax; }
 	void SetAy(float ay) { this->ay = ay; }
+	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
+
+	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
+
 	void SetDirectionX(int direction) { nx = direction; }
     int GetDirectionX() { return nx; }
 	void SetDirectionY(int direction) { ny = direction; }
@@ -106,7 +103,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
-	void Render();
+	virtual void Render();
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
@@ -114,7 +111,8 @@ public:
 	void UpdateMoving(DWORD dt);
 
 	int IsCollidable() { return 1; };
-	int IsBlocking() { return 1; };
+	int IsBlocking() { return 0; };
+	int IsOverlappable() { return 1; }
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
@@ -127,6 +125,6 @@ public:
 
 	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
 
-	CSimonState* GetState();
+	CSimonState* GetSimonState();
 	void SetState(CSimonState* state);
 };

@@ -4,6 +4,7 @@
 
 class CSimon;
 class CMap;
+class CGameObject;
 
 class CScene
 {
@@ -33,4 +34,9 @@ public:
 	void LoadScene();
 	void Update(DWORD dt);
 	void Render();
+
+	int GetCurrentMapHeight() { return SceneBG->GetHeight(); }
+	int GetCurrentMapWidth() { return SceneBG->GetWidth(); }
+
+	void AddObject(CGameObject* obj);
 };

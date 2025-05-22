@@ -48,7 +48,7 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
     }
     else if (keyCode == DIK_S) 
     {
-        simon->SetPosition(simon->GetX(), simon->GetY() - 3.5f);
+        simon->SetPosition(simon->GetX(), simon->GetY() - 3.0f);
         simon->SetState(new CSimonSit(simon));
     }
     else if (keyCode == DIK_A) 
@@ -84,8 +84,9 @@ void CSimonIdle::Update(CSimon* simon, DWORD dt)
 
 void CSimonIdle::OnNoCollision(CSimon* simon, DWORD dt)
 {
-    simon->SetState(new CSimonFalling(simon));
+    
 }
+
 
 void CSimonIdle::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {

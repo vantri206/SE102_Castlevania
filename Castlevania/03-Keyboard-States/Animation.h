@@ -18,15 +18,8 @@ class CAnimation
 public:
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
-	void Render(float x, float y)
-	{
-		this->Render(x, y, -1, 1.0f);
-	}
-	void Render(float x, float y, int nx)
-	{
-		this->Render(x, y, nx, 1.0f);
-	}
-	void Render(float x, float y, int nx, float size);
+	void Render(float x, float y, int nx, float width, float height);
+	int GetCurrentFrameIndex();
 };
 
 typedef CAnimation* LPANIMATION;

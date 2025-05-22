@@ -33,7 +33,7 @@ static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra
 		obj = new CGhoul();
 		break;
 	case PANTHER:
-		obj = new CPanther();
+		//obj = new CPanther();
 		break;
 	case BRICK:
 		obj = new CBrick();
@@ -61,6 +61,10 @@ void CScene::LoadScene()
 		DebugOut(L"[ERROR] Load scene objects failed\n");
 		return;
 	}
+
+	int mapWidth = SceneBG->GetWidth();
+	int mapHeight = SceneBG->GetHeight();
+	quadtree = new QuadTree(mapWidth, mapHeight);
 
 	char str[MAX_TXT_LINE];
 	vector<string> tokens;
@@ -95,14 +99,11 @@ void CScene::LoadScene()
 				obj->SetPosition(x, y);
 				obj->SetSize(width, height);
 				objects.push_back(obj);
-				//DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectType, x, y);
+				quadtree->Insert(obj);
 			}
 		}
 	}
 	f.close();
-	int mapWidth = SceneBG->GetWidth();
-	int mapHeight = SceneBG->GetHeight();
-	quadtree = new QuadTree(mapWidth, mapHeight, objects);
 	//DebugOut(L"[INFO] Load scene %d objects\n");
 	quadtree->PrintTree();
 }
@@ -119,7 +120,6 @@ void CScene::LoadPlayer()
 void CScene::Update(DWORD dt)
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
-	auto activeObjects1 = quadtree->GetObjectsInView(cam);
 
 	auto activeObjects = quadtree->GetObjectsInView(cam);
 	for (auto obj : activeObjects)
@@ -131,7 +131,19 @@ void CScene::Update(DWORD dt)
 		obj->GetBoundingBox(l, t, r, b);
 		//DebugOut(L"[INFO] Object %d at bouding box(): %f, %f, %f, %f\n", obj->GetId(), l, t, r ,b);
 	}
-
+	auto it = objects.begin();
+	while (it != objects.end())
+	{
+		CGameObject* obj = *it;
+		if(obj->IsDeleted())
+		{
+			quadtree->Remove(obj);
+			delete obj;
+			it = objects.erase(it);
+		}
+		else
+			++it;
+	}
 }
 
 void CScene::Render()
@@ -140,6 +152,14 @@ void CScene::Render()
 	for (int i = 0; i < (int)objects.size(); i++)
 	{
 		objects[i]->Render();
+		objects[i]->RenderBoundingBox();
 	}
 	player->Render();
+	player->RenderBoundingBox();
+}
+
+void CScene::AddObject(CGameObject* obj)
+{
+	objects.push_back(obj);
+	quadtree->Insert(obj);
 }

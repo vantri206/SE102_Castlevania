@@ -4,48 +4,38 @@
 #include "Whip.h"
 #include <cstdlib>
 
+CGhoul::CGhoul()
+{
+	vx = vy = 0.0f;
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(GHOUL_ANI_SET_ID));
+	this->SetState(GHOUL_STATE_IDLE);
+	this->SetAniId(ANI_ID_GHOUL_IDLE);
+}
 void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (isDead) return;
+	vx += ax * dt;
+	vy += ay * dt;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CGhoul::Render()
 {
-	if (isDead) return;
-	animation_set->at(ANI_ID_GHOUL_IDLE)->Render(x, y);
-	//RenderBoundingBox();
-}
-
-void CGhoul::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	if (isDead)
-	{
-		left = top = right = bottom = 0;
-		return;
-	}
-	left = x - GHOUL_BBOX_WIDTH/2;
-	top = y - GHOUL_BBOX_HEIGHT/2;
-	right = left + GHOUL_BBOX_WIDTH;
-	bottom = top + GHOUL_BBOX_HEIGHT;
+	animation_set->at(this->GetAniId())->Render(x, y, nx, width, height);
 }
 
 void CGhoul::OnNoCollision(DWORD dt)
 {
-	if (isDead) return;
 	x += vx * dt;
 	y += vy * dt;
 }
 
 void CGhoul::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (isDead) return;
-
 	if (dynamic_cast<CGhoul*>(e->obj)) return;
-	if (dynamic_cast<CWhip*>(e->obj))
+	if (dynamic_cast<CWeapon*>(e->obj))
 	{
-		SetState(GHOUL_STATE_DIE);
-		return;
+		DebugOut(L"gh vs w\n");
+		this->Delete();
 	}
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
@@ -53,7 +43,7 @@ void CGhoul::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
-		vx = 0;
+		vx = 0.0f;
 	}
 }
 
@@ -61,17 +51,20 @@ void CGhoul::SetState(int state)
 {
 	switch (state)
 	{
-	case GHOUL_STATE_DIE:
-		vx = 0;
-		vy = 0;
-		isDead = true;
-		DebugOut(L"[INFO] Ghoul died\n");
-		break;
+	case GHOUL_STATE_IDLE:
+		this->SetAniId(ANI_ID_GHOUL_IDLE);
+	case GHOUL_STATE_WALK:
+		this->SetAniId(ANI_ID_GHOUL_WALK);
 	}
+	this->state = state;
 }
 
+int CGhoul::IsCollidable()
+{
+	return 1;
+}
 void CGhoul::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)
-		this->SetDirection(extra_settings[0]);
+		this->SetDirectionX(extra_settings[0]);
 }

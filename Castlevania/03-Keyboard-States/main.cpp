@@ -37,12 +37,15 @@ void LoadResources()
 {
 	CGame::GetInstance()->LoadResources();
 
-	scene = new CScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);
+	CGame* game = CGame::GetInstance();
+	game->LoadScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);
+	game->ChangeScene(2);
 }
 
 void Update(DWORD dt)
 {
-	scene->Update(dt);
+	CGame* game = CGame::GetInstance();
+	game->GetCurrentScene()->Update(dt);
 }
 
 void Render()
@@ -56,12 +59,17 @@ void Render()
 
 	pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR);
 
+	UINT slot = 0;
+
 	spriteHandler->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	scene->Render();
+	ID3D10SamplerState* pointSampler = g->GetPointSampler();
+	pD3DDevice->PSSetSamplers(slot, 1, &pointSampler);
+
+	g->GetCurrentScene()->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
@@ -163,8 +171,8 @@ int WINAPI WinMain(
 	SetDebugWindow(hWnd);
 
 	CGame* game = CGame::GetInstance();
-	/*game->Init(hWnd, hInstance);
-	game->InitKeyboard();*/
+	game->Init(hWnd, hInstance);
+	game->InitKeyboard();
 	game->Init(hWnd, hInstance);
 
 	keyHandler = new CSampleKeyHandler();

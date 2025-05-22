@@ -23,6 +23,7 @@
 56 resource/Items/TripleShot.png
 60 resource/Objects/Torch.png
 61 resource/Objects/Candle.png
+999 resource/Scene/bbox.png
 2 
 #----MAP----#
 # id file_path

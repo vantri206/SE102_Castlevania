@@ -4,7 +4,7 @@
 #include "Whip.h"
 #include "Ghoul.h"
 
-QuadTree::QuadTree(int mapWidth, int mapHeight, vector<LPGAMEOBJECT>& gameObjects)
+QuadTree::QuadTree(int mapWidth, int mapHeight)
 {
     // Tìm kích thước lớn nhất để tạo vùng root là hình vuông
     int size = max(mapWidth, mapHeight);
@@ -14,26 +14,79 @@ QuadTree::QuadTree(int mapWidth, int mapHeight, vector<LPGAMEOBJECT>& gameObject
     // Tạo node gốc từ (0,0) đến (bound,bound)
     root = new QNode(0, 0, bound, bound);
 
-    // Đưa tất cả object vào node gốc dưới dạng CTreeObject
-    for (auto& obj : gameObjects)
-    {
-        // Đặc biệt xử lý cho Whip và Ghoul
-        if (dynamic_cast<CWhip*>(obj) || dynamic_cast<CGhoul*>(obj))
-        {
-            root->objects.push_back(new CTreeObject(obj));
-            continue;
-        }
-        root->objects.push_back(new CTreeObject(obj));
-    }
-
-    // Bắt đầu chia nhỏ node đệ quy
-    Subdivide(root, 1);
 }
 
 QuadTree::~QuadTree()
 {
     // Giải phóng root -> gián tiếp giải phóng toàn bộ cây
     delete root;
+}
+
+void QuadTree::Insert(LPGAMEOBJECT obj)
+{
+
+    CTreeObject* treeObj = new CTreeObject(obj);
+    insertNode(root, treeObj, 0);
+}
+
+void QuadTree::Remove(LPGAMEOBJECT obj)
+{
+    RemoveObj(root, obj);
+}
+
+bool QuadTree::RemoveObj(QNode* node, CGameObject* obj)
+{
+    bool isRemoved = false;
+
+    for (auto it = node->objects.begin(); it != node->objects.end();)
+    {
+        CTreeObject* treeObj = *it;
+        if (treeObj->target == obj)
+        {
+            delete treeObj;
+            it = node->objects.erase(it);   //if removed, it = next it
+            isRemoved = true;
+        }
+        else ++it;  //if dont remove, ++it to next it
+    }
+
+    if (!node->IsLeaf())
+    {
+        QNode* children[4] = { node->lt, node->rt, node->lb, node->rb };
+        for (QNode* child : children)
+        {
+            bool res = RemoveObj(child, obj);
+            if (!isRemoved) isRemoved = res;
+        }
+    }
+    return isRemoved;
+}
+
+void QuadTree::insertNode(QNode* node, CTreeObject* treeObj, int depth)
+{
+    // Nếu node đã chia nhỏ, đẩy xuống các nhánh con
+    if (!node->IsLeaf()) {
+        QNode* children[4] = { node->lt, node->rt, node->lb, node->rb };
+        for (QNode* child : children) {
+            if (treeObj->Intersects(child->x0, child->y0, child->x1, child->y1)) {
+                insertNode(child, treeObj, depth + 1);
+            }
+        }
+        return;
+    }
+
+    // Node lá, thêm vào
+    node->objects.push_back(treeObj);
+
+    // Nếu vượt ngưỡng, chia nhỏ node
+    if (depth < MAX_DEPTH && node->Width() > MIN_NODE_SIZE && node->Height() > MIN_NODE_SIZE && node->objects.size() > 4) {
+        Subdivide(node, depth + 1);
+        auto old = node->objects;
+        node->objects.clear();
+        for (auto obj : old) {
+            insertNode(node, obj, depth + 1);
+        }
+    }
 }
 
 
@@ -78,8 +131,6 @@ void QuadTree::Clip(CTreeObject* obj, QNode* node)
     // Nếu object nằm trong vùng của node thì thêm vào
     if (obj->Intersects(node->x0, node->y0, node->x1, node->y1))
     {
-        DebugOut(L"[Clip] Object at (%f, %f) clipped to node (%d,%d)-(%d,%d)\n",
-            obj->x, obj->y, node->x0, node->y0, node->x1, node->y1);
         node->objects.push_back(obj);
     }
 }
@@ -94,12 +145,6 @@ void QuadTree::Retrieve(QNode* node, RECT camRect, vector<LPGAMEOBJECT>& result)
     // Thêm các object trong node vào danh sách kết quả
     for (CTreeObject* obj : node->objects)
     {
-        // Đặc biệt xử lý cho Whip và Ghoul
-        if (dynamic_cast<CWhip*>(obj->target) || dynamic_cast<CGhoul*>(obj->target))
-        {
-            result.push_back(obj->target);
-            continue;
-        }
         result.push_back(obj->target);
     }
 

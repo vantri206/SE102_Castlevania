@@ -27,8 +27,6 @@ public:
 	{
 		maxVx = PANTHER_WALKING_SPEED;
 		maxVy = PANTHER_WALKING_SPEED;
-		ax = 0.0f;
-		ay = 0.0f;
 		nx = 1, ny = 1;
 
 		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(PANTHER_ANI_SET_ID));
