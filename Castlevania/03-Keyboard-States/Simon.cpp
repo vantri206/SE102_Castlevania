@@ -129,4 +129,3 @@ bool CSimon::IsNearStairDown()
 	}
 	return false;
 }
-

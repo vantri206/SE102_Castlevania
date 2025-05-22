@@ -27,6 +27,11 @@ public:
 	CWhip();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	CSimon* owner;
+public:
+	CWhip();
+
+	void Update(DWORD dt);
 	void UpdateSize(int currentFrameIndex);
 	void UpdatePostition(int currentFrameIndex);
 
@@ -37,5 +42,7 @@ public:
 
 	void SetState(int state) {}
 	int IsCollidable();
-
+	int IsBlocking() { return 0; }
+	void SetOwner(CSimon* simon) { this->owner = simon; }
+	CSimon* GetOwner() { return this->owner; }
 };
