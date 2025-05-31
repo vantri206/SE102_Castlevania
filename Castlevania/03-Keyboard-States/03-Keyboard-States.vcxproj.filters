@@ -237,6 +237,9 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Source Files\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="SimonAutoWalking.cpp">
+      <Filter>Source Files\GameObjects\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="DeadEffect.h">
       <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonAutoWalking.h">
+      <Filter>Header Files\GameObjects\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

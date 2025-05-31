@@ -12,6 +12,7 @@
 #include "Stair.h"
 #include "SimonStairUpIdle.h"
 #include "SimonStairDownIdle.h"
+#include "SimonAutoWalking.h"
 
 #define SIMON_IDLE_WIDTH 16
 #define SIMON_IDLE_HEIGHT 30
@@ -61,8 +62,8 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
         if (stair != nullptr)
         {
             float stairX = stair->GetX();
-            simon->SetPosition(stairX, simon->GetY());
-            simon->SetState(new CSimonStairUpIdle(simon));
+			int stairDirection = stair->GetHorizontalDirection();
+            simon->SetState(new CSimonAutoWalking(simon,stairX,stairDirection,true));
         }
     }
     else if (keyCode == DIK_DOWN && simon->IsNearStairDown())
@@ -71,8 +72,8 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
         if (stair != nullptr)
         {
             float stairX = stair->GetX();
-            simon->SetPosition(stairX, simon->GetY());
-            simon->SetState(new CSimonStairDownIdle(simon));
+            int stairDirection = stair->GetHorizontalDirection();
+            simon->SetState(new CSimonAutoWalking(simon, stairX, stairDirection,false));
         }
     }
 } 
