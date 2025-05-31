@@ -48,24 +48,27 @@ void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
 
 void CSimonWalking::Update(CSimon* simon, DWORD dt)
 {
-
+	float x, y;
+	simon->GetSpeed(x, y);
+	if (y < 0) simon->SetState(new CSimonFalling(simon));
 }
 void CSimonWalking::OnNoCollision(CSimon* simon, DWORD dt)
 {
-	simon->SetState(new CSimonFalling(simon));
+	simon->UpdateMoving(dt);
 }
 void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->obj->IsBlocking())
+	if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+		simon->OnCollisionWithEnemy(enemy);
+	}
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		simon->SetVx(0.0f);
-	}
-	if (dynamic_cast<CEnemy*>(e->obj))
-	{
-		simon->SetState(new CSimonHurt(simon));
 	}
 }

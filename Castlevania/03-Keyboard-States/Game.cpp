@@ -36,6 +36,9 @@ CGame* CGame::__instance = NULL;
 */
 void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 {
+	for (int i = 0; i < MAX_SCENE; i++)
+		scenes[i] = nullptr;
+
 	this->hWnd = hWnd;
 	this->hInstance = hInstance;
 
@@ -150,6 +153,18 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	CTextures::GetInstance()->SetDevice(pD3DDevice);
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
 
+	D3D10_SAMPLER_DESC sampDesc;
+	ZeroMemory(&sampDesc, sizeof(sampDesc));
+	sampDesc.Filter = D3D10_FILTER_MIN_MAG_MIP_POINT;
+	sampDesc.AddressU = D3D10_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressV = D3D10_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressW = D3D10_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.ComparisonFunc = D3D10_COMPARISON_NEVER;
+	sampDesc.MinLOD = 0;
+	sampDesc.MaxLOD = D3D10_FLOAT32_MAX;
+
+	hr = pD3DDevice->CreateSamplerState(&sampDesc, &pPointSampler);
+	
 	return;
 }
 /*
@@ -163,9 +178,11 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 	ID3D10Texture2D* tex = NULL;
 
 	// Loads the texture into a temporary ID3D10Resource object
+	D3DX10_IMAGE_LOAD_INFO loadInfo = {};
+	loadInfo.MipLevels = 1; // chỉ level 0
 	HRESULT hr = D3DX10CreateTextureFromFile(pD3DDevice,
 		texturePath,
-		NULL, //&info,
+		&loadInfo,
 		NULL,
 		&pD3D10Resource,
 		NULL);
@@ -215,16 +232,17 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 	return new CTexture(tex, gSpriteTextureRV);
 }
 
-void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float size)
+void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float width, float height)
 {
-	if (tex == NULL) return; 
+	if (tex == NULL) return;
 
-	int spriteWidth = right - left + 1;  
-	int spriteHeight = bottom - top + 1;  
+	int spriteWidth = right - left + 1;
+	int spriteHeight = bottom - top + 1;
 
-	D3DX10_SPRITE sprite;  
-	
+	D3DX10_SPRITE sprite;
+
 	sprite.pTexture = tex->getShaderResourceView();
+
 
 	sprite.TexCoord.x = (float)left / tex->getWidth();
 	sprite.TexCoord.y = (float)top / tex->getHeight();
@@ -232,32 +250,75 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 	sprite.TexSize.x = (float)spriteWidth / tex->getWidth();
 	sprite.TexSize.y = (float)spriteHeight / tex->getHeight();
 
+	sprite.TextureIndex = 0;
+	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-	sprite.TextureIndex = 0;  
-	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);  
-
-	if (nx > 0) {
-
-		sprite.TexCoord.x = (right / (float)tex->getWidth());  
+	if (nx > 0)
+	{
+		sprite.TexCoord.x = ((float)left + spriteWidth) / tex->getWidth();
 		sprite.TexSize.x = -sprite.TexSize.x;
 	}
+
+
 	float cx = (FLOAT)floor(CCamera::GetInstance()->GetX());
 	float cy = (FLOAT)floor(CCamera::GetInstance()->GetY());
 
-
 	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, x-cx, (y - cy), 0.1f);
-	
-	
-	D3DXMATRIX matScaling;
-	D3DXMatrixScaling(&matScaling, size * (FLOAT)spriteWidth, size * (FLOAT)spriteHeight, 1.0f);
+	D3DXMatrixTranslation(&matTranslation, round(x - cx), round(y - cy), 0.1f);
 
+
+
+	D3DXMATRIX matScaling;
+	D3DXMatrixScaling(&matScaling, width, height, 1.0f);
 
 	sprite.matWorld = matScaling * matTranslation;
-
+	// 6) Gán point-filtering ngay trước draw
+	ID3D10SamplerState* pt = pPointSampler; // hoặc g->GetPointSampler()
+	pD3DDevice->PSSetSamplers(0, 1, &pt);
 	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
-	//DebugOut(L"[INFO] CameraX:%f CameraY:%f  Ok\n",CCamera::GetInstance()->GetX(), CCamera::GetInstance()->GetY());
 }
+
+
+void CGame::DrawBoundingBox(float left, float top, float right, float bottom)
+{
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(999); 
+	if (!bbox) return;
+
+	float width = right - left + 1;
+	float height = top - bottom + 1;
+
+	float x = (left + right) / 2;
+	float y = (bottom + top) / 2;
+
+	Draw(x, top, 1, bbox, 0, 0, 1, 1, width - 2, 1.0f);
+
+	Draw(x, bottom, 1, bbox, 0, 0, 1, 1, width - 2, 1.0f);
+
+	Draw(left, y, 1, bbox, 0, 0, 1, 1, 1.0f, height);
+
+	Draw(right, y, 1, bbox, 0, 0, 1, 1, 1.0f, height);
+}
+
+void CGame::LoadScene(int id, int mapId, LPCWSTR mapFile, LPCWSTR objFile)
+{
+	if (id < 0 || id >= MAX_SCENE) return;
+
+	if (scenes[id])		//delete old scene
+	{
+		scenes[id]->~CScene();
+		delete scenes[id];
+		scenes[id] = nullptr;
+	}
+
+	scenes[id] = new CScene(id, mapId, mapFile, objFile);
+}
+
+void CGame::ChangeScene(int id)
+{
+	if (id < 0 || id >= MAX_SCENE) return;
+	currentSceneId = id;
+}
+
 
 int CGame::IsKeyDown(int KeyCode)
 {

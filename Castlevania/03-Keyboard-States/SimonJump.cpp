@@ -9,8 +9,9 @@
 CSimonJump::CSimonJump(CSimon* simon)
 {
 	jumpStartTime = GetTickCount64();
-	simon->SetVy(SIMON_JUMP_SPEED);
-	simon->SetAy(0.0f);
+	float vx, vy, ax, ay;
+	simon->GetPhysical(vx, vy, ax, ay);
+	simon->SetPhysical(vx, SIMON_JUMP_SPEED, ax, GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
 }
 void CSimonJump::KeyDownHandle(CSimon* simon, int keyCode) {}
@@ -25,10 +26,10 @@ void CSimonJump::KeyUpHandle(CSimon* simon, int keyCode)
 }
 void CSimonJump::Update(CSimon* simon, DWORD dt) 
 {
-	if (GetTickCount64() - jumpStartTime > JUMP_DURATION)
-	{
+	float x, y;
+	simon->GetSpeed(x, y);
+	if(y < 0)
 		simon->SetState(new CSimonFalling(simon));
-	}
 }
 
 void CSimonJump::OnNoCollision(CSimon* simon, DWORD dt)
@@ -40,15 +41,8 @@ void CSimonJump::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
-		simon->SetState(new CSimonHurt(simon));
-	}
-	else if (e->ny > 0 && e->obj->IsBlocking())
-	{
-		simon->SetState(new CSimonIdle(simon));
-	}
-	else if (e->ny < 0 && e->obj->IsBlocking())
-	{
-		simon->SetState(new CSimonFalling(simon));
+		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+		simon->OnCollisionWithEnemy(enemy);
 	}
 }
 

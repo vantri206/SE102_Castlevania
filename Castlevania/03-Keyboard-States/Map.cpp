@@ -70,7 +70,6 @@ void CMap::LoadMap()
 		}
 	}
 
-	CGame::GetInstance()->SetCurrentMap(this->mapId, mapWidth, mapHeight);
 	CTextures::GetInstance()->AddTilesMap(mapId, tileWidth, tileHeight, tilesetColumns, tileCount);
 	for (int i = 0; i < tileRows; i++)
 	{
@@ -112,9 +111,9 @@ void CMap::Render()
 			x = (j + 0.5f) * tileWidth;
 			y = (tileRows - i - 0.5f) * tileHeight;
 
-			//DebugOut(L"i, j : %f, %f, %d \n", x, y, tile_index);
 			CTexture* tileTexture = CTextures::GetInstance()->Get(mapId * 1000 + tile_index);
-			CGame::GetInstance()->Draw(x, y, -1, tileTexture, 0, 0, tileWidth - 1, tileHeight - 1);
+
+			CGame::GetInstance()->Draw(x, y, -1, tileTexture, 0, 0, tileWidth - 1, tileHeight - 1, tileWidth, tileHeight);
 		}
 	}
 }

@@ -9,7 +9,7 @@ CTorch::CTorch()
 }
 void CTorch::Render()
 {
-	animation_set->at(TORCH_STATE_BURN)->Render(x, y);
+	animation_set->at(TORCH_STATE_BURN)->Render(x, y, nx, width, height);
 }
 
 void CTorch::LoadExtraSetting(vector<int> extra_settings)

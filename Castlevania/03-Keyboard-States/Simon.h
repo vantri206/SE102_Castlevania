@@ -4,7 +4,7 @@
 
 #include "SimonState.h"
 #include "SimonIdle.h"
-//#include "SimonHurt.h"
+#include "SimonHurt.h"
 #include "SimonFalling.h"
 
 #include "Brick.h"
@@ -14,19 +14,24 @@
 #include "GameDefine.h"
 #include "Stair.h"
 
+#include "Weapon.h"
 
-#define SIMON_WALKING_SPEED 0.4f
+
+#define SIMON_BLINK_TIME 120
+
+#define SIMON_AUTOWALKING_SPEED 0.05f
+
+#define SIMON_WALKING_SPEED 0.1f
 #define SIMON_ACCEL_WALK_X	0.0005f
 
 #define SIMON_WALKING_STAIR_SPEED 0.03f
 
-#define SIMON_HURT_VX 0.2f    
-#define SIMON_HURT_VY 0.4f   
-#define SIMON_HURT_TIME 300  
-#define SIMON_UNTOUCHABLE_TIME 1000 
+#define SIMON_HURT_VX 0.1f    
+#define SIMON_HURT_VY 0.3f   
+#define SIMON_HURT_TIME 500  
+#define SIMON_UNTOUCHABLE_TIME 2000 
 
-#define SIMON_JUMP_SPEED 1.0f
-#define JUMP_DURATION 0.005f
+#define SIMON_JUMP_SPEED 0.4f
 #define GRAVITY -0.002f
 
 #define SIMON_STATE_IDLE	0
@@ -59,8 +64,6 @@
 #define SIMON_WIDTH 16
 #define SIMON_HEIGHT 30
 
-#define SIMON_SIZE 0.5f
-
 class CSimon : public CGameObject
 {
 protected:
@@ -68,36 +71,39 @@ protected:
 	float ax, ay;
 
 	unique_ptr<CSimonState> currentState;
+
 	int untouchable;
 	ULONGLONG untouchable_start;
+
 	CStair* nearbyStair;	
 	bool isOnStair = false;
+
+	CWeapon* currentWeapon;
+
+	int health;
 public:
-	vector<LPGAMEOBJECT>* coObjects;
 
 	CSimon(float x, float y)
 	{
-		this->x = x;
-		this->y = y;
-		maxVx = 0.0f;
-		ax = 0.0f;
-		ay = 0.0f;
+		this->SetPosition(x, y);
+		this->SetAccel(0.0f, 0.0f);
+		this->maxVx = 0;
+
 		untouchable = 0;
 		untouchable_start = -1;
-		nx = NEGATIVE_DIRECTION;
-		ny = 1;
-		coObjects = nullptr;
-		
-		currentState = make_unique<CSimonIdle>();
+
+		currentWeapon = nullptr;
+		health = 5;
 	}
 
-	void SetCoObjects(vector<LPGAMEOBJECT>* objects) { coObjects = objects; }
-	vector<LPGAMEOBJECT>* GetCoObjects() { return coObjects; }
-
-	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
-	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
 	void SetAx(float ax) { this->ax = ax; }
 	void SetAy(float ay) { this->ay = ay; }
+	void SetAccel(float ax, float ay) { this->ax = ax; this->ay = ay; }
+
+	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
+
+	void GetPhysical(float& vx, float& vy, float& ax, float& ay)	{	vx = this->vx; vy = this->vy; ax = this->ax; ay = this->ay;	}
+	void SetPhysical(float vx, float vy, float ax, float ay) { this->vx = vx; this->vy = vy; this->ax = ax; this->ay = ay; }
 	void SetDirectionX(int direction) { nx = direction; }
     int GetDirectionX() { return nx; }
 	void SetDirectionY(int direction) { ny = direction; }
@@ -106,17 +112,22 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
-	void Render();
+	virtual void Render();
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
+	void OnCollisionWithEnemy(CEnemy* enemy);
+	void OnCollisionWithEnemyOnStair(CEnemy* enemy);
+
 	void UpdateMoving(DWORD dt);
 
 	int IsCollidable() { return 1; };
-	int IsBlocking() { return 1; };
+	int IsBlocking() { return 0; };
+	int IsOverlappable() { return 1; }
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	int GetUntouchable() { return untouchable; }
 
 	bool IsNearStairUp();
 	bool IsNearStairDown();
@@ -125,8 +136,15 @@ public:
 	void SetOnStair(bool isonstair) { this->isOnStair = isonstair; }
 	bool GetOnStair() { return isOnStair; }
 
+	void SetCurrentWeapon(CWeapon* weapon) { this->currentWeapon = weapon; }
+	void GetCurrentWeapon(CWeapon*& currentweapon) { currentweapon = this->currentWeapon; }
+
+	void TakenDamage(int damage);
+
 	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
 
-	CSimonState* GetState();
+	int GetHealth() { return health; }
+	void SetHealth(int hp) { health = hp; }
+	CSimonState* GetSimonState();
 	void SetState(CSimonState* state);
 };

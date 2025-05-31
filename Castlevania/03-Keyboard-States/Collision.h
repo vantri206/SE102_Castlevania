@@ -83,5 +83,8 @@ public:
 
 	void Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 
+	void Overlap(float l1, float t1, float r1, float b1, float l2, float t2, float r2, float b2, float x1, float x2, float y1, float y2, float& t, float& nx, float& ny);
+	LPCOLLISIONEVENT Overlap(LPGAMEOBJECT objSrc, LPGAMEOBJECT objDest, bool isInverted);
+
 	static CCollision* GetInstance();
 };

@@ -1,17 +1,72 @@
 #include "Whip.h"
-#include "Game.h"
+#include "Simon.h"
 
-void CWhip::Update(DWORD dt) {
-    // Đồng bộ vị trí với Simon
-    x = simon->x + (simon->GetDirectionX() > 0 ? SIMON_WIDTH : -SIMON_WIDTH);
-    y = simon->y;
-    nx = simon->GetDirectionX();
+CWhip::CWhip(CSimon* simon)
+{
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(WHIP_ANI_SET_ID));
+	this->SetState(WHIP_STATE_ATTACK);
+	owner = simon;
+	damage = 1;
 }
 
-void CWhip::Render() {
-    if (animation_set == nullptr) {
-        DebugOut(L"[ERROR] Whip animation set is null!\n");
-        return;
-    }
-    animation_set->at(ID_ANI_WHIP)->Render(x, y, nx, 0.5f);
+void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	CAnimation* ani = animation_set->at(ani_id);
+	int currentFrameIndex = ani->GetCurrentFrameIndex();
+	UpdatePostition(currentFrameIndex);
+	UpdateSize(currentFrameIndex);
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+void CWhip::UpdateSize(int currentFrameIndex)
+{
+	if (currentFrameIndex >= 0 && currentFrameIndex < 3) 
+	{
+		width = whipFrameWidths[currentFrameIndex];
+		height = whipFrameHeights[currentFrameIndex];
+	}
+}
+
+void CWhip::UpdatePostition(int currentFrameIndex)
+{
+	float x, y;
+	int owner_dirx;
+	owner->GetPosition(x, y);
+	owner_dirx = owner->GetDirectionX();
+
+	switch (currentFrameIndex)
+	{
+	case 0:
+		this->SetPosition(x - width * owner_dirx, y - 4);
+		break;
+	case 1:
+		this->SetPosition(x - (width - 5) * owner_dirx, y + 3);
+		break;
+	case 2:
+		this->SetPosition(x + (width - 3) * owner_dirx, y + 7);
+		break;
+	}
+}
+void CWhip::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+		enemy->TakenDamage(this->damage);
+	}
+}
+void CWhip::Render()
+{
+	int nx = owner->GetDirectionX();
+	animation_set->at(ANI_ID_WHIP_ATTACK)->Render(x, y, nx, width, height);
+	this->RenderBoundingBox();
+}
+
+int CWhip::IsCollidable()
+{
+	CAnimation* ani = animation_set->at(ani_id);
+	int currentFrameIndex = ani->GetCurrentFrameIndex();
+	if (currentFrameIndex == 2) return 1;
+	return 0;
 }

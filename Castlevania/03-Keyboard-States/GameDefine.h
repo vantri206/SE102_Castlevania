@@ -15,8 +15,11 @@
 #define POSITIVE_DIRECTION -1
 #define NEGATIVE_DIRECTION 1
 
+/*-----STAIR DIRECTION----*/
+
 #define UP_STAIR_DIRECTION 1
 #define DOWN_STAIR_DIRECTION -1
+
 /*---- Resource file path ----*/
 #define TEXTURES_PATH L"./resource/textures.txt"
 #define ANIMATIONS_PATH L"./resource/animations.txt"
@@ -53,12 +56,13 @@ enum ANIMATION_SET_ID
 	CANDLE_ANI_SET_ID = 301,
 	BIGHEART_ANI_SET_ID = 400,
 	MONEYBAG_ANI_SET_ID = 401,
+	DEADEFFECT_ANI_SET_ID = 900
 };
 
 // Scene 
 #define SCENE1 1
 #define SCENE2 2
-
+#define MAX_SCENE 9
 // Map resource
 
 #define STAGE1_FILE_PATH L"./resource/Map/Stage1.txt"

@@ -3,6 +3,8 @@
 
 #include "debug.h"
 #include "GameDefine.h"
+#include "Weapon.h"
+#include "Ghoul.h"
 
 #define BLOCK_PUSH_FACTOR 0.001f
 
@@ -10,8 +12,7 @@ CCollision* CCollision::__instance = NULL;
 
 int CCollisionEvent::WasCollided() 
 {
-	return
-		t >= 0.0f && t <= 1.0f && obj->IsDirectionColliable(nx, ny) == 1;
+	return	t >= 0.0f && t <= 1.0f && obj->IsDirectionColliable(nx, ny) == 1;
 }
 
 CCollision* CCollision::GetInstance()
@@ -19,7 +20,70 @@ CCollision* CCollision::GetInstance()
 	if (__instance == NULL) __instance = new CCollision();
 	return __instance;
 }
+/*
+	Overlap Collision
+*/
+void CCollision::Overlap(
+	float l1, float t1, float r1, float b1,
+	float l2, float t2, float r2, float b2,
+	float x1, float x2, float y1, float y2,
+	float& t, float& nx, float& ny)
+{
+	t = -1.0f;
+	nx = ny = 0.0f;
 
+	if (r1 <= l2 || l1 >= r2 || b1 >= t2 || t1 <= b2)	return;
+
+	t = 0.0f;
+
+
+	float overlapX = min(r1, r2) - max(l1, l2);
+	float overlapY = min(t1, t2) - max(b1, b2);
+
+
+	float dx = x2 - x1;
+	float dy = y2 - y1;
+
+	if (overlapX < overlapY)	//overlap theo x
+	{
+		if (dx > 0)
+			nx = -1.0f;		//obj1 left to obj2
+		else if (dx < 0)
+			nx = 1.0f;		//obj1 right to obj2
+	}
+	else						//overlap theo y
+	{
+		if (dy > 0)
+			ny = -1.0f;  // obj1 below obj2
+		else if (dy < 0)
+			ny = 1.0f;   // obj1 on top obj2
+	}
+}
+
+LPCOLLISIONEVENT CCollision::Overlap(LPGAMEOBJECT objSrc, LPGAMEOBJECT objDest, bool isReversed)
+{
+	float sl, st, sr, sb; 
+	float dl, dt, dr, db;
+	float sx, sy;
+	float dx, dy;
+	objSrc->GetBoundingBox(sl, st, sr, sb);
+	objDest->GetBoundingBox(dl, dt, dr, db);
+	objSrc->GetPosition(sx, sy);
+	objDest->GetPosition(dx, dy);
+
+	float t, nx, ny;
+
+	Overlap(sl, st, sr, sb, dl, dt, dr, db, sx, dx, sy, dy, t, nx, ny);
+	CCollisionEvent* e = nullptr;
+
+	if (t < 0.0f || t > 1.0f) return nullptr;
+
+	if (!isReversed)
+		e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objDest, objSrc);
+	else
+		e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objSrc, objDest);
+	return e;
+}
 /*
 	SweptAABB
 */
@@ -148,8 +212,8 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 		sl, st, sr, sb,
 		t, nx, ny
 	);
-	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
-	return e;
+	if (t < 0.0f || t > 1.0f) return nullptr;
+	return new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
 }
 
 /*
@@ -161,17 +225,22 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDests, vector<LPCOLLISIONEVENT>& coEvents)
 {
 	for (UINT i = 0; i < objDests->size(); i++)
-	if (objSrc->CanCollisionWithObj(objDests->at(i)))
 	{
-		LPCOLLISIONEVENT e = SweptAABB(objSrc, dt, objDests->at(i));
-
-		if (e->WasCollided() == 1)
+		if (!objSrc->CanCollisionWithObj(objDests->at(i))) continue;
+		LPCOLLISIONEVENT e = nullptr;
+		e = SweptAABB(objSrc, dt, objDests->at(i));
+		if (!e)		//no dynamic collsion
+		{
+			if (objSrc->IsOverlappable()&& objDests->at(i)->IsOverlappable())
+			{
+				e = Overlap(objSrc, objDests->at(i), false);
+			}
+		}
+		if (e && e->WasCollided() == 1)
 			coEvents.push_back(e);
 		else
 			delete e;
 	}
-
-	//std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
 void CCollision::Filter(LPGAMEOBJECT objSrc,
@@ -192,8 +261,8 @@ void CCollision::Filter(LPGAMEOBJECT objSrc,
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
-		//if (c->isDeleted) continue;
-		//if (c->obj->IsDeleted) continue;
+		if (c->isDeleted) continue;
+		if (c->obj->IsDeleted()) continue;
 
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
 		if (filterBlock == 1 && !c->obj->IsBlocking())
@@ -341,9 +410,8 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	{
 		LPCOLLISIONEVENT e = coEvents[i];
 		if (e->isDeleted) continue;
-		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
-
-		objSrc->OnCollisionWith(e);
+		if (e->obj->IsBlocking()) continue; 
+		e->src_obj->OnCollisionWith(e);
 	}
 
 

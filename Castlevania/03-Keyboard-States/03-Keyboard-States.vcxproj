@@ -138,6 +138,8 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CTreeObject.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
@@ -150,6 +152,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="SimonAttack.cpp" />
+    <ClCompile Include="SimonAutoWalking.cpp" />
     <ClCompile Include="SimonFalling.cpp" />
     <ClCompile Include="SimonHurt.cpp" />
     <ClCompile Include="SimonIdle.cpp" />
@@ -168,6 +171,8 @@
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Ghoul.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Whip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -180,6 +185,8 @@
     <ClInclude Include="Candle.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CTreeObject.h" />
+    <ClInclude Include="DeadEffect.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="KeyEventHandler.h" />
@@ -196,6 +203,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="SimonAttack.h" />
+    <ClInclude Include="SimonAutoWalking.h" />
     <ClInclude Include="SimonFalling.h" />
     <ClInclude Include="SimonHurt.h" />
     <ClInclude Include="SimonJump.h" />
@@ -216,9 +224,11 @@
     <ClInclude Include="Torch.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Ghoul.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="Whip.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

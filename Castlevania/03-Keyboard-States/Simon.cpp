@@ -9,13 +9,16 @@
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	this->CheckStairNearby(coObjects);
 
 	currentState->Update(this, dt);
-	int mapwidth = CGame::GetInstance()->GetCurrentMapWidth();
-	int mapheight = CGame::GetInstance()->GetCurrentMapHeight();
+
+	if (currentWeapon != nullptr) currentWeapon->Update(dt, coObjects);
+	int mapwidth = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapWidth();
+	int mapheight = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapHeight();
 
 	vx += ax * dt;
 	vy += ay * dt;
@@ -50,6 +53,35 @@ void CSimon::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CSimon*>(e->obj)) return;
 	currentState->OnCollisionWith(this, e);
 }
+
+void CSimon::OnCollisionWithEnemy(CEnemy* enemy)
+{
+	this->TakenDamage(enemy->GetAttack());
+	this->SetState(new CSimonHurt(this));
+	this->StartUntouchable();
+}
+void CSimon::OnCollisionWithEnemyOnStair(CEnemy* enemy)
+{
+	this->TakenDamage(enemy->GetAttack());
+	this->StartUntouchable();
+}
+
+void CSimon::TakenDamage(int damage)
+{
+	health -= damage;
+}
+int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
+{
+	if (dynamic_cast<CBrick*>(objDests) && this->isOnStair == true)
+		return 0;
+	if (dynamic_cast<CEnemy*>(objDests))
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(objDests);
+		if (enemy->isDead() || this->GetUntouchable())
+			return 0;
+	}
+	return 1;
+}
 void CSimon::UpdateMoving(DWORD dt)
 {
 	x += vx * dt;
@@ -70,22 +102,23 @@ void CSimon::SetState(CSimonState* state)
 	currentState.reset(state);
 }
 
-int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
-{
-	if (dynamic_cast<CBrick*>(objDests) && this->isOnStair == true)
-		return 0;
-	return 1;
-}
-
-CSimonState* CSimon::GetState()
+CSimonState* CSimon::GetSimonState()
 {
 	return currentState.get();
 }
 
 void CSimon::Render()
 {
-	animation_set->at(ani_id)->Render(x, y, nx, SIMON_SIZE);
 	currentState->Render(this);
+	if (untouchable)					
+	{
+		DWORD now = GetTickCount64();
+		if ((now / SIMON_BLINK_TIME) % 2 == 0)										//cach 90 moi lan render
+		{
+			animation_set->at(ani_id)->Render(x, y, nx, width, height);
+		}
+	}
+	else animation_set->at(ani_id)->Render(x, y, nx, width, height);
 }
 
 void CSimon::CheckStairNearby(vector<LPGAMEOBJECT>* coObjects)

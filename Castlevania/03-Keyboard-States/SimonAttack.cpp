@@ -8,28 +8,16 @@ CSimonAttack::CSimonAttack(CSimon* simon)
     attackStartTime = GetTickCount64();
     simon->SetAniId(ID_ANI_SIMON_ATTACK);
     
-    // Create whip
-    whip = new CWhip();
-    whip->SetDirectionX(simon->GetDirectionX());
-    
-    // Calculate whip position based on Simon's direction
-    float whip_x;
-    if (simon->GetDirectionX() > 0)
-        whip_x = simon->GetX() + SIMON_WIDTH/2 + WHIP_BBOX_WIDTH/2;  // Center of Simon + half width of whip
-    else
-        whip_x = simon->GetX() - SIMON_WIDTH/2;  // Center of Simon - half width of whip
-        
-    float whip_y = simon->GetY() + WHIP_BBOX_HEIGHT/2; // Same vertical center as Simon
-    whip->SetPosition(whip_x, whip_y);
+    float x, y;
+    simon->GetPosition(x, y);
+    CWhip* whip = new CWhip(simon);
+    whip->SetPosition(x, y);
+    simon->SetCurrentWeapon(whip);
 }
 
 CSimonAttack::~CSimonAttack()
 {
-    if (whip)
-    {
-        delete whip;
-        whip = nullptr;
-    }
+
 }
 
 void CSimonAttack::KeyDownHandle(CSimon* simon, int keyCode) {}
@@ -37,28 +25,16 @@ void CSimonAttack::KeyUpHandle(CSimon* simon, int keyCode) {}
 
 void CSimonAttack::Update(CSimon* simon, DWORD dt)
 {
-    if (GetTickCount64() - attackStartTime > 300)
+    if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
     {
-        if (whip)
-        {
-            whip->SetFinished(true);
-        }
+        CWeapon* currentWeapon = nullptr;
+        simon->GetCurrentWeapon(currentWeapon);
+        currentWeapon->Delete();
+        delete currentWeapon;
+        simon->SetCurrentWeapon(nullptr);
+       
         simon->SetState(new CSimonIdle(simon));
         return;
-    }
-
-    // Update whip position based on Simon's position and direction
-    if (whip)
-    {
-        float whip_x;
-        if (simon->GetDirectionX() > 0)
-            whip_x = simon->GetX() + SIMON_WIDTH/2 + WHIP_BBOX_WIDTH/2;  // Center of Simon + half width of whip
-        else
-            whip_x = simon->GetX() - SIMON_WIDTH/2;  // Center of Simon - half width of whip
-            
-        float whip_y = simon->GetY() + WHIP_BBOX_HEIGHT / 2;  // Same vertical center as Simon
-        whip->SetPosition(whip_x, whip_y);
-        whip->Update(dt, simon->GetCoObjects());
     }
 }
 
@@ -68,12 +44,16 @@ void CSimonAttack::OnNoCollision(CSimon* simon, DWORD dt)
 
 void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
+    if (dynamic_cast<CEnemy*>(e->obj))
+    {
+        CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+        simon->OnCollisionWithEnemy(enemy);
+    }
 }
 
 void CSimonAttack::Render(CSimon* simon)
 {
-    if (whip)
-    {
-        whip->Render();
-    }
+    CWeapon* currentWeapon;
+    simon->GetCurrentWeapon(currentWeapon);
+    if (currentWeapon != nullptr) currentWeapon->Render();
 }

@@ -13,10 +13,11 @@
 #include "Panther.h"
 #include "Candle.h"
 #include "Stair.h"
+#include "Effect.h"
 
 QuadTree* quadtree = NULL;
-vector<CGameObject*> objects;
 CSimon* player = NULL;
+vector<CGameEffect*> effects;
 
 static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra_settings)
 {
@@ -33,7 +34,7 @@ static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra
 		obj = new CGhoul();
 		break;
 	case PANTHER:
-		obj = new CPanther();
+		//obj = new CPanther();
 		break;
 	case BRICK:
 		obj = new CBrick();
@@ -61,6 +62,10 @@ void CScene::LoadScene()
 		DebugOut(L"[ERROR] Load scene objects failed\n");
 		return;
 	}
+
+	int mapWidth = SceneBG->GetWidth();
+	int mapHeight = SceneBG->GetHeight();
+	quadtree = new QuadTree(mapWidth, mapHeight);
 
 	char str[MAX_TXT_LINE];
 	vector<string> tokens;
@@ -94,17 +99,12 @@ void CScene::LoadScene()
 			{
 				obj->SetPosition(x, y);
 				obj->SetSize(width, height);
-				objects.push_back(obj);
-				//DebugOut(L"[INFO] Load object %d at (%f, %f)\n", objectType, x, y);
+				quadtree->Insert(obj);
 			}
 		}
 	}
-	f.close();
-	int mapWidth = SceneBG->GetWidth();
-	int mapHeight = SceneBG->GetHeight();
-	quadtree = new QuadTree(mapWidth, mapHeight, objects);
-	//DebugOut(L"[INFO] Load scene %d objects\n");
 	quadtree->PrintTree();
+	f.close();
 }
 
 void CScene::LoadPlayer()
@@ -119,27 +119,69 @@ void CScene::LoadPlayer()
 void CScene::Update(DWORD dt)
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
-	auto activeObjects1 = quadtree->GetObjectsInView(cam);
-
 	auto activeObjects = quadtree->GetObjectsInView(cam);
 	for (auto obj : activeObjects)
-		obj->Update(dt, &activeObjects);   
+		obj->Update(dt, &activeObjects);
 	player->Update(dt, &activeObjects);
-	for (auto obj : activeObjects)
-	{
-		float l, t, r, b;
-		obj->GetBoundingBox(l, t, r, b);
-		//DebugOut(L"[INFO] Object %d at bouding box(): %f, %f, %f, %f\n", obj->GetId(), l, t, r ,b);
-	}
-
+	for (auto effect : effects)
+		effect->Update(dt);
 }
 
 void CScene::Render()
 {
 	SceneBG->Render();
-	for (int i = 0; i < (int)objects.size(); i++)
+	RECT cam = CCamera::GetInstance()->GetCamRect();
+	auto activeObjects = quadtree->GetObjectsInView(cam);
+	for(auto obj : activeObjects)
 	{
-		objects[i]->Render();
+		if (obj == nullptr || obj->IsDeleted()) continue;
+		obj->Render();
+		obj->RenderBoundingBox();
 	}
+
 	player->Render();
+	player->RenderBoundingBox();
+
+	for (auto effect : effects)
+		effect->Render();
+
+	this->ClearObject();
+	this->ClearEffects();
+}
+
+void CScene::AddObject(CGameObject* obj)
+{
+	quadtree->Insert(obj);
+}
+
+void CScene::ClearObject()
+{
+	RECT cam = CCamera::GetInstance()->GetCamRect();
+	auto activeObjects = quadtree->GetObjectsInView(cam);
+	for (auto obj : activeObjects)
+	{
+		if (obj != nullptr && obj->IsDeleted())
+		{
+			quadtree->Remove(obj);
+			delete obj;
+		}
+	}
+}
+
+void CScene::AddEffect(CGameEffect* effect)
+{
+	effects.push_back(effect);
+}
+
+void CScene::ClearEffects()
+{
+	for (int i = 0; i < effects.size();)
+	{
+		if (effects[i]->IsFinished())
+		{
+			delete effects[i];
+			effects.erase(effects.begin() + i);
+		}
+		else ++i;
+	}
 }

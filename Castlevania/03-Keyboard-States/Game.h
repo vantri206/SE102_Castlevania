@@ -10,6 +10,7 @@
 #include "KeyEventHandler.h"
 #include "d3dx9core.h"
 #include "Texture.h"
+#include "GameDefine.h"
 
 #define MAX_FRAME_RATE 60
 #define KEYBOARD_BUFFER_SIZE 1024
@@ -30,6 +31,8 @@ protected:
 
 	LPD3DX10SPRITE spriteHandler = NULL;
 
+	ID3D10SamplerState* pPointSampler = nullptr;
+
 	ID3D10Device* pD3DDevice = NULL;
 	IDXGISwapChain* pSwapChain = NULL;
 	ID3D10RenderTargetView* pRenderTargetView = NULL;
@@ -45,27 +48,18 @@ protected:
 
 	HINSTANCE hInstance;
 
-	int mapWidth;
-	int mapHeight;
-	int mapId;
+	CScene* scenes[MAX_SCENE];
+	int currentSceneId = -1;
 public:
 
 	void Init(HWND hWnd,HINSTANCE hInstance);
 
-	void Draw(float x, float y, LPTEXTURE tex, int l, int t, int r, int b)
-	{
-		this->Draw(x, y, 1, tex, l, t, r, b, 1.0f);
-	}
-	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b)
-	{
-		this->Draw(x, y, nx, tex, l, t, r, b, 1.0f);
-	}
-	void Draw(float x, float y, int nx, LPTEXTURE tex, int l, int t, int r, int b, float size);
+	void DrawBoundingBox(float x, float y, float width, float height);
 
 	LPD3DX10SPRITE GetSpriteHandler() { return this->spriteHandler; }
 
 	// Keyboard related functions 
-	void InitKeyboard();
+	void InitKeyboard() {}
 	int IsKeyDown(int KeyCode);
 	int IsKeyUp(int KeyCode);
 	void ProcessKeyboard();
@@ -77,8 +71,11 @@ public:
 		return pD3DDevice;
 	}
 
+	ID3D10SamplerState* GetPointSampler() const { return pPointSampler; }
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
+
+	void Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float width, float height);
 
 	IDXGISwapChain* GetSwapChain() { return this->pSwapChain; }
 	ID3D10RenderTargetView* GetRenderTargetView() { return this->pRenderTargetView; }
@@ -89,15 +86,14 @@ public:
 	int GetBackBufferWidth() { return backBufferWidth; }
 	int GetBackBufferHeight() { return backBufferHeight; }
 
-	void SetCurrentMap(int _mapId, int _mapWidth, int _mapHeight)
+	void LoadScene(int id, int mapId, LPCWSTR mapFile, LPCWSTR objFile);
+	void ChangeScene(int sceneId);
+	CScene* GetCurrentScene()
 	{
-		this->mapId = _mapId;
-		this->mapHeight = _mapHeight;
-		this->mapWidth = _mapWidth;
+		if (currentSceneId >= 0 && currentSceneId < MAX_SCENE)
+			return scenes[currentSceneId];
+		return nullptr;
 	}
-	int GetCurrentMapWidth() { return this->mapWidth; }
-	int GetCurrentMapHeight() { return this->mapHeight; }
-	int GetCurrentMapId() { return this->mapId; }
 
 	static CGame* GetInstance();
 
