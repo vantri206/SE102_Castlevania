@@ -12,6 +12,7 @@ class CWeapon : public CGameObject
 {
 protected:
 	CSimon* owner;
+	int damage;
 public:
 	CWeapon()
 	{
@@ -20,6 +21,7 @@ public:
 		width = height = 0;
 		nx = 1;
 		owner = nullptr;
+		damage = 0;
 	}
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) = 0;
@@ -33,4 +35,7 @@ public:
 
 	void SetOwner(CSimon* simon) { this->owner = simon; }
 	CSimon* GetOwner() { return this->owner; }
+
+	virtual void SetWeaponDamage(int dmg) { this->damage = dmg; }
+	virtual int GetCurrentDamage() { return this->damage; }
 };

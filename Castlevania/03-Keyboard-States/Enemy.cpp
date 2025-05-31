@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Weapon.h"
-
+#include "Effect.h"
+#include "DeadEffect.h"
 void CEnemy::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)
@@ -9,10 +10,13 @@ void CEnemy::LoadExtraSetting(vector<int> extra_settings)
 	}
 }
 
-void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
+void CEnemy::NormalEnemyDead(int duration)
 {
-	if (dynamic_cast<CWeapon*>(e->obj))
-	{
-		this->Delete();
-	}
+	this->startDeathTime = GetTickCount64();
+	this->SetSpeed(0, 0);
+	CScene* currentscene = CGame::GetInstance()->GetCurrentScene();
+	CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
+	currentscene->AddEffect(static_cast<CGameEffect*>(deadEffect));
 }
+
+

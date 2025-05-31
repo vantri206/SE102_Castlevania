@@ -5,6 +5,7 @@
 class CSimon;
 class CMap;
 class CGameObject;
+class CGameEffect;
 
 class CScene
 {
@@ -39,4 +40,8 @@ public:
 	int GetCurrentMapWidth() { return SceneBG->GetWidth(); }
 
 	void AddObject(CGameObject* obj);
+	void ClearObject();
+
+	void AddEffect(CGameEffect* effect);
+	void ClearEffects();
 };

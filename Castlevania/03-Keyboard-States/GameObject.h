@@ -24,7 +24,7 @@ protected:
     int state;
     int ani_id;
 
-	bool isDeleted;
+	bool isDeleted = false;
 
     CAnimationSet animations;
     LPANIMATION_SET animation_set;

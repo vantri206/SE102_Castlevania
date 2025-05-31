@@ -1,10 +1,12 @@
 #include "Whip.h"
 #include "Simon.h"
 
-CWhip::CWhip()
+CWhip::CWhip(CSimon* simon)
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(WHIP_ANI_SET_ID));
 	this->SetState(WHIP_STATE_ATTACK);
+	owner = simon;
+	damage = 1;
 }
 
 void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -13,6 +15,8 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	int currentFrameIndex = ani->GetCurrentFrameIndex();
 	UpdatePostition(currentFrameIndex);
 	UpdateSize(currentFrameIndex);
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CWhip::UpdateSize(int currentFrameIndex)
@@ -44,7 +48,14 @@ void CWhip::UpdatePostition(int currentFrameIndex)
 		break;
 	}
 }
-
+void CWhip::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+		enemy->TakenDamage(this->damage);
+	}
+}
 void CWhip::Render()
 {
 	int nx = owner->GetDirectionX();

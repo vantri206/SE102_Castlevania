@@ -31,10 +31,14 @@ void CSimonSit::Update(CSimon* simon, DWORD dt)
 
 void CSimonSit::OnNoCollision(CSimon* simon, DWORD dt)
 {
-	simon->SetState(new CSimonFalling(simon));
+	
 }
 
 void CSimonSit::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-
+	if (dynamic_cast<CEnemy*>(e->obj))
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+		simon->OnCollisionWithEnemy(enemy);
+	}
 }

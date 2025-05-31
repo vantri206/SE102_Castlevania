@@ -1,7 +1,7 @@
 #object_id object_type x y width height extra_setting...
 
 #Simon, x y is start position when swich scene
-1 0 18 120 16 30
+1 0 18 47 16 30
 
 #Candle, extra setting: item's objectid drop when hit
 3 6 32 56 8 16

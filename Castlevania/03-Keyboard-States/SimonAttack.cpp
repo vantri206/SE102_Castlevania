@@ -10,17 +10,14 @@ CSimonAttack::CSimonAttack(CSimon* simon)
     
     float x, y;
     simon->GetPosition(x, y);
-    whip = new CWhip();
+    CWhip* whip = new CWhip(simon);
     whip->SetPosition(x, y);
-    whip->SetOwner(simon);
-    CScene* scene = CGame::GetInstance()->GetCurrentScene();
-    scene->AddObject(whip);
+    simon->SetCurrentWeapon(whip);
 }
 
 CSimonAttack::~CSimonAttack()
 {
-    if (whip != NULL)
-        whip->Delete();
+
 }
 
 void CSimonAttack::KeyDownHandle(CSimon* simon, int keyCode) {}
@@ -28,9 +25,14 @@ void CSimonAttack::KeyUpHandle(CSimon* simon, int keyCode) {}
 
 void CSimonAttack::Update(CSimon* simon, DWORD dt)
 {
-    whip->Update(dt, simon->GetCoObjects());
     if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
     {
+        CWeapon* currentWeapon = nullptr;
+        simon->GetCurrentWeapon(currentWeapon);
+        currentWeapon->Delete();
+        delete currentWeapon;
+        simon->SetCurrentWeapon(nullptr);
+       
         simon->SetState(new CSimonIdle(simon));
         return;
     }
@@ -42,10 +44,16 @@ void CSimonAttack::OnNoCollision(CSimon* simon, DWORD dt)
 
 void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-
+    if (dynamic_cast<CEnemy*>(e->obj))
+    {
+        CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+        simon->OnCollisionWithEnemy(enemy);
+    }
 }
 
-void CSimonAttack::Render()
+void CSimonAttack::Render(CSimon* simon)
 {
-    if(whip) whip->Render();
+    CWeapon* currentWeapon;
+    simon->GetCurrentWeapon(currentWeapon);
+    if (currentWeapon != nullptr) currentWeapon->Render();
 }

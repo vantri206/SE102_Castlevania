@@ -3,6 +3,8 @@
 #include "Utils.h"
 #include "Whip.h"
 #include "Ghoul.h"
+#include <memory>
+#include <unordered_set>
 
 QuadTree::QuadTree(int mapWidth, int mapHeight)
 {
@@ -24,10 +26,11 @@ QuadTree::~QuadTree()
 
 void QuadTree::Insert(LPGAMEOBJECT obj)
 {
-
     CTreeObject* treeObj = new CTreeObject(obj);
     insertNode(root, treeObj, 0);
+
 }
+
 
 void QuadTree::Remove(LPGAMEOBJECT obj)
 {
@@ -64,26 +67,37 @@ bool QuadTree::RemoveObj(QNode* node, CGameObject* obj)
 
 void QuadTree::insertNode(QNode* node, CTreeObject* treeObj, int depth)
 {
-    // Nếu node đã chia nhỏ, đẩy xuống các nhánh con
     if (!node->IsLeaf()) {
         QNode* children[4] = { node->lt, node->rt, node->lb, node->rb };
+        std::vector<QNode*> intersectNodes;
+
         for (QNode* child : children) {
             if (treeObj->Intersects(child->x0, child->y0, child->x1, child->y1)) {
-                insertNode(child, treeObj, depth + 1);
+                intersectNodes.push_back(child);
             }
         }
-        return;
+
+        if (intersectNodes.size() == 1) {
+            insertNode(intersectNodes[0], treeObj, depth + 1);
+            return;
+        }
+        else                                                                //neu node con khong chua duoc ca obj -> day len cha
+        {
+            node->objects.push_back(treeObj);
+            return;
+        }
     }
 
-    // Node lá, thêm vào
     node->objects.push_back(treeObj);
 
-    // Nếu vượt ngưỡng, chia nhỏ node
     if (depth < MAX_DEPTH && node->Width() > MIN_NODE_SIZE && node->Height() > MIN_NODE_SIZE && node->objects.size() > 4) {
         Subdivide(node, depth + 1);
-        auto old = node->objects;
+
+        auto oldObjects = node->objects;
         node->objects.clear();
-        for (auto obj : old) {
+
+        // Insert lại các object sau khi chia node
+        for (auto obj : oldObjects) {
             insertNode(node, obj, depth + 1);
         }
     }
@@ -92,50 +106,19 @@ void QuadTree::insertNode(QNode* node, CTreeObject* treeObj, int depth)
 
 void QuadTree::Subdivide(QNode* node, int depth)
 {
-    // Điều kiện dừng chia: quá độ sâu, kích thước node quá nhỏ, hoặc quá ít object
     if (depth > MAX_DEPTH || node->Width() <= MIN_NODE_SIZE || node->Height() <= MIN_NODE_SIZE || node->objects.size() <= 1)
         return;
 
-    // Tính điểm chia giữa node hiện tại
     int midX = (node->x0 + node->x1) / 2;
     int midY = (node->y0 + node->y1) / 2;
 
-    // Tạo 4 node con
-    node->lt = new QNode(node->x0, node->y0, midX, midY); // trên trái
-    node->rt = new QNode(midX, node->y0, node->x1, midY); // trên phải
-    node->lb = new QNode(node->x0, midY, midX, node->y1); // dưới trái
-    node->rb = new QNode(midX, midY, node->x1, node->y1); // dưới phải
-
-    // Gán các object hiện tại vào các node con nếu chúng giao nhau
-    for (CTreeObject* obj : node->objects)
-    {
-        Clip(obj, node->lt);
-        Clip(obj, node->rt);
-        Clip(obj, node->lb);
-        Clip(obj, node->rb);
-    }
-
-    // Xóa danh sách object ở node hiện tại (đã chia cho node con)
-    node->objects.clear();
-
-    // Đệ quy tiếp cho các node con
-    Subdivide(node->lt, depth + 1);
-    Subdivide(node->rt, depth + 1);
-    Subdivide(node->lb, depth + 1);
-    Subdivide(node->rb, depth + 1);
+    node->lt = new QNode(node->x0, node->y0, midX, midY);
+    node->rt = new QNode(midX, node->y0, node->x1, midY);
+    node->lb = new QNode(node->x0, midY, midX, node->y1);
+    node->rb = new QNode(midX, midY, node->x1, node->y1);
 }
 
-
-void QuadTree::Clip(CTreeObject* obj, QNode* node)
-{
-    // Nếu object nằm trong vùng của node thì thêm vào
-    if (obj->Intersects(node->x0, node->y0, node->x1, node->y1))
-    {
-        node->objects.push_back(obj);
-    }
-}
-
-void QuadTree::Retrieve(QNode* node, RECT camRect, vector<LPGAMEOBJECT>& result)
+void QuadTree::Retrieve(QNode* node, RECT camRect, std::unordered_set<LPGAMEOBJECT>& res)
 {
     // Nếu node nằm ngoài vùng camera thì bỏ qua
     if (node->x1 < camRect.left || node->x0 > camRect.right ||
@@ -145,39 +128,54 @@ void QuadTree::Retrieve(QNode* node, RECT camRect, vector<LPGAMEOBJECT>& result)
     // Thêm các object trong node vào danh sách kết quả
     for (CTreeObject* obj : node->objects)
     {
-        result.push_back(obj->target);
+        res.insert(obj->target);
     }
 
     // Nếu node không phải node lá -> tiếp tục kiểm tra các node con
     if (!node->IsLeaf())
     {
-        Retrieve(node->lt, camRect, result);
-        Retrieve(node->rt, camRect, result);
-        Retrieve(node->lb, camRect, result);
-        Retrieve(node->rb, camRect, result);
+        Retrieve(node->lt, camRect, res);
+        Retrieve(node->rt, camRect, res);
+        Retrieve(node->lb, camRect, res);
+        Retrieve(node->rb, camRect, res);
     }
 }
 
 vector<LPGAMEOBJECT> QuadTree::GetObjectsInView(RECT cam)
 {
     // Trả về danh sách các object trong vùng nhìn thấy (camera)
-    vector<LPGAMEOBJECT> result;
-    Retrieve(root, cam, result);
-    return result;
+    std::unordered_set<LPGAMEOBJECT> uniqueRes;
+    Retrieve(root, cam, uniqueRes);
+    vector<LPGAMEOBJECT> res;
+    for (auto obj : uniqueRes)
+    {
+        res.push_back(obj);
+    }
+    return res;
 }
 
 void QuadTree::PrintNode(QNode* node, int level)
 {
     if (!node) return;
 
-    // Tạo khoảng trắng theo cấp độ node
     string indent(level * 2, ' ');
 
-    // In thông tin node
-    DebugOut(L"%sNode: (%d,%d)-(%d,%d), %d objects\n",
-        ToLPCWSTR(indent),
-        node->x0, node->y0, node->x1, node->y1,
-        (int)node->objects.size());
+    DebugOut(L"%sNode (%d,%d)-(%d,%d): ", ToLPCWSTR(indent), node->x0, node->y0, node->x1, node->y1);
+
+    if (node->objects.empty())
+    {
+        DebugOut(L"[No objects]\n");
+    }
+    else
+    {
+        DebugOut(L"Objects: ");
+        for (CTreeObject* obj : node->objects)
+        {
+            if (obj && obj->target)
+                DebugOut(L"%d ", obj->target->GetId());
+        }
+        DebugOut(L"\n");
+    }
 
     // Đệ quy in các node con
     PrintNode(node->lt, level + 1);
@@ -192,4 +190,3 @@ void QuadTree::PrintTree()
     PrintNode(root, 0);
     DebugOut(L"==============================\n");
 }
-

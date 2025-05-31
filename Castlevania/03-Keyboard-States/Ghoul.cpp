@@ -10,17 +10,33 @@ CGhoul::CGhoul()
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(GHOUL_ANI_SET_ID));
 	this->SetState(GHOUL_STATE_IDLE);
 	this->SetAniId(ANI_ID_GHOUL_IDLE);
+
+	health = 1;
 }
 void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vx += ax * dt;
-	vy += ay * dt;
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+	if (this->isDead())
+	{
+		if (GetTickCount64() - startDeathTime >= GHOUL_DEATH_TIME)
+			isDeleted = true;
+	}
+	else if (this->health <= 0)
+	{
+		this->SetState(GHOUL_STATE_DEAD);
+		this->NormalEnemyDead(GHOUL_DEATH_TIME);
+	}
+	else
+	{
+		vx += ax * dt;
+		vy += ay * dt;
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 }
 
 void CGhoul::Render()
 {
-	animation_set->at(this->GetAniId())->Render(x, y, nx, width, height);
+	if(!this->isDead())
+		animation_set->at(this->GetAniId())->Render(x, y, nx, width, height);
 }
 
 void CGhoul::OnNoCollision(DWORD dt)
@@ -31,12 +47,7 @@ void CGhoul::OnNoCollision(DWORD dt)
 
 void CGhoul::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CGhoul*>(e->obj)) return;
-	if (dynamic_cast<CWeapon*>(e->obj))
-	{
-		DebugOut(L"gh vs w\n");
-		this->Delete();
-	}
+	if (dynamic_cast<CEnemy*>(e->obj)) return;
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0.0f;
@@ -53,18 +64,26 @@ void CGhoul::SetState(int state)
 	{
 	case GHOUL_STATE_IDLE:
 		this->SetAniId(ANI_ID_GHOUL_IDLE);
+		break;
 	case GHOUL_STATE_WALK:
 		this->SetAniId(ANI_ID_GHOUL_WALK);
+		break;
+	case GHOUL_STATE_DEAD:
+		break;
 	}
 	this->state = state;
 }
 
 int CGhoul::IsCollidable()
 {
-	return 1;
+	return !(this->isDead());
 }
 void CGhoul::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)
 		this->SetDirectionX(extra_settings[0]);
+}
+bool CGhoul::isDead()
+{
+	return (this->state == GHOUL_STATE_DEAD);
 }

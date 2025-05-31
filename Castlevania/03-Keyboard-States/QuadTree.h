@@ -1,6 +1,7 @@
 #pragma once
 
 #include "QNode.h"
+#include "unordered_set"
 
 #define MAX_DEPTH 5
 #define MIN_NODE_SIZE 256 
@@ -11,8 +12,7 @@ private:
     QNode* root;
 
     void Subdivide(QNode* node, int depth);
-    void Clip(CTreeObject* obj, QNode* node);
-    void Retrieve(QNode* node, RECT camRect, std::vector<LPGAMEOBJECT>& result);
+    void Retrieve(QNode* node, RECT camRect, std::unordered_set<LPGAMEOBJECT>& result);
     void PrintNode(QNode* node, int level);
     bool RemoveObj(QNode* node, CGameObject* Obj);
 public:

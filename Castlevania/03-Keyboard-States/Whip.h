@@ -24,20 +24,21 @@ class CWhip : public CWeapon
 protected:
 	CSimon* owner;
 public:
-	CWhip();
+	CWhip(CSimon*);
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateSize(int currentFrameIndex);
 	void UpdatePostition(int currentFrameIndex);
 
 	void OnNoCollision(DWORD dt) {}
-	void OnCollisionWith(LPCOLLISIONEVENT e) {}
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void Render();
 
 	void SetState(int state) {}
 	int IsCollidable();
 	int IsBlocking() { return 0; }
+	int IsOverlappable() { return 1;}
 	void SetOwner(CSimon* simon) { this->owner = simon; }
 	CSimon* GetOwner() { return this->owner; }
 };

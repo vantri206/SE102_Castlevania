@@ -92,7 +92,8 @@ void CSimonIdle::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
 	{
-		simon->SetState(new CSimonHurt(simon));
+        CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+        simon->OnCollisionWithEnemy(enemy);
 	}
 	else if (e->ny != 0 && e->obj->IsBlocking())
 	{

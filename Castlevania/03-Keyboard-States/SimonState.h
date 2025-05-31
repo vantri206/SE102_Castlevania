@@ -12,6 +12,6 @@ public:
     virtual void Update(CSimon* simon, DWORD dt) = 0;
     virtual void OnNoCollision(CSimon* simon, DWORD dt) = 0;
     virtual void OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e) = 0;
-    virtual void Render() {}
+    virtual void Render(CSimon*) {}
     virtual ~CSimonState() {};
 };

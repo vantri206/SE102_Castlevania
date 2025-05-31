@@ -13,10 +13,11 @@
 #include "Panther.h"
 #include "Candle.h"
 #include "Stair.h"
+#include "Effect.h"
 
 QuadTree* quadtree = NULL;
-vector<CGameObject*> objects;
 CSimon* player = NULL;
+vector<CGameEffect*> effects;
 
 static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra_settings)
 {
@@ -98,14 +99,12 @@ void CScene::LoadScene()
 			{
 				obj->SetPosition(x, y);
 				obj->SetSize(width, height);
-				objects.push_back(obj);
 				quadtree->Insert(obj);
 			}
 		}
 	}
-	f.close();
-	//DebugOut(L"[INFO] Load scene %d objects\n");
 	quadtree->PrintTree();
+	f.close();
 }
 
 void CScene::LoadPlayer()
@@ -120,46 +119,69 @@ void CScene::LoadPlayer()
 void CScene::Update(DWORD dt)
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
-
 	auto activeObjects = quadtree->GetObjectsInView(cam);
 	for (auto obj : activeObjects)
-		obj->Update(dt, &activeObjects);   
+		obj->Update(dt, &activeObjects);
 	player->Update(dt, &activeObjects);
-	for (auto obj : activeObjects)
-	{
-		float l, t, r, b;
-		obj->GetBoundingBox(l, t, r, b);
-		//DebugOut(L"[INFO] Object %d at bouding box(): %f, %f, %f, %f\n", obj->GetId(), l, t, r ,b);
-	}
-	auto it = objects.begin();
-	while (it != objects.end())
-	{
-		CGameObject* obj = *it;
-		if(obj->IsDeleted())
-		{
-			quadtree->Remove(obj);
-			delete obj;
-			it = objects.erase(it);
-		}
-		else
-			++it;
-	}
+	for (auto effect : effects)
+		effect->Update(dt);
 }
 
 void CScene::Render()
 {
 	SceneBG->Render();
-	for (int i = 0; i < (int)objects.size(); i++)
+	RECT cam = CCamera::GetInstance()->GetCamRect();
+	auto activeObjects = quadtree->GetObjectsInView(cam);
+	for(auto obj : activeObjects)
 	{
-		objects[i]->Render();
-		objects[i]->RenderBoundingBox();
+		if (obj == nullptr || obj->IsDeleted()) continue;
+		obj->Render();
+		obj->RenderBoundingBox();
 	}
+
 	player->Render();
 	player->RenderBoundingBox();
+
+	for (auto effect : effects)
+		effect->Render();
+
+	this->ClearObject();
+	this->ClearEffects();
 }
 
 void CScene::AddObject(CGameObject* obj)
 {
-	objects.push_back(obj);
 	quadtree->Insert(obj);
+}
+
+void CScene::ClearObject()
+{
+	RECT cam = CCamera::GetInstance()->GetCamRect();
+	auto activeObjects = quadtree->GetObjectsInView(cam);
+	for (auto obj : activeObjects)
+	{
+		if (obj != nullptr && obj->IsDeleted())
+		{
+			quadtree->Remove(obj);
+			delete obj;
+		}
+	}
+}
+
+void CScene::AddEffect(CGameEffect* effect)
+{
+	effects.push_back(effect);
+}
+
+void CScene::ClearEffects()
+{
+	for (int i = 0; i < effects.size();)
+	{
+		if (effects[i]->IsFinished())
+		{
+			delete effects[i];
+			effects.erase(effects.begin() + i);
+		}
+		else ++i;
+	}
 }

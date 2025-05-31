@@ -10,9 +10,7 @@
 
 #define GHOUL_STATE_IDLE	0
 #define GHOUL_STATE_WALK	1
-
-#define GHOUL_BBOX_WIDTH    16
-#define GHOUL_BBOX_HEIGHT   32
+#define GHOUL_STATE_DEAD	2
 
 #define ANI_ID_GHOUL_IDLE 0
 #define ANI_ID_GHOUL_WALK 1
@@ -20,6 +18,7 @@
 #define GHOUL_WIDTH 16
 #define GHOUL_HEIGHT 14
 
+#define GHOUL_DEATH_TIME 450
 
 class CGhoul : public CEnemy
 {
@@ -39,4 +38,6 @@ public:
 	void SetState(int state);
 
 	void LoadExtraSetting(vector<int> extra_settings);
+
+	bool isDead();
 };

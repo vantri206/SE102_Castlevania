@@ -32,20 +32,32 @@ void CCollision::Overlap(
 	t = -1.0f;
 	nx = ny = 0.0f;
 
-	if (r1 <= l2 || l1 >= r2 || t1 <= b2 || b1 >= t2)
-		return;
+	if (r1 <= l2 || l1 >= r2 || b1 >= t2 || t1 <= b2)	return;
 
-	t = 0.0f;				//overlap -> collision instant
+	t = 0.0f;
 
-	if (x1 < x2)	
-		nx = -1.0f;			//obj1 is on the left obj2
-	else if (x1 > x2)
-		nx = 1.0f;		
 
-	if (y1 < y2)
-		ny = -1.0f;			// obj1 is below of obj2
-	else if (y1 > y2)
-		ny = 1.0f;  
+	float overlapX = min(r1, r2) - max(l1, l2);
+	float overlapY = min(t1, t2) - max(b1, b2);
+
+
+	float dx = x2 - x1;
+	float dy = y2 - y1;
+
+	if (overlapX < overlapY)	//overlap theo x
+	{
+		if (dx > 0)
+			nx = -1.0f;		//obj1 left to obj2
+		else if (dx < 0)
+			nx = 1.0f;		//obj1 right to obj2
+	}
+	else						//overlap theo y
+	{
+		if (dy > 0)
+			ny = -1.0f;  // obj1 below obj2
+		else if (dy < 0)
+			ny = 1.0f;   // obj1 on top obj2
+	}
 }
 
 LPCOLLISIONEVENT CCollision::Overlap(LPGAMEOBJECT objSrc, LPGAMEOBJECT objDest, bool isReversed)
@@ -64,10 +76,12 @@ LPCOLLISIONEVENT CCollision::Overlap(LPGAMEOBJECT objSrc, LPGAMEOBJECT objDest, 
 	Overlap(sl, st, sr, sb, dl, dt, dr, db, sx, dx, sy, dy, t, nx, ny);
 	CCollisionEvent* e = nullptr;
 
-	if (isReversed)
-		e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objSrc, objDest);
-	else
+	if (t < 0.0f || t > 1.0f) return nullptr;
+
+	if (!isReversed)
 		e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objDest, objSrc);
+	else
+		e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objSrc, objDest);
 	return e;
 }
 /*
@@ -223,7 +237,7 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 			}
 			else if (objDests->at(i)->IsOverlappable())
 			{
-				e = Overlap(objDests->at(i), objSrc, true);
+				e = Overlap(objSrc, objDests->at(i), true);
 			}
 		}
 		if (e && e->WasCollided() == 1)
@@ -251,8 +265,8 @@ void CCollision::Filter(LPGAMEOBJECT objSrc,
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
-		//if (c->isDeleted) continue;
-		//if (c->obj->IsDeleted) continue;
+		if (c->isDeleted) continue;
+		if (c->obj->IsDeleted()) continue;
 
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
 		if (filterBlock == 1 && !c->obj->IsBlocking())
@@ -400,9 +414,8 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	{
 		LPCOLLISIONEVENT e = coEvents[i];
 		if (e->isDeleted) continue;
-		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
-
-		objSrc->OnCollisionWith(e);
+		if (e->obj->IsBlocking()) continue; 
+		e->src_obj->OnCollisionWith(e);
 	}
 
 

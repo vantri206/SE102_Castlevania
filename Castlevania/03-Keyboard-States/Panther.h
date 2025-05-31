@@ -23,14 +23,7 @@ class CPanther : public CEnemy
 {
 protected:
 public:
-	CPanther()
-	{
-		maxVx = PANTHER_WALKING_SPEED;
-		maxVy = PANTHER_WALKING_SPEED;
-		nx = 1, ny = 1;
-
-		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(PANTHER_ANI_SET_ID));
-	}
+	CPanther();
 	void SetDirection(int direction) { nx = direction; }
 	int GetDirection() { return nx; }
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {}

@@ -3,6 +3,8 @@
 
 class CSimonHurt : public CSimonState
 {
+protected:
+    DWORD startHurtTime;
 public:
     CSimonHurt(CSimon* simon);
     void KeyDownHandle(CSimon* simon, int keyCode);

@@ -38,6 +38,10 @@
 #--WHIP--#
 2000 20000 150 20001 150 20002 150
 
+####----EFFECT----####
+#--DEAD--# 	#effect when object can break (torch, candle,...) and enemies dead
+#dead effect
+9000 90000 150 90001 150 90002 150
 #####-----ENEMIES-----####
 
 #----GHOULS----#
