@@ -15,7 +15,7 @@
 
 #define ANI_ID_WHIP_ATTACK 0
 
-const int whipFrameWidths[] = { 8.5, 16, 36 };
+const int whipFrameWidths[] = { 8.5, 16, 22.5 };
 const int whipFrameHeights[] = { 24, 19, 8 };
 
 

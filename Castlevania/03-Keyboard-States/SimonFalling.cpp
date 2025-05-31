@@ -10,8 +10,6 @@
 
 CSimonFalling::CSimonFalling(CSimon* simon)
 {
-	simon->SetSpeed(0.0f, 0.0f);
-	simon->SetAccel(0.0f, GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
 	simon->SetSize(SIMON_FALLING_WIDTH, SIMON_FALLING_HEIGHT);
 }
