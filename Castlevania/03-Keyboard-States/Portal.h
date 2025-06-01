@@ -9,7 +9,7 @@ class CPortal : public CGameObject
 protected:
 	int sceneId;
 public:
-	CPortal();
+	CPortal(int scenid);
 	void Render() {}
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {}

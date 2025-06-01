@@ -144,6 +144,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MorningStar.cpp" />
     <ClCompile Include="Panther.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="QNode.cpp" />
@@ -152,10 +153,12 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="SimonAttack.cpp" />
+    <ClCompile Include="SimonAutoWalking.cpp" />
     <ClCompile Include="SimonFalling.cpp" />
     <ClCompile Include="SimonHurt.cpp" />
     <ClCompile Include="SimonIdle.cpp" />
     <ClCompile Include="SimonJump.cpp" />
+    <ClCompile Include="SimonPowerUp.cpp" />
     <ClCompile Include="SimonSit.cpp" />
     <ClCompile Include="SimonStairDownIdle.cpp" />
     <ClCompile Include="SimonStairUpIdle.cpp" />
@@ -194,6 +197,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MoneyBag.h" />
+    <ClInclude Include="MorningStar.h" />
     <ClInclude Include="Panther.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="QNode.h" />
@@ -202,9 +206,11 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="SimonAttack.h" />
+    <ClInclude Include="SimonAutoWalking.h" />
     <ClInclude Include="SimonFalling.h" />
     <ClInclude Include="SimonHurt.h" />
     <ClInclude Include="SimonJump.h" />
+    <ClInclude Include="SimonPowerUp.h" />
     <ClInclude Include="SimonSit.h" />
     <ClInclude Include="SimonStairDownIdle.h" />
     <ClInclude Include="SimonStairUpIdle.h" />

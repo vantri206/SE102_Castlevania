@@ -230,16 +230,8 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 		LPCOLLISIONEVENT e = nullptr;
 		e = SweptAABB(objSrc, dt, objDests->at(i));
 		if (!e)		//no dynamic collsion
-		{
-			if (objSrc->IsOverlappable())
-			{
+			if (objSrc->IsOverlappable() && objDests->at(i)->IsOverlappable())
 				e = Overlap(objSrc, objDests->at(i), false);
-			}
-			else if (objDests->at(i)->IsOverlappable())
-			{
-				e = Overlap(objSrc, objDests->at(i), true);
-			}
-		}
 		if (e && e->WasCollided() == 1)
 			coEvents.push_back(e);
 		else

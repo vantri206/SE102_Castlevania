@@ -11,7 +11,7 @@
 #define SIMON_STAIR_DOWN_WIDTH 16
 #define SIMON_STAIR_DOWN_HEIGHT 30
 
-CSimonStairDownIdle::CSimonStairDownIdle(CSimon* simon)
+CSimonStairDownIdle::CSimonStairDownIdle(CSimon* simon) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_DOWN_IDLE);
     simon->SetAccel(0.0f, 0.0f);
@@ -19,13 +19,13 @@ CSimonStairDownIdle::CSimonStairDownIdle(CSimon* simon)
     simon->SetSize(SIMON_STAIR_DOWN_WIDTH, SIMON_STAIR_DOWN_HEIGHT);
     simon->SetOnStair(true);
 }
-void CSimonStairDownIdle::KeyUpHandle(CSimon* simon, int keyCode)
+void CSimonStairDownIdle::KeyUpHandle(int keyCode)
 {
     //DebugOut(L"Keycode: %d\n", keyCode);
 
 }
 
-void CSimonStairDownIdle::KeyDownHandle(CSimon* simon, int keyCode)
+void CSimonStairDownIdle::KeyDownHandle(int keyCode)
 {
     //DebugOut(L"Keycode: %d\n", keyCode);
     if (keyCode == DIK_UP)
@@ -44,17 +44,17 @@ void CSimonStairDownIdle::KeyDownHandle(CSimon* simon, int keyCode)
     }
 }
 
-void CSimonStairDownIdle::Update(CSimon* simon, DWORD dt)
+void CSimonStairDownIdle::Update(DWORD dt)
 {
 
 }
 
-void CSimonStairDownIdle::OnNoCollision(CSimon* simon, DWORD dt)
+void CSimonStairDownIdle::OnNoCollision(DWORD dt)
 {
 
 }
 
-void CSimonStairDownIdle::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+void CSimonStairDownIdle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
     {

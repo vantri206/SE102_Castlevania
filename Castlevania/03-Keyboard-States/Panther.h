@@ -8,28 +8,45 @@
 #include "GameDefine.h"
 #include "debug.h"
 
-#define PANTHER_WALKING_SPEED 0.3f
+#define PANTHER_RUN_SPEED 0.2f
+#define PANTHER_JUMP_VY 0.25f
 
 #define PANTHER_STATE_IDLE	0
-#define PANTHER_STATE_WALK	1
+#define PANTHER_STATE_RUN 1
+#define PANTHER_STATE_HOVERING 2
+#define PANTHER_STATE_DEAD 3
 
 #pragma region ANIMATION_ID
 
 #define ANI_ID_PANTHER_IDLE 0
 #define ANI_ID_PANTHER_WALK 1
+#define ANI_ID_PANTHER_HOVERING 2
 
+#define PANTHER_RANGE_ACTIVE 150
 
 class CPanther : public CEnemy
 {
 protected:
 public:
 	CPanther();
-	void SetDirection(int direction) { nx = direction; }
-	int GetDirection() { return nx; }
-	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
-	void Update(DWORD dt);
+
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+
 	void Render();
-	void SetState(int state) {}
+
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+	int IsCollidable();
+
+	void SetState(int state);
 
 	void LoadExtraSetting(vector<int> extra_settings);
+
+	int CheckEnemyCanActive(CSimon* simon);
+
+	void ActiveEnemy();
+
+	int isHovering();
+
+	bool isDead();
 };

@@ -5,8 +5,6 @@ class CTreeObject
 {
 public:
     LPGAMEOBJECT target;
-    float x, y;
-    float width, height;
 
     CTreeObject(LPGAMEOBJECT target);
 

@@ -9,49 +9,36 @@
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	this->CheckStairNearby(coObjects);
 
-	currentState->Update(this, dt);
+	currentState->Update(dt);
 
-	if (currentWeapon != nullptr) currentWeapon->Update(dt, coObjects);
-	int mapwidth = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapWidth();
-	int mapheight = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapHeight();
-
+	if (currentWeapon != nullptr)
+	{
+		currentWeapon->Update(dt, coObjects);
+	}
 	vx += ax * dt;
 	vy += ay * dt;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-	}
+		FinishedUntouchable();
 
-	if (x <= 0 || x >= mapwidth - SIMON_WIDTH)
-	{
-		if (x <= 0)
-		{
-			x = 0;
-		}
-		else if (x >= mapwidth - SIMON_WIDTH)
-		{
-			x = (float)(mapwidth - SIMON_WIDTH);
-		}
-	}
+	int mapwidth = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapWidth();
+	int mapheight = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapHeight();
 	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
 }
 void CSimon::OnNoCollision(DWORD dt)
 {
-	currentState->OnNoCollision(this, dt);
+	currentState->OnNoCollision(dt);
 }
 void CSimon::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CSimon*>(e->obj)) return;
-	currentState->OnCollisionWith(this, e);
+	currentState->OnCollisionWith(e);
 }
 
 void CSimon::OnCollisionWithEnemy(CEnemy* enemy)
@@ -89,12 +76,12 @@ void CSimon::UpdateMoving(DWORD dt)
 }
 void CSimon::OnKeyDown(int keyCode)
 {
-	currentState->KeyDownHandle(this, keyCode);
+	currentState->KeyDownHandle(keyCode);
 }
 
 void CSimon::OnKeyUp(int keyCode)
 {
-	currentState->KeyUpHandle(this, keyCode);
+	currentState->KeyUpHandle(keyCode);
 }
 
 void CSimon::SetState(CSimonState* state) 
@@ -109,11 +96,11 @@ CSimonState* CSimon::GetSimonState()
 
 void CSimon::Render()
 {
-	currentState->Render(this);
+	currentState->Render();
 	if (untouchable)					
 	{
 		DWORD now = GetTickCount64();
-		if ((now / SIMON_BLINK_TIME) % 2 == 0)										//cach 90 moi lan render
+		if ((now / SIMON_BLINK_TIME) % 2 == 0)									
 		{
 			animation_set->at(ani_id)->Render(x, y, nx, width, height);
 		}

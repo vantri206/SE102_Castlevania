@@ -12,25 +12,25 @@
 #include "Stair.h"
 #include "SimonStairUpIdle.h"
 #include "SimonStairDownIdle.h"
+#include "SimonAutoWalking.h"
 
 #define SIMON_IDLE_WIDTH 16
 #define SIMON_IDLE_HEIGHT 30
 
-CSimonIdle::CSimonIdle(CSimon* simon)
+CSimonIdle::CSimonIdle(CSimon* simon) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_IDLE);
-    simon->SetAccel(0.0f, GRAVITY);
-    simon->SetSpeed(0.0f, 0.0f);
+    simon->SetPhysical(0.0f, 0.0f, 0.0f, GRAVITY);
     simon->SetSize(SIMON_IDLE_WIDTH, SIMON_IDLE_HEIGHT);
     simon->SetOnStair(false);
 }
-void CSimonIdle::KeyUpHandle(CSimon* simon, int keyCode)
+void CSimonIdle::KeyUpHandle(int keyCode)
 {
 	//DebugOut(L"Keycode: %d\n", keyCode);
 
 }
 
-void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
+void CSimonIdle::KeyDownHandle(int keyCode)
 {
 	//DebugOut(L"Keycode: %d\n", keyCode);
     if (keyCode == DIK_RIGHT)
@@ -60,9 +60,11 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
 		CStair* stair = simon->GetNearbyStair();
         if (stair != nullptr)
         {
-            float stairX = stair->GetX();
-            simon->SetPosition(stairX, simon->GetY());
-            simon->SetState(new CSimonStairUpIdle(simon));
+            float stairX, stairY;
+            int stairDirection;
+            stair->GetPosition(stairX, stairY);
+            stairDirection = stair->GetHorizontalDirection();
+            simon->SetState(new CSimonAutoWalking(simon, stairX, stairY, stairDirection, SIMON_STATE_WALKING_UP));
         }
     }
     else if (keyCode == DIK_DOWN && simon->IsNearStairDown())
@@ -70,25 +72,27 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
         CStair* stair = simon->GetNearbyStair();
         if (stair != nullptr)
         {
-            float stairX = stair->GetX();
-            simon->SetPosition(stairX, simon->GetY());
-            simon->SetState(new CSimonStairDownIdle(simon));
+            float stairX, stairY;
+            int stairDirection;
+            stair->GetPosition(stairX, stairY);
+            stairDirection = stair->GetHorizontalDirection();
+            simon->SetState(new CSimonAutoWalking(simon, stairX, stairY, stairDirection, SIMON_STATE_WALKING_DOWN));
         }
     }
 } 
 
-void CSimonIdle::Update(CSimon* simon, DWORD dt)
+void CSimonIdle::Update(DWORD dt)
 {
 
 }
 
-void CSimonIdle::OnNoCollision(CSimon* simon, DWORD dt)
+void CSimonIdle::OnNoCollision(DWORD dt)
 {
-    
+    simon->UpdateMoving(dt);
 }
 
 
-void CSimonIdle::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+void CSimonIdle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
 	{

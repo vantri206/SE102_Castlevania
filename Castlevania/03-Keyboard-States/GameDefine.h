@@ -20,11 +20,8 @@
 #define UP_STAIR_DIRECTION 1
 #define DOWN_STAIR_DIRECTION -1
 
-/*---- Resource file path ----*/
-#define TEXTURES_PATH L"./resource/textures.txt"
-#define ANIMATIONS_PATH L"./resource/animations.txt"
-#define SPRITES_PATH L"./resource/sprites.txt"
-#define ANIMATIONS_SET_PATH L"./resource/animations_set.txt"
+/*-----Gravity----*/
+#define GRAVITY -0.002f
 
 
 /*---- OBJECT_TYPE_ID ----*/
@@ -42,6 +39,7 @@ enum OBJECT_TYPE
 	PANTHER = 8,
 	MONEYBAG = 9,
 	STAIR = 10,
+	MORNINGSTAR = 11
 };
 
 /*---- Animation Set ----*/
@@ -56,14 +54,20 @@ enum ANIMATION_SET_ID
 	CANDLE_ANI_SET_ID = 301,
 	BIGHEART_ANI_SET_ID = 400,
 	MONEYBAG_ANI_SET_ID = 401,
+	MORNINGSTAR_ANI_SET_ID = 402,
 	DEADEFFECT_ANI_SET_ID = 900
 };
 
-// Scene 
+/*----Scene---*/
 #define SCENE1 1
 #define SCENE2 2
 #define MAX_SCENE 9
-// Map resource
+
+/*---- Resource file path ----*/
+#define TEXTURES_PATH L"./resource/textures.txt"
+#define ANIMATIONS_PATH L"./resource/animations.txt"
+#define SPRITES_PATH L"./resource/sprites.txt"
+#define ANIMATIONS_SET_PATH L"./resource/animations_set.txt"
 
 #define STAGE1_FILE_PATH L"./resource/Map/Stage1.txt"
 #define STAGE1_OBJECT_FILE_PATH L"./resource/Map/Stage1Objects.txt"

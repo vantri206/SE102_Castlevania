@@ -17,12 +17,16 @@
 #include "Weapon.h"
 
 
+#define UNTOUCHABLE 1
+#define NOT_UNTOUCHABLE 0
+
 #define SIMON_BLINK_TIME 120
 
 #define SIMON_WALKING_SPEED 0.3f
 #define SIMON_ACCEL_WALK_X	0.0005f
 
-#define SIMON_WALKING_STAIR_SPEED 0.03f
+#define SIMON_WALKING_STAIR_SPEED 0.075f
+#define SIMON_AUTO_WALKING_STAIR_SPEED 0.03f
 
 #define SIMON_HURT_VX 0.1f    
 #define SIMON_HURT_VY 0.3f   
@@ -30,15 +34,17 @@
 #define SIMON_UNTOUCHABLE_TIME 2000 
 
 #define SIMON_JUMP_SPEED 0.4f
-#define GRAVITY -0.002f
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1
 #define SIMON_STATE_JUMP	2
 #define SIMON_STATE_SIT		3
 #define SIMON_STATE_ATTACK	4
-#define SIMON_STATE_GO_UP	5
-#define SIMON_STATE_GO_DOWN 6
+#define SIMON_STATE_WALKING_UP	5
+#define SIMON_STATE_WALKING_DOWN 6
+#define SIMON_STATE_IDLE_UP 7
+#define SIMON_STATE_IDLE_DOWN 8
+#define SIMON_STATE_INTRO 9
 
 
 
@@ -78,6 +84,8 @@ protected:
 
 	CWeapon* currentWeapon;
 
+	bool isAutoWalking;
+
 	int health;
 public:
 
@@ -91,6 +99,7 @@ public:
 		untouchable_start = -1;
 
 		currentWeapon = nullptr;
+		isAutoWalking = false;
 		health = 5;
 	}
 
@@ -124,7 +133,9 @@ public:
 	int IsBlocking() { return 0; };
 	int IsOverlappable() { return 1; }
 
+	void SetUntouchable(int untouchable) { this->untouchable = untouchable; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	void FinishedUntouchable() { untouchable = 0; untouchable_start = 0; }
 	int GetUntouchable() { return untouchable; }
 
 	bool IsNearStairUp();
@@ -141,6 +152,9 @@ public:
 
 	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
 
+	void StartAutoWalking() { isAutoWalking = true; }
+	void FinishedAutoWalking() { isAutoWalking = false; }
+	int IsAutoWalking() { return (isAutoWalking) ? 1 : 0; }
 	int GetHealth() { return health; }
 	void SetHealth(int hp) { health = hp; }
 	CSimonState* GetSimonState();

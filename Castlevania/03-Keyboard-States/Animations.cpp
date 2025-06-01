@@ -61,7 +61,12 @@ LPANIMATION_SET CAnimationSets::Get(unsigned int id)
 	LPANIMATION_SET ani_set = animation_sets[id];
 	if (ani_set == NULL)
 		DebugOut(L"[ERROR] Failed to find animation set id: %d\n", id);
-
+	else
+		for (auto ani : *ani_set)
+		{
+			if (ani)
+				ani->Reset();
+		}
 	return ani_set;
 }
 

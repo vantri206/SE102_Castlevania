@@ -7,6 +7,7 @@ CWhip::CWhip(CSimon* simon)
 	this->SetState(WHIP_STATE_ATTACK);
 	owner = simon;
 	damage = 1;
+	damageCalculator = false;
 }
 
 void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -17,6 +18,14 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	UpdateSize(currentFrameIndex);
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+	if (currentFrameIndex == 2 && !damageCalculator)
+	{
+		for (auto enemy : enemiesTarget)
+		{
+			enemy->TakenDamage(this->damage);
+		}
+		damageCalculator = true;
+	}
 }
 
 void CWhip::UpdateSize(int currentFrameIndex)
@@ -53,7 +62,10 @@ void CWhip::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
-		enemy->TakenDamage(this->damage);
+		if (enemy)
+		{
+			enemiesTarget.insert(enemy);
+		}
 	}
 }
 void CWhip::Render()

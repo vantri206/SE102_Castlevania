@@ -6,12 +6,27 @@ class CSimon;
 
 class CSimonState
 {
+protected:
+    CSimon* simon;
+
 public:
-    virtual void KeyUpHandle(CSimon* simon, int keyCode) = 0;
-    virtual void KeyDownHandle(CSimon* simon, int keyCode) = 0;
-    virtual void Update(CSimon* simon, DWORD dt) = 0;
-    virtual void OnNoCollision(CSimon* simon, DWORD dt) = 0;
-    virtual void OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e) = 0;
-    virtual void Render(CSimon*) {}
-    virtual ~CSimonState() {};
+
+    CSimonState(CSimon* simon)
+    {
+        this->simon = simon;
+    }
+    virtual ~CSimonState() {}
+
+    virtual void KeyUpHandle(int keyCode) {}
+    virtual void KeyDownHandle(int keyCode) {}
+
+    virtual void Update(DWORD dt) = 0;
+    virtual void OnNoCollision(DWORD dt) {}
+    virtual void OnCollisionWith(LPCOLLISIONEVENT e) {}
+
+    virtual void OnEnter() {}
+    virtual void OnExit() {}
+    virtual void Render() {}
+
+    virtual bool IsAutoWalking() { return false; }
 };

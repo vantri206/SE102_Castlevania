@@ -15,15 +15,11 @@
 #define ANI_ID_GHOUL_IDLE 0
 #define ANI_ID_GHOUL_WALK 1
 
-#define GHOUL_WIDTH 16
-#define GHOUL_HEIGHT 14
-
-#define GHOUL_DEATH_TIME 450
+#define GHOUL_RANGE_ACTIVE 150.0f
 
 class CGhoul : public CEnemy
 {
 protected:
-	
 public:
 	CGhoul();
 
@@ -38,6 +34,10 @@ public:
 	void SetState(int state);
 
 	void LoadExtraSetting(vector<int> extra_settings);
+
+	int CheckEnemyCanActive(CSimon* simon);
+
+	void ActiveEnemy();
 
 	bool isDead();
 };

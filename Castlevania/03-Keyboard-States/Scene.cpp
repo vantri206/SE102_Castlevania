@@ -14,6 +14,7 @@
 #include "Candle.h"
 #include "Stair.h"
 #include "Effect.h"
+#include "MorningStar.h"
 
 QuadTree* quadtree = NULL;
 CSimon* player = NULL;
@@ -34,7 +35,7 @@ static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra
 		obj = new CGhoul();
 		break;
 	case PANTHER:
-		//obj = new CPanther();
+		obj = new CPanther();
 		break;
 	case BRICK:
 		obj = new CBrick();
@@ -45,6 +46,8 @@ static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra
 	case STAIR:
 		obj = new CStair();
 		break;
+	case MORNINGSTAR:
+		obj = new CMorningStar();
 	}
 	obj->SetId(objectId);
 	obj->SetType(objectType);
@@ -184,4 +187,9 @@ void CScene::ClearEffects()
 		}
 		else ++i;
 	}
+}
+
+CSimon* CScene::GetPlayer()
+{
+	return player;
 }

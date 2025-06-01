@@ -5,15 +5,17 @@
 #include "SimonIdle.h"
 #include "SimonWalking.h"
 #include "SimonJump.h"
+#include "SimonPowerUp.h"
 #include "Brick.h"
 #include "Enemy.h"
 #include "Debug.h"
 #include "SimonHurt.h"
+#include "MorningStar.h"
 
 #define SIMON_WALKING_WIDTH 15
 #define SIMON_WALKING_HEIGHT 30
 
-CSimonWalking::CSimonWalking(CSimon* simon)
+CSimonWalking::CSimonWalking(CSimon* simon) : CSimonState(simon)
 {
 	simon->SetMaxVx(SIMON_WALKING_SPEED * simon->GetDirectionX());
 	simon->SetAccel(SIMON_ACCEL_WALK_X * simon->GetDirectionX(), GRAVITY);
@@ -21,7 +23,7 @@ CSimonWalking::CSimonWalking(CSimon* simon)
 	simon->SetSize(SIMON_WALKING_WIDTH, SIMON_WALKING_HEIGHT);
 }
 
-void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)
+void CSimonWalking::KeyUpHandle(int keyCode)
 {
 	if (keyCode == DIK_RIGHT && simon->GetDirectionX() > 0)
 	{
@@ -33,35 +35,34 @@ void CSimonWalking::KeyUpHandle(CSimon* simon, int keyCode)
 	}
 }
 
-void CSimonWalking::KeyDownHandle(CSimon* simon, int keyCode)
+void CSimonWalking::KeyDownHandle(int keyCode)
 {
 	if (keyCode == DIK_D)
 	{
 		simon->SetState(new CSimonJump(simon));
 	}
-	if (keyCode == DIK_A)
-	{
-		simon->SetState(new CSimonIdle(simon));
-		simon->SetState(new CSimonAttack(simon));
-	}
 }
 
-void CSimonWalking::Update(CSimon* simon, DWORD dt)
+void CSimonWalking::Update(DWORD dt)
 {
 	float x, y;
 	simon->GetSpeed(x, y);
 	if (y < 0) simon->SetState(new CSimonFalling(simon));
 }
-void CSimonWalking::OnNoCollision(CSimon* simon, DWORD dt)
+void CSimonWalking::OnNoCollision(DWORD dt)
 {
 	simon->UpdateMoving(dt);
 }
-void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+void CSimonWalking::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		simon->OnCollisionWithEnemy(enemy);
+	}
+	if (dynamic_cast<CMorningStar*>(e->obj))
+	{
+		simon->SetState(new CSimonPowerUp(simon));
 	}
 	else if (e->ny > 0 && e->obj->IsBlocking())
 	{

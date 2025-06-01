@@ -8,6 +8,7 @@
 #include "debug.h"
 #include "Collision.h"
 #include "Weapon.h"
+#include <unordered_set>
 
 #define GHOUL_WALKING_SPEED	0.15f
 
@@ -23,6 +24,8 @@ class CWhip : public CWeapon
 {
 protected:
 	CSimon* owner;
+	std::unordered_set<CEnemy*> enemiesTarget;
+	bool damageCalculator;
 public:
 	CWhip(CSimon*);
 

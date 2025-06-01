@@ -27,13 +27,16 @@ void CAnimation::Render(float x, float y, int nx, float width, float height)
 			currentFrame++;
 			lastFrameTime = now;
 			if (currentFrame == frames.size()) currentFrame = 0;
-			//DebugOut(L"now: %d, lastFrameTime: %d, t: %d\n", now, lastFrameTime, t);
 		}
 
 	}
 	frames[currentFrame]->GetSprite()->Draw(x, y, nx, width, height);
 }
-
+void CAnimation::Reset()
+{
+	currentFrame = -1;       
+	lastFrameTime = 0;        
+}
 int CAnimation::GetCurrentFrameIndex()
 {
 	return currentFrame;

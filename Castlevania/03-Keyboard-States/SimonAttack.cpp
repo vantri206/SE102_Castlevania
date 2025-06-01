@@ -3,11 +3,10 @@
 #include "SimonIdle.h"
 #include "Whip.h"
 
-CSimonAttack::CSimonAttack(CSimon* simon)
+CSimonAttack::CSimonAttack(CSimon* simon) : CSimonState(simon)
 {
     attackStartTime = GetTickCount64();
     simon->SetAniId(ID_ANI_SIMON_ATTACK);
-    
     float x, y;
     simon->GetPosition(x, y);
     CWhip* whip = new CWhip(simon);
@@ -20,10 +19,10 @@ CSimonAttack::~CSimonAttack()
 
 }
 
-void CSimonAttack::KeyDownHandle(CSimon* simon, int keyCode) {}
-void CSimonAttack::KeyUpHandle(CSimon* simon, int keyCode) {}
+void CSimonAttack::KeyDownHandle(int keyCode) {}
+void CSimonAttack::KeyUpHandle(int keyCode) {}
 
-void CSimonAttack::Update(CSimon* simon, DWORD dt)
+void CSimonAttack::Update(DWORD dt)
 {
     if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
     {
@@ -38,11 +37,11 @@ void CSimonAttack::Update(CSimon* simon, DWORD dt)
     }
 }
 
-void CSimonAttack::OnNoCollision(CSimon* simon, DWORD dt)
+void CSimonAttack::OnNoCollision(DWORD dt)
 {
 }
 
-void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+void CSimonAttack::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
     {
@@ -51,7 +50,7 @@ void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
     }
 }
 
-void CSimonAttack::Render(CSimon* simon)
+void CSimonAttack::Render()
 {
     CWeapon* currentWeapon;
     simon->GetCurrentWeapon(currentWeapon);

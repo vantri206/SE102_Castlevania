@@ -1,18 +1,26 @@
 #object_id object_type x y width height extra_setting...
 #object info and detail object type below
-1 3 608 47 16 32
-#Torch, extra setting: item's objectid drop when hit
-2 3 480 47 16 32
-#Torch, extra setting: item's objectid drop when hit
-3 3 352 47 16 32
-#Torch, extra setting: item's objectid drop when hit
-4 3 224 47 16 32
-#Torch, extra setting: item's objectid drop when hit
-5 3 91 47 16 32
-#Torch, extra setting: item's objectid drop when hit
-6 2 384 23 768 16
-#Brick
-7 5 695.5 43.5 15 25 2
-#Portal, extra setting: scene will be changed to
-8 0 48 46 16 30
+
 #Simon, x y is start position when swich scene
+
+8 0 48 46 16 30
+
+#Torch, extra setting: item's objectid drop when hit
+
+1 3 608 47 16 32
+
+2 3 480 47 16 32
+
+3 3 352 47 16 32
+
+4 3 224 47 16 32
+
+5 3 91 47 16 32
+
+#Brick
+
+6 2 384 23 768 16
+
+#Portal, extra setting: scene will be changed to
+
+7 5 695.5 43.5 15 25 2

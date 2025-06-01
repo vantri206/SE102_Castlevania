@@ -38,6 +38,7 @@ void LoadResources()
 	CGame::GetInstance()->LoadResources();
 
 	CGame* game = CGame::GetInstance();
+	game->LoadScene(SCENE1, 1, STAGE1_FILE_PATH, STAGE1_OBJECT_FILE_PATH);
 	game->LoadScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);
 	game->ChangeScene(2);
 }

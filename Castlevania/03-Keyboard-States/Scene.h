@@ -44,4 +44,6 @@ public:
 
 	void AddEffect(CGameEffect* effect);
 	void ClearEffects();
+
+	CSimon* GetPlayer();
 };

@@ -3,22 +3,22 @@
 #include "Simon.h"
 #include "Stair.h"
 
-CSimonWalkingStairUp::CSimonWalkingStairUp(CSimon* simon) 
+CSimonWalkingStairUp::CSimonWalkingStairUp(CSimon* simon) : CSimonState(simon)
 {
 	int dir_x = simon->GetDirectionX(), dir_y = simon->GetDirectionY();
 	simon->SetAniId(ID_ANI_SIMON_GO_UP);
 	simon->SetSpeed(SIMON_WALKING_STAIR_SPEED * dir_x, SIMON_WALKING_STAIR_SPEED * dir_y);
 	simon->SetAccel(0.0f, 0.0f);
 }
-void CSimonWalkingStairUp::KeyDownHandle(CSimon* simon, int keyCode) {}
-void CSimonWalkingStairUp::KeyUpHandle(CSimon* simon, int keyCode) 
+void CSimonWalkingStairUp::KeyDownHandle(int keyCode) {}
+void CSimonWalkingStairUp::KeyUpHandle(int keyCode) 
 {
 	if (keyCode == DIK_UP)
 	{
 		simon->SetState(new CSimonStairUpIdle(simon));
 	}
 }
-void CSimonWalkingStairUp::Update(CSimon* simon, DWORD dt)
+void CSimonWalkingStairUp::Update(DWORD dt)
 {
 	if (simon->GetNearbyStair() != nullptr)
 	{
@@ -31,11 +31,11 @@ void CSimonWalkingStairUp::Update(CSimon* simon, DWORD dt)
 		}
 	}
 }
-void CSimonWalkingStairUp::OnNoCollision(CSimon* simon, DWORD dt)
+void CSimonWalkingStairUp::OnNoCollision(DWORD dt)
 {
 	simon->UpdateMoving(dt);
 }
-void CSimonWalkingStairUp::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+void CSimonWalkingStairUp::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
 }

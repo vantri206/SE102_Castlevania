@@ -8,24 +8,22 @@
 #define SIMON_FALLING_WIDTH 16
 #define SIMON_FALLING_HEIGHT 24
 
-CSimonFalling::CSimonFalling(CSimon* simon)
+CSimonFalling::CSimonFalling(CSimon* simon) : CSimonState(simon)
 {
-	simon->SetSpeed(0.0f, 0.0f);
-	simon->SetAccel(0.0f, GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
 	simon->SetSize(SIMON_FALLING_WIDTH, SIMON_FALLING_HEIGHT);
 }
-void CSimonFalling::KeyDownHandle(CSimon* simon, int keyCode) {}
-void CSimonFalling::KeyUpHandle(CSimon* simon, int keyCode) {}
-void CSimonFalling::Update(CSimon* simon, DWORD dt)
+void CSimonFalling::KeyDownHandle(int keyCode) {}
+void CSimonFalling::KeyUpHandle(int keyCode) {}
+void CSimonFalling::Update(DWORD dt)
 {
 
 }
-void CSimonFalling::OnNoCollision(CSimon* simon, DWORD dt)
+void CSimonFalling::OnNoCollision(DWORD dt)
 {
 	simon->UpdateMoving(dt);
 }
-void CSimonFalling::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+void CSimonFalling::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	/*
 	if (dynamic_cast<CEnemy*>(e->obj))

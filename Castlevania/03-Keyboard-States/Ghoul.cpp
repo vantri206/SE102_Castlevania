@@ -1,12 +1,13 @@
 #include <algorithm>
 #include "debug.h"
+#include "Simon.h"
 #include "Ghoul.h"
 #include "Whip.h"
+#include "Enemy.h"
 #include <cstdlib>
 
 CGhoul::CGhoul()
 {
-	vx = vy = 0.0f;
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(GHOUL_ANI_SET_ID));
 	this->SetState(GHOUL_STATE_IDLE);
 	this->SetAniId(ANI_ID_GHOUL_IDLE);
@@ -15,15 +16,22 @@ CGhoul::CGhoul()
 }
 void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (!isActived())
+	{
+		CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+		if (this->CheckEnemyCanActive(player)) ActiveEnemy();
+	}
+	if (!isActived()) return;
+
 	if (this->isDead())
 	{
-		if (GetTickCount64() - startDeathTime >= GHOUL_DEATH_TIME)
+		if (GetTickCount64() - startDeathTime >= ENEMY_DEAD_TIME)
 			isDeleted = true;
 	}
 	else if (this->health <= 0)
 	{
 		this->SetState(GHOUL_STATE_DEAD);
-		this->NormalEnemyDead(GHOUL_DEATH_TIME);
+		this->NormalEnemyDead(ENEMY_DEAD_TIME);
 	}
 	else
 	{
@@ -82,6 +90,21 @@ void CGhoul::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)
 		this->SetDirectionX(extra_settings[0]);
+}
+int CGhoul::CheckEnemyCanActive(CSimon* simon)
+{
+	float x = simon->GetX();
+	if (abs(x - this->x) <= GHOUL_RANGE_ACTIVE) return 1;
+	return 0;
+}
+void CGhoul::ActiveEnemy()
+{
+	CEnemy::ActiveEnemy();
+	CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+	if (player->GetX() < this->x) this->nx = -1;
+	else this->nx = 1;
+	this->SetState(GHOUL_STATE_WALK);
+	this->SetSpeed(GHOUL_WALKING_SPEED * nx, 0);
 }
 bool CGhoul::isDead()
 {
