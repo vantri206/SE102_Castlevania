@@ -12,6 +12,7 @@ CPanther::CPanther()
 	this->SetState(PANTHER_STATE_IDLE);
 	this->SetAniId(ANI_ID_PANTHER_IDLE);
 	this->ay = GRAVITY;
+
 	health = 1;
 }
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -21,10 +22,6 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 		if (this->CheckEnemyCanActive(player)) ActiveEnemy();
 	}
-
-	if (!isActived()) return;
-
-	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	if (this->isDead())
 	{
@@ -36,13 +33,16 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->SetState(PANTHER_STATE_DEAD);
 		this->NormalEnemyDead(ENEMY_DEAD_TIME);
 	}
-	else if (vy < 0 && !isHovering())
+	else
 	{
-		this->SetState(PANTHER_STATE_HOVERING);
-		this->vy = PANTHER_JUMP_VY;
+		if (vy < 0 && !isHovering())
+		{
+			this->SetState(PANTHER_STATE_HOVERING);
+			this->vy = PANTHER_JUMP_VY;
+		}
+		else vy += ay * dt;
+		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
-	vx += ax * dt;
-	vy += ay * dt;
 }
 
 void CPanther::Render()
@@ -121,6 +121,13 @@ void CPanther::ActiveEnemy()
 int CPanther::isHovering()
 {
 	return (this->state == PANTHER_STATE_HOVERING);
+}
+void CPanther::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x - width / 2;
+	t = y + height / 1.5;
+	r = x + width / 2;
+	b = y - height / 2;
 }
 bool CPanther::isDead()
 {

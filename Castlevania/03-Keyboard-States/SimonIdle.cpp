@@ -38,24 +38,30 @@ void CSimonIdle::KeyDownHandle(int keyCode)
         simon->SetDirectionX(1);
         simon->SetState(new CSimonWalking(simon));
     }
-    else if (keyCode == DIK_LEFT) {
+    else if (keyCode == DIK_LEFT) 
+    {
         simon->SetDirectionX(-1);
         simon->SetState(new CSimonWalking(simon));
     }
-    else if (keyCode == DIK_D)
-    {
-        simon->SetState(new CSimonJump(simon));
-    }
-    else if (keyCode == DIK_S) 
+    else if (keyCode == DIK_DOWN)
     {
         simon->SetPosition(simon->GetX(), simon->GetY() - 3.0f);
         simon->SetState(new CSimonSit(simon));
     }
+    else if (keyCode == DIK_S)
+    {
+        simon->SetState(new CSimonJump(simon));
+    }
     else if (keyCode == DIK_A) 
     {
-        simon->SetState(new CSimonAttack(simon));
+        if (CGame::GetInstance()->IsKeyDown(DIK_UP))
+        {
+            if(simon->CanUseSubWeapon())
+                simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
+        }
+        else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
     }
-    if (keyCode == DIK_UP && simon->IsNearStairUp())
+    else if (keyCode == DIK_UP && simon->IsNearStairUp())
     {
 		CStair* stair = simon->GetNearbyStair();
         if (stair != nullptr)

@@ -8,7 +8,7 @@
 #include "GameDefine.h"
 #include "debug.h"
 
-#define PANTHER_RUN_SPEED 0.2f
+#define PANTHER_RUN_SPEED 0.02f
 #define PANTHER_JUMP_VY 0.25f
 
 #define PANTHER_STATE_IDLE	0
@@ -48,5 +48,6 @@ public:
 
 	int isHovering();
 
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	bool isDead();
 };

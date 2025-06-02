@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "GameDefine.h"
+#include "BreakableObject.h"
 
 #define CANDLE_STATE_BURN 0
 
@@ -12,15 +13,12 @@
 #define CANDLE_WIDTH 8
 #define CANDLE_HEIGHT 16
 
-class CCandle : public CGameObject
+class CCandle : public CBreakableObject
 {
-protected:
-	int object_drop_id;
 public:
 	CCandle();
 	void Render();
 	void Update(DWORD dt) {}
-	void LoadExtraSetting(vector<int> extra_settings);
 	int IsBlocking() { return 0; }
 	int IsColliable() { return 1; }
 };

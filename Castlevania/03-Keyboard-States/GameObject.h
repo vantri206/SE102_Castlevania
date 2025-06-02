@@ -77,9 +77,10 @@ public:
 
     virtual int IsOverlappable() { return 0; }
 
+    virtual int IsBreakable() { return 0; }
 	virtual int IsDirectionColliable(int nx, int ny) { return 1; }
 
-    void GetBoundingBox(float& l, float& t, float& r, float& b);
+    virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 
     virtual void Delete() { isDeleted = true; }
     virtual bool IsDeleted() { return this->isDeleted; }

@@ -15,4 +15,5 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
 	void SetSceneId(int id) { sceneId = id; }
 	int IsBlocking() { return 0; }
+	int isBreakable() { return 1; }
 };

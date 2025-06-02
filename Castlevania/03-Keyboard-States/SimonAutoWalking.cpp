@@ -12,7 +12,6 @@
 
 CSimonAutoWalking::CSimonAutoWalking(CSimon* simon, float x, float y, int direction, int simonState) : CSimonState(simon)
 {
-	simon->StartAutoWalking();
 	int moveDir = (x > simon->GetX()) ? NEGATIVE_DIRECTION : POSITIVE_DIRECTION;
 	simon->SetDirectionX(moveDir);
 	simon->SetVx(SIMON_AUTO_WALKING_STAIR_SPEED * moveDir);
@@ -28,8 +27,7 @@ void CSimonAutoWalking::Update(DWORD dt)
 	if(CheckReachedTarget())
 	{
 		simon->SetSpeed(0.0f, 0.0f);
-		simon->SetDirectionX(targetX);
-		simon->FinishedAutoWalking(); 
+		simon->SetDirectionX(targetX); 
 		simon->SetDirectionX(finishedDirection);
 		ChangeState();
 	}

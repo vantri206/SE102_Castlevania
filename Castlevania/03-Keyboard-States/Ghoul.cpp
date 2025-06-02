@@ -11,6 +11,7 @@ CGhoul::CGhoul()
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(GHOUL_ANI_SET_ID));
 	this->SetState(GHOUL_STATE_IDLE);
 	this->SetAniId(ANI_ID_GHOUL_IDLE);
+	this->ay = GRAVITY;
 
 	health = 1;
 }
@@ -21,8 +22,6 @@ void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 		if (this->CheckEnemyCanActive(player)) ActiveEnemy();
 	}
-	if (!isActived()) return;
-
 	if (this->isDead())
 	{
 		if (GetTickCount64() - startDeathTime >= ENEMY_DEAD_TIME)

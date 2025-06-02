@@ -83,10 +83,14 @@ protected:
 	bool isOnStair = false;
 
 	CWeapon* currentWeapon;
+	int currentSubWeaponType;
+	int subWeaponLimit;
+	vector<CWeapon*> activeSubWeaponList;
 
 	bool isAutoWalking;
 
 	int health;
+	int heartCount;
 public:
 
 	CSimon(float x, float y)
@@ -99,8 +103,12 @@ public:
 		untouchable_start = -1;
 
 		currentWeapon = nullptr;
-		isAutoWalking = false;
+		currentSubWeaponType = DAGGER_TYPE;
+		subWeaponLimit = 1;
+		activeSubWeaponList = vector<CWeapon*>();
+
 		health = 5;
+		heartCount = 5;
 	}
 
 	void SetAx(float ax) { this->ax = ax; }
@@ -121,23 +129,29 @@ public:
 	void OnKeyUp(int keyCode);
 	virtual void Render();
 
+	//for collision
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithEnemy(CEnemy* enemy);
 	void OnCollisionWithEnemyOnStair(CEnemy* enemy);
 
+	void UpdateWeapon(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+
 	void UpdateMoving(DWORD dt);
 
 	int IsCollidable() { return 1; };
 	int IsBlocking() { return 0; };
 	int IsOverlappable() { return 1; }
+	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
 
+	//for untouchable mode
 	void SetUntouchable(int untouchable) { this->untouchable = untouchable; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void FinishedUntouchable() { untouchable = 0; untouchable_start = 0; }
 	int GetUntouchable() { return untouchable; }
 
+	//for go stair
 	bool IsNearStairUp();
 	bool IsNearStairDown();
 	void CheckStairNearby(vector<LPGAMEOBJECT>* coObjects);
@@ -145,15 +159,25 @@ public:
 	void SetOnStair(bool isonstair) { this->isOnStair = isonstair; }
 	bool GetOnStair() { return isOnStair; }
 
+	//for attack
 	void SetCurrentWeapon(CWeapon* weapon) { this->currentWeapon = weapon; }
-	void GetCurrentWeapon(CWeapon*& currentweapon) { currentweapon = this->currentWeapon; }
+	CWeapon* GetCurrentWeapon() { return this->currentWeapon; }
+
+	void SetSubWeapon(int subtype) { this->currentSubWeaponType = subtype; }
+	vector<CWeapon*> GetSubWeaponList() const { return activeSubWeaponList; }
+
+	int CanUseSubWeapon();
+	void AddSubWeapon(CWeapon* subweapon);
+	int GetCurrentSubType() { return this->currentSubWeaponType; }
+	void RemoveAllSubWeapons();								//when simon dead, change scene
+	void RenderSubWeapons();
+
+	int getHeartCount() { return this->heartCount; }
+	void addHeart(int heartcountadd) { this->heartCount += heartcountadd; }
+	void spendHeart(int heartcountspend) { this->heartCount -= heartcountspend; }
+
 
 	void TakenDamage(int damage);
-
-	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
-
-	void StartAutoWalking() { isAutoWalking = true; }
-	void FinishedAutoWalking() { isAutoWalking = false; }
 	int IsAutoWalking() { return (isAutoWalking) ? 1 : 0; }
 	int GetHealth() { return health; }
 	void SetHealth(int hp) { health = hp; }

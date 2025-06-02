@@ -10,7 +10,7 @@ class CSimonAttack : public CSimonState
 private:
     ULONGLONG attackStartTime;
 public:
-    CSimonAttack(CSimon* simon);
+    CSimonAttack(CSimon* simon,int weaponType);
     ~CSimonAttack();
     void KeyDownHandle(int keyCode);
     void KeyUpHandle(int keyCode);

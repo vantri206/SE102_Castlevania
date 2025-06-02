@@ -13,6 +13,7 @@ class CWeapon : public CGameObject
 protected:
 	CSimon* owner;
 	int damage;
+	int heartCost;
 public:
 	CWeapon()
 	{
@@ -38,4 +39,6 @@ public:
 
 	virtual void SetWeaponDamage(int dmg) { this->damage = dmg; }
 	virtual int GetCurrentDamage() { return this->damage; }
+
+	virtual int GetHeartCost() { return 0; }
 };

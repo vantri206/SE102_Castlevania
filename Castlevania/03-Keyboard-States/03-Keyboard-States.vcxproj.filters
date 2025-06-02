@@ -243,8 +243,14 @@
     <ClCompile Include="SimonAutoWalking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Dagger.cpp">
+      <Filter>Source Files\GameObjects\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakableObject.cpp">
+      <Filter>Source Files\GameObjects\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\GameObjects\Characters</Filter>
+      <Filter>Source Files\GameObjects\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +412,12 @@
     </ClInclude>
     <ClInclude Include="SimonPowerUp.h">
       <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Dagger.h">
+      <Filter>Header Files\GameObjects\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakableObject.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

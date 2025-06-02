@@ -8,7 +8,7 @@
 
 #include "GameDefine.h"
 
-#define ENEMY_DEAD_TIME 450
+#define ENEMY_DEAD_TIME 900
 
 class CEnemy : public CGameObject
 {
@@ -31,6 +31,9 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) = 0;
 	virtual void Render() = 0;
 
+	virtual void SetPhysical(float vx, float vy, float ax, float ay);
+
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual int IsBlocking() { return 0; }
 	virtual int IsCollidable() { return 1; };
 	virtual int IsOverlappable() { return 1; }
@@ -50,6 +53,7 @@ public:
 
 	virtual void TakenDamage(int damage) { health -= damage; }
 	virtual void NormalEnemyDead(int duration);
+	virtual void TriggerNormalEffect(int duration);
 
 	virtual int isActived(){ return isActive; }
 	virtual void ActiveEnemy() { isActive = 1; }

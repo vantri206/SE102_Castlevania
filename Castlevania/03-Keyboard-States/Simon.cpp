@@ -9,16 +9,6 @@
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CCollision::GetInstance()->Process(this, dt, coObjects);
-
-	this->CheckStairNearby(coObjects);
-
-	currentState->Update(dt);
-
-	if (currentWeapon != nullptr)
-	{
-		currentWeapon->Update(dt, coObjects);
-	}
 	vx += ax * dt;
 	vy += ay * dt;
 
@@ -26,6 +16,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 		FinishedUntouchable();
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	this->CheckStairNearby(coObjects);
+
+	currentState->Update(dt);
+
+	this->UpdateWeapon(dt, coObjects);
 
 	int mapwidth = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapWidth();
 	int mapheight = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapHeight();
@@ -52,11 +50,64 @@ void CSimon::OnCollisionWithEnemyOnStair(CEnemy* enemy)
 	this->TakenDamage(enemy->GetAttack());
 	this->StartUntouchable();
 }
+void CSimon::UpdateWeapon(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if (currentWeapon != nullptr)
+	{
+		currentWeapon->Update(dt, coObjects);
+	}
+	if (activeSubWeaponList.size() > 0)
+	for (int i = 0; i < activeSubWeaponList.size(); )
+	{
+		CWeapon* subweapon = activeSubWeaponList[i];
+		subweapon->Update(dt, coObjects);
+		if (subweapon->IsDeleted())
+		{
+			delete subweapon;
+			activeSubWeaponList.erase(activeSubWeaponList.begin() + i);
+		}
+		else i++;
+	}
+}
+
+int CSimon::CanUseSubWeapon()
+{
+	return (currentSubWeaponType >= DAGGER_TYPE && currentSubWeaponType <= STOPWATCH_TYPE
+			&& activeSubWeaponList.size() <= subWeaponLimit && heartCount > 0);
+}
+
+void CSimon::AddSubWeapon(CWeapon* subweapon)
+{
+	activeSubWeaponList.push_back(subweapon);
+}
+
+void CSimon::RemoveAllSubWeapons()
+{
+	if(activeSubWeaponList.size() > 0)
+	for (int i = 0; i < activeSubWeaponList.size(); ++i)
+	{
+		CWeapon* subweapon = activeSubWeaponList[i];
+		delete subweapon;
+	}
+	activeSubWeaponList.clear();
+}
+
+void CSimon::RenderSubWeapons()
+{
+	if (activeSubWeaponList.size() > 0)
+	for (int i = 0; i < activeSubWeaponList.size(); ++i)
+	{
+		CWeapon* subweapon = activeSubWeaponList[i];
+		subweapon->Render();
+		subweapon->RenderBoundingBox();
+	}
+}
 
 void CSimon::TakenDamage(int damage)
 {
 	health -= damage;
 }
+
 int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
 {
 	if (dynamic_cast<CBrick*>(objDests) && this->isOnStair == true)
@@ -69,11 +120,13 @@ int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
 	}
 	return 1;
 }
+
 void CSimon::UpdateMoving(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
 }
+
 void CSimon::OnKeyDown(int keyCode)
 {
 	currentState->KeyDownHandle(keyCode);
@@ -97,6 +150,7 @@ CSimonState* CSimon::GetSimonState()
 void CSimon::Render()
 {
 	currentState->Render();
+	this->RenderSubWeapons();
 	if (untouchable)					
 	{
 		DWORD now = GetTickCount64();

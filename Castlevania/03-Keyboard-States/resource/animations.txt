@@ -43,10 +43,9 @@
 #lv3
 2002 20020 150 20021 150 20022 150
 
-####----EFFECT----####
-#--DEAD--# 	#effect when object can break (torch, candle,...) and enemies dead
-#dead effect
-9000 90000 150 90001 150 90002 150
+#--DAGGER--#
+#throw
+2100 21000 0
 
 #####-----ENEMIES-----####
 
@@ -54,13 +53,13 @@
 #idle 
 3000 30000 0
 #walk 
-3001 30001 100 30002 100
+3001 30001 150 30002 150
 
 #----PANTHERS----#
 #idle 
 3100 31000 0
 #walk 
-3101 31001 70 31002 70
+3101 31001 100 31002 100 31003 100
 #hovering
 3102 31003 0
 
@@ -84,3 +83,8 @@
 #--MORNING STAR--#
 #normal
 5002 50020 0
+
+####----EFFECT----####
+#--DEAD--# 	#effect when object can break (torch, candle,...) and enemies dead
+#dead effect
+9000 90000 300 90001 300 90002 300

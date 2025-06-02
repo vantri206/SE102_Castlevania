@@ -10,8 +10,6 @@
 #include "Weapon.h"
 #include <unordered_set>
 
-#define GHOUL_WALKING_SPEED	0.15f
-
 #define WHIP_STATE_ATTACK 0
 
 #define ANI_ID_WHIP_ATTACK 0

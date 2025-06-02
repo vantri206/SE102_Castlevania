@@ -13,10 +13,29 @@ void CEnemy::LoadExtraSetting(vector<int> extra_settings)
 void CEnemy::NormalEnemyDead(int duration)
 {
 	this->startDeathTime = GetTickCount64();
-	this->SetSpeed(0, 0);
+	this->SetPhysical(0.0f, 0.0f, 0.0f, 0.0f);
+	this->TriggerNormalEffect(duration);
+}
+
+void CEnemy::SetPhysical(float vx, float vy, float ax, float ay)
+{
+	this->vx = vx;
+	this->vy = vy;
+	this->ax = ax;
+	this->ay = ay;
+}
+
+void CEnemy::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x - width / 3;
+	t = y + height / 2;
+	r = x + width / 3;
+	b = y - height / 2;
+}
+
+void CEnemy::TriggerNormalEffect(int duration)
+{
 	CScene* currentscene = CGame::GetInstance()->GetCurrentScene();
 	CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
 	currentscene->AddEffect(static_cast<CGameEffect*>(deadEffect));
 }
-
-
