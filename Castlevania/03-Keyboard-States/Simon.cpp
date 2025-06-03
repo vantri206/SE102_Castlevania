@@ -6,6 +6,7 @@
 #include "Brick.h"
 #include "Candle.h"
 #include "Whip.h"
+#include "Audio/SoundManager.h"
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -68,6 +69,7 @@ void CSimon::OnCollisionWithEnemyOnStair(CEnemy* enemy)
 
 void CSimon::TakenDamage(int damage)
 {
+	SoundManager::GetInstance().PlaySound("being_hit");
 	health -= damage;
 }
 int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)

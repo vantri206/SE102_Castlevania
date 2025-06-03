@@ -131,6 +131,9 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Audio\Sound.cpp" />
+    <ClCompile Include="Audio\SoundManager.cpp" />
+    <ClCompile Include="Audio\WavLoader.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -178,6 +181,9 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Audio\Sound.h" />
+    <ClInclude Include="Audio\SoundManager.h" />
+    <ClInclude Include="Audio\WavLoader.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BigHeart.h" />
     <ClInclude Include="Brick.h" />

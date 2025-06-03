@@ -2,6 +2,8 @@
 #include "SimonAttack.h"
 #include "SimonIdle.h"
 #include "Whip.h"
+#include "Audio/SoundManager.h"
+
 
 CSimonAttack::CSimonAttack(CSimon* simon)
 {
@@ -53,6 +55,12 @@ void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 
 void CSimonAttack::Render(CSimon* simon)
 {
+    SoundManager& soundMgr = SoundManager::GetInstance();
+    soundMgr.Init();
+
+    soundMgr.LoadSound("use_wp", L"resource/Sounds/SoundEffects/Using_Weapon.wav");
+	soundMgr.PlaySound("use_wp");
+
     CWeapon* currentWeapon;
     simon->GetCurrentWeapon(currentWeapon);
     if (currentWeapon != nullptr) currentWeapon->Render();

@@ -4,6 +4,8 @@
 #include "Game.h"
 #include "Simon.h"
 #include "SimonSit.h"
+#include "Audio/SoundManager.h"
+
 
 #define SIMON_FALLING_WIDTH 16
 #define SIMON_FALLING_HEIGHT 24
@@ -31,6 +33,7 @@ void CSimonFalling::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 		simon->SetState(new CSimonHurt(simon));
 	}
 	*/
+	SoundManager::GetInstance().PlaySound("use_wp");
 	if (e->ny > 0 && e->obj->IsBlocking())
 	{	
 		simon->SetState(new CSimonSit(simon));

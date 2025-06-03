@@ -15,6 +15,7 @@
 #include "Utils.h"
 #include "Camera.h"
 #include "GameDefine.h"
+#include "Audio/SoundManager.h"
 
 CSampleKeyHandler* keyHandler;
 
@@ -36,6 +37,15 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void LoadResources()
 {
 	CGame::GetInstance()->LoadResources();
+
+	//Load Sound
+	SoundManager& soundMgr = SoundManager::GetInstance();
+	soundMgr.Init();
+
+	soundMgr.LoadSound("use_wp", L"resource/Sounds/SoundEffects/Using_Weapon.wav");
+	soundMgr.LoadSound("landing", L"resource/Sounds/SoundEffects/Landing.wav");
+	soundMgr.LoadSound("being_hit", L"resource/Sounds/SoundEffects/Being_Hit.wav");
+	//soundMgr.LoadSound("hit", L"resource/Sounds/SoundEffects/Hit.wav");
 
 	CGame* game = CGame::GetInstance();
 	game->LoadScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);
