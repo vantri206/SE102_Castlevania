@@ -103,12 +103,12 @@ public:
 		untouchable_start = -1;
 
 		currentWeapon = nullptr;
-		currentSubWeaponType = DAGGER_TYPE;
-		subWeaponLimit = 1;
+		currentSubWeaponType = HOLYWATERBOTTLE_TYPE;
+		subWeaponLimit = 2;
 		activeSubWeaponList = vector<CWeapon*>();
 
 		health = 5;
-		heartCount = 5;
+		heartCount = 50;
 	}
 
 	void SetAx(float ax) { this->ax = ax; }
@@ -117,7 +117,7 @@ public:
 
 	void SetMaxVx(float maxVx) { this->maxVx = maxVx; }
 
-	void GetPhysical(float& vx, float& vy, float& ax, float& ay)	{	vx = this->vx; vy = this->vy; ax = this->ax; ay = this->ay;	}
+	void GetPhysical(float& vx, float& vy, float& ax, float& ay)	{ vx = this->vx; vy = this->vy; ax = this->ax; ay = this->ay;	}
 	void SetPhysical(float vx, float vy, float ax, float ay) { this->vx = vx; this->vy = vy; this->ax = ax; this->ay = ay; }
 	void SetDirectionX(int direction) { nx = direction; }
     int GetDirectionX() { return nx; }

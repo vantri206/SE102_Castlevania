@@ -23,11 +23,10 @@ class CWhip : public CWeapon
 protected:
 	CSimon* owner;
 	std::unordered_set<CEnemy*> enemiesTarget;
-	bool damageCalculator;
 public:
 	CWhip(CSimon*);
 
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Update(DWORD dt, vector<CGameObject*>* coObjects);
 	void UpdateSize(int currentFrameIndex);
 	void UpdatePostition(int currentFrameIndex);
 
@@ -37,9 +36,9 @@ public:
 	void Render();
 
 	void SetState(int state) {}
+
 	int IsCollidable();
-	int IsBlocking() { return 0; }
-	int IsOverlappable() { return 1;}
+
 	void SetOwner(CSimon* simon) { this->owner = simon; }
 	CSimon* GetOwner() { return this->owner; }
 };

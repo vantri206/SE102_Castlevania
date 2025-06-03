@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Candle.h"
 
 CCandle::CCandle()
@@ -11,5 +9,6 @@ CCandle::CCandle()
 }
 void CCandle::Render()
 {
-	animation_set->at(CANDLE_STATE_BURN)->Render(x, y, nx, width, height);
+	if(!this->isInDestroyed())
+		animation_set->at(CANDLE_STATE_BURN)->Render(x, y, nx, width, height);
 }

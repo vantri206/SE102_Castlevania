@@ -73,7 +73,7 @@ void CSimon::UpdateWeapon(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 int CSimon::CanUseSubWeapon()
 {
 	return (currentSubWeaponType >= DAGGER_TYPE && currentSubWeaponType <= STOPWATCH_TYPE
-			&& activeSubWeaponList.size() <= subWeaponLimit && heartCount > 0);
+			&& activeSubWeaponList.size() < subWeaponLimit && heartCount > 0);
 }
 
 void CSimon::AddSubWeapon(CWeapon* subweapon)
@@ -149,8 +149,6 @@ CSimonState* CSimon::GetSimonState()
 
 void CSimon::Render()
 {
-	currentState->Render();
-	this->RenderSubWeapons();
 	if (untouchable)					
 	{
 		DWORD now = GetTickCount64();
@@ -160,6 +158,8 @@ void CSimon::Render()
 		}
 	}
 	else animation_set->at(ani_id)->Render(x, y, nx, width, height);
+	currentState->Render();
+	this->RenderSubWeapons();
 }
 
 void CSimon::CheckStairNearby(vector<LPGAMEOBJECT>* coObjects)

@@ -2,9 +2,9 @@
 #include "Weapon.h"
 #include "GameDefine.h"
 
-#define DAGGER_SPEED 0.3f
+#define DAGGER_SPEED 0.1f
 #define DAGGER_WIDTH 16
-#define DAGGER_HEIGHT 9
+#define DAGGER_HEIGHT 8
 
 #define DAGGER_STATE_THROW 0
 
@@ -19,8 +19,6 @@ public:
 
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
-    void SetState(int state) { this->state = state; }
-    void OnNoCollision(DWORD dt) {}
     void OnCollisionWith(LPCOLLISIONEVENT e);
     int IsCollidable();
     void Destroy();

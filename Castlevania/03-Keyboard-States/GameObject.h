@@ -67,17 +67,15 @@ public:
     virtual void Render() = 0;
     void RenderBoundingBox();
 
-    virtual int IsCollidable() { return 0; };
     virtual int CanCollisionWithObj(LPGAMEOBJECT objDests) { return 1; };
 
     virtual void OnNoCollision(DWORD dt) {};
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 
     virtual int IsBlocking() { return 1; }
-
     virtual int IsOverlappable() { return 0; }
+    virtual int IsCollidable() { return 0; };
 
-    virtual int IsBreakable() { return 0; }
 	virtual int IsDirectionColliable(int nx, int ny) { return 1; }
 
     virtual void GetBoundingBox(float& l, float& t, float& r, float& b);

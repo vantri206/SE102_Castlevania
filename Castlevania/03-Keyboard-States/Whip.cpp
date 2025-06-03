@@ -1,5 +1,6 @@
 #include "Whip.h"
 #include "Simon.h"
+#include "BreakableObject.h"
 
 CWhip::CWhip(CSimon* simon)
 {
@@ -7,10 +8,9 @@ CWhip::CWhip(CSimon* simon)
 	this->SetState(WHIP_STATE_ATTACK);
 	owner = simon;
 	damage = 1;
-	damageCalculator = false;
 }
 
-void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CWhip::Update(DWORD dt, vector<CGameObject*>* coObjects)
 {
 	CAnimation* ani = animation_set->at(ani_id);
 	int currentFrameIndex = ani->GetCurrentFrameIndex();
@@ -18,14 +18,6 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	UpdateSize(currentFrameIndex);
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	if (currentFrameIndex == 2 && !damageCalculator)
-	{
-		for (auto enemy : enemiesTarget)
-		{
-			enemy->TakenDamage(this->damage);
-		}
-		damageCalculator = true;
-	}
 }
 
 void CWhip::UpdateSize(int currentFrameIndex)
@@ -64,8 +56,17 @@ void CWhip::OnCollisionWith(LPCOLLISIONEVENT e)
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		if (enemy)
 		{
-			enemiesTarget.insert(enemy);
+			if (enemiesTarget.find(enemy) == enemiesTarget.end())
+			{
+				enemiesTarget.insert(enemy);
+				enemy->TakenDamage(this->damage);
+			}
 		}
+	}
+	else if (dynamic_cast<CBreakableObject*>(e->obj))
+	{
+		CBreakableObject* breakableObj = dynamic_cast<CBreakableObject*>(e->obj);
+		if (breakableObj) breakableObj->OnHit();
 	}
 }
 void CWhip::Render()

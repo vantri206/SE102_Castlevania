@@ -15,6 +15,7 @@ void CEnemy::NormalEnemyDead(int duration)
 	this->startDeathTime = GetTickCount64();
 	this->SetPhysical(0.0f, 0.0f, 0.0f, 0.0f);
 	this->TriggerNormalEffect(duration);
+	this->isActive = 0;
 }
 
 void CEnemy::SetPhysical(float vx, float vy, float ax, float ay)
@@ -27,9 +28,9 @@ void CEnemy::SetPhysical(float vx, float vy, float ax, float ay)
 
 void CEnemy::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - width / 3;
+	l = x - width / 5;
 	t = y + height / 2;
-	r = x + width / 3;
+	r = x + width / 5;
 	b = y - height / 2;
 }
 

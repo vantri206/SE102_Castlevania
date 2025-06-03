@@ -30,9 +30,10 @@ public:
 
 	virtual int IsBlocking() { return 0; }
 	virtual int IsCollidable() { return 1; };
-	virtual int IsOverlappable() { return 0; }
+	virtual int IsOverlappable() { return 1; }
 
-	virtual void SetState(int state) = 0;
+	virtual int CanCollisionWithObj(LPGAMEOBJECT objDests);
+	virtual int isInViewport();
 
 	void SetOwner(CSimon* simon) { this->owner = simon; }
 	CSimon* GetOwner() { return this->owner; }

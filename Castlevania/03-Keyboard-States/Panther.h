@@ -8,8 +8,8 @@
 #include "GameDefine.h"
 #include "debug.h"
 
-#define PANTHER_RUN_SPEED 0.02f
-#define PANTHER_JUMP_VY 0.25f
+#define PANTHER_RUN_SPEED 0.25f
+#define PANTHER_JUMP_VY 0.15f
 
 #define PANTHER_STATE_IDLE	0
 #define PANTHER_STATE_RUN 1
@@ -38,6 +38,8 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	int IsCollidable();
 
+	int CanCollisionWithObj(CGameObject* objDest);
+
 	void SetState(int state);
 
 	void LoadExtraSetting(vector<int> extra_settings);
@@ -48,6 +50,5 @@ public:
 
 	int isHovering();
 
-	void GetBoundingBox(float& l, float& t, float& r, float& b);
-	bool isDead();
+	int isDead();
 };

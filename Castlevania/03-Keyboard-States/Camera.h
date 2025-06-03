@@ -10,7 +10,7 @@ private:
     float width, height;         
 
 public:
-    CCamera(float _x = 0, float _y = 0, float _width = 360, float _height = 192);
+    CCamera(float _x = 0, float _y = 0, float _width = 360, float _height = 270);
     static CCamera* GetInstance();
     void SetPosition(float newX, float newY, float mapWidth, float mapHeight);
     void SetSize(float width, float height);

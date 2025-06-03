@@ -1,7 +1,9 @@
 #include "Simon.h"
 #include "SimonAttack.h"
 #include "SimonIdle.h"
+#include "Axe.h"
 #include "Whip.h"
+#include "HolyWaterBottle.h"
 #include "Dagger.h"
 
 CSimonAttack::CSimonAttack(CSimon* simon, int weaponType) : CSimonState(simon)
@@ -12,12 +14,20 @@ CSimonAttack::CSimonAttack(CSimon* simon, int weaponType) : CSimonState(simon)
     if (weaponType == SUB_WEAPON)
     {
         CWeapon* subWeapon = nullptr;
-        float x, y;
+        float x, y; 
         simon->GetPosition(x, y);
+        x += simon->GetWidth() / 2;
+        y += simon->GetHeight() / 3;
         switch (simon->GetCurrentSubType())
         {
         case DAGGER_TYPE:
-            subWeapon = new CDagger(simon->GetX(), simon->GetY(), simon->GetDirectionX());
+            subWeapon = new CDagger(x, y, simon->GetDirectionX());
+            break;
+        case AXE_TYPE:
+            subWeapon = new CAxe(x, y, simon->GetDirectionX());
+            break;
+        case HOLYWATERBOTTLE_TYPE:
+            subWeapon = new CHolyWaterBottle(x, y, simon->GetDirectionX());
             break;
         }
         simon->AddSubWeapon(subWeapon);
@@ -44,7 +54,7 @@ void CSimonAttack::KeyUpHandle(int keyCode) {}
 void CSimonAttack::Update(DWORD dt)
 {
     if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
-    {
+    {        
         CWeapon* currentWeapon = simon->GetCurrentWeapon();
         if (currentWeapon)
         {

@@ -21,7 +21,7 @@
 #define DOWN_STAIR_DIRECTION -1
 
 /*-----Gravity----*/
-#define GRAVITY -0.002f
+#define GRAVITY -0.001f
 
 /*---Simon weapon----*/
 #define PRIMARY_WEAPON 0
@@ -31,7 +31,7 @@ enum SUBWEAPON_TYPE
 {
 	DAGGER_TYPE = 0,
 	AXE_TYPE = 1,
-	HOLYWATER_TYPE = 2,
+	HOLYWATERBOTTLE_TYPE = 2,
 	STOPWATCH_TYPE = 3
 };
 /*---- OBJECT_TYPE_ID ----*/

@@ -17,7 +17,7 @@ CPanther::CPanther()
 }
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!isActived())
+	if (!(isDead() || isActived()))
 	{
 		CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 		if (this->CheckEnemyCanActive(player)) ActiveEnemy();
@@ -35,6 +35,8 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
+		if (this->isActived())
+			vx = PANTHER_RUN_SPEED * nx;
 		if (vy < 0 && !isHovering())
 		{
 			this->SetState(PANTHER_STATE_HOVERING);
@@ -60,7 +62,7 @@ void CPanther::OnNoCollision(DWORD dt)
 void CPanther::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CEnemy*>(e->obj)) return;
-	if (e->ny != 0 && e->obj->IsBlocking())
+	if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		vy = 0.0f;
 		if (isHovering())
@@ -76,6 +78,12 @@ void CPanther::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 }
 
+int CPanther::CanCollisionWithObj(CGameObject* objDest)
+{
+	if (isHovering() && vy > 0 && dynamic_cast<CBrick*>(objDest))
+		return 0;
+	return 1;
+}
 void CPanther::SetState(int state)
 {
 	switch (state)
@@ -122,14 +130,7 @@ int CPanther::isHovering()
 {
 	return (this->state == PANTHER_STATE_HOVERING);
 }
-void CPanther::GetBoundingBox(float& l, float& t, float& r, float& b)
-{
-	l = x - width / 2;
-	t = y + height / 1.5;
-	r = x + width / 2;
-	b = y - height / 2;
-}
-bool CPanther::isDead()
+int CPanther::isDead()
 {
 	return (this->state == PANTHER_STATE_DEAD);
 }

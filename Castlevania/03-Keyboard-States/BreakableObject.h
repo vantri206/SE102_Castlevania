@@ -9,8 +9,15 @@ protected:
     int itemdropId;
     DWORD startDestroyedTime;
 public:
-    virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    CBreakableObject()
+    {
+        itemdropId = -1;
+        startDestroyedTime = -1;
+    }
+    virtual void Update(DWORD dt, vector<CGameObject*>* coObjects);
     virtual void Render() {}
+
+    virtual int IsOverlappable() { return 1; }
 
     virtual void LoadExtraSetting(vector<int> extra_settings);
 
@@ -18,4 +25,5 @@ public:
     
     virtual void SetItemDrop(int itemid);
     virtual void TriggerDestroyedEffect(int duration);
+    virtual int isInDestroyed();
 };

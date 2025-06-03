@@ -18,7 +18,5 @@ class CCandle : public CBreakableObject
 public:
 	CCandle();
 	void Render();
-	void Update(DWORD dt) {}
 	int IsBlocking() { return 0; }
-	int IsColliable() { return 1; }
 };

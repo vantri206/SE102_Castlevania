@@ -1,5 +1,6 @@
 #include "BreakableObject.h"
 #include "DeadEffect.h"
+#include "debug.h"
 
 void CBreakableObject::OnHit()
 {
@@ -7,9 +8,9 @@ void CBreakableObject::OnHit()
 	this->startDestroyedTime = GetTickCount64();
 }
 
-void CBreakableObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CBreakableObject::Update(DWORD dt, vector<CGameObject*>* coObjects)
 {
-	if (GetTickCount64() - startDestroyedTime >= BREAKABLEOBJCET_DESTROYED_TIME)
+	if (this->isInDestroyed() && GetTickCount64() - startDestroyedTime >= BREAKABLEOBJCET_DESTROYED_TIME)
 	{
 		this->Delete();
 	}
@@ -30,4 +31,9 @@ void CBreakableObject::TriggerDestroyedEffect(int duration)
 	CScene* currentscene = CGame::GetInstance()->GetCurrentScene();
 	CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
 	currentscene->AddEffect(static_cast<CGameEffect*>(deadEffect));
+}
+
+int CBreakableObject::isInDestroyed()
+{
+	return (startDestroyedTime != -1);
 }

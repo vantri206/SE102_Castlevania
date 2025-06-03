@@ -17,7 +17,7 @@ CGhoul::CGhoul()
 }
 void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!isActived())
+	if (!(isDead() || isActived()))
 	{
 		CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 		if (this->CheckEnemyCanActive(player)) ActiveEnemy();
@@ -34,7 +34,8 @@ void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		vx += ax * dt;
+		if (this->state == GHOUL_STATE_WALK)
+			vx = GHOUL_WALKING_SPEED * nx;
 		vy += ay * dt;
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
@@ -105,7 +106,7 @@ void CGhoul::ActiveEnemy()
 	this->SetState(GHOUL_STATE_WALK);
 	this->SetSpeed(GHOUL_WALKING_SPEED * nx, 0);
 }
-bool CGhoul::isDead()
+int CGhoul::isDead()
 {
 	return (this->state == GHOUL_STATE_DEAD);
 }

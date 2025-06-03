@@ -163,8 +163,13 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	sampDesc.MinLOD = 0;
 	sampDesc.MaxLOD = D3D10_FLOAT32_MAX;
 
+	ID3D10SamplerState* pSampler = nullptr;
+	pD3DDevice->CreateSamplerState(&sampDesc, &pSampler);
+
+	pD3DDevice->PSSetSamplers(0, 1, &pSampler);
+
 	hr = pD3DDevice->CreateSamplerState(&sampDesc, &pPointSampler);
-	
+		
 	return;
 }
 /*
@@ -290,9 +295,9 @@ void CGame::DrawBoundingBox(float left, float top, float right, float bottom)
 	float x = (left + right) / 2;
 	float y = (bottom + top) / 2;
 
-	Draw(x, top, 1, bbox, 0, 0, 1, 1, width - 2, 1.0f);
+	Draw(x, top, 1, bbox, 0, 0, 1, 1, width, 1.0f);
 
-	Draw(x, bottom, 1, bbox, 0, 0, 1, 1, width - 2, 1.0f);
+	Draw(x, bottom, 1, bbox, 0, 0, 1, 1, width, 1.0f);
 
 	Draw(left, y, 1, bbox, 0, 0, 1, 1, 1.0f, height);
 

@@ -44,7 +44,7 @@ public:
 
 	virtual void LoadExtraSetting(vector<int> extra_settings);
 
-	virtual bool isDead() { return false; }
+	virtual int isDead() { return false; }
 
 	virtual int GetHealth() { return health; }
 	virtual void SetHealth(int hp) { health = hp; }

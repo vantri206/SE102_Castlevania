@@ -8,10 +8,10 @@ CDagger::CDagger(float x, float y, int directionX)
 {
     this->SetSize(DAGGER_WIDTH, DAGGER_HEIGHT);
     this->SetPosition(x, y);
-    this->nx = directionX;
-    this->vx = DAGGER_SPEED * nx;
-	this->heartCost = 1;
-	this->damage = 1;
+    nx = directionX;
+    vx = DAGGER_SPEED * nx;
+	heartCost = 1;
+	damage = 1;
 
     this->SetAnimationSet(CAnimationSets::GetInstance()->Get(DAGGER_ANI_SET_ID));
 }
@@ -20,6 +20,11 @@ void CDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isDeleted) return;
     x += vx * dt;
+	if (!this->isInViewport())
+	{
+		this->Destroy();
+		return;
+	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -36,7 +41,7 @@ void CDagger::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (enemy)	enemy->TakenDamage(this->damage);
 		this->Destroy();
 	}
-	if (dynamic_cast<CBreakableObject*>(e->obj))
+	else if (dynamic_cast<CBreakableObject*>(e->obj))
 	{
 		CBreakableObject* breakableObj = dynamic_cast<CBreakableObject*>(e->obj);
 		if (breakableObj) breakableObj->OnHit();

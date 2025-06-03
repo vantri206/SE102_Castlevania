@@ -2,8 +2,8 @@
 
 #include "Simon.h"
 #include "SimonAutoWalking.h"
-#include "SimonWalkingStairUp.h"
-#include "SimonWalkingStairDown.h"
+#include "SimonStairUpIdle.h"
+#include "SimonStairDownIdle.h"
 
 #define SIMON_WALKING_WIDTH 15
 #define SIMON_WALKING_HEIGHT 30
@@ -68,10 +68,10 @@ void CSimonAutoWalking::ChangeState()
 	switch (nextState)
 	{
 	case SIMON_STATE_WALKING_UP:
-		simon->SetState(new CSimonWalkingStairUp(simon));
+		simon->SetState(new CSimonStairUpIdle(simon));
 		break;
 	case SIMON_STATE_WALKING_DOWN:
-		simon->SetState(new CSimonWalkingStairDown(simon));
+		simon->SetState(new CSimonStairDownIdle(simon));
 		break;
 	}
 }

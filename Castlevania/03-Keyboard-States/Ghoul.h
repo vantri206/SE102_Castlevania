@@ -39,5 +39,5 @@ public:
 
 	void ActiveEnemy();
 
-	bool isDead();
+	int isDead();
 };
