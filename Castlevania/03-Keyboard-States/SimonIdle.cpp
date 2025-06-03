@@ -58,12 +58,12 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
     }
     if (keyCode == DIK_UP && simon->IsNearStairUp())
     {
-		CStair* stair = simon->GetNearbyStair();
+        CStair* stair = simon->GetNearbyStair();
         if (stair != nullptr)
         {
             float stairX = stair->GetX();
-			int stairDirection = stair->GetHorizontalDirection();
-            simon->SetState(new CSimonAutoWalking(simon,stairX,stairDirection,true));
+            int stairDirection = stair->GetHorizontalDirection();
+            simon->SetState(new CSimonAutoWalking(simon, stairX, stairDirection, WALK_TO_STAIR_UP));
         }
     }
     else if (keyCode == DIK_DOWN && simon->IsNearStairDown())
@@ -73,7 +73,7 @@ void CSimonIdle::KeyDownHandle(CSimon* simon, int keyCode)
         {
             float stairX = stair->GetX();
             int stairDirection = stair->GetHorizontalDirection();
-            simon->SetState(new CSimonAutoWalking(simon, stairX, stairDirection,false));
+            simon->SetState(new CSimonAutoWalking(simon, stairX, stairDirection, WALK_TO_STAIR_DOWN));
         }
     }
 } 

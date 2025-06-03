@@ -9,11 +9,11 @@
 #define SIMON_WALKING_HEIGHT 30
 #define AUTO_WALK_EPSILON 2.0f
 
-CSimonAutoWalking::CSimonAutoWalking(CSimon* simon, float x, int direction, bool isGoingUp)
+CSimonAutoWalking::CSimonAutoWalking(CSimon* simon, float x, int direction, AutoWalkPurpose purpose)
 {
 	this->targetX = x;
 	this->stairDirection = direction;
-	this->goingUp = isGoingUp;
+	this->purpose = purpose;
 
 	int moveDir = (x > simon->GetX()) ? 1 : -1;
 	simon->SetDirectionX(moveDir);
@@ -27,20 +27,30 @@ void CSimonAutoWalking::Update(CSimon* simon, DWORD dt)
 {
 	float x, y;
 	simon->GetPosition(x, y);
-	DebugOut(L"Simon Auto Walking Stair: x = %f, targetX = %f, direction = %d, goingUp = %d\n", x, targetX, stairDirection, goingUp);
 	if (abs(x - targetX) <= AUTO_WALK_EPSILON)
 	{
-		// Đã đến đúng vị trí cầu thang
 		simon->SetAccel(0.0f, GRAVITY);
 		simon->SetSpeed(0.0f, 0.0f);
-		simon->SetDirectionX(stairDirection); // Hướng lên/xuống cầu thang
 
-		if (goingUp)
+		switch (purpose)
+		{
+		case WALK_TO_STAIR_UP:
+			simon->SetDirectionX(stairDirection);
 			simon->SetState(new CSimonStairUpIdle(simon));
-		else
+			break;
+
+		case WALK_TO_STAIR_DOWN:
+			simon->SetDirectionX(stairDirection);
 			simon->SetState(new CSimonStairDownIdle(simon));
+			break;
+		default:
+			simon->SetState(new CSimonIdle(simon));
+			break;
+		}
 	}
 }
+
+
 void CSimonAutoWalking::KeyDownHandle(CSimon* simon, int keyCode) {}
 void CSimonAutoWalking::KeyUpHandle(CSimon* simon, int keyCode) {}
 void CSimonAutoWalking::OnNoCollision(CSimon* simon, DWORD dt) {}
