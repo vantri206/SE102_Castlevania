@@ -89,12 +89,25 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	SceneBG->Render();
 	RECT cam = CCamera::GetInstance()->GetCamRect();
 	auto activeObjects = quadtree->GetObjectsInView(cam);
-	for(auto obj : activeObjects)
+	if(hiddenObj.size() > 0)
+	for (auto obj : activeObjects)
 	{
 		if (obj == nullptr || obj->IsDeleted()) continue;
+		if (hiddenObj.find(obj) != hiddenObj.end())
+		{
+			obj->Render();
+			obj->RenderBoundingBox();
+		}
+	}
+
+	SceneBG->Render();
+
+	for (auto obj : activeObjects)
+	{
+		if (obj == nullptr || obj->IsDeleted()) continue;
+		if (hiddenObj.find(obj) != hiddenObj.end()) continue;
 		obj->Render();
 		obj->RenderBoundingBox();
 	}
@@ -112,6 +125,11 @@ void CPlayScene::Render()
 void CPlayScene::AddObject(CGameObject* obj)
 {
 	quadtree->Insert(obj);
+}
+
+void CPlayScene::AddHiddenObject(CGameObject* obj)
+{
+	hiddenObj.insert(obj);
 }
 
 void CPlayScene::ClearObject()

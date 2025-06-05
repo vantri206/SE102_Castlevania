@@ -23,4 +23,4 @@
 
 #Portal, extra setting: width, height, scene will be changed to
 
-7 5 700 30 16 24 2
+7 5 0 0 16 24 2

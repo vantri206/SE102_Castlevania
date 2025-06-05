@@ -205,6 +205,10 @@
     <ClCompile Include="GameObject\Item\SubWeaponItem.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
+    <ClCompile Include="MoneyBag.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerZone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine\Animation.h">
@@ -386,6 +390,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\Item\SubWeaponItem.h">
       <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerZone.h">
+      <Filter>GameObject\WorldObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@
 #include "Debug.h"
 #include "SimonHurt.h"
 #include "MorningStar.h"
+#include "../../TriggerZone.h"
 
 #define SIMON_WALKING_WIDTH 16
 #define SIMON_WALKING_HEIGHT 32
@@ -64,7 +65,11 @@ void CSimonWalking::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		simon->SetState(new CSimonPowerUp(simon));
 	}
-	else if (e->ny > 0 && e->obj->IsBlocking())
+	if (dynamic_cast<CTriggerZone*>(e->obj))
+	{
+		dynamic_cast<CTriggerZone*>(e->obj)->Trigger();
+	}
+	if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

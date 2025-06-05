@@ -54,7 +54,8 @@ enum OBJECT_TYPE
 	AXE = 13,
 	HOLYWATERBOTTLE = 14,
 	SUBWEAPONITEM = 15,
-	SMALLHEART = 16
+	SMALLHEART = 16,
+	TRIGGERZONE = 17
 };
 
 /*---- Animation Set ----*/

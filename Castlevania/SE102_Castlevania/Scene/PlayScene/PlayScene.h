@@ -3,6 +3,7 @@
 #include <vector>
 #include <Windows.h>
 #include "Map.h"
+#include <unordered_set>
 
 class CSimon;
 class CGameObject;
@@ -17,6 +18,7 @@ protected:
 
 	CMap* SceneBG;
 
+	std::unordered_set<CGameObject*> hiddenObj;
 	QuadTree* quadtree = nullptr;
 	CSimon* player = nullptr;
 	vector<CGameEffect*> effects;
@@ -45,6 +47,7 @@ public:
 	int GetCurrentMapWidth() { return SceneBG->GetWidth(); }
 
 	void AddObject(CGameObject* obj);
+	void AddHiddenObject(CGameObject* obj);
 	void ClearObject();
 
 	void AddEffect(CGameEffect* effect);

@@ -14,7 +14,6 @@ void CBreakableObject::Update(DWORD dt, vector<CGameObject*>* coObjects)
 	{
 		if (itemdropId != -1)
 		{
-			
 			CGameObject* dropObj = CGameObject::CreateObject(itemdropId, itemdropId, itemDropExtraSettings);
 			if (dropObj != nullptr)
 			{
@@ -22,7 +21,7 @@ void CBreakableObject::Update(DWORD dt, vector<CGameObject*>* coObjects)
 				CGame::GetInstance()->GetCurrentScene()->AddObject(dropObj);
 			}
 		}
-		this->Delete();
+		this->Delete();	
 	}
 }
 void CBreakableObject::LoadExtraSetting(vector<int> extra_settings)
