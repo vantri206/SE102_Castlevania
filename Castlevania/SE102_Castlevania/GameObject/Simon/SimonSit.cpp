@@ -1,6 +1,7 @@
 #include "SimonSit.h"
 #include "SimonIdle.h"
 #include "Simon.h"
+#include "SimonSitAttack.h"
 
 #define SIMON_SIT_WIDTH 16
 #define SIMON_SIT_HEIGHT 24
@@ -15,6 +16,15 @@ CSimonSit::CSimonSit(CSimon* simon) : CSimonState(simon)
 
 void CSimonSit::KeyDownHandle(int keyCode)
 {
+	if (keyCode == DIK_A)
+	{
+		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
+		{
+			if (simon->CanUseSubWeapon())
+				simon->SetState(new CSimonSitAttack(simon, SUB_WEAPON));
+		}
+		else simon->SetState(new CSimonSitAttack(simon, PRIMARY_WEAPON));
+	}
 }
 void CSimonSit::KeyUpHandle(int keyCode)
 {
@@ -23,6 +33,7 @@ void CSimonSit::KeyUpHandle(int keyCode)
 		simon->SetPosition(simon->GetX(), simon->GetY() + 4.0f);
         simon->SetState(new CSimonIdle(simon));
     }
+
 }
 void CSimonSit::Update(DWORD dt)
 {

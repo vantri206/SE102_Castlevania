@@ -134,6 +134,7 @@
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\TileMap\Map.h" />
     <ClInclude Include="Scene\TileMap\Tile.h" />
+    <ClInclude Include="SimonSitAttack.h" />
     <ClInclude Include="TriggerZone.h" />
     <ClInclude Include="Utils\debug.h" />
     <ClInclude Include="Utils\Utils.h" />
@@ -215,7 +216,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)Utils;$(ProjectDir)Scene\PlayScene;$(ProjectDir)Scene\TileMap;$(ProjectDir)Scene\Effect;$(ProjectDir)GameSetting;$(ProjectDir)GameObject\WorldObject;$(ProjectDir)GameObject\Weapon;$(ProjectDir)GameObject\Simon;$(ProjectDir)GameObject\Item;$(ProjectDir)GameObject\Enemy;$(ProjectDir)GameObject\BreakableObject;$(ProjectDir)GameObject;$(ProjectDir)GameEngine\Quadtree;$(ProjectDir)GameEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Utils;$(ProjectDir)Scene\PlayScene;$(ProjectDir)Scene\TileMap;$(ProjectDir)Scene\Effect;$(ProjectDir)GameSetting;$(ProjectDir)GameObject\WorldObject;$(ProjectDir)GameObject\Weapon;$(ProjectDir)GameObject\Simon;$(ProjectDir)GameObject\Item;$(ProjectDir)GameObject\Enemy;$(ProjectDir)GameObject\BreakableObject;$(ProjectDir)GameObject;$(ProjectDir)GameEngine\Quadtree;$(ProjectDir)GameEngine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d10.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>

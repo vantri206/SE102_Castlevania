@@ -24,3 +24,6 @@
 #Portal, extra setting: width, height, scene will be changed to
 
 7 5 0 0 16 24 2
+
+#TriggerZone
+8 7 100 48 50 32 9 80 0 1000
