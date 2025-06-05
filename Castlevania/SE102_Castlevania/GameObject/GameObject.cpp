@@ -58,7 +58,6 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case MONEYBAG:
 		obj = new CMoneyBag();
-		break;
 	case TRIGGERZONE:
 		obj = new CTriggerZone();
 		break;

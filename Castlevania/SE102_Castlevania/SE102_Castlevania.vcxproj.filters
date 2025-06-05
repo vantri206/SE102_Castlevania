@@ -396,5 +396,8 @@
     <ClInclude Include="GameObject\WorldObject\TriggerZone.h">
       <Filter>GameObject\WorldObject</Filter>
     </ClInclude>
+    <ClInclude Include="SimonSitAttack.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

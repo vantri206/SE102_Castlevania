@@ -24,6 +24,7 @@
 60 resource/Objects/Torch.png
 61 resource/Objects/Candle.png
 62 resource/Items/HolyWaterBottle.png
+63 resource/Characters/Simon2.png
 999 resource/Scene/bbox.png
 2 
 #----MAP----#

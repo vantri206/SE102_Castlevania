@@ -135,6 +135,8 @@
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\TileMap\Map.h" />
     <ClInclude Include="Scene\TileMap\Tile.h" />
+    <ClInclude Include="SimonSitAttack.h" />
+    <ClInclude Include="TriggerZone.h" />
     <ClInclude Include="Utils\debug.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
