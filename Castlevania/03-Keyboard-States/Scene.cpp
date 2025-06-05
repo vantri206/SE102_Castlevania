@@ -14,6 +14,7 @@
 #include "Candle.h"
 #include "Stair.h"
 #include "Effect.h"
+#include "TriggerZone.h"
 
 QuadTree* quadtree = NULL;
 CSimon* player = NULL;
@@ -44,6 +45,9 @@ static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra
 		break;
 	case STAIR:
 		obj = new CStair();
+		break;
+	case TRIGGER_ZONE:
+		obj = new CTriggerZone();
 		break;
 	}
 	obj->SetId(objectId);

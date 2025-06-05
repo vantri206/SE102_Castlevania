@@ -42,6 +42,7 @@ enum OBJECT_TYPE
 	PANTHER = 8,
 	MONEYBAG = 9,
 	STAIR = 10,
+	TRIGGER_ZONE = 20,
 };
 
 /*---- Animation Set ----*/

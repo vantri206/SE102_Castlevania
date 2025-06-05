@@ -240,6 +240,9 @@
     <ClCompile Include="SimonAutoWalking.cpp">
       <Filter>Source Files\GameObjects\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="TriggerZone.cpp">
+      <Filter>Source Files\GameObjects\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -394,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="SimonAutoWalking.h">
       <Filter>Header Files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerZone.h">
+      <Filter>Header Files\GameObjects\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

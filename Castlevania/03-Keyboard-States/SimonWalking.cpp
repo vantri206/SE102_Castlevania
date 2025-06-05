@@ -7,8 +7,11 @@
 #include "SimonJump.h"
 #include "Brick.h"
 #include "Enemy.h"
+#include "TriggerZone.h"
 #include "Debug.h"
 #include "SimonHurt.h"
+#include "Candle.h"
+#include "Game.h"
 
 #define SIMON_WALKING_WIDTH 15
 #define SIMON_WALKING_HEIGHT 30
@@ -58,17 +61,26 @@ void CSimonWalking::OnNoCollision(CSimon* simon, DWORD dt)
 }
 void CSimonWalking::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CEnemy*>(e->obj))
-	{
-		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
-		simon->OnCollisionWithEnemy(enemy);
-	}
-	else if (e->ny > 0 && e->obj->IsBlocking())
-	{
-		simon->SetVy(0.0f);
-	}
-	else if (e->nx != 0 && e->obj->IsBlocking())
-	{
-		simon->SetVx(0.0f);
-	}
+    if (dynamic_cast<CEnemy*>(e->obj))
+    {
+        CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+        simon->OnCollisionWithEnemy(enemy);
+    }
+    else if (dynamic_cast<CTriggerZone*>(e->obj))
+    {
+		CCandle* candle = new CCandle();
+		candle->SetPosition(50, 30);
+		candle->SetTargetY(40);
+		candle->StartAppearing();
+		CGame* game = CGame::GetInstance();
+		game->GetCurrentScene()->AddObject(candle);
+    }
+    else if (e->ny > 0 && e->obj->IsBlocking())
+    {
+        simon->SetVy(0.0f);
+    }
+    else if (e->nx != 0 && e->obj->IsBlocking())
+    {
+        simon->SetVx(0.0f);
+    }
 }

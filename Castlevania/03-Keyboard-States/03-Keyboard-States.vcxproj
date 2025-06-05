@@ -169,6 +169,7 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Torch.cpp" />
+    <ClCompile Include="TriggerZone.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Ghoul.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Torch.h" />
+    <ClInclude Include="TriggerZone.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Ghoul.h" />
     <ClInclude Include="Weapon.h" />
