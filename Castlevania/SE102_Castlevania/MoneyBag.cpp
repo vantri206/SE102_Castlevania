@@ -6,7 +6,8 @@ CMoneyBag::CMoneyBag()
 {
 	this->SetSize(MONEYBAG_WIDTH, MONEYBAG_HEIGHT);
 	vx = vy = 0.0f;
-	ay = DEFAULT_GRAVITY;
+	ay = 0;
+	vy = 0.02f;
 	hidden = 0;
 
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(MONEYBAG_ANI_SET_ID));

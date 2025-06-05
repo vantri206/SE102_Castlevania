@@ -42,4 +42,6 @@ public:
     void OnCollisionWith(LPCOLLISIONEVENT e);
 
     void LoadExtraSetting(vector<int> extra_settings);
+
+    int GetSubWeaponType() { return this->subWeaponType; }
 };

@@ -15,8 +15,10 @@ void CTriggerZone::Trigger()
 		{
 			dropObj->SetPosition(this->spawnX, this->spawnY);
 			CGame::GetInstance()->GetCurrentScene()->AddObject(dropObj);
+			CGame::GetInstance()->GetCurrentScene()->AddHiddenObject(dropObj);
 		}
 	}
+	this->Delete();
 }
 
 void CTriggerZone::LoadExtraSetting(vector<int> extra_settings)

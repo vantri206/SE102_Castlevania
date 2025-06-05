@@ -11,7 +11,7 @@
 #include "Debug.h"
 #include "SimonHurt.h"
 #include "MorningStar.h"
-#include "../../TriggerZone.h"
+#include "TriggerZone.h"
 
 #define SIMON_WALKING_WIDTH 16
 #define SIMON_WALKING_HEIGHT 32

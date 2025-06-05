@@ -16,7 +16,6 @@
 #define TILES_COUNT 3
 #define TILE_GRID_SIZE 4
 
-
 CMap::CMap(int mapId, LPCWSTR mapFile)
 {
 	this->mapId = mapId;
@@ -46,7 +45,7 @@ void CMap::LoadMap()
 		f.getline(str, MAX_TXT_LINE);
 		string line(str);
 		tokens = split(line);
-		switch(i)
+		switch (i)
 		{
 		case MAP_SIZE:
 			mapWidth = atoi(tokens[0].c_str());
@@ -71,6 +70,7 @@ void CMap::LoadMap()
 	}
 
 	CTextures::GetInstance()->AddTilesMap(mapId, tileWidth, tileHeight, tilesetColumns, tileCount);
+
 	for (int i = 0; i < tileRows; i++)
 	{
 		f.getline(str, MAX_TXT_LINE);
@@ -83,12 +83,37 @@ void CMap::LoadMap()
 			int tile_index = atoi(tokens[j].c_str());
 			row.push_back(tile_index);
 		}
-
 		mapBackground.push_back(row);
+		mapForeground.push_back(row);
 	}
+	f.getline(str, MAX_TXT_LINE);
+	string line(str);
+	tokens = split(line);
+	int j = 0;
+	for (int j = 0; j < tokens.size(); j++)
+	{
+		tileForegroundList.push_back(atoi(tokens[j].c_str()));
+	}
+	this->SplitLayer();
 }
 
-void CMap::Render()
+void CMap::SplitLayer()
+{
+	for(int i = 0; i < tileRows; i++)
+		for (int j = 0; j < tileColumns; j++)
+		{
+			int tile_index = mapBackground[i][j];
+			int check = 0;
+			for (auto tilefor_index : tileForegroundList)
+			{
+				if (tile_index == tilefor_index)
+					check = 1;
+			}
+			if (check) mapBackground[i][j] = -1;
+			else mapForeground[i][j] = -1;
+		}
+}
+void CMap::RenderBackground()
 {
 	int cam_left = CCamera::GetInstance()->GetX();
 	int cam_bottom = CCamera::GetInstance()->GetY();
@@ -107,7 +132,7 @@ void CMap::Render()
 		for (int j = columnleft; j < columnright; j++)
 		{
 			int tile_index = mapBackground[i][j];
-
+			if (tile_index == -1) continue;
 			x = (j + 0.5f) * tileWidth;
 			y = (tileRows - i - 0.5f) * tileHeight;
 
@@ -117,7 +142,35 @@ void CMap::Render()
 		}
 	}
 }
+void CMap::RenderForeground()
+{
+	int cam_left = CCamera::GetInstance()->GetX();
+	int cam_bottom = CCamera::GetInstance()->GetY();
+	int cam_right = cam_left + CCamera::GetInstance()->GetWidth();
+	int cam_top = cam_bottom + CCamera::GetInstance()->GetHeight();
 
+	int columnleft = max(0, cam_left / tileWidth);
+	int columnright = min(tileColumns, cam_right / tileWidth + 1);
+	int rowtop = min(tileRows, cam_top / tileHeight);
+	int rowbottom = max(0, cam_bottom / tileHeight + 1);
+
+	float x, y;
+
+	for (int i = rowbottom; i < rowtop; i++)
+	{
+		for (int j = columnleft; j < columnright; j++)
+		{
+			int tile_index = mapForeground[i][j];
+			if (tile_index == -1) continue;
+			x = (j + 0.5f) * tileWidth;
+			y = (tileRows - i - 0.5f) * tileHeight;
+
+			CTexture* tileTexture = CTextures::GetInstance()->Get(mapId * 1000 + tile_index);
+
+			CGame::GetInstance()->Draw(x, y, -1, tileTexture, 0, 0, tileWidth - 1, tileHeight - 1, tileWidth, tileHeight);
+		}
+	}
+}
 int CMap::GetWidth()
 {
 	return mapWidth;

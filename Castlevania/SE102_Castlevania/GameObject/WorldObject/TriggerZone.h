@@ -4,7 +4,6 @@
 class CTriggerZone : public CGameObject
 {
 protected:
-    float width, height;
     float spawnX, spawnY;
     int spawnObjectId;
     int isSpawnObjectHidden;

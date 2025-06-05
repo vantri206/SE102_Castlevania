@@ -91,6 +91,9 @@ void CPlayScene::Render()
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
 	auto activeObjects = quadtree->GetObjectsInView(cam);
+
+	SceneBG->RenderBackground();
+
 	if(hiddenObj.size() > 0)
 	for (auto obj : activeObjects)
 	{
@@ -102,7 +105,8 @@ void CPlayScene::Render()
 		}
 	}
 
-	SceneBG->Render();
+
+	SceneBG->RenderForeground();
 
 	for (auto obj : activeObjects)
 	{

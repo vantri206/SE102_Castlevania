@@ -13,6 +13,8 @@ class CMap
 protected:
 
 	vector<vector<int>> mapBackground;
+	vector<vector<int>> mapForeground;
+	vector<int> tileForegroundList;
 
 	int mapId;
 
@@ -32,8 +34,16 @@ protected:
 
 	int tileCount;
 
+	int tileForegroundCount;
+
 public:
 	CMap(int mapId, LPCWSTR mapFile);
+
+	void SplitLayer();
+
+	void RenderBackground();
+
+	void RenderForeground();
 
 	void Render();
 

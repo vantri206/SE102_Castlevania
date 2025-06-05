@@ -14,6 +14,7 @@
 #include "SmallHeart.h"
 #include "SubWeaponItem.h"
 #include "MoneyBag.h"
+#include "TriggerZone.h"
 
 #define ID_TEX_BBOX 999
 
@@ -57,6 +58,10 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case MONEYBAG:
 		obj = new CMoneyBag();
+		break;
+	case TRIGGERZONE:
+		obj = new CTriggerZone();
+		break;
 	default:
 		DebugOut(L"[ERROR] Unknown object type: %d\n", objectType);
 		break;
@@ -90,7 +95,6 @@ void CGameObject::RenderBoundingBox()
 {
 	float l, t, r, b;
 	this->GetBoundingBox(l, t, r, b);
-	CGame::GetInstance()->DrawBoundingBox(l, t, r, b);
 }
 CGameObject::~CGameObject()
 {
