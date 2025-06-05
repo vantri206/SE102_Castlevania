@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GameEngine">
+      <UniqueIdentifier>{848187a7-4040-4beb-a4d5-740adf7e6a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\Quadtree">
+      <UniqueIdentifier>{2e4d6a1d-41a4-42df-8e0f-50a3fde5fcf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{e3593010-62b3-4ee7-b988-6ff5565d105f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\BreakableObject">
+      <UniqueIdentifier>{7c4f60db-ad63-418a-944d-6aadee41889b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Enemy">
+      <UniqueIdentifier>{316723e4-594f-4f4a-bb8b-b7708ecffb4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item">
+      <UniqueIdentifier>{bd5a534f-ee0e-426d-a4d1-8c0892c184ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Simon">
+      <UniqueIdentifier>{27f20e9c-c0e1-47ec-b204-bc6f00ce9a7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Weapon">
+      <UniqueIdentifier>{cd7c2a9e-06a2-45ec-8d49-d6d328ceac00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\WorldObject">
+      <UniqueIdentifier>{9b74f65e-2bce-480c-a642-1144bc0448f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSetting">
+      <UniqueIdentifier>{5a03ac6b-3e73-4e7e-a79b-1e5ba4e5a1d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{94ef9a84-5370-46b4-8d01-0248f947a93c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Effect">
+      <UniqueIdentifier>{8e0c5efe-a204-44c9-bab5-a22cc92ecb51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene">
+      <UniqueIdentifier>{9f9b0eb6-a7a6-4c14-b857-4ca1b9e3ad4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TileMap">
+      <UniqueIdentifier>{9189550a-6060-4cc7-ad8c-5bd46a65655d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UItils">
+      <UniqueIdentifier>{ef02dbb9-7f7f-458c-a7d8-f3632cd1b696}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameEngine\Animation.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Animations.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Camera.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Collision.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Game.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\SampleKeyEventHandler.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Sprite.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Sprites.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Textures.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Quadtree\CTreeObject.cpp">
+      <Filter>GameEngine\Quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Quadtree\QNode.cpp">
+      <Filter>GameEngine\Quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine\Quadtree\QuadTree.cpp">
+      <Filter>GameEngine\Quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BreakableObject\BreakableObject.cpp">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BreakableObject\Candle.cpp">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BreakableObject\Torch.cpp">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Enemy\Bat.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Enemy\Enemy.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Enemy\Ghoul.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Enemy\Panther.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Item\MorningStar.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\WorldObject\Brick.cpp">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\WorldObject\Portal.cpp">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\WorldObject\Stair.cpp">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Weapon\Axe.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Weapon\Dagger.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Weapon\HolyWaterBottle.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Weapon\Weapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Weapon\Whip.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\Simon.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonAttack.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonAutoWalking.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonFalling.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonHurt.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonIdle.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonJump.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonPowerUp.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonSit.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonSitAttack.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonStairDownIdle.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonStairUpIdle.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonWalking.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonWalkingStairDown.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Simon\SimonWalkingStairUp.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSetting\GameSetting.cpp">
+      <Filter>GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\debug.cpp">
+      <Filter>UItils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Utils.cpp">
+      <Filter>UItils</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Effect\Effect.cpp">
+      <Filter>Scene\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\PlayScene.cpp">
+      <Filter>Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TileMap\Map.cpp">
+      <Filter>Scene\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TileMap\Tile.cpp">
+      <Filter>Scene\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Item\SubWeaponItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameEngine\Animation.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\AnimationFrame.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Animations.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Camera.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Collision.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Game.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\KeyEventHandler.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\SampleKeyEventHandler.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Sprite.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Sprites.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Texture.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Textures.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Quadtree\CTreeObject.h">
+      <Filter>GameEngine\Quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Quadtree\QNode.h">
+      <Filter>GameEngine\Quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Quadtree\QuadTree.h">
+      <Filter>GameEngine\Quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BreakableObject\BreakableObject.h">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BreakableObject\Candle.h">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BreakableObject\Torch.h">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Enemy\Bat.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Enemy\Enemy.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Enemy\Ghoul.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Enemy\Panther.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Item\BigHeart.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Item\MoneyBag.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Item\MorningStar.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Item\SmallHeart.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\WorldObject\Brick.h">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\WorldObject\Portal.h">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\WorldObject\Stair.h">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Weapon\Axe.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Weapon\Dagger.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Weapon\HolyWaterBottle.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Weapon\Weapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Weapon\Whip.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\Simon.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonAttack.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonAutoWalking.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonFalling.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonHurt.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonIdle.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonJump.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonPowerUp.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonSit.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonStairDownIdle.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonStairUpIdle.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonState.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonWalking.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonWalkingStairDown.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSetting\GameDefine.h">
+      <Filter>GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSetting\GameSetting.h">
+      <Filter>GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\debug.h">
+      <Filter>UItils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Utils.h">
+      <Filter>UItils</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Effect\DeadEffect.h">
+      <Filter>Scene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Effect\Effect.h">
+      <Filter>Scene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\PlayScene.h">
+      <Filter>Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TileMap\Map.h">
+      <Filter>Scene\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TileMap\Tile.h">
+      <Filter>Scene\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Item\SubWeaponItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

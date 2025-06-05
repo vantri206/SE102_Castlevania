@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameEngine\Animation.cpp" />
+    <ClCompile Include="GameEngine\Animations.cpp" />
+    <ClCompile Include="GameEngine\Camera.cpp" />
+    <ClCompile Include="GameEngine\Collision.cpp" />
+    <ClCompile Include="GameEngine\Game.cpp" />
+    <ClCompile Include="GameEngine\Quadtree\CTreeObject.cpp" />
+    <ClCompile Include="GameEngine\Quadtree\QNode.cpp" />
+    <ClCompile Include="GameEngine\Quadtree\QuadTree.cpp" />
+    <ClCompile Include="GameEngine\SampleKeyEventHandler.cpp" />
+    <ClCompile Include="GameEngine\Sprite.cpp" />
+    <ClCompile Include="GameEngine\Sprites.cpp" />
+    <ClCompile Include="GameEngine\Textures.cpp" />
+    <ClCompile Include="GameObject\BreakableObject\BreakableObject.cpp" />
+    <ClCompile Include="GameObject\BreakableObject\Candle.cpp" />
+    <ClCompile Include="GameObject\BreakableObject\Torch.cpp" />
+    <ClCompile Include="GameObject\Enemy\Bat.cpp" />
+    <ClCompile Include="GameObject\Enemy\Enemy.cpp" />
+    <ClCompile Include="GameObject\Enemy\Ghoul.cpp" />
+    <ClCompile Include="GameObject\Enemy\Panther.cpp" />
+    <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="GameObject\Item\MorningStar.cpp" />
+    <ClCompile Include="GameObject\Item\SubWeaponItem.cpp" />
+    <ClCompile Include="GameObject\Simon\Simon.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonAttack.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonAutoWalking.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonFalling.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonHurt.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonIdle.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonJump.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonPowerUp.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonSit.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonSitAttack.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonStairDownIdle.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonStairUpIdle.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonWalking.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonWalkingStairDown.cpp" />
+    <ClCompile Include="GameObject\Simon\SimonWalkingStairUp.cpp" />
+    <ClCompile Include="GameObject\Weapon\Axe.cpp" />
+    <ClCompile Include="GameObject\Weapon\Dagger.cpp" />
+    <ClCompile Include="GameObject\Weapon\HolyWaterBottle.cpp" />
+    <ClCompile Include="GameObject\Weapon\Weapon.cpp" />
+    <ClCompile Include="GameObject\Weapon\Whip.cpp" />
+    <ClCompile Include="GameObject\WorldObject\Brick.cpp" />
+    <ClCompile Include="GameObject\WorldObject\Portal.cpp" />
+    <ClCompile Include="GameObject\WorldObject\Stair.cpp" />
+    <ClCompile Include="GameSetting\GameSetting.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene\Effect\Effect.cpp" />
+    <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
+    <ClCompile Include="Scene\TileMap\Map.cpp" />
+    <ClCompile Include="Scene\TileMap\Tile.cpp" />
+    <ClCompile Include="Utils\debug.cpp" />
+    <ClCompile Include="Utils\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameEngine\Animation.h" />
+    <ClInclude Include="GameEngine\AnimationFrame.h" />
+    <ClInclude Include="GameEngine\Animations.h" />
+    <ClInclude Include="GameEngine\Camera.h" />
+    <ClInclude Include="GameEngine\Collision.h" />
+    <ClInclude Include="GameEngine\Game.h" />
+    <ClInclude Include="GameEngine\KeyEventHandler.h" />
+    <ClInclude Include="GameEngine\Quadtree\CTreeObject.h" />
+    <ClInclude Include="GameEngine\Quadtree\QNode.h" />
+    <ClInclude Include="GameEngine\Quadtree\QuadTree.h" />
+    <ClInclude Include="GameEngine\SampleKeyEventHandler.h" />
+    <ClInclude Include="GameEngine\Sprite.h" />
+    <ClInclude Include="GameEngine\Sprites.h" />
+    <ClInclude Include="GameEngine\Texture.h" />
+    <ClInclude Include="GameEngine\Textures.h" />
+    <ClInclude Include="GameObject\BreakableObject\BreakableObject.h" />
+    <ClInclude Include="GameObject\BreakableObject\Candle.h" />
+    <ClInclude Include="GameObject\BreakableObject\Torch.h" />
+    <ClInclude Include="GameObject\Enemy\Bat.h" />
+    <ClInclude Include="GameObject\Enemy\Enemy.h" />
+    <ClInclude Include="GameObject\Enemy\Ghoul.h" />
+    <ClInclude Include="GameObject\Enemy\Panther.h" />
+    <ClInclude Include="GameObject\GameObject.h" />
+    <ClInclude Include="GameObject\Item\BigHeart.h" />
+    <ClInclude Include="GameObject\Item\MoneyBag.h" />
+    <ClInclude Include="GameObject\Item\MorningStar.h" />
+    <ClInclude Include="GameObject\Item\SmallHeart.h" />
+    <ClInclude Include="GameObject\Item\SubWeaponItem.h" />
+    <ClInclude Include="GameObject\Simon\Simon.h" />
+    <ClInclude Include="GameObject\Simon\SimonAttack.h" />
+    <ClInclude Include="GameObject\Simon\SimonAutoWalking.h" />
+    <ClInclude Include="GameObject\Simon\SimonFalling.h" />
+    <ClInclude Include="GameObject\Simon\SimonHurt.h" />
+    <ClInclude Include="GameObject\Simon\SimonIdle.h" />
+    <ClInclude Include="GameObject\Simon\SimonJump.h" />
+    <ClInclude Include="GameObject\Simon\SimonPowerUp.h" />
+    <ClInclude Include="GameObject\Simon\SimonSit.h" />
+    <ClInclude Include="GameObject\Simon\SimonStairDownIdle.h" />
+    <ClInclude Include="GameObject\Simon\SimonStairUpIdle.h" />
+    <ClInclude Include="GameObject\Simon\SimonState.h" />
+    <ClInclude Include="GameObject\Simon\SimonWalking.h" />
+    <ClInclude Include="GameObject\Simon\SimonWalkingStairDown.h" />
+    <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h" />
+    <ClInclude Include="GameObject\Weapon\Axe.h" />
+    <ClInclude Include="GameObject\Weapon\Dagger.h" />
+    <ClInclude Include="GameObject\Weapon\HolyWaterBottle.h" />
+    <ClInclude Include="GameObject\Weapon\Weapon.h" />
+    <ClInclude Include="GameObject\Weapon\Whip.h" />
+    <ClInclude Include="GameObject\WorldObject\Brick.h" />
+    <ClInclude Include="GameObject\WorldObject\Portal.h" />
+    <ClInclude Include="GameObject\WorldObject\Stair.h" />
+    <ClInclude Include="GameSetting\GameDefine.h" />
+    <ClInclude Include="GameSetting\GameSetting.h" />
+    <ClInclude Include="Scene\Effect\DeadEffect.h" />
+    <ClInclude Include="Scene\Effect\Effect.h" />
+    <ClInclude Include="Scene\PlayScene\PlayScene.h" />
+    <ClInclude Include="Scene\TileMap\Map.h" />
+    <ClInclude Include="Scene\TileMap\Tile.h" />
+    <ClInclude Include="Utils\debug.h" />
+    <ClInclude Include="Utils\Utils.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}</ProjectGuid>
+    <RootNamespace>My03KeyboardStates</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d10.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)Utils;$(ProjectDir)Scene\PlayScene;$(ProjectDir)Scene\TileMap;$(ProjectDir)Scene\Effect;$(ProjectDir)GameSetting;$(ProjectDir)GameObject\WorldObject;$(ProjectDir)GameObject\Weapon;$(ProjectDir)GameObject\Simon;$(ProjectDir)GameObject\Item;$(ProjectDir)GameObject\Enemy;$(ProjectDir)GameObject\BreakableObject;$(ProjectDir)GameObject;$(ProjectDir)GameEngine\Quadtree;$(ProjectDir)GameEngine</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d10.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d10.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d10.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets" Condition="Exists('..\packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets'))" />
+  </Target>
+</Project>
