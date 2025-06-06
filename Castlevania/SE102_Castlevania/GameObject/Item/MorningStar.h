@@ -25,7 +25,7 @@ public:
 
 	int IsBlocking() { return 0; }
 	int IsCollidable() { return 1; }
-	int IsOverlapable() { return 1; }
+	int IsOverlappable() { return 1; }
 
 	void OnNoCollision(DWORD dt);
 

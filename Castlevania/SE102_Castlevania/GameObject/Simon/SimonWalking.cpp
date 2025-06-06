@@ -64,6 +64,7 @@ void CSimonWalking::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CMorningStar*>(e->obj))
 	{
 		simon->SetState(new CSimonPowerUp(simon));
+		e->obj->Delete();
 	}
 	if (dynamic_cast<CTriggerZone*>(e->obj))
 	{
