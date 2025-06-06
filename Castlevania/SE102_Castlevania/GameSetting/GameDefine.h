@@ -21,7 +21,7 @@
 #define DOWN_STAIR_DIRECTION -1
 
 /*-----Gravity----*/
-#define DEFAULT_GRAVITY 0.0f
+#define DEFAULT_GRAVITY -0.002f
 
 /*---Simon weapon----*/
 #define PRIMARY_WEAPON 0
