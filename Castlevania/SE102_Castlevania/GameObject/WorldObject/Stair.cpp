@@ -2,6 +2,11 @@
 
 #include "Stair.h"
 
+CStair::CStair()
+{
+	width = STAIR_WIDTH;
+	height = STAIR_HEIGHT;
+}
 void CStair::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)

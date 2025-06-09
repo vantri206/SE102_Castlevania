@@ -15,6 +15,7 @@
 #include "Utils.h"
 #include "Camera.h"
 #include "GameDefine.h"
+#include "SceneManager.h"
 
 CSampleKeyHandler* keyHandler;
 
@@ -36,17 +37,15 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void LoadResources()
 {
 	CGame::GetInstance()->LoadResources();
-
-	CGame* game = CGame::GetInstance();
-	game->LoadScene(SCENE1, 1, STAGE1_FILE_PATH, STAGE1_OBJECT_FILE_PATH);
-	game->LoadScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);
-	game->ChangeScene(1);
+	CSceneManager* scenes = CSceneManager::GetInstance();
+	scenes->LoadPlayer();
+	scenes->LoadAllScenes(ALL_SCENES_PATH);
+	scenes->ChangeScene(3, 0);
 }
 
 void Update(DWORD dt)
 {
-	CGame* game = CGame::GetInstance();
-	game->GetCurrentScene()->Update(dt);
+	CSceneManager::GetInstance()->Update(dt);
 }
 
 void Render()
@@ -67,10 +66,10 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	ID3D10SamplerState* linearSampler = g->GetLinearSampler();
-	pD3DDevice->PSSetSamplers(slot, 1, &linearSampler);
+	ID3D10SamplerState* pointSampler = g->GetPointSampler();
+	pD3DDevice->PSSetSamplers(slot, 1, &pointSampler);
 
-	g->GetCurrentScene()->Render();
+	CSceneManager::GetInstance()->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);

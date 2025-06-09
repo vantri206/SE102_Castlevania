@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BreakableBrick.cpp" />
     <ClCompile Include="GameEngine\Animation.cpp" />
     <ClCompile Include="GameEngine\Animations.cpp" />
     <ClCompile Include="GameEngine\Camera.cpp" />
@@ -39,7 +40,11 @@
     <ClCompile Include="GameObject\Enemy\Ghoul.cpp" />
     <ClCompile Include="GameObject\Enemy\Panther.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="GameObject\Item\BigHeart.cpp" />
+    <ClCompile Include="GameObject\Item\Item.cpp" />
+    <ClCompile Include="GameObject\Item\MoneyBag.cpp" />
     <ClCompile Include="GameObject\Item\MorningStar.cpp" />
+    <ClCompile Include="GameObject\Item\SmallHeart.cpp" />
     <ClCompile Include="GameObject\Item\SubWeaponItem.cpp" />
     <ClCompile Include="GameObject\Simon\Simon.cpp" />
     <ClCompile Include="GameObject\Simon\SimonAttack.cpp" />
@@ -64,18 +69,20 @@
     <ClCompile Include="GameObject\WorldObject\Brick.cpp" />
     <ClCompile Include="GameObject\WorldObject\Portal.cpp" />
     <ClCompile Include="GameObject\WorldObject\Stair.cpp" />
+    <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp" />
     <ClCompile Include="GameSetting\GameSetting.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MoneyBag.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene\Effect\Effect.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
     <ClCompile Include="Scene\TileMap\Map.cpp" />
     <ClCompile Include="Scene\TileMap\Tile.cpp" />
-    <ClCompile Include="TriggerZone.cpp" />
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BreakableBrick.h" />
+    <ClInclude Include="BrickEffect.h" />
     <ClInclude Include="GameEngine\Animation.h" />
     <ClInclude Include="GameEngine\AnimationFrame.h" />
     <ClInclude Include="GameEngine\Animations.h" />
@@ -100,6 +107,7 @@
     <ClInclude Include="GameObject\Enemy\Panther.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\Item\BigHeart.h" />
+    <ClInclude Include="GameObject\Item\Item.h" />
     <ClInclude Include="GameObject\Item\MoneyBag.h" />
     <ClInclude Include="GameObject\Item\MorningStar.h" />
     <ClInclude Include="GameObject\Item\SmallHeart.h" />
@@ -130,13 +138,13 @@
     <ClInclude Include="GameObject\WorldObject\TriggerZone.h" />
     <ClInclude Include="GameSetting\GameDefine.h" />
     <ClInclude Include="GameSetting\GameSetting.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene\Effect\DeadEffect.h" />
     <ClInclude Include="Scene\Effect\Effect.h" />
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\TileMap\Map.h" />
     <ClInclude Include="Scene\TileMap\Tile.h" />
-    <ClInclude Include="SimonSitAttack.h" />
-    <ClInclude Include="TriggerZone.h" />
     <ClInclude Include="Utils\debug.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>

@@ -12,7 +12,7 @@
 45 resource/Items/Dagger.png
 46 resource/Items/FireBall.png
 47 resource/Items/HolyWaterBottle.png
-48 resource/Items/InvisbilityPotion.png
+48 resource/Items/InvisibilityPotion.png
 49 resource/Items/MagicCrystal.png
 50 resource/Items/MoneyBag.png
 51 resource/Items/MorningStar.png
@@ -24,7 +24,10 @@
 60 resource/Objects/Torch.png
 61 resource/Objects/Candle.png
 62 resource/Items/HolyWaterBottle.png
-63 resource/Characters/Simon2.png
+63 resource/Characters/SimonInvincble.png
+64 resource/Objects/BreakableBrick.png
+65 resource/Objects/Brick.png
+66 resource/Objects/BrickPiece.png
 999 resource/Scene/bbox.png
 2 
 #----MAP----#

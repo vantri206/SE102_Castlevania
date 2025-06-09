@@ -1,27 +1,25 @@
 #pragma once
 
 #include "MoneyBag.h"
+#include <debug.h>
 
 CMoneyBag::CMoneyBag()
 {
 	this->SetSize(MONEYBAG_WIDTH, MONEYBAG_HEIGHT);
-	vx = vy = 0.0f;
-	ay = 0;
-	vy = 0.02f;
-	hidden = 0;
+	ay = DEFAULT_GRAVITY;
+	point = 0;
 
+	startSpawn = -1;
+	
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(MONEYBAG_ANI_SET_ID));
+	state = MONEYBAG_STATE_IDLE;
 }
 
 void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isSpawning() && GetTickCount64() - startSpawn >= MONEYBAG_SPAWN_DURATION) FinishedSpawning();
 	vy += ay * dt;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-}
-
-void CMoneyBag::Render()
-{
-	animation_set->at(ani_id)->Render(x, y, nx, width, height);
 }
 
 void CMoneyBag::OnNoCollision(DWORD dt)
@@ -31,7 +29,8 @@ void CMoneyBag::OnNoCollision(DWORD dt)
 
 void CMoneyBag::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny > 0 && e->obj->IsBlocking())
+	DebugOut(L"has col\n");
+	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0.0f;
 	}
@@ -74,8 +73,17 @@ void CMoneyBag::SetMoneyBagAni()
 	}
 }
 
-void CMoneyBag::StartAppearing()
+void CMoneyBag::StartSpawning()
 {
-	ay = 0;
-	vy = 0.1f;
+	ay = 0.0f;
+	vy = 0.02f;
+	startSpawn = GetTickCount64();
+	state = MONEYBAG_STATE_SPAWN;
+}
+
+void CMoneyBag::FinishedSpawning()
+{
+	ay = DEFAULT_GRAVITY;
+	vy = 0.0f;
+	state = MONEYBAG_STATE_IDLE;
 }

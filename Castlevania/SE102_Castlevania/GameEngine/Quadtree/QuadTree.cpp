@@ -9,6 +9,8 @@
 QuadTree::QuadTree(int mapWidth, int mapHeight)
 {
     // Tìm kích thước lớn nhất để tạo vùng root là hình vuông
+    this->mapWidth = mapWidth;
+    this->mapHeight = mapHeight;
     int size = max(mapWidth, mapHeight);
     int bound = 1;
     while (bound < size) bound *= 2; // Làm tròn lên thành lũy thừa của 2
@@ -28,7 +30,6 @@ void QuadTree::Insert(LPGAMEOBJECT obj)
 {
     CTreeObject* treeObj = new CTreeObject(obj);
     insertNode(root, treeObj, 0);
-
 }
 
 
@@ -152,6 +153,16 @@ vector<LPGAMEOBJECT> QuadTree::GetObjectsInView(RECT cam)
         res.push_back(obj);
     }
     return res;
+}
+
+vector<LPGAMEOBJECT> QuadTree::GetAllObjects()
+{
+    RECT view;
+    view.left = 0;
+    view.bottom = 0;
+    view.right = mapWidth;
+    view.left = mapHeight;
+    return this->GetObjectsInView(view);
 }
 
 void QuadTree::PrintNode(QNode* node, int level)

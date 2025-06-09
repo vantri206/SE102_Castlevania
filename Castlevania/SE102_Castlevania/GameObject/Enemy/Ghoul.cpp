@@ -20,7 +20,7 @@ void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!(isDead() || isActived()))
 	{
-		CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+		CSimon* player = CSceneManager::GetInstance()->GetPlayer();
 		if (this->CheckEnemyCanActive(player)) ActiveEnemy();
 	}
 	if (this->isDead())
@@ -94,14 +94,12 @@ void CGhoul::LoadExtraSetting(vector<int> extra_settings)
 }
 int CGhoul::CheckEnemyCanActive(CSimon* simon)
 {
-	float x = simon->GetX();
-	if (abs(x - this->x) <= GHOUL_RANGE_ACTIVE) return 1;
-	return 0;
+	return 1;
 }
 void CGhoul::ActiveEnemy()
 {
 	CEnemy::ActiveEnemy();
-	CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+	CSimon* player = CSceneManager::GetInstance()->GetPlayer();
 	if (player->GetX() < this->x) this->nx = -1;
 	else this->nx = 1;
 	this->SetState(GHOUL_STATE_WALK);

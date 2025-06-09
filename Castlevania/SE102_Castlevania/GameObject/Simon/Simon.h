@@ -15,14 +15,17 @@
 #include "Stair.h"
 
 #include "Weapon.h"
+#include <Item.h>
 
+
+#define SIMON_MAX_WHIP_LEVEL 3
 
 #define UNTOUCHABLE 1
 #define NOT_UNTOUCHABLE 0
 
 #define SIMON_BLINK_TIME 120
 
-#define SIMON_WALKING_SPEED 0.1f
+#define SIMON_WALKING_SPEED 0.3f
 #define SIMON_ACCEL_WALK_X	0.0005f
 
 #define SIMON_WALKING_STAIR_SPEED 0.075f
@@ -93,12 +96,16 @@ protected:
 
 	int health;
 	int heartCount;
+
+	int whipLevel;
+
 public:
 
-	CSimon(float x, float y)
+	CSimon()
 	{
-		this->SetPosition(x, y);
+		x = y = 0;
 		this->SetPhysical(0.0f, 0.0f, 0.0f, 0.0f);
+
 		this->SetSize(SIMON_WIDTH, SIMON_HEIGHT);
 		this->maxVx = 0;
 
@@ -110,9 +117,12 @@ public:
 		subWeaponLimit = 1;
 		activeSubWeaponList = vector<CWeapon*>();
 
+		whipLevel = 1;
 		
 		health = 5;
 		heartCount = 50;
+
+		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID));
 	}
 
 	void SetAx(float ax) { this->ax = ax; }
@@ -139,6 +149,9 @@ public:
 
 	void OnCollisionWithEnemy(CEnemy* enemy);
 	void OnCollisionWithEnemyOnStair(CEnemy* enemy);
+	void OnCollisionWithItem(CItem* item);
+
+	void UpgradeWeapon();
 
 	void UpdateWeapon(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 
@@ -180,6 +193,7 @@ public:
 	void addHeart(int heartcountadd) { this->heartCount += heartcountadd; }
 	void spendHeart(int heartcountspend) { this->heartCount -= heartcountspend; }
 
+	int getWhipLevel() { return whipLevel; }
 
 	void TakenDamage(int damage);
 	int IsAutoWalking() { return (isAutoWalking) ? 1 : 0; }

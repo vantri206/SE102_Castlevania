@@ -46,6 +46,9 @@
     <Filter Include="UItils">
       <UniqueIdentifier>{ef02dbb9-7f7f-458c-a7d8-f3632cd1b696}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\SceneManager">
+      <UniqueIdentifier>{7d882231-c072-4431-a12f-8e27a98f6995}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -205,11 +208,23 @@
     <ClCompile Include="GameObject\Item\SubWeaponItem.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="MoneyBag.cpp">
+    <ClCompile Include="GameObject\Item\BigHeart.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="TriggerZone.cpp">
+    <ClCompile Include="GameObject\Item\Item.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Item\MoneyBag.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Item\SmallHeart.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp">
       <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene\SceneManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -396,8 +411,14 @@
     <ClInclude Include="GameObject\WorldObject\TriggerZone.h">
       <Filter>GameObject\WorldObject</Filter>
     </ClInclude>
-    <ClInclude Include="SimonSitAttack.h">
-      <Filter>GameObject\Simon</Filter>
+    <ClInclude Include="GameObject\Item\Item.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

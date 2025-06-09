@@ -1,25 +1,34 @@
-﻿#pragma once
-#include "PlayScene.h"
+﻿#include "PlayScene.h"
 #include "Utils.h"
-#include "GameDefine.h"
-#include "QuadTree.h"
 #include "Camera.h"
+#include "Simon.h"
+#include "QuadTree.h"
+#include "Map.h"
+#include "GameObject.h"
+#include "Effect.h"
 #include <fstream>
 
-#include "Brick.h"
-#include "Torch.h"
-#include "Simon.h"
-#include "Ghoul.h"
-#include "Panther.h"
-#include "Candle.h"
-#include "Stair.h"
-#include "Effect.h"
-#include "MorningStar.h"
-
-void CPlayScene::LoadScene()
+CPlayScene::CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile)
 {
+    this->SceneId = id;
+
+	this->objectFile = objectFile;
+
+	this->mapId = mapId;
+
+	this->mapFile = mapFile;
+}
+
+void CPlayScene::LoadResources() 
+{
+	CSimon* player = CSceneManager::GetInstance()->GetPlayer();
+	this->SetPlayer(player);
+
+	SceneBG = new CMap(mapId, mapFile.c_str());
+	SceneEntryList.clear();
+
 	ifstream f;
-	f.open(objectFile);
+	f.open(objectFile.c_str());
 
 	if (!f.is_open())
 	{
@@ -37,8 +46,20 @@ void CPlayScene::LoadScene()
 	while (f.getline(str, MAX_TXT_LINE))
 	{
 		string line(str);
-		if (line[0] == '#' || line.length() < 6) continue;
+		if (line[0] == '#') continue;
 		tokens = split(line);
+
+		if (tokens[0] == "ENTRY")
+		{
+			sceneEntry* entry = new sceneEntry();
+			entry->entryX = atof(tokens[1].c_str());
+			entry->entryY = atof(tokens[2].c_str());
+			SceneEntryList.push_back(entry);
+			continue;
+		}
+
+		if (tokens.size() < 4) continue;
+
 		int objectId = atoi(tokens[0].c_str());
 		int objectType = atoi(tokens[1].c_str());
 		float x = atof(tokens[2].c_str());
@@ -51,38 +72,70 @@ void CPlayScene::LoadScene()
 			extra_settings.push_back(atoi(tokens[i].c_str()));
 		}
 
-		CGameObject* obj = NULL;
-		if (objectType == SIMON) player->SetPosition(x, y);
-		else
+		CGameObject* obj = nullptr;
+		obj = CGameObject::CreateObject(objectId, objectType, extra_settings);
+		if (obj)
 		{
-			obj = CGameObject::CreateObject(objectId, objectType, extra_settings);
-
-			if (obj != NULL)
-			{
-				obj->SetPosition(x, y);
-				quadtree->Insert(obj);
-			}
+			obj->SetPosition(x, y);
+			quadtree->Insert(obj);
 		}
+	}
+	if (currentEntry >= 0 && currentEntry < SceneEntryList.size())
+	{
+		sceneEntry* entry = SceneEntryList[currentEntry];
+		if (entry)
+		{
+			player->SetPosition(entry->entryX, entry->entryY);
+			//DebugOut(L"[INFO] Player position in new scene: %f %f\n", entry->entryX, entry->entryY);
+		}
+	}
+	else
+	{
+		DebugOut(L"Cant find entry posittion %d\n", currentEntry);
 	}
 	quadtree->PrintTree();
 	f.close();
 }
 
-void CPlayScene::LoadPlayer()
+void CPlayScene::UnloadResources()
 {
-	player = new CSimon(0, 0);
-	player->SetType(SIMON);
-	player->SetState(new CSimonIdle(player));
-	player->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID));
+    if (quadtree)
+    {
+        auto allObjects = quadtree->GetAllObjects();
+        for (auto obj : allObjects)
+        {
+            delete obj;
+			obj = nullptr;
+        }
+        delete quadtree;
+        quadtree = nullptr;
+    }
+
+    for (auto e : effects) 
+    {
+        delete e;
+    }
+
+    effects.clear();
+
+    hiddenObjects.clear();
+
+    if(SceneBG)
+    {
+        delete SceneBG;
+        SceneBG = nullptr;
+    }
 }
 
 void CPlayScene::Update(DWORD dt)
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
+
 	auto activeObjects = quadtree->GetObjectsInView(cam);
 	for (auto obj : activeObjects)
 		obj->Update(dt, &activeObjects);
-	player->Update(dt, &activeObjects);
+	if(player) player->Update(dt, &activeObjects);
+
 	for (auto effect : effects)
 		effect->Update(dt);
 }
@@ -91,38 +144,44 @@ void CPlayScene::Render()
 {
 	RECT cam = CCamera::GetInstance()->GetCamRect();
 	auto activeObjects = quadtree->GetObjectsInView(cam);
+	vector<LPGAMEOBJECT> hiddenObj, normalObj, enemyObj;
 
-	SceneBG->RenderBackground();
-
-	if(hiddenObj.size() > 0)
 	for (auto obj : activeObjects)
 	{
 		if (obj == nullptr || obj->IsDeleted()) continue;
-		if (hiddenObj.find(obj) != hiddenObj.end())
+		if (hiddenObjects.find(obj) != hiddenObjects.end())
 		{
-			obj->Render();
-			obj->RenderBoundingBox();
+			hiddenObj.push_back(obj);
 		}
+		else if (dynamic_cast<CEnemy*>(obj))
+		{
+			enemyObj.push_back(obj);
+		}
+		else normalObj.push_back(obj);
 	}
+	
+	SceneBG->RenderBackground();
 
+	for (auto obj : hiddenObj)
+		obj->Render();
 
 	SceneBG->RenderForeground();
 
-	for (auto obj : activeObjects)
-	{
-		if (obj == nullptr || obj->IsDeleted()) continue;
-		if (hiddenObj.find(obj) != hiddenObj.end()) continue;
+	for (auto obj : normalObj)
 		obj->Render();
-		obj->RenderBoundingBox();
-	}
 
-	player->Render();
-	player->RenderBoundingBox();
+	for (auto obj : enemyObj)
+		obj->Render();
+	
+	for (auto obj : activeObjects)
+		obj->RenderBoundingBox();
+
+	if (player) player->Render();
 
 	for (auto effect : effects)
 		effect->Render();
 
-	this->ClearObject();
+	this->ClearObjects();
 	this->ClearEffects();
 }
 
@@ -133,16 +192,15 @@ void CPlayScene::AddObject(CGameObject* obj)
 
 void CPlayScene::AddHiddenObject(CGameObject* obj)
 {
-	hiddenObj.insert(obj);
+	hiddenObjects.insert(obj);
 }
 
-void CPlayScene::ClearObject()
+void CPlayScene::ClearObjects()
 {
-	RECT cam = CCamera::GetInstance()->GetCamRect();
-	auto activeObjects = quadtree->GetObjectsInView(cam);
-	for (auto obj : activeObjects)
+	auto allObjects = quadtree->GetAllObjects();
+	for (auto obj : allObjects)
 	{
-		if (obj != nullptr && obj->IsDeleted())
+		if (obj && obj->IsDeleted())
 		{
 			quadtree->Remove(obj);
 			delete obj;
@@ -168,7 +226,21 @@ void CPlayScene::ClearEffects()
 	}
 }
 
-CSimon* CPlayScene::GetPlayer()
+CPlayScene::~CPlayScene()
 {
-	return player;
+    delete SceneBG;
+	auto allObjects = quadtree->GetAllObjects();
+	for (auto obj : allObjects)
+	{
+		if (obj != nullptr && obj->IsDeleted())
+		{
+			quadtree->Remove(obj);
+			delete obj;
+		}
+	}
+    delete quadtree;
+    delete player;
+    for (auto effect : effects)
+        delete effect;
+	effects.clear();
 }

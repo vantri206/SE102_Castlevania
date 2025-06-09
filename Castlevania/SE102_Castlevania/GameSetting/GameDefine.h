@@ -23,6 +23,10 @@
 /*-----Gravity----*/
 #define DEFAULT_GRAVITY -0.002f
 
+/*----Define for whip position---*/
+#define STANDING 0
+#define SITTING 1
+
 /*---Simon weapon----*/
 #define PRIMARY_WEAPON 0
 #define SUB_WEAPON 1
@@ -55,7 +59,9 @@ enum OBJECT_TYPE
 	HOLYWATERBOTTLE = 14,
 	SUBWEAPONITEM = 15,
 	SMALLHEART = 16,
-	TRIGGERZONE = 17
+	TRIGGERZONE = 17,
+	BREAKABLEBRICK = 18,
+	WALL = 19
 };
 
 /*---- Animation Set ----*/
@@ -71,18 +77,24 @@ enum ANIMATION_SET_ID
 	PANTHER_ANI_SET_ID = 201,
 	TORCH_ANI_SET_ID = 300,
 	CANDLE_ANI_SET_ID = 301,
+	BREAKABLEBRICK_ANI_SET_ID = 302,
 	BIGHEART_ANI_SET_ID = 400,
 	SMALLHEART_ANI_SET_ID = 401,
 	MONEYBAG_ANI_SET_ID = 410,
 	MORNINGSTAR_ANI_SET_ID = 420,
 	SUBWEAPONITEM_ANI_SET_ID = 430,
-	DEADEFFECT_ANI_SET_ID = 900
+	DEADEFFECT_ANI_SET_ID = 900,
+	BREAKBRICKEFFECT_ANI_SET_ID = 901
 };
 
 /*----Scene---*/
-#define SCENE1 1
-#define SCENE2 2
-#define MAX_SCENE 5
+
+#define MAX_SCENES 100
+
+#define INTRO_SCENE 0
+#define MENU_SCENE 1
+#define PLAY_SCENE 2
+#define CUT_SCENE 3
 
 /*---- Resource file path ----*/
 #define TEXTURES_PATH L"./resource/textures.txt"
@@ -101,4 +113,10 @@ enum ANIMATION_SET_ID
 #define STAGE5_FILE_PATH L"./resource/Map/Stage5.txt"
 #define STAGE5_OBJECT_FILE_PATH L"./resource/Map/Stage5Objects.txt"
 
+#define ALL_SCENES_PATH L"./resource/scenes.txt"
+
 #define MAX_TXT_LINE 1024
+
+#define SIMON_STAIR_DOWN_HEIGHT 32
+#define SIMON_IDLE_HEIGHT 32
+#define SIMON_SIT_HEIGHT 24

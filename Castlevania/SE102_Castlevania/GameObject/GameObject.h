@@ -88,6 +88,9 @@ public:
 
     static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra_settings);
 
+    virtual void StartSpawning() {}
+    virtual void FinishedSpawning() {}
+
     CGameObject();
     virtual ~CGameObject();
 

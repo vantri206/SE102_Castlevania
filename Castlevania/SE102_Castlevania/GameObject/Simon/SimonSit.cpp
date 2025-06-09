@@ -52,4 +52,12 @@ void CSimonSit::OnCollisionWith(LPCOLLISIONEVENT e)
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		simon->OnCollisionWithEnemy(enemy);
 	}
+	else if (e->ny > 0 && e->obj->IsBlocking())
+	{
+		simon->SetVy(0.0f);
+	}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		simon->SetVx(0.0f);
+	}
 }

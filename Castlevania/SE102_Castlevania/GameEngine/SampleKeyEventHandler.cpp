@@ -23,7 +23,9 @@ void CSampleKeyHandler::KeyState(BYTE* states)
 
     for (int i = 0; i < KEYBOARD_STATE_SIZE; i++)
     {
-        CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+        CSimon* player = nullptr;
+        player = CSceneManager::GetInstance()->GetPlayer();
+        if (!player) continue;
         if (game->IsKeyDown(i))
         {
             player->OnKeyDown(i);

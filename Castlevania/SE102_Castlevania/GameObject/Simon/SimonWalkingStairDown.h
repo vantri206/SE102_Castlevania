@@ -5,7 +5,7 @@
 class CSimonWalkingStairDown : public CSimonState
 {
 public:
-    CSimonWalkingStairDown(CSimon* simon);
+    CSimonWalkingStairDown(CSimon* simon, int isFirstEntry = 0);
     void KeyDownHandle(int keyCode);
     void KeyUpHandle(int keyCode);
     void Update(DWORD dt);

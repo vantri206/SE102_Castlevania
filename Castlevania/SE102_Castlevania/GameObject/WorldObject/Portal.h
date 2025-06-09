@@ -8,12 +8,15 @@ class CPortal : public CGameObject
 {
 protected:
 	int sceneId;
+	int sceneEntryId;
 public:
-	CPortal(int scenid);
+	CPortal();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {}
 	void Render() {}
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) {}
-	void SetSceneId(int id) { sceneId = id; }
+	void LoadExtraSetting(vector<int> extra_settings);
+
 	int IsBlocking() { return 0; }
-	int isBreakable() { return 1; }
+	int IsOverlappable() { return 1; }
+
+	void ChangeScene();
 };

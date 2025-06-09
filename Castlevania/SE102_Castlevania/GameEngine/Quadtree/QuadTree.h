@@ -15,6 +15,9 @@ private:
     void Retrieve(QNode* node, RECT camRect, std::unordered_set<LPGAMEOBJECT>& result);
     void PrintNode(QNode* node, int level);
     bool RemoveObj(QNode* node, CGameObject* Obj);
+
+
+    int mapWidth, mapHeight;
 public:
     QuadTree(int mapWidth, int mapHeight);
     void PrintTree();
@@ -25,4 +28,5 @@ public:
     void insertNode(QNode* node, CTreeObject* treeObj, int depth);
 
     std::vector<LPGAMEOBJECT> GetObjectsInView(RECT cam);
+    std::vector<LPGAMEOBJECT> GetAllObjects();
 };

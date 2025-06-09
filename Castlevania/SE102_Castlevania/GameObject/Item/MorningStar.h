@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "GameDefine.h"
+#include "Item.h"
 
 #define MORNINGSTAR_STATE_NORMAL 0
 
@@ -12,24 +13,9 @@
 #define MORNINGSTAR_WIDTH 16
 #define MORNINGSTAR_HEIGHT 16
 
-class CMorningStar : public CGameObject
+class CMorningStar : public CItem
 {
 protected: 
-	float ay;
 public:
 	CMorningStar();
-
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-
-	void Render();
-
-	int IsBlocking() { return 0; }
-	int IsCollidable() { return 1; }
-	int IsOverlappable() { return 1; }
-
-	void OnNoCollision(DWORD dt);
-
-	void OnCollisionWith(LPCOLLISIONEVENT e);
-
-	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

@@ -5,8 +5,9 @@
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
+#include "Scene.h"
+#include "SceneManager.h"
 #include "PlayScene.h"
-
 #include "KeyEventHandler.h"
 #include "d3dx9core.h"
 #include "Texture.h"
@@ -31,13 +32,13 @@ protected:
 
 	LPD3DX10SPRITE spriteHandler = NULL;
 
-	ID3D10SamplerState* pLinearSampler = nullptr;
+	ID3D10SamplerState* pPointSampler = nullptr;
 
 	ID3D10Device* pD3DDevice = NULL;
 	IDXGISwapChain* pSwapChain = NULL;
 	ID3D10RenderTargetView* pRenderTargetView = NULL;
 	ID3D10BlendState* pBlendStateAlpha = NULL;			// To store alpha blending state
-	
+
 	LPDIRECTINPUT8       di;		// The DirectInput object         
 	LPDIRECTINPUTDEVICE8 didv;		// The keyboard device 
 
@@ -48,11 +49,10 @@ protected:
 
 	HINSTANCE hInstance;
 
-	CPlayScene* scenes[MAX_SCENE];
 	int currentSceneId = -1;
 public:
 
-	void Init(HWND hWnd,HINSTANCE hInstance);
+	void Init(HWND hWnd, HINSTANCE hInstance);
 
 	void DrawBoundingBox(float x, float y, float width, float height);
 
@@ -71,15 +71,11 @@ public:
 		return pD3DDevice;
 	}
 
-	ID3D10SamplerState* GetLinearSampler() const { return pLinearSampler; }
+	ID3D10SamplerState* GetPointSampler() const { return pPointSampler; }
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
 
 	void Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float width, float height);
-
-	void Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float scale);
-
-	void Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float width, float height, D3DXCOLOR color);
 
 	IDXGISwapChain* GetSwapChain() { return this->pSwapChain; }
 	ID3D10RenderTargetView* GetRenderTargetView() { return this->pRenderTargetView; }
@@ -90,15 +86,17 @@ public:
 	int GetBackBufferWidth() { return backBufferWidth; }
 	int GetBackBufferHeight() { return backBufferHeight; }
 
-	void LoadScene(int id, int mapId, LPCWSTR mapFile, LPCWSTR objFile);
-	void ChangeScene(int sceneId);
-	CPlayScene* GetCurrentScene()
+	CScene* GetCurrentScene()
 	{
-		if (currentSceneId >= 0 && currentSceneId < MAX_SCENE)
-			return scenes[currentSceneId];
+		return CSceneManager::GetInstance()->GetCurrentScene();
+	}
+	CPlayScene* GetCurrentPlayScene()
+	{
+		CScene* playscene = this->GetCurrentScene();
+		if (playscene && dynamic_cast<CPlayScene*>(playscene))
+			return dynamic_cast<CPlayScene*>(playscene);
 		return nullptr;
 	}
-
 	static CGame* GetInstance();
 
 	~CGame();

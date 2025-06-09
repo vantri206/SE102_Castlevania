@@ -10,9 +10,11 @@
 #include "Portal.h"
 #include "Stair.h"
 #include "MorningStar.h"
+#include "Wall.h"
 #include "BigHeart.h"
 #include "SmallHeart.h"
 #include "SubWeaponItem.h"
+#include "BreakableBrick.h"
 #include "MoneyBag.h"
 #include "TriggerZone.h"
 
@@ -39,7 +41,7 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		obj = new CBrick();
 		break;
 	case PORTAL:
-		obj = new CBrick();
+		obj = new CPortal();
 		break;
 	case STAIR:
 		obj = new CStair();
@@ -61,6 +63,12 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case TRIGGERZONE:
 		obj = new CTriggerZone();
+		break;
+	case BREAKABLEBRICK:
+		obj = new CBreakableBrick();
+		break;
+	case WALL:
+		obj = new CWall();
 		break;
 	default:
 		DebugOut(L"[ERROR] Unknown object type: %d\n", objectType);
@@ -95,6 +103,7 @@ void CGameObject::RenderBoundingBox()
 {
 	float l, t, r, b;
 	this->GetBoundingBox(l, t, r, b);
+	CGame::GetInstance()->DrawBoundingBox(l, t, r, b);
 }
 CGameObject::~CGameObject()
 {

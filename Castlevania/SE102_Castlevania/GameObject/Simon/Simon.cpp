@@ -6,6 +6,13 @@
 #include "Brick.h"
 #include "Candle.h"
 #include "Whip.h"
+#include "SmallHeart.h"
+#include "BigHeart.h"
+#include "MoneyBag.h"
+#include "MorningStar.h"
+#include "SubWeaponItem.h"
+#include "SimonAttack.h"
+#include "SimonPowerUp.h"
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -17,16 +24,21 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 		FinishedUntouchable();
 
-	CCollision::GetInstance()->Process(this, dt, coObjects);
-
 	this->CheckStairNearby(coObjects);
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	currentState->Update(dt);
 
 	this->UpdateWeapon(dt, coObjects);
 
-	int mapwidth = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapWidth();
-	int mapheight = CGame::GetInstance()->GetCurrentScene()->GetCurrentMapHeight();
+	int mapwidth = 0, mapheight = 0;
+	CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+	if (currentPlayScene)
+	{
+		mapwidth = currentPlayScene->GetCurrentMapWidth();
+		mapheight = currentPlayScene->GetCurrentMapHeight();
+	}
 	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
 }
 void CSimon::OnNoCollision(DWORD dt)
@@ -50,6 +62,49 @@ void CSimon::OnCollisionWithEnemyOnStair(CEnemy* enemy)
 	this->TakenDamage(enemy->GetAttack());
 	this->StartUntouchable();
 }
+void CSimon::OnCollisionWithItem(CItem* item)
+{
+	switch (item->GetType())
+	{
+		case BIGHEART:
+		{
+			CBigHeart* bigheart = dynamic_cast<CBigHeart*>(item);
+			this->addHeart(bigheart->getHeartValue());
+			break;
+		}
+		case SMALLHEART:
+		{
+			CSmallHeart* smallheart = dynamic_cast<CSmallHeart*>(item);
+			this->addHeart(smallheart->getHeartValue());
+			break;
+		}
+		case MORNINGSTAR:
+		{
+			this->UpgradeWeapon();
+			this->SetState(new CSimonPowerUp(this));
+			break;
+		}
+		case SUBWEAPONITEM:
+		{
+			CSubWeaponItem* subweaponitem = dynamic_cast<CSubWeaponItem*>(item);
+			this->SetSubWeapon(subweaponitem->GetSubWeaponType());
+			break;
+		}
+		case MONEYBAG:
+		{
+			CMoneyBag* moneybag = dynamic_cast<CMoneyBag*>(item);
+			break;
+		}
+	}
+	item->Delete();
+}
+
+void CSimon::UpgradeWeapon()
+{
+	if (whipLevel < SIMON_MAX_WHIP_LEVEL)
+		whipLevel++;
+}
+
 void CSimon::UpdateWeapon(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (currentWeapon != nullptr)
@@ -72,8 +127,7 @@ void CSimon::UpdateWeapon(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 int CSimon::CanUseSubWeapon()
 {
-	return (currentSubWeaponType >= DAGGER_TYPE && currentSubWeaponType <= STOPWATCH_TYPE
-			&& activeSubWeaponList.size() < subWeaponLimit && heartCount > 0);
+	return (currentSubWeaponType != -1 && activeSubWeaponList.size() < subWeaponLimit && heartCount > 0);
 }
 
 void CSimon::AddSubWeapon(CWeapon* subweapon)
@@ -110,8 +164,6 @@ void CSimon::TakenDamage(int damage)
 
 int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
 {
-	if (dynamic_cast<CBrick*>(objDests) && this->isOnStair == true)
-		return 0;
 	if (dynamic_cast<CEnemy*>(objDests))
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(objDests);
@@ -140,6 +192,7 @@ void CSimon::OnKeyUp(int keyCode)
 void CSimon::SetState(CSimonState* state) 
 {
 	currentState.reset(state);
+	animation_set->at(ani_id)->Reset();
 }
 
 CSimonState* CSimon::GetSimonState()
@@ -167,11 +220,14 @@ void CSimon::CheckStairNearby(vector<LPGAMEOBJECT>* coObjects)
 	this->nearbyStair = nullptr;
 	float l, t, r, b;
 	this->GetBoundingBox(l, t, r, b);
-	for (size_t i = 0; i < coObjects->size(); i++)
+	for (int i = 0; i < coObjects->size(); i++)
 	{
-		if (dynamic_cast<CStair*>(coObjects->at(i)))
+		CGameObject* obj = coObjects->at(i);
+		if (!obj) continue;
+		if (obj->IsDeleted()) continue;
+		if (dynamic_cast<CStair*>(obj))
 		{
-			CStair* stair = dynamic_cast<CStair*>(coObjects->at(i));
+			CStair* stair = dynamic_cast<CStair*>(obj);
 			float l1, t1, r1, b1;
 			stair->GetBoundingBox(l1, t1, r1, b1);
 			if (min(r, r1) >= max(l, l1) && min(t, t1) >= max(b, b1))

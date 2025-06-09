@@ -14,8 +14,9 @@ void CTriggerZone::Trigger()
 		if (dropObj != nullptr)
 		{
 			dropObj->SetPosition(this->spawnX, this->spawnY);
-			CGame::GetInstance()->GetCurrentScene()->AddObject(dropObj);
-			CGame::GetInstance()->GetCurrentScene()->AddHiddenObject(dropObj);
+			CGame::GetInstance()->GetCurrentPlayScene()->AddObject(dropObj);
+			CGame::GetInstance()->GetCurrentPlayScene()->AddHiddenObject(dropObj);
+			dropObj->StartSpawning();
 		}
 	}
 	this->Delete();

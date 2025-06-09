@@ -5,6 +5,7 @@
 #include "Whip.h"
 #include "Enemy.h"
 #include <cstdlib>
+#include <BreakableBrick.h>
 
 CPanther::CPanther()
 {
@@ -20,7 +21,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!(isDead() || isActived()))
 	{
-		CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+		CSimon* player = CSceneManager::GetInstance()->GetPlayer();
 		if (this->CheckEnemyCanActive(player)) ActiveEnemy();
 	}
 
@@ -81,7 +82,7 @@ void CPanther::OnCollisionWith(LPCOLLISIONEVENT e)
 
 int CPanther::CanCollisionWithObj(CGameObject* objDest)
 {
-	if (isHovering() && vy > 0 && dynamic_cast<CBrick*>(objDest))
+	if (isHovering() && vy > 0 && (dynamic_cast<CBrick*>(objDest) || dynamic_cast<CBreakableBrick*>(objDest)))
 		return 0;
 	return 1;
 }
@@ -121,7 +122,7 @@ int CPanther::CheckEnemyCanActive(CSimon* simon)
 void CPanther::ActiveEnemy()
 {
 	CEnemy::ActiveEnemy();
-	CSimon* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+	CSimon* player = CSceneManager::GetInstance()->GetPlayer();
 	if (player->GetX() < this->x) this->nx = -1;
 	else this->nx = 1;
 	this->SetState(PANTHER_STATE_RUN);

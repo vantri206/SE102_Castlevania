@@ -1,6 +1,4 @@
-﻿#pragma once
-
-#include "debug.h"
+﻿#include "debug.h"
 #include "Game.h"
 #include "Sprite.h"
 #include "Texture.h"
@@ -36,8 +34,6 @@ CGame* CGame::__instance = NULL;
 */
 void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 {
-	for (int i = 0; i < MAX_SCENE; i++)
-		scenes[i] = nullptr;
 
 	this->hWnd = hWnd;
 	this->hInstance = hInstance;
@@ -164,19 +160,19 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	sampDesc.MaxLOD = D3D10_FLOAT32_MAX;
 
 	ID3D10SamplerState* pSampler = nullptr;
-	pD3DDevice->CreateSamplerState(&sampDesc, &pLinearSampler);
+	pD3DDevice->CreateSamplerState(&sampDesc, &pSampler);
 
 	pD3DDevice->PSSetSamplers(0, 1, &pSampler);
 
-	hr = pD3DDevice->CreateSamplerState(&sampDesc, &pLinearSampler);
-		
+	hr = pD3DDevice->CreateSamplerState(&sampDesc, &pPointSampler);
+
 	return;
 }
 /*
 	Draw the whole texture or part of texture onto screen
 	NOTE: This function is very inefficient because it has to convert
 	from texture to sprite every time we need to draw it
-*/	
+*/
 LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 {
 	ID3D10Resource* pD3D10Resource = NULL;
@@ -249,69 +245,6 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 	sprite.pTexture = tex->getShaderResourceView();
 
 
-	float texelX = 1.0f / tex->getWidth();
-	float texelY = 1.0f / tex->getHeight();
-
-	sprite.TexCoord.x = (left + 0.5f) * texelX;
-	sprite.TexCoord.y = (top + 0.5f) * texelY;
-
-	sprite.TexSize.x = (spriteWidth - 1.0f) * texelX;
-	sprite.TexSize.y = (spriteHeight - 1.0f) * texelY;
-
-
-	sprite.TextureIndex = 0;
-	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-	if (nx > 0)
-	{
-		sprite.TexCoord.x = (left + 0.5f + spriteWidth - 1) * texelX; 
-		sprite.TexSize.x = -(spriteWidth - 1.0f) * texelX;
-	}
-
-	float cx = (FLOAT)floor(CCamera::GetInstance()->GetX());
-	float cy = (FLOAT)floor(CCamera::GetInstance()->GetY());
-
-	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, round(x - cx), round(y - cy), 0.1f);
-
-
-
-	D3DXMATRIX matScaling;
-	D3DXMatrixScaling(&matScaling, width, height, 1.0f);
-
-	sprite.matWorld = matScaling * matTranslation;
-
-	ID3D10SamplerState* pt = pLinearSampler;
-	pD3DDevice->PSSetSamplers(0, 1, &pt);
-	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
-}
-
-void CGame::Draw(float x, float y, int nx, LPTEXTURE tex,
-	int left, int top, int right, int bottom, float scale)
-{
-	if (tex == NULL) return;
-
-	int spriteWidth = right - left + 1;
-	int spriteHeight = bottom - top + 1;
-
-	float width = spriteWidth * scale;
-	float height = spriteHeight * scale;
-
-	Draw(x, y, nx, tex, left, top, right, bottom, width, height);
-}
-
-void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float width, float height, D3DXCOLOR color)
-{
-	if (tex == NULL) return;
-
-	int spriteWidth = right - left + 1;
-	int spriteHeight = bottom - top + 1;
-
-	D3DX10_SPRITE sprite;
-
-	sprite.pTexture = tex->getShaderResourceView();
-
-
 	sprite.TexCoord.x = (float)left / tex->getWidth();
 	sprite.TexCoord.y = (float)top / tex->getHeight();
 
@@ -340,46 +273,31 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 	D3DXMatrixScaling(&matScaling, width, height, 1.0f);
 
 	sprite.matWorld = matScaling * matTranslation;
-	sprite.ColorModulate = color;
-	ID3D10SamplerState* pt = pLinearSampler;
+
+	ID3D10SamplerState* pt = this->GetPointSampler();
 	pD3DDevice->PSSetSamplers(0, 1, &pt);
 	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
 
+
 void CGame::DrawBoundingBox(float left, float top, float right, float bottom)
 {
-
 	LPTEXTURE bbox = CTextures::GetInstance()->Get(999);
 	if (!bbox) return;
 
-	float width = right - left + 1; 
-	float height = top - bottom + 1; 
+	float width = right - left + 1;
+	float height = top - bottom + 1;
 
-	float cx = left + width / 2.0f;
-	float cy = bottom + height / 2.0f;
+	float x = (left + right) / 2;
+	float y = (bottom + top) / 2;
 
-	Draw(cx, cy, 1, bbox, 0, 0, 0, 0, width, height, D3DXCOLOR(1.0f, 1.0f, 0.0f, 0.5f));
-}
+	Draw(x, top, 1, bbox, 0, 0, 1, 1, width, 1.0f);
 
+	Draw(x, bottom, 1, bbox, 0, 0, 1, 1, width, 1.0f);
 
-void CGame::LoadScene(int id, int mapId, LPCWSTR mapFile, LPCWSTR objFile)
-{
-	if (id < 0 || id >= MAX_SCENE) return;
+	Draw(left, y, 1, bbox, 0, 0, 1, 1, 1.0f, height);
 
-	if (scenes[id])		//delete old scene
-	{
-		scenes[id]->~CPlayScene();
-		delete scenes[id];
-		scenes[id] = nullptr;
-	}
-
-	scenes[id] = new CPlayScene(id, mapId, mapFile, objFile);
-}
-
-void CGame::ChangeScene(int id)
-{
-	if (id < 0 || id >= MAX_SCENE) return;
-	currentSceneId = id;
+	Draw(right, y, 1, bbox, 0, 0, 1, 1, 1.0f, height);
 }
 
 
@@ -503,14 +421,14 @@ void CGame::ProcessKeyboard()
 
 void _ParseSection_TEXTURES(LPCWSTR filepath)
 {
-	//DebugOut(L"[INFO] Load texture %d from file %s\n", 123, filepath);
+	DebugOut(L"[INFO] Load texture %d from file %s\n", 123, filepath);
 	ifstream f;
 	f.open(filepath);
 	char str[MAX_TXT_LINE];
 	while (f.getline(str, MAX_TXT_LINE))
 	{
 		string line(str);
-		//DebugOut(L"[INFO] Load texture %d from file %s\n", 123, line);
+		DebugOut(L"[INFO] Load texture %d from file %s\n", 123, line);
 		if (line[0] == '#') continue;
 		if (line.empty()) continue;
 
@@ -553,11 +471,11 @@ void _ParseSection_SPRITES(LPCWSTR filepath)
 
 		if (tex == NULL)
 		{
-			//DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+			DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
 			return;
 		}
 
-		//DebugOut(L"[ERROR] Texture ID: 123 + %d!\n", texID);
+		DebugOut(L"[ERROR] Texture ID: 123 + %d!\n", texID);
 		CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 	}
 	f.close();
@@ -586,7 +504,7 @@ void _ParseSection_ANIMATIONS(LPCWSTR filepath)
 			int sprite_id = atoi(tokens[i].c_str());
 			int frame_time = atoi(tokens[i + 1].c_str());
 			ani->Add(sprite_id, frame_time);
-			//DebugOut(L"[ERROR] Texture ID %d found!\n", sprite_id);
+			DebugOut(L"[ERROR] Texture ID %d found!\n", sprite_id);
 		}
 		CAnimations::GetInstance()->Add(ani_id, ani);
 	}
@@ -630,9 +548,9 @@ void _ParseSection_ANIMATION_SETS(LPCWSTR filepath)
 void CGame::LoadResources()
 {
 
-	for(int i = 1; i <= 4; i++)
+	for (int i = 1; i <= 4; i++)
 	{
-		switch(i)
+		switch (i)
 		{
 		case LOAD_RESOURCE_TEXTURES: _ParseSection_TEXTURES(TEXTURES_PATH); break;
 		case LOAD_RESOURCE_SPRITES: _ParseSection_SPRITES(SPRITES_PATH); break;

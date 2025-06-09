@@ -36,7 +36,10 @@ void CEnemy::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CEnemy::TriggerNormalEffect(int duration)
 {
-	CPlayScene* currentscene = CGame::GetInstance()->GetCurrentScene();
-	CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
-	currentscene->AddEffect(static_cast<CGameEffect*>(deadEffect));
+	CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+	if (currentPlayScene)
+	{
+		CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
+		currentPlayScene->AddEffect(static_cast<CGameEffect*>(deadEffect));
+	}
 }

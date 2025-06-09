@@ -4,11 +4,12 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "GameDefine.h"
+#include "Item.h"
 
 #define SMALL_HEART_WIDTH 8
 #define SMALL_HEART_HEIGHT 8
 
-#define ANI_ID_SMALLHEART 0
+#define ID_ANI_SMALLHEART 0
 
 #define SMALLHEART_HEART_VALUE 1
 
@@ -19,68 +20,19 @@
 
 #define SMALLHEART_SWING_SPEED 0.75f
 
-class CSmallHeart : public CGameObject
+class CSmallHeart : public CItem
 {
 protected:
-    float heartValue;
-    float ay;
+    int heartValue;
     DWORD lastSwingTime;
 public:
-    CSmallHeart()
-    {
-        vx = SMALLHEART_SWING_SPEED;
-        vy = 0.0f;
-        ay = HEART_GRAVITY;
-        heartValue = SMALLHEART_HEART_VALUE;
-        lastSwingTime = GetTickCount64();
+    CSmallHeart();
 
-        SetSize(SMALL_HEART_WIDTH, SMALL_HEART_HEIGHT);
-        animation_set = CAnimationSets::GetInstance()->Get(SMALLHEART_ANI_SET_ID);
-    }
+    int getHeartValue();
 
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-    {
-        DWORD now = GetTickCount64();
-        if (now - lastSwingTime > SMALLHEART_SWING_TIME)
-        {
-            nx = nx * (-1);
-            lastSwingTime = now;
-        }
-        vx = SMALLHEART_SWING_SPEED * nx;
-        vy += ay * dt;
-        if (vy < HEART_MAX_FALLSPEED)
-            vy = HEART_MAX_FALLSPEED;
-        CCollision::GetInstance()->Process(this, dt, coObjects);
-    }
+    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 
-    void Render()
-    {
-        animation_set->at(ANI_ID_SMALLHEART)->Render(x, y, nx, width, height);
-    }
+    void OnNoCollision(DWORD dt);
 
-    virtual void GetBoundingBox(float& l, float& t, float& r, float& b)
-    {
-        l = x - width / 4;
-        t = y + height / 2;
-        r = x + width / 4;
-        b = y - height / 2;
-    }
-
-    virtual int IsBlocking() { return 0; }
-    virtual int IsOverlappable() { return 1; }
-    virtual int IsCollidable() { return 1; };
-
-    void CSmallHeart::OnNoCollision(DWORD dt)
-    {
-        x += vx * dt;
-        y += vy * dt;
-    }
-
-    void CSmallHeart::OnCollisionWith(LPCOLLISIONEVENT e)
-    {
-        if (e->ny > 0 && e->obj->IsBlocking())
-        {
-            this->SetSpeed(0.0f, 0.0f);
-        }
-    }
+    void OnCollisionWith(LPCOLLISIONEVENT e);
 };

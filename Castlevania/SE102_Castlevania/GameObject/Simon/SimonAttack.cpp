@@ -6,7 +6,7 @@
 #include "HolyWaterBottle.h"
 #include "Dagger.h"
 
-#define SIMON_ATTACK_WIDTH 16
+#define SIMON_ATTACK_WIDTH 30
 #define SIMON_ATTACK_HEIGHT 32
 
 CSimonAttack::CSimonAttack(CSimon* simon, int weaponType) : CSimonState(simon)
@@ -24,18 +24,21 @@ CSimonAttack::CSimonAttack(CSimon* simon, int weaponType) : CSimonState(simon)
         y += simon->GetHeight() / 3;
         switch (simon->GetCurrentSubType())
         {
-        case DAGGER_TYPE:
+        case DAGGER:    
             subWeapon = new CDagger(x, y, simon->GetDirectionX());
             break;
-        case AXE_TYPE:
+        case AXE:
             subWeapon = new CAxe(x, y, simon->GetDirectionX());
             break;
-        case HOLYWATERBOTTLE_TYPE:
+        case HOLYWATERBOTTLE:
             subWeapon = new CHolyWaterBottle(x, y, simon->GetDirectionX());
             break;
         }
-        simon->AddSubWeapon(subWeapon);
-        simon->spendHeart(subWeapon->GetHeartCost());
+        if (subWeapon)
+        {
+            simon->AddSubWeapon(subWeapon);
+            simon->spendHeart(subWeapon->GetHeartCost());
+        }
     }
     else
     {
@@ -57,6 +60,7 @@ void CSimonAttack::KeyUpHandle(int keyCode) {}
 
 void CSimonAttack::Update(DWORD dt)
 {
+
     if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
     {        
         CWeapon* currentWeapon = simon->GetCurrentWeapon();

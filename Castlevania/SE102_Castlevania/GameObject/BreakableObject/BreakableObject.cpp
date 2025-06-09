@@ -18,7 +18,9 @@ void CBreakableObject::Update(DWORD dt, vector<CGameObject*>* coObjects)
 			if (dropObj != nullptr)
 			{
 				dropObj->SetPosition(this->x, this->y);
-				CGame::GetInstance()->GetCurrentScene()->AddObject(dropObj);
+				CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+				if (currentPlayScene)
+					currentPlayScene->AddObject(dropObj);
 			}
 		}
 		this->Delete();	
@@ -41,9 +43,12 @@ void CBreakableObject::SetItemDrop(int itemid)
 
 void CBreakableObject::TriggerDestroyedEffect(int duration)
 {
-	CPlayScene* currentscene = CGame::GetInstance()->GetCurrentScene();
-	CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
-	currentscene->AddEffect(static_cast<CGameEffect*>(deadEffect));
+	CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+	if (currentPlayScene)
+	{
+		CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
+		currentPlayScene->AddEffect(static_cast<CGameEffect*>(deadEffect));
+	}
 }
 
 int CBreakableObject::isInDestroyed()

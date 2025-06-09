@@ -1,13 +1,17 @@
 #include "Whip.h"
 #include "Simon.h"
 #include "BreakableObject.h"
+#include "SimonSitAttack.h"
 
 CWhip::CWhip(CSimon* simon)
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(WHIP_ANI_SET_ID));
-	this->SetState(WHIP_STATE_ATTACK);
+
 	owner = simon;
 	damage = 1;
+	
+	int lv = owner->getWhipLevel();
+	this->SetWhipLevel(lv);
 }
 
 void CWhip::Update(DWORD dt, vector<CGameObject*>* coObjects)
@@ -24,30 +28,22 @@ void CWhip::UpdateSize(int currentFrameIndex)
 {
 	if (currentFrameIndex >= 0 && currentFrameIndex < 3) 
 	{
-		width = whipFrameWidths[currentFrameIndex];
-		height = whipFrameHeights[currentFrameIndex];
+		width = whipFrameSize[level - 1][currentFrameIndex].frameWidth;
+		height = whipFrameSize[level - 1][currentFrameIndex].frameHeight;
 	}
 }
 
 void CWhip::UpdatePostition(int currentFrameIndex)
 {
 	float x, y;
-	int owner_dirx;
+	int owner_dirx, simonState;
 	owner->GetPosition(x, y);
 	owner_dirx = owner->GetDirectionX();
-
-	switch (currentFrameIndex)
-	{
-	case 0:
-		this->SetPosition(x - width * owner_dirx, y - 4);
-		break;
-	case 1:
-		this->SetPosition(x - (width - 5) * owner_dirx, y + 3);
-		break;
-	case 2:
-		this->SetPosition(x + (width - 5) * owner_dirx, y + 7);
-		break;
-	}
+	if(dynamic_cast<CSimonSitAttack*>(owner->GetSimonState()))
+		simonState = SITTING;
+	else simonState = STANDING;
+	this->SetPosition(x - whipOffset[level - 1][simonState][currentFrameIndex].whipoffsetX * owner_dirx,
+					  y - whipOffset[level - 1][simonState][currentFrameIndex].whipoffsetY);
 }
 void CWhip::OnCollisionWith(LPCOLLISIONEVENT e)
 {
@@ -72,8 +68,30 @@ void CWhip::OnCollisionWith(LPCOLLISIONEVENT e)
 void CWhip::Render()
 {
 	int nx = owner->GetDirectionX();
-	animation_set->at(ANI_ID_WHIP_ATTACK)->Render(x, y, nx, width, height);
+	animation_set->at(ani_id)->Render(x, y, nx, width, height);
 	this->RenderBoundingBox();
+}
+
+void CWhip::SetWhipLevel(int level)
+{
+	this->level = level;
+	switch (level)
+	{
+	case 1:
+		state = WHIP_STATE_LV1;
+		ani_id = ANI_ID_WHIP_LV1;
+		break;
+	case 2:
+		state = WHIP_STATE_LV2;
+		ani_id = ANI_ID_WHIP_LV2;
+		break;
+	case 3:
+		state = WHIP_STATE_LV3;
+		ani_id = ANI_ID_WHIP_LV3;
+		break;
+	default:
+		ani_id = ANI_ID_WHIP_LV1;
+	}
 }
 
 int CWhip::IsCollidable()

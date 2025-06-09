@@ -1,9 +1,8 @@
+#list potision simon can entry to map
+
+ENTRY 648 48
+
 #object_id object_type x y extra_setting...
-#object info and detail object type below
-
-#Simon, x y is start position when swich scene
-
-0 0 48 47
 
 #Torch, extra setting: item's objectid drop when hit
 
@@ -21,9 +20,10 @@
 
 6 2 384 23 768 16
 
-#Portal, extra setting: width, height, scene will be changed to
+#Portal, extra setting: width, height, scene will be changed to, entry id postition when change
 
-7 5 0 0 16 24 2
+7 5 692 36 24 8 2 0
 
-#TriggerZone
-8 17 100 48 50 32 9 80 0 1000
+#TriggerZone, extra setting: width, height, obj id spawn when trigger, spawnX, spawnY, extra setting for obj spawn
+
+8 17 732 32 36 24 9 572 24 1000

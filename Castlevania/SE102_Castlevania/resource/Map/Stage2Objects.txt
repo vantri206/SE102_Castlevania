@@ -1,7 +1,8 @@
-#object_id object_type x y extra_setting for each objects...
+#list potision simon entry to map
 
-#Simon, x y is start position when swich scene
-1 0 18 55
+ENTRY 1000 48
+
+#object_id object_type x y extra_setting...
 
 #Candle, extra setting: item's objectid drop when hit
 2 6 32 56 
@@ -52,11 +53,11 @@
 
 #Ghoul, extra setting: direction when start
 
-24 7 172 48 -1
+24 7 252 48 -1
 
-25 7 204 48 -1
+25 7 284 48 -1
 
-26 7 236 48 -1
+26 7 316 48 -1
 
 27 7 1200 48 -1
 
@@ -82,19 +83,19 @@
 
 36 10 624 36 1 1
 
-37 10 684 100 -1 -1
+37 10 688 100 -1 -1
 
 38 10 720 100 1 1
 
-39 10 748 132 -1 -1
+39 10 752 132 -1 -1
 
-40 10 908 132 -1 1
+40 10 912 132 -1 1
 
 41 10 944 100 1 -1
 
 42 10 1296 36 1 1
 
-43 10 1388 132 -1 -1
+43 10 1392 132 -1 -1
 
 #Panther, extra setting: direction when start
 
@@ -103,3 +104,10 @@
 45 8 892 136 -1
 
 46 8 956 104 -1
+
+#Breakable brick, extra setting: type brick, item drop when break
+
+47 18 1016 88 1 9 400
+
+#Portal, extra setting: width, height, scene will be changed to, entry id postition when change
+48 5 153 36 24 8 3 0

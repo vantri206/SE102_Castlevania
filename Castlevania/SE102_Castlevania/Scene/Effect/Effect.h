@@ -2,6 +2,8 @@
 
 #include "GameDefine.h"
 #include "GameObject.h"
+#include "debug.h"
+#include <Camera.h>
 
 class CGameEffect 
 {
@@ -10,22 +12,19 @@ protected:
     float width, height;
     DWORD startTime, effectDuration;
     bool isFinished;
+    CAnimationSet animations;
+    LPANIMATION_SET animation_set;
 public:
-    CGameEffect(float x, float y, DWORD duration)
-    {
-        width = height = 0;
-        this->x = x;
-        this->y = y;
-        startTime = GetTickCount64();
-        this->effectDuration = duration;
-        this->isFinished = false;
-    }
+    CGameEffect() {}
     virtual ~CGameEffect() {}
 
     virtual void Update(DWORD dt)
     {
-        if (!isFinished && GetTickCount64() - startTime >= effectDuration)
+        RECT cam = CCamera::GetInstance()->GetCamRect();
+        if(!(this->x >= cam.left && this->x <= cam.right && this->y <= cam.bottom && this->y >= cam.top))
+        {
             isFinished = true;
+        }
     }
     virtual void Render() = 0;
 

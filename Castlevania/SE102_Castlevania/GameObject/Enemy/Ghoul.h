@@ -6,7 +6,7 @@
 #include "GameDefine.h"
 #include "debug.h"
 
-#define GHOUL_WALKING_SPEED	0.075f
+#define GHOUL_WALKING_SPEED	0.025f
 
 #define GHOUL_STATE_IDLE	0
 #define GHOUL_STATE_WALK	1

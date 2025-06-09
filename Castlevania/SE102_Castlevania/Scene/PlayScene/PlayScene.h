@@ -3,43 +3,43 @@
 #include <vector>
 #include <Windows.h>
 #include "Map.h"
+#include "Scene.h"
 #include <unordered_set>
 
-class CSimon;
 class CGameObject;
 class CGameEffect;
 class QuadTree;
-class CPlayScene
+class CSimon;
+
+struct sceneEntry
+{
+	float entryX, entryY;
+};
+
+class CPlayScene : public CScene
 {
 protected:
-	int SceneId;
 
-	LPCWSTR objectFile;
+	wstring objectFile;
 
 	CMap* SceneBG;
+	int mapId;
+	wstring mapFile;
 
-	std::unordered_set<CGameObject*> hiddenObj;
+	std::unordered_set<CGameObject*> hiddenObjects;
 	QuadTree* quadtree = nullptr;
-	CSimon* player = nullptr;
 	vector<CGameEffect*> effects;
 
+	vector<sceneEntry*> SceneEntryList;
+	int currentEntry;
+
+	CSimon* player;
 public:
-	CPlayScene(int Id, int mapId, LPCWSTR mapFile, LPCWSTR objectFile)
-	{
-		this->SceneId = Id;
+	CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile);
+	
+	void LoadResources();
+	void UnloadResources();
 
-		this->objectFile = objectFile;
-
-		this->SceneBG = new CMap(mapId, mapFile);
-		
-		this->LoadPlayer();
-
-		this->LoadScene();
-
-	}
-
-	void LoadPlayer();
-	void LoadScene();
 	void Update(DWORD dt);
 	void Render();
 
@@ -48,10 +48,15 @@ public:
 
 	void AddObject(CGameObject* obj);
 	void AddHiddenObject(CGameObject* obj);
-	void ClearObject();
+	void ClearObjects();
 
 	void AddEffect(CGameEffect* effect);
 	void ClearEffects();
 
-	CSimon* GetPlayer();
+	void SetPlayer(CSimon* player) { this->player = player; }
+	void SetCurrentEntry(int entry) { currentEntry = entry; }
+
+	CMap* GetSceneMap() { return SceneBG; }
+	wstring GetObjectFile() { return objectFile; }
+	~CPlayScene();
 };

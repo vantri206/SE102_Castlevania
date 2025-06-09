@@ -39,6 +39,8 @@ protected:
 public:
 	CMap(int mapId, LPCWSTR mapFile);
 
+	int GetMapId() { return mapId; }
+	LPCWSTR GetMapFile() { return mapFile; }
 	void SplitLayer();
 
 	void RenderBackground();

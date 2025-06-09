@@ -12,8 +12,9 @@
 #include "SimonHurt.h"
 #include "MorningStar.h"
 #include "TriggerZone.h"
+#include <Portal.h>
 
-#define SIMON_WALKING_WIDTH 16
+#define SIMON_WALKING_WIDTH 15
 #define SIMON_WALKING_HEIGHT 32
 
 CSimonWalking::CSimonWalking(CSimon* simon) : CSimonState(simon)
@@ -38,7 +39,7 @@ void CSimonWalking::KeyUpHandle(int keyCode)
 
 void CSimonWalking::KeyDownHandle(int keyCode)
 {
-	if (keyCode == DIK_D)
+	if (keyCode == DIK_S)
 	{
 		simon->SetState(new CSimonJump(simon));
 	}
@@ -61,16 +62,22 @@ void CSimonWalking::OnCollisionWith(LPCOLLISIONEVENT e)
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		simon->OnCollisionWithEnemy(enemy);
 	}
-	if (dynamic_cast<CMorningStar*>(e->obj))
+	else if (dynamic_cast<CItem*>(e->obj))
 	{
-		simon->SetState(new CSimonPowerUp(simon));
-		e->obj->Delete();
+		CItem* item = dynamic_cast<CItem*>(e->obj);
+		simon->OnCollisionWithItem(item);
 	}
-	if (dynamic_cast<CTriggerZone*>(e->obj))
+	else if (dynamic_cast<CTriggerZone*>(e->obj))
 	{
-		dynamic_cast<CTriggerZone*>(e->obj)->Trigger();
+		CTriggerZone* triggerzone = dynamic_cast<CTriggerZone*>(e->obj);
+		triggerzone->Trigger();
 	}
-	if (e->ny > 0 && e->obj->IsBlocking())
+	else if (dynamic_cast<CPortal*>(e->obj))
+	{
+		CPortal* portal = dynamic_cast<CPortal*>(e->obj);
+		portal->ChangeScene();
+	}
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

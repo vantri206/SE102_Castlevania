@@ -226,7 +226,9 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 {
 	for (UINT i = 0; i < objDests->size(); i++)
 	{
-		if (!objSrc->CanCollisionWithObj(objDests->at(i))) continue;
+		LPGAMEOBJECT objDest = objDests->at(i);
+		if (objDest == objSrc) continue; 
+		if (!objSrc->CanCollisionWithObj(objDest)) continue;
 		LPCOLLISIONEVENT e = nullptr;
 		e = SweptAABB(objSrc, dt, objDests->at(i));
 		if (!e)		//no dynamic collsion
@@ -235,7 +237,10 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 		if (e && e->WasCollided() == 1)
 			coEvents.push_back(e);
 		else
+		{
 			delete e;
+			e = nullptr;
+		}
 	}
 }
 
@@ -257,6 +262,7 @@ void CCollision::Filter(LPGAMEOBJECT objSrc,
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
+		if (!c) continue;
 		if (c->isDeleted) continue;
 		if (c->obj->IsDeleted()) continue;
 
@@ -295,7 +301,6 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	{
 		Scan(objSrc, dt, coObjects, coEvents);
 	}
-
 	// No collision detected
 	if (coEvents.size() == 0)
 	{
@@ -405,6 +410,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEvents[i];
+		if (!e) continue;
 		if (e->isDeleted) continue;
 		if (e->obj->IsBlocking()) continue; 
 		e->src_obj->OnCollisionWith(e);

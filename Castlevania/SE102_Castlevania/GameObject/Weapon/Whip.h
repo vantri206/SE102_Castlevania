@@ -10,17 +10,59 @@
 #include "Weapon.h"
 #include <unordered_set>
 
-#define WHIP_STATE_ATTACK 0
+#define WHIP_STATE_LV1 0
+#define WHIP_STATE_LV2 1
+#define WHIP_STATE_LV3 2
 
-#define ANI_ID_WHIP_ATTACK 0
+#define ANI_ID_WHIP_LV1 0
+#define ANI_ID_WHIP_LV2 1
+#define ANI_ID_WHIP_LV3 2
 
-const int whipFrameWidths[] = { 8, 16, 23 };
-const int whipFrameHeights[] = { 24, 19, 8 };
+struct WhipOffset
+{
+    int whipoffsetX, whipoffsetY;
+};
 
+struct WhipFrameSize
+{
+    int frameWidth, frameHeight;
+};
+
+const WhipFrameSize whipFrameSize[3][3] =			//x is level (1, 2, 3), y is frame index
+{
+
+    { { 8, 24 }, { 16, 20 }, { 24, 8 } },
+
+    { { 8, 24 }, { 16, 20 }, { 24, 6 } },
+
+    { { 8, 22 }, { 16, 20 }, { 40, 6 } },
+};
+
+const WhipOffset whipOffset[3][2][3] =			//x is level (1, 2, 3), y is simon state (0: standing, 1: sitting), z is frame index
+{
+    {
+        { {17, 3}, {10, 2}, {-24, -4} },              
+
+        { {17, 7}, {10, 1}, {-24, -1} }
+    },
+
+    {
+        { {17, 3}, {10, 2}, {-24, -4} },
+
+        { {17, 7}, {10, 1}, {-24, -1} }
+    },
+
+    {
+        { {17, 3}, {10, 2}, {-32, -4} },
+
+        { {17, 7}, {10, 1}, {-32, -1} }
+    }
+};
 
 class CWhip : public CWeapon
 {
 protected:
+    int level;
 	CSimon* owner;
 	std::unordered_set<CEnemy*> enemiesTarget;
 public:
@@ -34,6 +76,8 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void Render();
+
+    void SetWhipLevel(int level);
 
 	void SetState(int state) {}
 

@@ -9,7 +9,7 @@
 #include "SimonStairUpIdle.h"
 
 #define SIMON_STAIR_UP_WIDTH 16
-#define SIMON_STAIR_UP_HEIGHT 30
+#define SIMON_STAIR_UP_HEIGHT 32
 
 CSimonStairUpIdle::CSimonStairUpIdle(CSimon* simon) : CSimonState(simon)
 {
@@ -58,6 +58,7 @@ void CSimonStairUpIdle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
     {
-        //simon->SetState(new CSimonHurt());
+        CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+        simon->OnCollisionWithEnemyOnStair(enemy);
     }
 }
