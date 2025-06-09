@@ -220,9 +220,6 @@
     <ClCompile Include="GameObject\Item\SmallHeart.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp">
-      <Filter>GameObject\WorldObject</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene\SceneManager</Filter>
     </ClCompile>
@@ -232,6 +229,10 @@
     </ClCompile>
     <ClCompile Include="SimonDie.cpp">
       <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerZone.cpp" />
+    <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp">
+      <Filter>GameObject\WorldObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -436,5 +437,6 @@
     <ClInclude Include="SimonDie.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
+    <ClInclude Include="SimonSitAttack.h" />
   </ItemGroup>
 </Project>

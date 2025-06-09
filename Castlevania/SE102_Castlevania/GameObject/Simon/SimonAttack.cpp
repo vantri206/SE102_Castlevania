@@ -2,6 +2,9 @@
 #include "SimonAttack.h"
 #include "SimonIdle.h"
 #include "Whip.h"
+#include "Dagger.h"
+#include "Axe.h"
+#include "HolyWaterBottle.h"
 
 #define SIMON_ATTACK_WIDTH 30
 #define SIMON_ATTACK_HEIGHT 32
@@ -51,16 +54,16 @@ CSimonAttack::~CSimonAttack()
 
 }
 
-void CSimonAttack::KeyDownHandle(CSimon* simon, int keyCode) {}
-void CSimonAttack::KeyUpHandle(CSimon* simon, int keyCode) {}
+void CSimonAttack::KeyDownHandle(int keyCode) {}
+void CSimonAttack::KeyUpHandle(int keyCode) {}
 
-void CSimonAttack::Update(CSimon* simon, DWORD dt)
+void CSimonAttack::Update(DWORD dt)
 {
 
     if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
     {
         CWeapon* currentWeapon = nullptr;
-        simon->GetCurrentWeapon(currentWeapon);
+        currentWeapon = simon->GetCurrentWeapon();
         currentWeapon->Delete();
         delete currentWeapon;
         simon->SetCurrentWeapon(nullptr);
@@ -70,11 +73,11 @@ void CSimonAttack::Update(CSimon* simon, DWORD dt)
     }
 }
 
-void CSimonAttack::OnNoCollision(CSimon* simon, DWORD dt)
+void CSimonAttack::OnNoCollision(DWORD dt)
 {
 }
 
-void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
+void CSimonAttack::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
     {
@@ -83,9 +86,9 @@ void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
     }
 }
 
-void CSimonAttack::Render(CSimon* simon)
+void CSimonAttack::Render()
 {
     CWeapon* currentWeapon;
-    simon->GetCurrentWeapon(currentWeapon);
+    currentWeapon = simon->GetCurrentWeapon();
     if (currentWeapon != nullptr) currentWeapon->Render();
 }
