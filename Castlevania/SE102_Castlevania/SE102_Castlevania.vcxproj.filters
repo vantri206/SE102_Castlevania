@@ -226,6 +226,10 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene\SceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="BreakableBrick.cpp" />
+    <ClCompile Include="Wall.cpp">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine\Animation.h">
@@ -419,6 +423,11 @@
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Scene\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakableBrick.h" />
+    <ClInclude Include="BrickEffect.h" />
+    <ClInclude Include="Wall.h">
+      <Filter>GameObject\WorldObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

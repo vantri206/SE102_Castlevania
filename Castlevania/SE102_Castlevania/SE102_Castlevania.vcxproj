@@ -79,6 +79,7 @@
     <ClCompile Include="Scene\TileMap\Tile.cpp" />
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BreakableBrick.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Scene\TileMap\Tile.h" />
     <ClInclude Include="Utils\debug.h" />
     <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
