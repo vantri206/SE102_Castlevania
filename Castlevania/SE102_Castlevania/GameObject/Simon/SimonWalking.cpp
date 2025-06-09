@@ -42,6 +42,18 @@ void CSimonWalking::KeyDownHandle(int keyCode)
 	{
 		simon->SetState(new CSimonJump(simon));
 	}
+
+	if (keyCode == DIK_A)
+	{
+		simon->SetAx(0.0f);
+		simon->SetVx(0.0f);
+		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
+		{
+			if (simon->CanUseSubWeapon())
+				simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
+		}
+		else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
+	}
 }
 
 void CSimonWalking::Update(DWORD dt)

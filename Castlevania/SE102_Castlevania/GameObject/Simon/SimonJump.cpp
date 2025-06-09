@@ -5,6 +5,7 @@
 #include "Simon.h"
 #include "SimonFalling.h"
 #include "SimonHurt.h"
+#include "SimonAttack.h"
 
 #define SIMON_FALLING_WIDTH 16
 #define SIMON_FALLING_HEIGHT 24
@@ -18,7 +19,17 @@ CSimonJump::CSimonJump(CSimon* simon) : CSimonState(simon)
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
 	simon->SetSize(SIMON_FALLING_WIDTH, SIMON_FALLING_HEIGHT);
 }
-void CSimonJump::KeyDownHandle(int keyCode) {}
+void CSimonJump::KeyDownHandle(int keyCode) {
+	if (keyCode == DIK_A)
+	{
+		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
+		{
+			if (simon->CanUseSubWeapon())
+				simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
+		}
+		else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
+	}
+}
 void CSimonJump::KeyUpHandle(int keyCode)
 {
     if ((keyCode == DIK_RIGHT && simon->GetDirectionX() > 0) || (keyCode == DIK_LEFT && simon->GetDirectionX() < 0))

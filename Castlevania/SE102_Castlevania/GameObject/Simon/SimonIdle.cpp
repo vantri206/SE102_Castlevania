@@ -13,6 +13,9 @@
 #include "SimonStairUpIdle.h"
 #include "SimonStairDownIdle.h"
 #include "SimonAutoWalking.h"
+#include "MorningStar.h"
+#include "SimonPowerUp.h"
+#include "SimonDie.h"
 
 #define SIMON_IDLE_WIDTH 16
 #define SIMON_IDLE_HEIGHT 32
@@ -85,11 +88,17 @@ void CSimonIdle::KeyDownHandle(int keyCode)
             simon->SetState(new CSimonAutoWalking(simon, stairX, stairY, stairDirection, SIMON_STATE_WALKING_DOWN));
         }
     }
+    else if (keyCode == DIK_G) {
+		simon->SetState(new CSimonDie(simon));
+    }
+
 } 
 
 void CSimonIdle::Update(DWORD dt)
 {
-
+    float x, y;
+    simon->GetSpeed(x, y);
+    if (y < 0) simon->SetState(new CSimonFalling(simon));
 }
 
 void CSimonIdle::OnNoCollision(DWORD dt)
@@ -105,6 +114,11 @@ void CSimonIdle::OnCollisionWith(LPCOLLISIONEVENT e)
         CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
         simon->OnCollisionWithEnemy(enemy);
 	}
+    else if (dynamic_cast<CMorningStar*>(e->obj))
+    {
+        simon->SetState(new CSimonPowerUp(simon));
+        e->obj->Delete();
+    }
 	else if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);

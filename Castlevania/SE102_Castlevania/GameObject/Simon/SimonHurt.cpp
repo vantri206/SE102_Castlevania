@@ -21,7 +21,7 @@ void CSimonHurt::Update(DWORD dt)
 {
 	DWORD now = GetTickCount64();
 	if (now - startHurtTime > SIMON_HURT_TIME)
-		simon->SetState(new CSimonSit(simon));
+		simon->SetState(new CSimonIdle(simon));
 }
 void CSimonHurt::OnNoCollision(DWORD dt)
 {

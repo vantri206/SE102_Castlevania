@@ -593,6 +593,7 @@ void _ParseSection_ANIMATIONS(LPCWSTR filepath)
 	f.close();
 }
 
+
 void _ParseSection_ANIMATION_SETS(LPCWSTR filepath)
 {
 	ifstream f;
