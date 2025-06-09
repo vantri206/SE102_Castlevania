@@ -17,4 +17,3 @@ public:
 };
 
 typedef CAnimationFrame* LPANIMATION_FRAME;
-

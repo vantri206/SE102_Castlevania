@@ -13,7 +13,10 @@
 #include "SimonStairUpIdle.h"
 #include "SimonStairDownIdle.h"
 #include "SimonAutoWalking.h"
-#include <Item.h>
+#include "Item.h"
+#include "MorningStar.h"
+#include "SimonPowerUp.h"
+#include "SimonDie.h"
 
 #define SIMON_IDLE_WIDTH 15
 #define SIMON_IDLE_HEIGHT 32
@@ -87,6 +90,10 @@ void CSimonIdle::KeyDownHandle(int keyCode)
         simon->SetPosition(simon->GetX(), simon->GetY() - 4.0f);
         simon->SetState(new CSimonSit(simon));
     }
+    else if (keyCode == DIK_G) {
+		simon->SetState(new CSimonDie(simon));
+    }
+
 } 
 
 void CSimonIdle::Update(DWORD dt)

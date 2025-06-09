@@ -19,11 +19,15 @@ CSimonJump::CSimonJump(CSimon* simon) : CSimonState(simon)
 	simon->SetAniId(ID_ANI_SIMON_JUMP);
 	simon->SetSize(SIMON_FALLING_WIDTH, SIMON_FALLING_HEIGHT);
 }
-void CSimonJump::KeyDownHandle(int keyCode)
-{
+void CSimonJump::KeyDownHandle(int keyCode) {
 	if (keyCode == DIK_A)
 	{
-		simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
+		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
+		{
+			if (simon->CanUseSubWeapon())
+				simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
+		}
+		else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
 	}
 }
 void CSimonJump::KeyUpHandle(int keyCode)
