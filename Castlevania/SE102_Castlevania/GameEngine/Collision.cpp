@@ -54,9 +54,9 @@ void CCollision::Overlap(
 	else						//overlap theo y
 	{
 		if (dy > 0)
-			ny = -1.0f;  // obj1 below obj2
+			ny = 1.0f;  // obj1 below obj2
 		else if (dy < 0)
-			ny = 1.0f;   // obj1 on top obj2
+			ny = -1.0f;   // obj1 on top obj2
 	}
 }
 

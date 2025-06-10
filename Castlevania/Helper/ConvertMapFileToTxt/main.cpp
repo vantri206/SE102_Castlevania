@@ -7,8 +7,8 @@
 using json = nlohmann::json;
 using namespace std;
 
-#define MAP_FILE L"../Stage2Objects.json"
-#define OBJECTS_FILE L"../Stage2Objects.txt"
+#define MAP_FILE L"D:/UIT/SE102-NMPTG/Tool/Stage4Objects.json"
+#define OBJECTS_FILE L"D:/UIT/SE102-NMPTG/Stage4Objects.txt"
 
 #define MAP_HEIGHT 192
 
@@ -32,7 +32,10 @@ enum OBJECT_TYPE
     SUBWEAPONITEM = 15,
     SMALLHEART = 16,
     TRIGGERZONE = 17,
-    BREAKABLEBRICK = 18
+    BREAKABLEBRICK = 18,
+    WALL = 19,
+    BAT = 20,
+    WATERDEATHZONE = 21,
 };
 
 string GetObjectDetail(int objectType)
@@ -117,7 +120,7 @@ int main()
         return 1;
     }
 
-    outputFile << "#object_id object_type x y width height extra_setting...\n";
+    outputFile << "#object_id object_type x y extra_setting...\n";
 
     for (const auto& it : groupedObjects)
     {
@@ -131,9 +134,11 @@ int main()
             outputFile << obj.id << " "
                 << obj.objectType << " "
                 << obj.x << " "
-                << obj.y << " "
-                << obj.width << " "
-                << obj.height;
+                << obj.y;
+            if (obj.objectType == BRICK || obj.objectType == WALL || obj.objectType == TRIGGERZONE || obj.objectType == WATERDEATHZONE || obj.objectType == PORTAL)
+            {
+                outputFile<< " " <<obj.width << " " << obj.height;
+            }
 
             for (int param : obj.otherParams)
                 outputFile << " " << param;

@@ -62,7 +62,8 @@ enum OBJECT_TYPE
 	TRIGGERZONE = 17,
 	BREAKABLEBRICK = 18,
 	WALL = 19,
-	BAT = 20
+	BAT = 20,
+	WATERDEATHZONE = 21,
 };
 
 /*---- Animation Set ----*/

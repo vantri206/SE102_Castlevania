@@ -1,6 +1,7 @@
 #list potision simon can entry to map
 
 ENTRY 48 144
+ENTRY 48 24
 ENTRY 368 48
 
 #object_id object_type x y extra_setting...
@@ -33,12 +34,20 @@ ENTRY 368 48
 
 #Bat, extra setting: direction
 
-10 20 344 56 -1
+12 20 344 56 -1
 
-11 20 80 72 1
+13 20 80 72 1
 
 #Breakable brick, extra setting: type brick, item drop when break
 
-47 18 264 56 2 4
+14 18 264 56 2 4
 
-47 18 264 40 2 4
+15 18 264 40 2 4
+
+#Stair, extra setting: up or down (1: up, -1: down), left or right(1: right, -1: left)
+
+16 10 48 36 -1 1
+
+#Portal, extra setting: width, height, scene will be changed to, entry id postition when change
+
+18 5 80 8 16 16 4 0

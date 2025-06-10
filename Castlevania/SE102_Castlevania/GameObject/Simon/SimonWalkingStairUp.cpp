@@ -2,6 +2,7 @@
 #include "SimonStairUpIdle.h"
 #include "Simon.h"
 #include "Stair.h"
+#include <Portal.h>
 
 CSimonWalkingStairUp::CSimonWalkingStairUp(CSimon* simon) : CSimonState(simon)
 {
@@ -21,12 +22,12 @@ void CSimonWalkingStairUp::KeyUpHandle(int keyCode)
 }
 void CSimonWalkingStairUp::Update(DWORD dt)
 {
-	if (simon->GetNearbyStair() != nullptr)
+	CStair* stair = simon->GetNearbyStair();
+	if (stair)
 	{
 		float l, t, r, b;
 		float sl, st, sr, sb;
 		simon->GetBoundingBox(l, t, r, b);
-		CStair* stair = simon->GetNearbyStair();
 		if (b >= stair->GetY() && stair->GetStairDirection() == DOWN_STAIR_DIRECTION)
 		{
 			simon->SetOnStair(false);
@@ -44,5 +45,10 @@ void CSimonWalkingStairUp::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		simon->OnCollisionWithEnemyOnStair(enemy);
+	}
+	else if (dynamic_cast<CPortal*>(e->obj))
+	{
+		CPortal* portal = dynamic_cast<CPortal*>(e->obj);
+		portal->ChangeScene();
 	}
 }

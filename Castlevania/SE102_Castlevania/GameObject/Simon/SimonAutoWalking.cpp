@@ -27,7 +27,6 @@ void CSimonAutoWalking::Update(DWORD dt)
 	{
 		simon->SetSpeed(0.0f, 0.0f);
 		simon->SetPosition(targetX, simon->GetY());
-		simon->SetDirectionX(targetX); 
 		simon->SetDirectionX(finishedDirection);
 		ChangeState();
 	}

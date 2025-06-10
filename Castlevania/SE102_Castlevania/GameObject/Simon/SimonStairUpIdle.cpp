@@ -10,8 +10,7 @@
 CSimonStairUpIdle::CSimonStairUpIdle(CSimon* simon) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_UP_IDLE);
-    simon->SetAccel(0.0f, 0.0f);
-    simon->SetSpeed(0.0f, 0.0f);
+    simon->SetPhysical(0.0f, 0.0f, 0.0f, 0.0f);
     simon->SetSize(SIMON_STAIR_UP_WIDTH, SIMON_STAIR_UP_HEIGHT);
     simon->SetOnStair(true);
 }

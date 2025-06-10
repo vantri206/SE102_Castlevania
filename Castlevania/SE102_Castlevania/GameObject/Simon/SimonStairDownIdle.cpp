@@ -11,8 +11,7 @@
 CSimonStairDownIdle::CSimonStairDownIdle(CSimon* simon) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_DOWN_IDLE);
-    simon->SetAccel(0.0f, 0.0f);
-    simon->SetSpeed(0.0f, 0.0f);
+    simon->SetPhysical(0.0f, 0.0f, 0.0f, 0.0f);
     simon->SetSize(SIMON_STAIR_DOWN_WIDTH, SIMON_STAIR_DOWN_HEIGHT);
     simon->SetOnStair(true);
 }
