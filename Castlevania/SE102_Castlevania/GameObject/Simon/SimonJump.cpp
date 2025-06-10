@@ -3,21 +3,19 @@
 #include "debug.h"
 #include "Game.h"
 #include "Simon.h"
+#include "SimonSit.h"
 #include "SimonFalling.h"
 #include "SimonHurt.h"
 #include "SimonAttack.h"
-
-#define SIMON_FALLING_WIDTH 16
-#define SIMON_FALLING_HEIGHT 24
 
 CSimonJump::CSimonJump(CSimon* simon) : CSimonState(simon)
 {
 	jumpStartTime = GetTickCount64();
 	float vx, vy, ax, ay;
 	simon->GetPhysical(vx, vy, ax, ay);
-	simon->SetPhysical(vx, SIMON_JUMP_SPEED + 0.2f, ax, DEFAULT_GRAVITY);
-	simon->SetAniId(ID_ANI_SIMON_JUMP);
-	simon->SetSize(SIMON_FALLING_WIDTH, SIMON_FALLING_HEIGHT);
+	simon->SetPhysical(vx, SIMON_JUMP_SPEED, ax, DEFAULT_GRAVITY);
+	simon->SetAniId(ID_ANI_SIMON_IDLE);
+	simon->SetSize(SIMON_JUMP_WIDTH, SIMON_JUMP_HEIGHT);
 }
 void CSimonJump::KeyDownHandle(int keyCode)
 {
@@ -36,10 +34,13 @@ void CSimonJump::KeyUpHandle(int keyCode)
 }
 void CSimonJump::Update(DWORD dt)
 {
-	float x, y;
-	simon->GetSpeed(x, y);
-	if (y < 0)
+	float vx, vy;
+	simon->GetSpeed(vx, vy);
+	if (vy <= 0)
+	{
+		simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_IDLE_HEIGHT - SIMON_FALLING_HEIGHT) / 2);
 		simon->SetState(new CSimonFalling(simon));
+	}
 }
 
 void CSimonJump::OnNoCollision(DWORD dt)
@@ -59,7 +60,7 @@ void CSimonJump::OnCollisionWith(LPCOLLISIONEVENT e)
 		CItem* item = dynamic_cast<CItem*>(e->obj);
 		simon->OnCollisionWithItem(item);
 	}
-	else if (e->ny > 0 && e->obj->IsBlocking())
+	if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

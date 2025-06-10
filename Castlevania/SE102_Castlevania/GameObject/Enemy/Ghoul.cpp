@@ -1,4 +1,3 @@
-#include <algorithm>
 #include "debug.h"
 #include "Simon.h"
 #include "Ghoul.h"
@@ -14,7 +13,7 @@ CGhoul::CGhoul()
 	this->SetSize(GHOUL_WIDTH, GHOUL_HEIGHT);
 	this->ay = DEFAULT_GRAVITY;
 
-	health = 1;
+	health = GHOUL_HP;
 }
 void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

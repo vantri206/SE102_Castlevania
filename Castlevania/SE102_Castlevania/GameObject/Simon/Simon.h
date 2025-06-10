@@ -12,6 +12,7 @@
 
 #include "debug.h"
 #include "GameDefine.h"
+#include "GameSetting.h"
 #include "Stair.h"
 
 #include "Weapon.h"
@@ -25,7 +26,7 @@
 
 #define SIMON_BLINK_TIME 120
 
-#define SIMON_WALKING_SPEED 0.1f
+#define SIMON_WALKING_SPEED 0.3f
 #define SIMON_ACCEL_WALK_X	0.0005f
 
 #define SIMON_WALKING_STAIR_SPEED 0.075f
@@ -73,7 +74,6 @@
 
 #define SIMON_WIDTH 16
 #define SIMON_HEIGHT 32
-
 class CSimon : public CGameObject
 {
 protected:
@@ -175,12 +175,6 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void FinishedUntouchable() { untouchable = 0; untouchable_start = 0; }
 	int GetUntouchable() { return untouchable; }
-
-	//for invisible mode
-	void SetInvisible(int invisible) { this->invisible = invisible; }
-	void StartInvisible() { invisible = 1; invisible_start = GetTickCount64(); }
-	void FinishedInvisible() { invisible = 0; invisible_start = 0; }
-	int GetInvisible() { return invisible; }
 
 	//for go stair
 	bool IsNearStairUp();

@@ -63,13 +63,15 @@ void CSimonAttack::Update(DWORD dt)
 
     if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
     {
-        CWeapon* currentWeapon = simon->GetCurrentWeapon();
+        CWeapon* currentWeapon = nullptr;
+        currentWeapon = simon->GetCurrentWeapon();
         if (currentWeapon)
         {
             currentWeapon->Delete();
             delete currentWeapon;
             simon->SetCurrentWeapon(nullptr);
         }
+
         simon->SetState(new CSimonIdle(simon));
         return;
     }

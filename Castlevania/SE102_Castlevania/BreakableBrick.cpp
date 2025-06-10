@@ -1,4 +1,5 @@
 #include "BreakableBrick.h"
+#include "BrickEffect.h"
 
 CBreakableBrick::CBreakableBrick()
 {
@@ -6,18 +7,23 @@ CBreakableBrick::CBreakableBrick()
 	this->SetAnimationSet(ani_set);
 	this->SetSize(BREAKABLE_BRICK_WIDTH, BREAKABLE_BRICK_HEIGHT);
 }
-
 int CBreakableBrick::IsDirectionColliable(int nx, int ny)
 {
 	if (nx != 0 || ny > 0) return 1;
 	return 0;
 }
-
 void CBreakableBrick::Render()
 {
 	if (!this->isInDestroyed())
 		animation_set->at(ani_id)->Render(x, y, POSITIVE_DIRECTION, width, height);
 }
+
+void CBreakableBrick::OnHit()
+{
+	this->TriggerBreakableBrickEffect();
+	this->startDestroyedTime = GetTickCount64();
+}
+
 
 void CBreakableBrick::LoadExtraSetting(vector<int> extra_settings)
 {
@@ -36,4 +42,15 @@ void CBreakableBrick::LoadExtraSetting(vector<int> extra_settings)
 		ani_id = BREAKABLE_BRICK_ANI_BRICK2;
 		break;
 	}
+}
+
+void CBreakableBrick::TriggerBreakableBrickEffect()
+{
+	vector <CBrickEffect*> brickeffects;
+	brickeffects.push_back(new CBrickEffect(x, y, -0.05f, 0.4f, DEFAULT_GRAVITY));
+	brickeffects.push_back(new CBrickEffect(x, y, -0.025f, 0.4f, DEFAULT_GRAVITY));
+	brickeffects.push_back(new CBrickEffect(x, y, 0.025f, 0.4f, DEFAULT_GRAVITY));
+	brickeffects.push_back(new CBrickEffect(x, y, 0.05f, 0.4f, DEFAULT_GRAVITY));
+	for (auto brickeffect : brickeffects)
+		CGame::GetInstance()->GetCurrentPlayScene()->AddEffect(brickeffect);
 }

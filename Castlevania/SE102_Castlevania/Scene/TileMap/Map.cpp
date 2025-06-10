@@ -120,10 +120,10 @@ void CMap::RenderBackground()
 	int cam_right = cam_left + CCamera::GetInstance()->GetWidth();
 	int cam_top = cam_bottom + CCamera::GetInstance()->GetHeight();
 
-	int columnleft = max(0, cam_left / tileWidth);
+	int columnleft = max(0, cam_left / tileWidth - 1);
 	int columnright = min(tileColumns, cam_right / tileWidth + 1);
-	int rowtop = min(tileRows, cam_top / tileHeight);
-	int rowbottom = max(0, cam_bottom / tileHeight + 1);
+	int rowtop = min(tileRows, cam_top / tileHeight + 1);
+	int rowbottom = max(0, cam_bottom / tileHeight - 1);
 
 	float x, y;
 
@@ -149,10 +149,10 @@ void CMap::RenderForeground()
 	int cam_right = cam_left + CCamera::GetInstance()->GetWidth();
 	int cam_top = cam_bottom + CCamera::GetInstance()->GetHeight();
 
-	int columnleft = max(0, cam_left / tileWidth);
+	int columnleft = max(0, cam_left / tileWidth - 1);
 	int columnright = min(tileColumns, cam_right / tileWidth + 1);
-	int rowtop = min(tileRows, cam_top / tileHeight);
-	int rowbottom = max(0, cam_bottom / tileHeight + 1);
+	int rowtop = min(tileRows, cam_top / tileHeight + 1);
+	int rowbottom = max(0, cam_bottom / tileHeight - 1);
 
 	float x, y;
 

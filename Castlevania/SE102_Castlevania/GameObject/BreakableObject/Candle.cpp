@@ -1,4 +1,5 @@
 #include "Candle.h"
+#include "GameSetting.h"
 
 CCandle::CCandle()
 {

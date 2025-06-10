@@ -3,16 +3,16 @@
 #include "Simon.h"
 #include "Stair.h"
 #include "SimonSit.h"
-#include <SimonWalkingStairUp.h>
+#include "SimonWalkingStairUp.h"
+#include <Portal.h>
 
-CSimonWalkingStairDown::CSimonWalkingStairDown(CSimon* simon, int isFirstEntry) : CSimonState(simon)
+CSimonWalkingStairDown::CSimonWalkingStairDown(CSimon* simon) : CSimonState(simon)
 {
 	int dir_x = simon->GetDirectionX(), dir_y = simon->GetDirectionY();
 	simon->SetAniId(ID_ANI_SIMON_GO_DOWN);
 	simon->SetSpeed(SIMON_WALKING_STAIR_SPEED * dir_x, SIMON_WALKING_STAIR_SPEED * (-1) * dir_y);
 	simon->SetAccel(0.0f, 0.0f);
-
-	if(isFirstEntry) simon->UpdateMoving(SIMON_TIME_FIRST_STEP_ONSTAIR);
+	simon->SetOnStair(true);
 }
 void CSimonWalkingStairDown::KeyDownHandle(int keyCode) {}
 void CSimonWalkingStairDown::KeyUpHandle(int keyCode)
@@ -24,15 +24,17 @@ void CSimonWalkingStairDown::KeyUpHandle(int keyCode)
 }
 void CSimonWalkingStairDown::Update(DWORD dt)
 {
-	if (simon->GetNearbyStair() != nullptr)
+	CStair* stair = simon->GetNearbyStair();
+	if (stair)
 	{
 		float l, t, r, b;
 		float sl, st, sr, sb;
 		simon->GetBoundingBox(l, t, r, b);
-		CStair* stair = simon->GetNearbyStair();
 		stair->GetBoundingBox(sl, st, sr, sb);
 		if (b <= sb && stair->GetStairDirection() == UP_STAIR_DIRECTION)
 		{
+			simon->SetPosition(simon->GetX(), simon->GetY() + abs(sb - b));
+			simon->SetOnStair(false);
 			simon->SetState(new CSimonIdle(simon));
 		}
 	}
@@ -48,4 +50,9 @@ void CSimonWalkingStairDown::OnCollisionWith(LPCOLLISIONEVENT e)
         CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
         simon->OnCollisionWithEnemyOnStair(enemy);
     }
+	else if (dynamic_cast<CPortal*>(e->obj))
+	{
+		CPortal* portal = dynamic_cast<CPortal*>(e->obj);
+		portal->ChangeScene();
+	}
 }

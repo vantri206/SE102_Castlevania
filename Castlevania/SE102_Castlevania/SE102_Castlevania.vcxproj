@@ -80,6 +80,7 @@
     <ClCompile Include="SimonDie.cpp" />
     <ClCompile Include="SimonStairDownAttack.cpp" />
     <ClCompile Include="SimonStairUpAttack.cpp" />
+
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Wall.cpp" />

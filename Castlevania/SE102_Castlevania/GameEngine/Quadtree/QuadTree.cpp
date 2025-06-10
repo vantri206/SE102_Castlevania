@@ -123,7 +123,7 @@ void QuadTree::Retrieve(QNode* node, RECT camRect, std::unordered_set<LPGAMEOBJE
 {
     // Nếu node nằm ngoài vùng camera thì bỏ qua
     if (node->x1 < camRect.left || node->x0 > camRect.right ||
-        node->y1 < camRect.top || node->y0 > camRect.bottom)
+        node->y1 < camRect.bottom || node->y0 > camRect.top)
         return;
 
     // Thêm các object trong node vào danh sách kết quả
@@ -161,7 +161,7 @@ vector<LPGAMEOBJECT> QuadTree::GetAllObjects()
     view.left = 0;
     view.bottom = 0;
     view.right = mapWidth;
-    view.left = mapHeight;
+    view.top = mapHeight;
     return this->GetObjectsInView(view);
 }
 

@@ -3,9 +3,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
-
-#define STAIR_WIDTH 32
-#define STAIR_HEIGHT 4
+#include "GameSetting.h"
 
 class CStair : public CGameObject
 {

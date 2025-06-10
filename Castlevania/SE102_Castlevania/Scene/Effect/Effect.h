@@ -21,7 +21,7 @@ public:
     virtual void Update(DWORD dt)
     {
         RECT cam = CCamera::GetInstance()->GetCamRect();
-        if(!(this->x >= cam.left && this->x <= cam.right && this->y <= cam.bottom && this->y >= cam.top))
+        if(!(this->x >= cam.left && this->x <= cam.right && this->y >= cam.bottom && this->y <= cam.top))
         {
             isFinished = true;
         }

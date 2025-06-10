@@ -17,6 +17,7 @@
 #include "BreakableBrick.h"
 #include "MoneyBag.h"
 #include "TriggerZone.h"
+#include "Bat.h"
 
 #define ID_TEX_BBOX 999
 
@@ -69,6 +70,9 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case WALL:
 		obj = new CWall();
+		break;
+	case BAT:
+		obj = new CBat();
 		break;
 	default:
 		DebugOut(L"[ERROR] Unknown object type: %d\n", objectType);

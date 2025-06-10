@@ -6,9 +6,6 @@
 #include "HolyWaterBottle.h"
 #include "Dagger.h"
 
-#define SIMON_SIT_ATTACK_WIDTH 30
-#define SIMON_SIT_ATTACK_HEIGHT 24
-
 CSimonSitAttack::CSimonSitAttack(CSimon* simon, int weaponType) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_SIT_ATTACK);

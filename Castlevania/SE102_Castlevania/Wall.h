@@ -10,7 +10,7 @@ public:
 	CWall();
 	void Render() {}
 	void Update(DWORD dt) {}
-	int IsBlocking() { return 1; }
-	int IsOverlappable() { return 0; }
 	void LoadExtraSetting(vector<int> extra_settings);
+
+	int IsOverlappable() { return 1; }
 };

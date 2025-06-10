@@ -15,7 +15,7 @@ CPanther::CPanther()
 	this->SetSize(PANTHER_WIDTH, PANTHER_HEIGHT);
 	this->ay = DEFAULT_GRAVITY;
 
-	health = 1;
+	health = PANTHER_HP;
 }
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

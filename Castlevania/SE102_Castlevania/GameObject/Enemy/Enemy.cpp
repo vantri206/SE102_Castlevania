@@ -1,7 +1,9 @@
 #include "Enemy.h"
 #include "Weapon.h"
 #include "Effect.h"
+#include "Enemy.h"
 #include "DeadEffect.h"
+
 void CEnemy::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)

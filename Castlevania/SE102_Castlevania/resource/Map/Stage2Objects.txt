@@ -77,8 +77,6 @@ ENTRY 1000 48
 
 34 2 1464 120 144 16
 
-35 2 1528 72 16 80
-
 #Stair, extra setting: up or down (1: up, -1: down), left or right(1: right, -1: left)
 
 36 10 624 36 1 1
@@ -110,4 +108,5 @@ ENTRY 1000 48
 47 18 1016 88 1 9 400
 
 #Portal, extra setting: width, height, scene will be changed to, entry id postition when change
+
 48 5 153 36 24 8 3 0

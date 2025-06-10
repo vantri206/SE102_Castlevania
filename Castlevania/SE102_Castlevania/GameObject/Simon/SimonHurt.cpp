@@ -4,9 +4,6 @@
 #include "SimonHurt.h"
 #include "SimonSit.h"
 
-#define SIMON_HURT_WIDTH 16
-#define SIMON_HURT_HEIGHT 28
-
 CSimonHurt::CSimonHurt(CSimon* simon) : CSimonState(simon)
 {
 	simon->SetSize(SIMON_HURT_WIDTH, SIMON_HURT_HEIGHT);

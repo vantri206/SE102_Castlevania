@@ -10,13 +10,13 @@
 
 #define BRICKBREAK_EFFECT_ANI 0
 
-class CBrickFragment : public CGameEffect
+class CBrickEffect : public CGameEffect
 {
 protected:
     float ay;
     float vx, vy;
 public:
-    CBrickFragment(float x, float y, float vx, float ay)
+    CBrickEffect(float x, float y, float vx, float vy, float ay)
     {
         this->animation_set = CAnimationSets::GetInstance()->Get(BREAKBRICKEFFECT_ANI_SET_ID);
         this->width = BRICK_EFFECT_WIDTH;
@@ -25,8 +25,8 @@ public:
         this->x = x;
         this->y = y;
         this->vx = vx;
+        this->vy = vy;
         this->ay = ay;
-        this->vy = 0;
     }
 
     void Update(DWORD dt)

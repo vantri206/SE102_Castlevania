@@ -7,9 +7,7 @@
 #include "Dagger.h"
 #include "Axe.h"
 #include "Item.h"
-
-#define HOLYWATERBOTTLE_ITEM_WIDTH 16
-#define HOLYWATERBOTTLE_ITEM_HEIGHT 16
+#include "GameSetting.h"
 
 #define ID_ANI_ITEM_DAGGER 0
 #define ID_ANI_ITEM_AXE 1

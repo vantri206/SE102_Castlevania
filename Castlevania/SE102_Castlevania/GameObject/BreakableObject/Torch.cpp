@@ -1,6 +1,5 @@
-#pragma once
-
 #include "Torch.h"
+#include "GameSetting.h"
 
 CTorch::CTorch()
 {

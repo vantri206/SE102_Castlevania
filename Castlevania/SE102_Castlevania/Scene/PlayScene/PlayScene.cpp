@@ -6,6 +6,8 @@
 #include "Map.h"
 #include "GameObject.h"
 #include "Effect.h"
+#include "SimonWalkingStairUp.h"
+#include "SimonWalkingStairDown.h"
 #include <fstream>
 
 CPlayScene::CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile)
@@ -86,7 +88,7 @@ void CPlayScene::LoadResources()
 		if (entry)
 		{
 			player->SetPosition(entry->entryX, entry->entryY);
-			//DebugOut(L"[INFO] Player position in new scene: %f %f\n", entry->entryX, entry->entryY);
+			//DebugOut(L"[INFO] Player position in new scene: %f %f %s\n", entry->entryX, entry->entryY, entry->entry_state);
 		}
 	}
 	else
@@ -104,8 +106,9 @@ void CPlayScene::UnloadResources()
         auto allObjects = quadtree->GetAllObjects();
         for (auto obj : allObjects)
         {
-            delete obj;
+			quadtree->Remove(obj);
 			obj = nullptr;
+			delete obj;
         }
         delete quadtree;
         quadtree = nullptr;
@@ -202,7 +205,9 @@ void CPlayScene::ClearObjects()
 	{
 		if (obj && obj->IsDeleted())
 		{
+			//DebugOut(L"clear %d\n", obj->GetType());
 			quadtree->Remove(obj);
+			obj = nullptr;
 			delete obj;
 		}
 	}

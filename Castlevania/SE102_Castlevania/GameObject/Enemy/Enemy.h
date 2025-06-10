@@ -8,8 +8,6 @@
 
 #include "GameDefine.h"
 
-#define ENEMY_DEAD_TIME 300
-
 class CEnemy : public CGameObject
 {
 protected:

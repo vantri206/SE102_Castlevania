@@ -385,9 +385,6 @@
     <ClInclude Include="GameObject\Simon\SimonWalkingStairDown.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h">
-      <Filter>GameObject\Simon</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject\GameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -439,6 +436,10 @@
       <Filter>GameObject\WorldObject</Filter>
     </ClInclude>
     <ClInclude Include="SimonDie.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+
+    <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
     <ClInclude Include="SimonSitAttack.h" />

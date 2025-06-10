@@ -1,24 +1,14 @@
 #pragma once
 #include "Weapon.h"
 #include "Enemy.h"
+#include "GameSetting.h"
 #include <unordered_set>
-
-#define HOLYWATER_BOTTLE_SPEED 0.05f
-#define HOLYWATER_BOTTLE_THROW_VY 0.1f
 
 #define HOLYWATER_THROW_STATE 0
 #define HOLYWATER_BREAKING_STATE 1
 
 #define ANI_ID_HOLYWATER_THROW 0
 #define ANI_ID_HOLYWATER_BREAKING 1
-
-#define HOLYWATER_BOTTLE_WIDTH 8
-#define HOLYWATER_BOTTLE_HEIGHT 4
-#define HOLYWATER_BURN_WIDTH 16
-#define HOLYWATER_BURN_HEIGHT 13
-
-#define HOLYWATER_BURN_DURATION 1600
-#define HOLYWATER_BURN_COOLDOWN 400
 
 class CHolyWaterBottle : public CWeapon
 {

@@ -1,10 +1,7 @@
 #pragma once
 #include "Weapon.h"
+#include "GameSetting.h"
 #include "GameDefine.h"
-
-#define DAGGER_SPEED 0.1f
-#define DAGGER_WIDTH 16
-#define DAGGER_HEIGHT 10
 
 #define DAGGER_STATE_THROW 0
 

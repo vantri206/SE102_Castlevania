@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include "Map.h"
 #include "Scene.h"
+#include "GameDefine.h"
 #include <unordered_set>
 
 class CGameObject;
@@ -43,7 +44,7 @@ public:
 	void Update(DWORD dt);
 	void Render();
 
-	int GetCurrentMapHeight() { return SceneBG->GetHeight(); }
+	int GetCurrentMapHeight() { return max(SceneBG->GetHeight(), SCREEN_HEIGHT); }
 	int GetCurrentMapWidth() { return SceneBG->GetWidth(); }
 
 	void AddObject(CGameObject* obj);
