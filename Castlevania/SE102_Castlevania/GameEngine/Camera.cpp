@@ -12,7 +12,7 @@ CCamera* CCamera::GetInstance() {
     return __instance;
 }
 void CCamera::SetPosition(float newX, float newY, float mapWidth, float mapHeight) {
-    x = max(0.0f, min(newX, mapWidth - width));
+    x = max(0.0f, min(newX, mapWidth - width + 16));
     y = max(0.0f, min(newY, mapHeight - height));
 }
 void CCamera::SetSize(float newWidth, float newHeight) {
@@ -57,8 +57,8 @@ RECT CCamera::GetCamRect()
 {
 	RECT camRect;
 	camRect.left = (int)x;
-	camRect.top = (int)y;
+	camRect.bottom = (int)y;
 	camRect.right = (int)(x + width);
-	camRect.bottom = (int)(y + height);
+	camRect.top = (int)(y + height);
 	return camRect;
 }

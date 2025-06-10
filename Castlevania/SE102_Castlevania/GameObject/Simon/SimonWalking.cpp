@@ -12,10 +12,7 @@
 #include "SimonHurt.h"
 #include "MorningStar.h"
 #include "TriggerZone.h"
-#include <Portal.h>
-
-#define SIMON_WALKING_WIDTH 15
-#define SIMON_WALKING_HEIGHT 32
+#include "Portal.h"
 
 CSimonWalking::CSimonWalking(CSimon* simon) : CSimonState(simon)
 {
@@ -59,9 +56,13 @@ void CSimonWalking::KeyDownHandle(int keyCode)
 
 void CSimonWalking::Update(DWORD dt)
 {
-	float x, y;
-	simon->GetSpeed(x, y);
-	if (y < 0) simon->SetState(new CSimonFalling(simon));
+	float vx, vy;
+	simon->GetSpeed(vx, vy);
+	if (vy < 0)
+	{
+		simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_WALKING_HEIGHT - SIMON_FALLING_HEIGHT)/2);
+		simon->SetState(new CSimonFalling(simon));
+	}
 }
 void CSimonWalking::OnNoCollision(DWORD dt)
 {
@@ -89,7 +90,7 @@ void CSimonWalking::OnCollisionWith(LPCOLLISIONEVENT e)
 		CPortal* portal = dynamic_cast<CPortal*>(e->obj);
 		portal->ChangeScene();
 	}
-	else if (e->ny > 0 && e->obj->IsBlocking())
+	if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

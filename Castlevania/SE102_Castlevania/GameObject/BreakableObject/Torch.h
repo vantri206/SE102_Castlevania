@@ -10,9 +10,6 @@
 
 #define TORCH_ANI_ID_BURN
 
-#define TORCH_WIDTH 16
-#define TORCH_HEIGHT 32
-
 class CTorch : public CBreakableObject
 {
 protected:

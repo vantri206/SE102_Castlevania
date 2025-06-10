@@ -12,6 +12,7 @@
 CSimonAttack::CSimonAttack(CSimon* simon, int weaponType) : CSimonState(simon)
 {
     attackStartTime = GetTickCount64();
+    simon->SetSize(SIMON_ATTACK_WIDTH, SIMON_ATTACK_HEIGHT);
     simon->SetAniId(ID_ANI_SIMON_ATTACK);
 
     if (weaponType == SUB_WEAPON)
@@ -64,9 +65,12 @@ void CSimonAttack::Update(DWORD dt)
     {
         CWeapon* currentWeapon = nullptr;
         currentWeapon = simon->GetCurrentWeapon();
-        currentWeapon->Delete();
-        delete currentWeapon;
-        simon->SetCurrentWeapon(nullptr);
+        if (currentWeapon)
+        {
+            currentWeapon->Delete();
+            delete currentWeapon;
+            simon->SetCurrentWeapon(nullptr);
+        }
 
         simon->SetState(new CSimonIdle(simon));
         return;

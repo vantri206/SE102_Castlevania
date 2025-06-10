@@ -78,7 +78,6 @@
     <ClCompile Include="Scene\TileMap\Map.cpp" />
     <ClCompile Include="Scene\TileMap\Tile.cpp" />
     <ClCompile Include="SimonDie.cpp" />
-    <ClCompile Include="TriggerZone.cpp" />
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -149,8 +148,6 @@
     <ClInclude Include="Scene\TileMap\Map.h" />
     <ClInclude Include="Scene\TileMap\Tile.h" />
     <ClInclude Include="SimonDie.h" />
-    <ClInclude Include="SimonSitAttack.h" />
-    <ClInclude Include="TriggerZone.h" />
     <ClInclude Include="Utils\debug.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Wall.h" />

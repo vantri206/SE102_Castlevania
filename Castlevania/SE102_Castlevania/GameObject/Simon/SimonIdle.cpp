@@ -18,15 +18,11 @@
 #include "SimonPowerUp.h"
 #include "SimonDie.h"
 
-#define SIMON_IDLE_WIDTH 15
-#define SIMON_IDLE_HEIGHT 32
-
 CSimonIdle::CSimonIdle(CSimon* simon) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_IDLE);
     simon->SetPhysical(0.0f, 0.0f, 0.0f, DEFAULT_GRAVITY);
     simon->SetSize(SIMON_IDLE_WIDTH, SIMON_IDLE_HEIGHT);
-    simon->SetOnStair(false);
 }
 void CSimonIdle::KeyUpHandle(int keyCode)
 {
@@ -98,9 +94,13 @@ void CSimonIdle::KeyDownHandle(int keyCode)
 
 void CSimonIdle::Update(DWORD dt)
 {
-    float x, y;
-    simon->GetSpeed(x, y);
-    if (y < 0) simon->SetState(new CSimonFalling(simon));
+    float vx, vy;
+    simon->GetSpeed(vx, vy);
+    if (vy < 0)
+    {
+        simon->SetPosition(simon->GetX(), simon->GetY() - 4.0f);
+        simon->SetState(new CSimonFalling(simon));
+    }
 }
 
 void CSimonIdle::OnNoCollision(DWORD dt)

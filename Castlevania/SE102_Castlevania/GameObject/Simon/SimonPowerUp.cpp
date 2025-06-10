@@ -1,9 +1,5 @@
 #include "SimonPowerUp.h"
 #include "Simon.h"
-
-#define SIMON_POWERUP_WIDTH 16
-#define SIMON_POWERUP_HEIGHT 32
-
 CSimonPowerUp::CSimonPowerUp(CSimon* simon) : CSimonState(simon)
 {
 	startPowerUp = GetTickCount64();

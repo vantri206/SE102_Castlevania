@@ -6,7 +6,7 @@
 #include "Weapon.h"
 #include "Ghoul.h"
 
-#define BLOCK_PUSH_FACTOR 0.001f
+#define BLOCK_PUSH_FACTOR 0.1f
 
 CCollision* CCollision::__instance = NULL;
 

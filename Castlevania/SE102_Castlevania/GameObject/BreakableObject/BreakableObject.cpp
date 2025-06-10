@@ -1,6 +1,7 @@
 #include "BreakableObject.h"
 #include "DeadEffect.h"
 #include "debug.h"
+#include "GameSetting.h"
 
 void CBreakableObject::OnHit()
 {

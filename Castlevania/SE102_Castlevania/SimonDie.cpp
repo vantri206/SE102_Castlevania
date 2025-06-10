@@ -1,8 +1,6 @@
 ﻿#include "SimonDie.h"
 #include "Simon.h"
 
-#define SIMON_DIE_WIDTH 30
-#define SIMON_DIE_HEIGHT 14
 CSimonDie::CSimonDie(CSimon* simon) : CSimonState(simon) {
 
     simon->SetAniId(ID_ANI_SIMON_DIE);

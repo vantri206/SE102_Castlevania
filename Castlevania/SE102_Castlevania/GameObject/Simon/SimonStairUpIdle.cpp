@@ -1,15 +1,11 @@
 #pragma once
 
 #include "Simon.h"
-
 #include "SimonIdle.h"
 #include "Enemy.h"
 #include "SimonWalkingStairUp.h"
 #include "SimonWalkingStairDown.h"
 #include "SimonStairUpIdle.h"
-
-#define SIMON_STAIR_UP_WIDTH 16
-#define SIMON_STAIR_UP_HEIGHT 32
 
 CSimonStairUpIdle::CSimonStairUpIdle(CSimon* simon) : CSimonState(simon)
 {

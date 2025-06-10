@@ -1,12 +1,173 @@
 #pragma once
 
-#include <unordered_map>
-#include <string>
+#pragma region SIMON_SETTING
 
-class CGameSettings
-{
-	static std::unordered_map<std::string, float> settings;
-public:
-	static void LoadFromFile(const std::string& path);
-	static float Get(const std::string& key, float defaultValue = 0.0f);
-};
+#define SIMON_MAX_WHIP_LEVEL 3
+
+#define SIMON_BLINK_TIME 120
+
+#define SIMON_WALKING_SPEED 0.3f
+#define SIMON_ACCEL_WALK_X	0.0005f
+
+#define SIMON_WALKING_STAIR_SPEED 0.075f
+#define SIMON_AUTO_WALKING_STAIR_SPEED 0.03f
+
+#define SIMON_HURT_VX 0.1f    
+#define SIMON_HURT_VY 0.3f   
+#define SIMON_HURT_TIME 500  
+#define SIMON_UNTOUCHABLE_TIME 2000 
+
+#define SIMON_JUMP_SPEED 0.5f
+
+#define SIMON_ATTACK_TIME 600
+#pragma endregion
+
+#define BREAKABLEOBJCET_DESTROYED_TIME 300
+
+#define CANDLE_WIDTH 8
+#define CANDLE_HEIGHT 16
+
+#define TORCH_WIDTH 16
+#define TORCH_HEIGHT 32
+
+
+#define BAT_FLYING_SPEED 0.075f
+#define BAT_SWING_SPEED 0.05f
+
+#define BAT_RANGE_ACTIVE_MIN 196.0f
+#define BAT_RANGE_ACTIVE 360.0f
+
+#define BAT_SWING_COOLDOWN 500
+
+#define BAT_WIDTH 16
+#define BAT_HEIGHT 16
+
+#define BAT_HP 1
+
+#define PANTHER_HP 1
+#define GHOUL_HP 1
+
+#define ENEMY_DEAD_TIME 300
+
+#define GHOUL_WALKING_SPEED	0.025f
+
+
+#define GHOUL_WIDTH 16
+#define GHOUL_HEIGHT 32
+
+
+#define GHOUL_RANGE_ACTIVE 150.0f
+
+
+#define PANTHER_WIDTH 32
+#define PANTHER_HEIGHT 16
+
+#define PANTHER_RANGE_ACTIVE 150
+
+#define PANTHER_RUN_SPEED 0.25f
+#define PANTHER_JUMP_VY 0.15f
+
+
+#define BIGHEART_HEART_VALUE 5
+
+#define HEART_GRAVITY -0.0075f
+#define HEART_MAX_FALLSPEED -0.01f
+
+
+#define BIG_HEART_WIDTH 12
+#define BIG_HEART_HEIGHT 10
+
+#define MORNINGSTAR_WIDTH 16
+#define MORNINGSTAR_HEIGHT 16
+#define MONEYBAG_SPAWN_DURATION 800
+
+#define MONEYBAG_WIDTH 16
+#define MONEYBAG_HEIGHT 16
+
+
+#define SMALLHEART_HEART_VALUE 1
+
+#define SMALLHEART_SWING_TIME 200
+
+#define HEART_GRAVITY -0.0075f
+
+#define SMALLHEART_SWING_SPEED 0.75f
+
+
+#define HOLYWATERBOTTLE_ITEM_WIDTH 16
+#define HOLYWATERBOTTLE_ITEM_HEIGHT 16
+
+#define SIMON_WIDTH 16
+#define SIMON_HEIGHT 32
+
+#define SIMON_WALKING_WIDTH 15
+#define SIMON_WALKING_HEIGHT 30
+
+#define SIMON_DIE_WIDTH 30
+#define SIMON_DIE_HEIGHT 14
+
+#define SIMON_FALLING_WIDTH 16
+#define SIMON_FALLING_HEIGHT 24
+
+#define SIMON_JUMP_WIDTH 16
+#define SIMON_JUMP_HEIGHT 32
+
+#define SIMON_HURT_WIDTH 16
+#define SIMON_HURT_HEIGHT 28
+
+
+#define SIMON_IDLE_WIDTH 15
+#define SIMON_IDLE_HEIGHT 32
+
+#define SIMON_POWERUP_WIDTH 16
+#define SIMON_POWERUP_HEIGHT 32
+
+
+#define SIMON_SIT_WIDTH 16
+#define SIMON_SIT_HEIGHT 24
+
+
+#define SIMON_SIT_ATTACK_WIDTH 30
+#define SIMON_SIT_ATTACK_HEIGHT 24
+
+
+#define SIMON_STAIR_DOWN_WIDTH 16
+#define SIMON_STAIR_DOWN_HEIGHT 32
+
+#define SIMON_STAIR_UP_WIDTH 16
+#define SIMON_STAIR_UP_HEIGHT 32
+
+#define SIMON_WALKING_WIDTH 15
+#define SIMON_WALKING_HEIGHT 32
+
+#define AXE_SPEED 0.1075f
+#define AXE_THROW_VY 0.4f
+
+#define AXE_WIDTH 15
+#define AXE_HEIGHT 14
+
+
+#define DAGGER_SPEED 0.1f
+#define DAGGER_WIDTH 16
+#define DAGGER_HEIGHT 10
+
+
+#define HOLYWATER_BOTTLE_SPEED 0.05f
+#define HOLYWATER_BOTTLE_THROW_VY 0.1f
+
+
+#define HOLYWATER_BOTTLE_WIDTH 8
+#define HOLYWATER_BOTTLE_HEIGHT 4
+#define HOLYWATER_BURN_WIDTH 16
+#define HOLYWATER_BURN_HEIGHT 13
+
+#define HOLYWATER_BURN_DURATION 1600
+#define HOLYWATER_BURN_COOLDOWN 400
+
+
+#define STAIR_WIDTH 32
+#define STAIR_HEIGHT 6
+
+
+#define BREAKABLE_BRICK_WIDTH 16
+#define BREAKABLE_BRICK_HEIGHT 16

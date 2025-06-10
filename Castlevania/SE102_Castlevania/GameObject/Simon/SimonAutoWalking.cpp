@@ -7,9 +7,6 @@
 #include "SimonWalkingStairUp.h"
 #include "SimonWalkingStairDown.h"
 
-#define SIMON_WALKING_WIDTH 15
-#define SIMON_WALKING_HEIGHT 30
-
 #define AUTO_WALK_EPSILON 1.0f
 
 CSimonAutoWalking::CSimonAutoWalking(CSimon* simon, float x, float y, int direction, int simonState) : CSimonState(simon)
@@ -29,6 +26,7 @@ void CSimonAutoWalking::Update(DWORD dt)
 	if(CheckReachedTarget())
 	{
 		simon->SetSpeed(0.0f, 0.0f);
+		simon->SetPosition(targetX, simon->GetY());
 		simon->SetDirectionX(targetX); 
 		simon->SetDirectionX(finishedDirection);
 		ChangeState();
@@ -70,10 +68,10 @@ void CSimonAutoWalking::ChangeState()
 	switch (nextState)
 	{
 	case SIMON_STATE_WALKING_UP:
-		simon->SetState(new CSimonWalkingStairUp(simon, 1));
+		simon->SetState(new CSimonWalkingStairUp(simon));
 		break;
 	case SIMON_STATE_WALKING_DOWN:
-		simon->SetState(new CSimonWalkingStairDown(simon, 1));
+		simon->SetState(new CSimonWalkingStairDown(simon));
 		break;
 	}
 }

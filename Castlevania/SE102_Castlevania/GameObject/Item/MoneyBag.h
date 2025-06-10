@@ -4,19 +4,15 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "GameDefine.h"
+#include "GameSetting.h"
 #include "Item.h"
 
 #define MONEYBAG_STATE_IDLE 0
 #define MONEYBAG_STATE_SPAWN 1
 
-#define MONEYBAG_SPAWN_DURATION 800
-
 #define ID_ANI_MONEYBAG_400 0
 #define ID_ANI_MONEYBAG_700 1
 #define ID_ANI_MONEYBAG_1000 2
-
-#define MONEYBAG_WIDTH 16
-#define MONEYBAG_HEIGHT 16
 
 class CMoneyBag : public CItem
 {

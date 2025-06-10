@@ -3,9 +3,6 @@
 #include "Simon.h"
 #include "SimonSitAttack.h"
 
-#define SIMON_SIT_WIDTH 16
-#define SIMON_SIT_HEIGHT 24
-
 CSimonSit::CSimonSit(CSimon* simon) : CSimonState(simon)
 {
 	simon->SetSpeed(0.0f, 0.0f);
@@ -30,14 +27,24 @@ void CSimonSit::KeyUpHandle(int keyCode)
 {
     if (keyCode == DIK_S)
     {
-		simon->SetPosition(simon->GetX(), simon->GetY() + 4.0f);
-        simon->SetState(new CSimonIdle(simon));
+		float vx, vy;
+		simon->GetSpeed(vx, vy);
+		if (vy == 0)
+		{
+			simon->SetPosition(simon->GetX(), simon->GetY() + (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
+			simon->SetState(new CSimonIdle(simon));
+		}
     }
 
 }
 void CSimonSit::Update(DWORD dt)
 {
-
+	float vx, vy;
+	simon->GetSpeed(vx, vy);
+	if (vy < 0.0f)
+	{
+		simon->SetState(new CSimonFalling(simon));
+	}
 }
 
 void CSimonSit::OnNoCollision(DWORD dt)
@@ -52,7 +59,7 @@ void CSimonSit::OnCollisionWith(LPCOLLISIONEVENT e)
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		simon->OnCollisionWithEnemy(enemy);
 	}
-	else if (e->ny > 0 && e->obj->IsBlocking())
+	if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

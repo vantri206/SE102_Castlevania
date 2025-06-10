@@ -5,12 +5,9 @@
 #include "Simon.h"
 #include "SimonSit.h"
 
-#define SIMON_FALLING_WIDTH 16
-#define SIMON_FALLING_HEIGHT 24
-
 CSimonFalling::CSimonFalling(CSimon* simon) : CSimonState(simon)
 {
-	simon->SetAniId(ID_ANI_SIMON_JUMP);
+	simon->SetAniId(ID_ANI_SIMON_SIT);
 	simon->SetSize(SIMON_FALLING_WIDTH, SIMON_FALLING_HEIGHT);
 }
 void CSimonFalling::KeyDownHandle(int keyCode) {}
@@ -34,6 +31,10 @@ void CSimonFalling::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny > 0 && e->obj->IsBlocking())
 	{	
 		simon->SetState(new CSimonSit(simon));
+	}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		simon->SetVx(0.0f);
 	}
 }
 

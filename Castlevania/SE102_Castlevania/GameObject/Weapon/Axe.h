@@ -2,12 +2,8 @@
 #include "Weapon.h"
 #include "GameDefine.h"
 #include "Enemy.h"
+#include "GameSetting.h"
 #include <unordered_set>
-
-#define AXE_SPEED 0.1075f
-#define AXE_THROW_VY 0.4f
-#define AXE_WIDTH 15
-#define AXE_HEIGHT 14
 
 #define AXE_STATE_THROW 0
 

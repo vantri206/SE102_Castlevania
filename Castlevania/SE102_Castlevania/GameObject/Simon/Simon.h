@@ -12,31 +12,11 @@
 
 #include "debug.h"
 #include "GameDefine.h"
+#include "GameSetting.h"
 #include "Stair.h"
 
 #include "Weapon.h"
-#include <Item.h>
-
-
-#define SIMON_MAX_WHIP_LEVEL 3
-
-#define UNTOUCHABLE 1
-#define NOT_UNTOUCHABLE 0
-
-#define SIMON_BLINK_TIME 120
-
-#define SIMON_WALKING_SPEED 0.3f
-#define SIMON_ACCEL_WALK_X	0.0005f
-
-#define SIMON_WALKING_STAIR_SPEED 0.075f
-#define SIMON_AUTO_WALKING_STAIR_SPEED 0.03f
-
-#define SIMON_HURT_VX 0.1f    
-#define SIMON_HURT_VY 0.3f   
-#define SIMON_HURT_TIME 500  
-#define SIMON_UNTOUCHABLE_TIME 2000 
-
-#define SIMON_JUMP_SPEED 0.5f
+#include "Item.h"
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1
@@ -69,9 +49,6 @@
 #define ID_ANI_SIMON_DIE			12
 #define ID_ANI_SIMON_POWER_UP		13
 #define ID_ANI_SIMON_SIT_ATTACK		15
-
-#define SIMON_WIDTH 16
-#define SIMON_HEIGHT 32
 
 class CSimon : public CGameObject
 {

@@ -11,24 +11,34 @@ ENTRY 368 48
 
 2 2 152 88 48 16
 
-3 2 280 88 16 48
+3 2 416 24 192 16
 
-4 2 344 24 48 16
+4 2 336 104 32 16
 
-5 2 440 24 112 16
+5 2 376 88 48 16
 
-6 2 336 104 32 16
+6 2 464 120 96 16
 
-7 2 360 88 48 16
-
-8 2 464 88 96 16
+7 2 136 24 272 16
 
 #Wall, extra setting: width, height
 
-4 19 296 64 48 96
+8 19 264 88 16 47
 
-6 19 128 24 256 16
+9 19 296 64 48 96
 
-#Portal, extra setting: width, height, scene will be changed to, entry id postition when change
+10 19 4 72 8 80
 
-7 5 692 36 24 8 2 0
+11 19 508 72 8 80
+
+#Bat, extra setting: direction
+
+10 20 344 56 -1
+
+11 20 80 72 1
+
+#Breakable brick, extra setting: type brick, item drop when break
+
+47 18 264 56 2 4
+
+47 18 264 40 2 4

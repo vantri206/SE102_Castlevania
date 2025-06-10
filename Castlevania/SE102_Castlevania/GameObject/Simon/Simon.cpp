@@ -13,6 +13,8 @@
 #include "SubWeaponItem.h"
 #include "SimonAttack.h"
 #include "SimonPowerUp.h"
+#include <SimonJump.h>
+#include <SimonSit.h>
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -39,6 +41,17 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mapwidth = currentPlayScene->GetCurrentMapWidth();
 		mapheight = currentPlayScene->GetCurrentMapHeight();
 	}
+
+	float l, t, r, b;
+	this->GetBoundingBox(l, t, r, b);
+
+    if (x < 0) x = 0;
+    else if (x > mapwidth) x = (float)mapwidth;
+
+    // Giới hạn y trong [0, mapheight]
+    if (y < 0) y = 0;
+    else if (y > mapheight) y = (float)mapheight;
+
 	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
 }
 void CSimon::OnNoCollision(DWORD dt)
@@ -164,10 +177,15 @@ void CSimon::TakenDamage(int damage)
 
 int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
 {
+	if (dynamic_cast<CBrick*>(objDests))
+	{
+		if (this->isOnStair) return 0;
+		return 1;
+	}
 	if (dynamic_cast<CEnemy*>(objDests))
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(objDests);
-		if (enemy->isDead() || this->GetUntouchable())
+		if (enemy->isDead() || !enemy->isActived() || this->GetUntouchable())
 			return 0;
 	}
 	return 1;

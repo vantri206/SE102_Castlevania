@@ -10,8 +10,6 @@ public:
 	CBrick();
 	void Render() {}
 	void Update(DWORD dt) {}
-	int IsBlocking() { return 1; }
-	int IsOverlappable() { return 0; }
 	int IsDirectionColliable(int nx, int ny);
 	void LoadExtraSetting(vector<int> extra_settings);
 };

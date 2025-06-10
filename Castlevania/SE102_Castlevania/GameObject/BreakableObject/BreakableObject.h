@@ -1,8 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-#define BREAKABLEOBJCET_DESTROYED_TIME 300
-
 class CBreakableObject : public CGameObject
 {
 protected:

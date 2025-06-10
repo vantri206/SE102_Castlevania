@@ -5,17 +5,14 @@
 #include "Animations.h"
 #include "GameDefine.h"
 #include "Item.h"
+#include "GameSetting.h"
 
 #define MORNINGSTAR_STATE_NORMAL 0
 
 #define ID_ANI_MORNINGSTAR 0
 
-#define MORNINGSTAR_WIDTH 16
-#define MORNINGSTAR_HEIGHT 16
-
 class CMorningStar : public CItem
 {
-protected: 
 public:
 	CMorningStar();
 };

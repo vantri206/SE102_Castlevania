@@ -202,7 +202,9 @@ void CPlayScene::ClearObjects()
 	{
 		if (obj && obj->IsDeleted())
 		{
+			DebugOut(L"clear %d\n", obj->GetType());
 			quadtree->Remove(obj);
+			obj = nullptr;
 			delete obj;
 		}
 	}

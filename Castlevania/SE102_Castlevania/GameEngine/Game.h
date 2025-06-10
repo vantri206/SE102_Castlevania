@@ -4,6 +4,7 @@
 #include <d3dx10.h>
 
 #define DIRECTINPUT_VERSION 0x0800
+
 #include <dinput.h>
 #include "Scene.h"
 #include "SceneManager.h"

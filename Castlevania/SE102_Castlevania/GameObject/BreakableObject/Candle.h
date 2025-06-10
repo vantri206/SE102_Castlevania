@@ -10,9 +10,6 @@
 
 #define CANDLE_ANI_BURN 0
 
-#define CANDLE_WIDTH 8
-#define CANDLE_HEIGHT 16
-
 class CCandle : public CBreakableObject
 {
 public:
