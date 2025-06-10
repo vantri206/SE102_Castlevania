@@ -32,8 +32,7 @@ void CSimonFalling::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	*/
 	if (e->ny > 0 && e->obj->IsBlocking())
-	{	
+	{
 		simon->SetState(new CSimonSit(simon));
 	}
 }
-

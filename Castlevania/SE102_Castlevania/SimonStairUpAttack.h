@@ -5,12 +5,12 @@
 
 #define SIMON_ATTACK_TIME 500
 
-class CSimonAttack : public CSimonState {
+class CSimonStairUpAttack : public CSimonState {
 private:
     ULONGLONG attackStartTime;
 public:
-    CSimonAttack(CSimon* simon, int weaponType);
-    ~CSimonAttack();
+    CSimonStairUpAttack(CSimon* simon);
+    ~CSimonStairUpAttack();
     void KeyDownHandle(int keyCode);
     void KeyUpHandle(int keyCode);
     void Update(DWORD dt);

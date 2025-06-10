@@ -1,29 +1,30 @@
 #include "Simon.h"
 #include "SimonAttack.h"
 #include "SimonIdle.h"
-#include "Whip.h"
-#include "Dagger.h"
 #include "Axe.h"
+#include "Whip.h"
 #include "HolyWaterBottle.h"
+#include "Dagger.h"
 
 #define SIMON_ATTACK_WIDTH 30
 #define SIMON_ATTACK_HEIGHT 32
 
 CSimonAttack::CSimonAttack(CSimon* simon, int weaponType) : CSimonState(simon)
 {
-    attackStartTime = GetTickCount64();
     simon->SetAniId(ID_ANI_SIMON_ATTACK);
+    simon->SetSize(SIMON_ATTACK_WIDTH, SIMON_ATTACK_HEIGHT);
+    attackStartTime = GetTickCount64();
 
     if (weaponType == SUB_WEAPON)
     {
         CWeapon* subWeapon = nullptr;
-        float x, y; 
+        float x, y;
         simon->GetPosition(x, y);
         x += simon->GetWidth() / 2;
         y += simon->GetHeight() / 3;
         switch (simon->GetCurrentSubType())
         {
-        case DAGGER:    
+        case DAGGER:
             subWeapon = new CDagger(x, y, simon->GetDirectionX());
             break;
         case AXE:
@@ -62,12 +63,13 @@ void CSimonAttack::Update(DWORD dt)
 
     if (GetTickCount64() - attackStartTime > SIMON_ATTACK_TIME)
     {
-        CWeapon* currentWeapon = nullptr;
-        currentWeapon = simon->GetCurrentWeapon();
-        currentWeapon->Delete();
-        delete currentWeapon;
-        simon->SetCurrentWeapon(nullptr);
-
+        CWeapon* currentWeapon = simon->GetCurrentWeapon();
+        if (currentWeapon)
+        {
+            currentWeapon->Delete();
+            delete currentWeapon;
+            simon->SetCurrentWeapon(nullptr);
+        }
         simon->SetState(new CSimonIdle(simon));
         return;
     }
@@ -75,6 +77,7 @@ void CSimonAttack::Update(DWORD dt)
 
 void CSimonAttack::OnNoCollision(DWORD dt)
 {
+	simon->UpdateMoving(dt);
 }
 
 void CSimonAttack::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -88,7 +91,6 @@ void CSimonAttack::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CSimonAttack::Render()
 {
-    CWeapon* currentWeapon;
-    currentWeapon = simon->GetCurrentWeapon();
-    if (currentWeapon != nullptr) currentWeapon->Render();
+    CWeapon* currentWeapon = simon->GetCurrentWeapon();
+    if (currentWeapon) currentWeapon->Render();
 }

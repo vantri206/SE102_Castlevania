@@ -230,9 +230,14 @@
     <ClCompile Include="SimonDie.cpp">
       <Filter>GameObject\Simon</Filter>
     </ClCompile>
-    <ClCompile Include="TriggerZone.cpp" />
     <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp">
       <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonStairUpAttack.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonStairDownAttack.cpp">
+      <Filter>GameObject\Simon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -433,10 +438,15 @@
     <ClInclude Include="Wall.h">
       <Filter>GameObject\WorldObject</Filter>
     </ClInclude>
-    <ClInclude Include="TriggerZone.h" />
     <ClInclude Include="SimonDie.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
     <ClInclude Include="SimonSitAttack.h" />
+    <ClInclude Include="SimonStairUpAttack.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonStairDownAttack.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

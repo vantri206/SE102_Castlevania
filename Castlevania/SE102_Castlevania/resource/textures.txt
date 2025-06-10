@@ -28,6 +28,7 @@
 64 resource/Objects/BreakableBrick.png
 65 resource/Objects/Brick.png
 66 resource/Objects/BrickPiece.png
+67 resource/Characters/SimonInvincible.png
 999 resource/Scene/bbox.png
 2 
 #----MAP----#

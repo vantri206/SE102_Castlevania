@@ -7,6 +7,7 @@
 #include "SimonWalkingStairUp.h"
 #include "SimonWalkingStairDown.h"
 #include "SimonStairUpIdle.h"
+#include "SimonStairUpAttack.h"
 
 #define SIMON_STAIR_UP_WIDTH 16
 #define SIMON_STAIR_UP_HEIGHT 32
@@ -40,7 +41,7 @@ void CSimonStairUpIdle::KeyDownHandle(int keyCode)
     }
     else if (keyCode == DIK_A)
     {
-        //simon->SetState(new CSimonAttack(simon));
+		simon->SetState(new CSimonStairUpAttack(simon));
     }
 }
 
