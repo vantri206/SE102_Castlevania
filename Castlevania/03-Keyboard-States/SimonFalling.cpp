@@ -33,7 +33,7 @@ void CSimonFalling::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 		simon->SetState(new CSimonHurt(simon));
 	}
 	*/
-	SoundManager::GetInstance().PlaySound("use_wp");
+	SoundManager::GetInstance().PlaySound("landing");
 	if (e->ny > 0 && e->obj->IsBlocking())
 	{	
 		simon->SetState(new CSimonSit(simon));

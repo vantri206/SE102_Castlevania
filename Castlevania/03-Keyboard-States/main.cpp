@@ -41,11 +41,38 @@ void LoadResources()
 	//Load Sound
 	SoundManager& soundMgr = SoundManager::GetInstance();
 	soundMgr.Init();
+		// Load music
+	soundMgr.LoadSound("stage_1_bgm", L"resource/Sounds/Musics/Stage_01_Vampire_Killer.wav");
+	soundMgr.LoadSound("game_start", L"resource/Sounds/Musics/Game_Start_Prologue.wav");
+	soundMgr.LoadSound("game_over", L"resource/Sounds/Musics/Game_Over.wav"); 
+	soundMgr.LoadSound("boss_battle", L"resource/Sounds/Musics/Boss_Battle_Poison_Mind.wav");
 
-	soundMgr.LoadSound("use_wp", L"resource/Sounds/SoundEffects/Using_Weapon.wav");
-	soundMgr.LoadSound("landing", L"resource/Sounds/SoundEffects/Landing.wav");
+	// Load sound effects
 	soundMgr.LoadSound("being_hit", L"resource/Sounds/SoundEffects/Being_Hit.wav");
-	//soundMgr.LoadSound("hit", L"resource/Sounds/SoundEffects/Hit.wav");
+	soundMgr.LoadSound("fishman_launching", L"resource/Sounds/SoundEffects/Fishman_Launching.wav");
+	soundMgr.LoadSound("getting_heartbonus", L"resource/Sounds/SoundEffects/Getting_Heart_Bonus.wav");
+	soundMgr.LoadSound("getting_heart", L"resource/Sounds/SoundEffects/Getting_Heart.wav");
+	soundMgr.LoadSound("holy_cross", L"resource/Sounds/SoundEffects/Getting_Holy_Cross.wav");
+	soundMgr.LoadSound("money_get", L"resource/Sounds/SoundEffects/Getting_Money_Bag.wav");
+	soundMgr.LoadSound("powerup", L"resource/Sounds/SoundEffects/Getting_Powerup.wav");
+	soundMgr.LoadSound("time_bonus", L"resource/Sounds/SoundEffects/Getting_Time_Bonus.wav");
+	soundMgr.LoadSound("goto_castle", L"resource/Sounds/SoundEffects/Going_To_Castle.wav");
+	soundMgr.LoadSound("money_hidden", L"resource/Sounds/SoundEffects/Hidden_Money_Bag_Found.wav");
+	soundMgr.LoadSound("hit_block", L"resource/Sounds/SoundEffects/Hitting_Breakable_Block.wav");
+	soundMgr.LoadSound("hit_st", L"resource/Sounds/SoundEffects/Hitting_Something.wav");
+	soundMgr.LoadSound("hit_water", L"resource/Sounds/SoundEffects/Hitting_Water_Surface.wav");
+	soundMgr.LoadSound("holy_water", L"resource/Sounds/SoundEffects/Holy_Water_Touching_Ground.wav");
+	soundMgr.LoadSound("invisible_end", L"resource/Sounds/SoundEffects/Invisible_End.wav");
+	soundMgr.LoadSound("invisible_start", L"resource/Sounds/SoundEffects/Invisible_Start.wav");
+	soundMgr.LoadSound("landing", L"resource/Sounds/SoundEffects/Landing.wav");
+	soundMgr.LoadSound("life_lost", L"resource/Sounds/SoundEffects/Live_Lost_.wav");
+	soundMgr.LoadSound("stage_clear", L"resource/Sounds/SoundEffects/Stage_Clear_.wav");
+	soundMgr.LoadSound("stopwatch", L"resource/Sounds/SoundEffects/Stopwatch_Start.wav");
+	soundMgr.LoadSound("throw_dagger", L"resource/Sounds/SoundEffects/Throwing_Dagger.wav");
+	soundMgr.LoadSound("timeout", L"resource/Sounds/SoundEffects/Timeout_Warning.wav");
+	soundMgr.LoadSound("use_door", L"resource/Sounds/SoundEffects/Using_Door.wav");
+	soundMgr.LoadSound("use_wp", L"resource/Sounds/SoundEffects/Using_Weapon.wav");
+
 
 	CGame* game = CGame::GetInstance();
 	game->LoadScene(SCENE2, 2, STAGE2_FILE_PATH, STAGE2_OBJECT_FILE_PATH);

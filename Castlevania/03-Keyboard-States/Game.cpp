@@ -597,3 +597,67 @@ CGame* CGame::GetInstance()
 	if (__instance == NULL) __instance = new CGame();
 	return __instance;
 }
+
+void CGame::DrawFillRect(RECT rect, D3DXCOLOR color)
+{
+    // Create a 1x1 white texture if not exists
+    static ID3D10Texture2D* whiteTex = nullptr;
+    static ID3D10ShaderResourceView* whiteTexView = nullptr;
+    
+    if (whiteTex == nullptr)
+    {
+        D3D10_TEXTURE2D_DESC texDesc;
+        ZeroMemory(&texDesc, sizeof(texDesc));
+        texDesc.Width = 1;
+        texDesc.Height = 1;
+        texDesc.MipLevels = 1;
+        texDesc.ArraySize = 1;
+        texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+        texDesc.SampleDesc.Count = 1;
+        texDesc.Usage = D3D10_USAGE_DEFAULT;
+        texDesc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+
+        UINT white = 0xFFFFFFFF;
+        D3D10_SUBRESOURCE_DATA initData;
+        initData.pSysMem = &white;
+        initData.SysMemPitch = sizeof(UINT);
+        initData.SysMemSlicePitch = 0;
+
+        HRESULT hr = pD3DDevice->CreateTexture2D(&texDesc, &initData, &whiteTex);
+        if (FAILED(hr))
+            return;
+
+        D3D10_SHADER_RESOURCE_VIEW_DESC srvDesc;
+        ZeroMemory(&srvDesc, sizeof(srvDesc));
+        srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+        srvDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+        srvDesc.Texture2D.MipLevels = 1;
+
+        hr = pD3DDevice->CreateShaderResourceView(whiteTex, &srvDesc, &whiteTexView);
+        if (FAILED(hr))
+            return;
+    }
+
+    D3DX10_SPRITE sprite;
+    sprite.pTexture = whiteTexView;
+    sprite.TexCoord.x = 0.0f;
+    sprite.TexCoord.y = 0.0f;
+    sprite.TexSize.x = 1.0f;
+    sprite.TexSize.y = 1.0f;
+    sprite.ColorModulate = color;
+    sprite.TextureIndex = 0;
+
+    D3DXMATRIX matWorld;
+    D3DXMatrixIdentity(&matWorld);
+
+    D3DXMATRIX matTranslation;
+    D3DXMatrixTranslation(&matTranslation, (float)rect.left, (float)rect.top, 0.0f);
+
+    D3DXMATRIX matScaling;
+    D3DXMatrixScaling(&matScaling, (float)(rect.right - rect.left), (float)(rect.bottom - rect.top), 1.0f);
+
+    matWorld = matScaling * matTranslation;
+    sprite.matWorld = matWorld;
+
+    this->spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
+}

@@ -55,11 +55,7 @@ void CSimonAttack::OnCollisionWith(CSimon* simon, LPCOLLISIONEVENT e)
 
 void CSimonAttack::Render(CSimon* simon)
 {
-    SoundManager& soundMgr = SoundManager::GetInstance();
-    soundMgr.Init();
-
-    soundMgr.LoadSound("use_wp", L"resource/Sounds/SoundEffects/Using_Weapon.wav");
-	soundMgr.PlaySound("use_wp");
+    SoundManager::GetInstance().PlaySound("use_wp");
 
     CWeapon* currentWeapon;
     simon->GetCurrentWeapon(currentWeapon);

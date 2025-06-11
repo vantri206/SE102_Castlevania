@@ -2,7 +2,6 @@
 #include "SimonIdle.h"
 #include "SimonState.h"
 #include "SimonHurt.h"
-#include "Audio/SoundManager.h"
 
 CSimonHurt::CSimonHurt(CSimon* simon)
 {

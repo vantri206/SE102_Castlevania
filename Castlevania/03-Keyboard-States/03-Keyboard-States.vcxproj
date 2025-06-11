@@ -145,6 +145,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Panther.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameDefine.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />

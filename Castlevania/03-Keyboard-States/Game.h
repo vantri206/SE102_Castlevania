@@ -55,6 +55,7 @@ public:
 	void Init(HWND hWnd,HINSTANCE hInstance);
 
 	void DrawBoundingBox(float x, float y, float width, float height);
+	void DrawFillRect(RECT rect, D3DXCOLOR color);
 
 	LPD3DX10SPRITE GetSpriteHandler() { return this->spriteHandler; }
 
