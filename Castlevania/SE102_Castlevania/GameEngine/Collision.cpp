@@ -10,11 +10,6 @@
 
 CCollision* CCollision::__instance = NULL;
 
-int CCollisionEvent::WasCollided() 
-{
-	return	t >= 0.0f && t <= 1.0f && obj->IsDirectionColliable(nx, ny) == 1;
-}
-
 CCollision* CCollision::GetInstance()
 {
 	if (__instance == NULL) __instance = new CCollision();
@@ -54,13 +49,13 @@ void CCollision::Overlap(
 	else						//overlap theo y
 	{
 		if (dy > 0)
-			ny = 1.0f;  // obj1 below obj2
+			ny = -1.0f;  // obj1 below obj2
 		else if (dy < 0)
-			ny = -1.0f;   // obj1 on top obj2
+			ny = 1.0f;   // obj1 on top obj2
 	}
 }
 
-LPCOLLISIONEVENT CCollision::Overlap(LPGAMEOBJECT objSrc, LPGAMEOBJECT objDest, bool isReversed)
+LPCOLLISIONEVENT CCollision::Overlap(LPGAMEOBJECT objSrc, LPGAMEOBJECT objDest)
 {
 	float sl, st, sr, sb; 
 	float dl, dt, dr, db;
@@ -78,10 +73,7 @@ LPCOLLISIONEVENT CCollision::Overlap(LPGAMEOBJECT objSrc, LPGAMEOBJECT objDest, 
 
 	if (t < 0.0f || t > 1.0f) return nullptr;
 
-	if (!isReversed)
-		e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objDest, objSrc);
-	else
-		e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objSrc, objDest);
+	e = new CCollisionEvent(t, nx, ny, 0.0f, 0.0f, objDest, objSrc);
 	return e;
 }
 /*
@@ -230,10 +222,14 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 		if (objDest == objSrc) continue; 
 		if (!objSrc->CanCollisionWithObj(objDest)) continue;
 		LPCOLLISIONEVENT e = nullptr;
-		e = SweptAABB(objSrc, dt, objDests->at(i));
-		if (!e)		//no dynamic collsion
-			if (objSrc->IsOverlappable() && objDests->at(i)->IsOverlappable())
-				e = Overlap(objSrc, objDests->at(i), false);
+		e = SweptAABB(objSrc, dt, objDest);
+		if (e && e->WasCollided() == 1)
+			coEvents.push_back(e);
+		else e = nullptr;
+		if (e != nullptr) continue;		//has dynamic collsion
+		if (!objSrc->CanOverlapWithObj(objDest)) continue;
+			if (objSrc->IsOverlappable() && (!objDest->IsBlocking() || (objDest->IsBlocking() && objDest->IsOverlappable())))
+				e = Overlap(objSrc, objDest);
 		if (e && e->WasCollided() == 1)
 			coEvents.push_back(e);
 		else
@@ -266,17 +262,14 @@ void CCollision::Filter(LPGAMEOBJECT objSrc,
 		if (c->isDeleted) continue;
 		if (c->obj->IsDeleted()) continue;
 
-		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
-		if (filterBlock == 1 && !c->obj->IsBlocking())
-		{
-			continue;
-		}
+		if (filterBlock && !c->obj->IsBlocking()) continue;
 
 		if (c->t < min_tx && c->nx != 0 && filterX == 1) {
 			min_tx = c->t; min_ix = i;
 		}
 
-		if (c->t < min_ty && c->ny != 0 && filterY == 1) {
+		if (c->t < min_ty && c->ny != 0 && filterY == 1)
+		{
 			min_ty = c->t; min_iy = i;
 		}
 	}
@@ -413,9 +406,15 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		if (!e) continue;
 		if (e->isDeleted) continue;
 		if (e->obj->IsBlocking()) continue; 
-		e->src_obj->OnCollisionWith(e);
+		objSrc->OnCollisionWith(e);
 	}
 
 
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+int CCollisionEvent::WasCollided()
+{
+	if (dynamic_cast<CWeapon*>(src_obj))	return	t >= 0.0f && t <= 1.0f;
+	else return	t >= 0.0f && t <= 1.0f && obj->IsDirectionColliable(nx, ny) == 1;
 }

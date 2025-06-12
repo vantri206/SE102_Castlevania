@@ -233,6 +233,12 @@
     <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp">
       <Filter>GameObject\WorldObject</Filter>
     </ClCompile>
+    <ClCompile Include="WaterDeadZone.cpp" />
+    <ClCompile Include="FishMan.cpp" />
+    <ClCompile Include="Fireball.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine\Animation.h">
@@ -434,6 +440,21 @@
     </ClInclude>
     <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h">
       <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterDeadZone.h">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FishMan.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireball.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashEffect.h">
+      <Filter>Scene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawn.h">
+      <Filter>GameObject\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

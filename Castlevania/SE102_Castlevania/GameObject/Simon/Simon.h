@@ -6,7 +6,7 @@
 #include "SimonIdle.h"
 #include "SimonHurt.h"
 #include "SimonFalling.h"
-
+#include "Fireball.h"
 #include "Brick.h"
 #include "Enemy.h"
 
@@ -74,6 +74,8 @@ protected:
 	int health;
 	int heartCount;
 
+	int isDrowning;
+
 	int whipLevel;
 
 public:
@@ -98,6 +100,8 @@ public:
 		
 		health = 5;
 		heartCount = 50;
+
+		isDrowning = 0;
 
 		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID));
 	}
@@ -127,6 +131,7 @@ public:
 	void OnCollisionWithEnemy(CEnemy* enemy);
 	void OnCollisionWithEnemyOnStair(CEnemy* enemy);
 	void OnCollisionWithItem(CItem* item);
+	void OnCollisionWithBullet(CFireball* fireball);
 
 	void UpgradeWeapon();
 
@@ -137,7 +142,8 @@ public:
 	int IsCollidable() { return 1; };
 	int IsBlocking() { return 0; };
 	int IsOverlappable() { return 1; }
-	int CanCollisionWithObj(LPGAMEOBJECT objDests) override;
+	int CanCollisionWithObj(LPGAMEOBJECT objDests);
+	int CanOverlapWithObj(LPGAMEOBJECT objDests);
 
 	//for untouchable mode
 	void SetUntouchable(int untouchable) { this->untouchable = untouchable; }
@@ -177,5 +183,7 @@ public:
 	int GetHealth() { return health; }
 	void SetHealth(int hp) { health = hp; }
 	CSimonState* GetSimonState();
+	void StartDrowning();
+	int IsDrowning() { return isDrowning; }
 	void SetState(CSimonState* state);
 };

@@ -1,4 +1,4 @@
-#pragma once
+
 
 #pragma region SIMON_SETTING
 
@@ -6,30 +6,76 @@
 
 #define SIMON_BLINK_TIME 120
 
-#define SIMON_WALKING_SPEED 0.3f
+#define SIMON_WALKING_SPEED 0.1f
 #define SIMON_ACCEL_WALK_X	0.0005f
 
 #define SIMON_WALKING_STAIR_SPEED 0.075f
 #define SIMON_AUTO_WALKING_STAIR_SPEED 0.03f
 
 #define SIMON_HURT_VX 0.1f    
-#define SIMON_HURT_VY 0.3f   
+#define SIMON_HURT_VY 0.1f   
 #define SIMON_HURT_TIME 500  
 #define SIMON_UNTOUCHABLE_TIME 2000 
 
-#define SIMON_JUMP_SPEED 0.5f
+#define SIMON_JUMP_SPEED 0.3f
 
 #define SIMON_ATTACK_TIME 600
+
+#define SIMON_GRAVITY -0.001f
 #pragma endregion
 
-#define BREAKABLEOBJCET_DESTROYED_TIME 300
+#pragma region GHOUL_SETTING
 
-#define CANDLE_WIDTH 8
-#define CANDLE_HEIGHT 16
+#define GHOUL_WALKING_SPEED	0.03f
 
-#define TORCH_WIDTH 16
-#define TORCH_HEIGHT 32
+#define GHOUL_WIDTH 16
+#define GHOUL_HEIGHT 32
 
+#define GHOUL_SPAWN_TIME 5000
+
+#pragma endregion
+
+#pragma region FISHMAN_SETTING
+
+#define FISHMAN_RUN_SPEED 0.02f
+#define FISHMAN_JUMP_SPEED 0.5f
+
+#define FISHMAN_WIDTH 16
+#define FISHMAN_HEIGHT 32
+
+#define FIREBALL_WIDTH 8
+#define FIREBALL_HEIGHT 8
+
+#define FISHMAN_HP 1
+
+#define FISHMAN_ACTIVE_RANGEX 72
+#define FISHMAN_ACTIVE_RANGEY 100
+
+#define FISHMAN_ATTACK_TIME 400
+
+#define FISHMAN_ATTACK_COOLDOWN 3000
+
+#define FISHMAN_GRAVITY -0.001f
+
+#define FISHMAN_SPAWN_TIME 5000
+
+#pragma endregion
+
+#pragma region PANTHER_SETTING
+
+#define PANTHER_HP 1
+
+#define PANTHER_WIDTH 32
+#define PANTHER_HEIGHT 16
+
+#define PANTHER_RANGE_ACTIVE 80
+
+#define PANTHER_RUN_SPEED 0.13f
+#define PANTHER_JUMP_VY 0.15f
+
+#pragma endregion
+
+#pragma region BAT_SETTING
 
 #define BAT_FLYING_SPEED 0.075f
 #define BAT_SWING_SPEED 0.05f
@@ -44,28 +90,20 @@
 
 #define BAT_HP 1
 
-#define PANTHER_HP 1
+#define BAT_SPAWN_TIME 7000
+
+#pragma endregion
+
+#define TRANSITION_SCENE_TIME 500
+
+#define SPLASHEFFECT_GRAVITY -0.001f
+
+#define FIREBALL_SPEED 0.05f
+#define FIREBALL_DAMAGE 1
+
 #define GHOUL_HP 1
 
 #define ENEMY_DEAD_TIME 300
-
-#define GHOUL_WALKING_SPEED	0.025f
-
-
-#define GHOUL_WIDTH 16
-#define GHOUL_HEIGHT 32
-
-
-#define GHOUL_RANGE_ACTIVE 150.0f
-
-
-#define PANTHER_WIDTH 32
-#define PANTHER_HEIGHT 16
-
-#define PANTHER_RANGE_ACTIVE 150
-
-#define PANTHER_RUN_SPEED 0.25f
-#define PANTHER_JUMP_VY 0.15f
 
 
 #define BIGHEART_HEART_VALUE 5
@@ -88,8 +126,6 @@
 #define SMALLHEART_HEART_VALUE 1
 
 #define SMALLHEART_SWING_TIME 200
-
-#define HEART_GRAVITY -0.0075f
 
 #define SMALLHEART_SWING_SPEED 0.75f
 
@@ -171,3 +207,11 @@
 
 #define BREAKABLE_BRICK_WIDTH 16
 #define BREAKABLE_BRICK_HEIGHT 16
+
+#define BREAKABLEOBJCET_DESTROYED_TIME 300
+
+#define CANDLE_WIDTH 8
+#define CANDLE_HEIGHT 16
+
+#define TORCH_WIDTH 16
+#define TORCH_HEIGHT 32

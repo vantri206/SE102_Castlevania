@@ -43,19 +43,7 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += vx * dt;
 		y += vy * dt;
 	}
-
-	float camX, camY;
-
-	CPlayScene* playscene = CGame::GetInstance()->GetCurrentPlayScene();
-	if (playscene)
-	{
-		int width = playscene->GetCurrentMapWidth();
-		int height = playscene->GetCurrentMapHeight();
-		if (!(this->x >= 0 && this->x <= width && this->y >= 0 && this->y <= height))
-		{
-			isDeleted = true;
-		}
-	}
+	if (!this->isInSceneViewport()) this->Delete();
 }
 
 void CBat::Render()

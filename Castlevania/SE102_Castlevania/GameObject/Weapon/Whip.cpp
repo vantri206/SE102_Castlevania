@@ -6,12 +6,12 @@
 CWhip::CWhip(CSimon* simon)
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(WHIP_ANI_SET_ID));
-
 	owner = simon;
 	damage = 1;
 	
 	int lv = owner->getWhipLevel();
 	this->SetWhipLevel(lv);
+	this->animation_set->at(ani_id)->Reset();
 }
 
 void CWhip::Update(DWORD dt, vector<CGameObject*>* coObjects)
@@ -100,4 +100,9 @@ int CWhip::IsCollidable()
 	int currentFrameIndex = ani->GetCurrentFrameIndex();
 	if (currentFrameIndex == 2) return 1;
 	return 0;
+}
+
+void CWhip::ResetAnimation()
+{
+	this->animation_set->at(ani_id)->Reset();
 }

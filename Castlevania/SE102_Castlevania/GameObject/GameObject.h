@@ -31,7 +31,7 @@ protected:
 
 public:
 
-    void SetType(int type) { this->type = type; }
+    virtual void SetType(int type) { this->type = type; }
     void SetId(int id) { this->id = id; }
     int GetType() { return type; }
     int GetId() { return id; }
@@ -67,7 +67,10 @@ public:
     virtual void Render() = 0;
     void RenderBoundingBox();
 
+    virtual int isInSceneViewport();
+
     virtual int CanCollisionWithObj(LPGAMEOBJECT objDests) { return 1; };
+    virtual int CanOverlapWithObj(LPGAMEOBJECT objDests) { return 1; };
 
     virtual void OnNoCollision(DWORD dt) {};
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
@@ -87,6 +90,8 @@ public:
     virtual void LoadExtraSetting(vector<int> extra_settings) {}
 
     static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra_settings);
+
+    void TriggerSplashEffect(float x, float y);
 
     virtual void StartSpawning() {}
     virtual void FinishedSpawning() {}

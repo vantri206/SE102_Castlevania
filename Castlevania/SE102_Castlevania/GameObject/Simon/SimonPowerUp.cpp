@@ -5,7 +5,7 @@ CSimonPowerUp::CSimonPowerUp(CSimon* simon) : CSimonState(simon)
 	startPowerUp = GetTickCount64();
 	simon->StartUntouchable();
 	simon->SetAniId(ID_ANI_SIMON_POWER_UP);
-	simon->SetPhysical(0.0f, 0.0f, 0.0f, DEFAULT_GRAVITY);
+	simon->SetPhysical(0.0f, 0.0f, 0.0f, SIMON_GRAVITY);
 	simon->SetSize(SIMON_POWERUP_WIDTH, SIMON_POWERUP_HEIGHT);
 }
 

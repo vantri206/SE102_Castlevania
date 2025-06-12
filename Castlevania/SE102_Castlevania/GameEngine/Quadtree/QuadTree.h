@@ -26,6 +26,7 @@ public:
     void Insert(LPGAMEOBJECT obj);
     void Remove(LPGAMEOBJECT obj);
     void insertNode(QNode* node, CTreeObject* treeObj, int depth);
+    void Update(vector<LPGAMEOBJECT>& Objects);
 
     std::vector<LPGAMEOBJECT> GetObjectsInView(RECT cam);
     std::vector<LPGAMEOBJECT> GetAllObjects();

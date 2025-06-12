@@ -300,7 +300,6 @@ void CGame::DrawBoundingBox(float left, float top, float right, float bottom)
 	Draw(right, y, 1, bbox, 0, 0, 1, 1, 1.0f, height);
 }
 
-
 int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;

@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include <cstdlib>
 #include <BreakableBrick.h>
+#include <Camera.h>
 
 CPanther::CPanther()
 {
@@ -29,11 +30,16 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		if (GetTickCount64() - startDeathTime >= ENEMY_DEAD_TIME)
 			isDeleted = true;
+		return;
 	}
-	else if (this->health <= 0)
+
+	if (!isActived()) return;
+
+	else if (!CCamera::GetInstance()->IsInCamera(this) || this->health <= 0)
 	{
 		this->SetState(PANTHER_STATE_DEAD);
 		this->NormalEnemyDead(ENEMY_DEAD_TIME);
+		return;
 	}
 	else
 	{

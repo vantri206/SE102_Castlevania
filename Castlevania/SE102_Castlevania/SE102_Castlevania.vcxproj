@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BreakableBrick.cpp" />
+    <ClCompile Include="EnemySpawn.cpp" />
+    <ClCompile Include="Fireball.cpp" />
+    <ClCompile Include="FishMan.cpp" />
     <ClCompile Include="GameEngine\Animation.cpp" />
     <ClCompile Include="GameEngine\Animations.cpp" />
     <ClCompile Include="GameEngine\Camera.cpp" />
@@ -81,10 +84,14 @@
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="WaterDeadZone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BreakableBrick.h" />
     <ClInclude Include="BrickEffect.h" />
+    <ClInclude Include="EnemySpawn.h" />
+    <ClInclude Include="Fireball.h" />
+    <ClInclude Include="FishMan.h" />
     <ClInclude Include="GameEngine\Animation.h" />
     <ClInclude Include="GameEngine\AnimationFrame.h" />
     <ClInclude Include="GameEngine\Animations.h" />
@@ -148,9 +155,11 @@
     <ClInclude Include="Scene\TileMap\Map.h" />
     <ClInclude Include="Scene\TileMap\Tile.h" />
     <ClInclude Include="SimonDie.h" />
+    <ClInclude Include="SplashEffect.h" />
     <ClInclude Include="Utils\debug.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="WaterDeadZone.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

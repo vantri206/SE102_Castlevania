@@ -79,6 +79,18 @@
 #flying
 3200 32000 100 32001 100 32002 100
 
+#----FISH MAN----#
+#jump
+3300 33000 0
+#walk
+3301 33000 100 33001 100
+#attack
+3302 33002 0
+
+#----FIREBALL---#
+#normal
+3900 39000 0
+
 #####-----OBJECTS-----####
 
 #--TORCH--#
@@ -127,4 +139,8 @@
 #dead effect
 9000 90000 100 90001 100 90002 100
 #--BRICK BREAK---#
+#brick effect
 9001 90010 0
+#----SPLASH WATER EFFECT---#
+#splash effect
+9002 90020 0

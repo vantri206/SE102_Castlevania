@@ -6,7 +6,7 @@
 CSimonSit::CSimonSit(CSimon* simon) : CSimonState(simon)
 {
 	simon->SetSpeed(0.0f, 0.0f);
-	simon->SetAccel(0.0f, DEFAULT_GRAVITY);
+	simon->SetAccel(0.0f, SIMON_GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_SIT);
 	simon->SetSize(SIMON_SIT_WIDTH, SIMON_SIT_HEIGHT);
 }
@@ -25,15 +25,10 @@ void CSimonSit::KeyDownHandle(int keyCode)
 }
 void CSimonSit::KeyUpHandle(int keyCode)
 {
-    if (keyCode == DIK_S)
+    if (keyCode == DIK_DOWN)
     {
-		float vx, vy;
-		simon->GetSpeed(vx, vy);
-		if (vy == 0)
-		{
-			simon->SetPosition(simon->GetX(), simon->GetY() + (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
-			simon->SetState(new CSimonIdle(simon));
-		}
+		simon->SetPosition(simon->GetX(), simon->GetY() + (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
+		simon->SetState(new CSimonIdle(simon));
     }
 
 }
@@ -59,7 +54,7 @@ void CSimonSit::OnCollisionWith(LPCOLLISIONEVENT e)
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		simon->OnCollisionWithEnemy(enemy);
 	}
-	if (e->ny > 0 && e->obj->IsBlocking())
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

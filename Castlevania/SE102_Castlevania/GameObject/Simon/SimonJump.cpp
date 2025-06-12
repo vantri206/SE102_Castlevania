@@ -13,7 +13,7 @@ CSimonJump::CSimonJump(CSimon* simon) : CSimonState(simon)
 	jumpStartTime = GetTickCount64();
 	float vx, vy, ax, ay;
 	simon->GetPhysical(vx, vy, ax, ay);
-	simon->SetPhysical(vx, SIMON_JUMP_SPEED, ax, DEFAULT_GRAVITY);
+	simon->SetPhysical(vx, SIMON_JUMP_SPEED, ax, SIMON_GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_IDLE);
 	simon->SetSize(SIMON_JUMP_WIDTH, SIMON_JUMP_HEIGHT);
 }
@@ -64,7 +64,7 @@ void CSimonJump::OnCollisionWith(LPCOLLISIONEVENT e)
 		CItem* item = dynamic_cast<CItem*>(e->obj);
 		simon->OnCollisionWithItem(item);
 	}
-	if (e->ny > 0 && e->obj->IsBlocking())
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

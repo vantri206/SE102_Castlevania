@@ -13,8 +13,12 @@
 #include "SubWeaponItem.h"
 #include "SimonAttack.h"
 #include "SimonPowerUp.h"
-#include <SimonJump.h>
-#include <SimonSit.h>
+#include "SimonJump.h"
+#include "SimonSit.h"
+#include "BreakableBrick.h"
+#include "Bat.h"
+#include "Fireball.h"
+#include "SimonDie.h"
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -48,7 +52,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     if (x < 0) x = 0;
     else if (x > mapwidth) x = (float)mapwidth;
 
-    // Giới hạn y trong [0, mapheight]
     if (y < 0) y = 0;
     else if (y > mapheight) y = (float)mapheight;
 
@@ -69,11 +72,15 @@ void CSimon::OnCollisionWithEnemy(CEnemy* enemy)
 	this->TakenDamage(enemy->GetAttack());
 	this->SetState(new CSimonHurt(this));
 	this->StartUntouchable();
+	if (dynamic_cast<CBat*>(enemy))
+		enemy->TakenDamage(999);
 }
 void CSimon::OnCollisionWithEnemyOnStair(CEnemy* enemy)
 {
 	this->TakenDamage(enemy->GetAttack());
 	this->StartUntouchable();
+	if (dynamic_cast<CBat*>(enemy))
+		enemy->TakenDamage(999);
 }
 void CSimon::OnCollisionWithItem(CItem* item)
 {
@@ -110,6 +117,13 @@ void CSimon::OnCollisionWithItem(CItem* item)
 		}
 	}
 	item->Delete();
+}
+void CSimon::OnCollisionWithBullet(CFireball* fireball)
+{
+	this->TakenDamage(FIREBALL_DAMAGE);
+	this->SetState(new CSimonHurt(this));
+	this->StartUntouchable();
+	fireball->Delete();
 }
 
 void CSimon::UpgradeWeapon()
@@ -175,22 +189,6 @@ void CSimon::TakenDamage(int damage)
 	health -= damage;
 }
 
-int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
-{
-	if (dynamic_cast<CBrick*>(objDests))
-	{
-		if (this->isOnStair) return 0;
-		return 1;
-	}
-	if (dynamic_cast<CEnemy*>(objDests))
-	{
-		CEnemy* enemy = dynamic_cast<CEnemy*>(objDests);
-		if (enemy->isDead() || !enemy->isActived() || this->GetUntouchable())
-			return 0;
-	}
-	return 1;
-}
-
 void CSimon::UpdateMoving(DWORD dt)
 {
 	x += vx * dt;
@@ -218,8 +216,15 @@ CSimonState* CSimon::GetSimonState()
 	return currentState.get();
 }
 
+void CSimon::StartDrowning()
+{
+	this->SetState(new CSimonDie(this));
+	isDrowning = 1;
+}
+
 void CSimon::Render()
 {
+	if (isDrowning) return;
 	if (untouchable)					
 	{
 		DWORD now = GetTickCount64();
@@ -276,4 +281,28 @@ bool CSimon::IsNearStairDown()
 		}
 	}
 	return false;
+}
+
+int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
+{
+	if (dynamic_cast<CBrick*>(objDests))
+	{
+		if (this->isOnStair) return 0;
+		return 1;
+	}
+	if (dynamic_cast<CEnemy*>(objDests))
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(objDests);
+		if (enemy->isDead() || !enemy->isActived() || this->GetUntouchable())
+			return 0;
+	}
+	return 1;
+}
+int CSimon::CanOverlapWithObj(LPGAMEOBJECT objDests)
+{
+	if (dynamic_cast<CBreakableBrick*>(objDests))
+	{
+		return 0;
+	}
+	return 1;
 }

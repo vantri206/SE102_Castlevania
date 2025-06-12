@@ -6,6 +6,7 @@
 #include "Candle.h"
 #include "Ghoul.h"
 #include "Panther.h"
+#include "FishMan.h"
 #include "Brick.h"
 #include "Portal.h"
 #include "Stair.h"
@@ -15,10 +16,12 @@
 #include "SmallHeart.h"
 #include "SubWeaponItem.h"
 #include "BreakableBrick.h"
+#include "WaterDeadZone.h"
 #include "MoneyBag.h"
 #include "TriggerZone.h"
+#include "SplashEffect.h"
 #include "Bat.h"
-
+#include "EnemySpawn.h"
 #define ID_TEX_BBOX 999
 
 CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int> extra_settings)
@@ -31,12 +34,6 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case CANDLE:
 		obj = new CCandle();
-		break;
-	case GHOUL:
-		obj = new CGhoul();
-		break;
-	case PANTHER:
-		obj = new CPanther();
 		break;
 	case BRICK:
 		obj = new CBrick();
@@ -71,8 +68,14 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 	case WALL:
 		obj = new CWall();
 		break;
+	case WATERDEADZONE:
+		obj = new CWaterDeadZone();
+		break;
+	case GHOUL:
+	case PANTHER:
 	case BAT:
-		obj = new CBat();
+	case FISHMAN:
+		obj = new CEnemySpawn();
 		break;
 	default:
 		DebugOut(L"[ERROR] Unknown object type: %d\n", objectType);
@@ -85,6 +88,17 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		obj->LoadExtraSetting(extra_settings);
 	}
 	return obj;
+}
+
+void CGameObject::TriggerSplashEffect(float x, float y)
+{
+	DebugOut(L"trigger\n");
+	vector <CSplashEffect*>splasheffects;
+	splasheffects.push_back(new CSplashEffect(x, y, -0.025f, 0.15f, SPLASHEFFECT_GRAVITY));
+	splasheffects.push_back(new CSplashEffect(x, y, 0, 0.2f, SPLASHEFFECT_GRAVITY));
+	splasheffects.push_back(new CSplashEffect(x, y, 0.025f, 0.15f, SPLASHEFFECT_GRAVITY));
+	for (auto splasheffect : splasheffects)
+		CGame::GetInstance()->GetCurrentPlayScene()->AddEffect(splasheffect);
 }
 
 CGameObject::CGameObject()
@@ -108,6 +122,20 @@ void CGameObject::RenderBoundingBox()
 	float l, t, r, b;
 	this->GetBoundingBox(l, t, r, b);
 	CGame::GetInstance()->DrawBoundingBox(l, t, r, b);
+}
+int CGameObject::isInSceneViewport()
+{
+	CPlayScene* playscene = CGame::GetInstance()->GetCurrentPlayScene();
+	if (playscene)
+	{
+		int width = playscene->GetCurrentMapWidth();
+		int height = playscene->GetCurrentMapHeight();
+		if (this->x >= 0 && this->x <= width && this->y >= 0 && this->y <= height)
+		{
+			return 1;
+		}
+	}
+	return 0;
 }
 CGameObject::~CGameObject()
 {

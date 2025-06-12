@@ -72,16 +72,12 @@ void CSceneManager::ChangeScene(int id, int entry)
     {
         currentScene->UnloadResources();
     }
-
-    currentScene = scenes[id];
+    
+    currentScene = nullptr;
     currentSceneId = id;
+    nextSceneEntry = entry;
 
-    currentScene->LoadResources();
-    CPlayScene* playScene = dynamic_cast<CPlayScene*>(currentScene);
-    if (playScene)
-    {
-        playScene->SetCurrentEntry(entry);
-    }
+    transitionStart = GetTickCount64();
 
     DebugOut(L"[SceneManager] Changed to scene %d (entry %d)\n", id, entry);
 }
@@ -89,8 +85,18 @@ void CSceneManager::ChangeScene(int id, int entry)
 
 void CSceneManager::Update(DWORD dt)
 {
+    DWORD now = GetTickCount64();
     if (currentScene)
-        currentScene->Update(dt);
+            currentScene->Update(dt);
+     if (transitionStart != - 1 && GetTickCount64() - transitionStart >= TRANSITION_SCENE_TIME)
+     {
+        currentScene = scenes[currentSceneId];
+        currentScene->LoadResources();
+        CPlayScene* playScene = dynamic_cast<CPlayScene*>(currentScene);
+        if (playScene)
+            playScene->SetCurrentEntry(nextSceneEntry);
+        transitionStart = -1;
+     }
 }
 
 void CSceneManager::Render()

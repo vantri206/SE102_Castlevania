@@ -19,6 +19,8 @@ CPlayScene::CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile)
 	this->mapId = mapId;
 
 	this->mapFile = mapFile;
+
+	this->quadtree = new QuadTree(0, 0);
 }
 
 void CPlayScene::LoadResources() 
@@ -79,6 +81,7 @@ void CPlayScene::LoadResources()
 		if (obj)
 		{
 			obj->SetPosition(x, y);
+			objects.push_back(obj);
 			quadtree->Insert(obj);
 		}
 	}
@@ -107,8 +110,8 @@ void CPlayScene::UnloadResources()
         for (auto obj : allObjects)
         {
 			quadtree->Remove(obj);
-			obj = nullptr;
 			delete obj;
+			obj = nullptr;
         }
         delete quadtree;
         quadtree = nullptr;
@@ -132,12 +135,25 @@ void CPlayScene::UnloadResources()
 
 void CPlayScene::Update(DWORD dt)
 {
-	RECT cam = CCamera::GetInstance()->GetCamRect();
+	quadtree->Update(objects);			//update dynamic objects position on tree
 
-	auto activeObjects = quadtree->GetObjectsInView(cam);
-	for (auto obj : activeObjects)
-		obj->Update(dt, &activeObjects);
-	if(player) player->Update(dt, &activeObjects);
+	auto allObjects = quadtree->GetAllObjects();
+	for (auto obj : allObjects)
+	{
+		float l, t, r, b;
+		obj->GetBoundingBox(l, t, r, b);
+		RECT objBbox;
+		objBbox.left = (int)floor(l);
+		objBbox.top = (int)ceil(t);
+		objBbox.right = (int)ceil(r);
+		objBbox.bottom = (int)floor(b);
+		auto nearbyObjects = quadtree->GetObjectsInView(objBbox);
+		obj->Update(dt, &nearbyObjects);
+	}
+
+	RECT cam = CCamera::GetInstance()->GetCamRect();
+	auto nearbyPlayerObjects = quadtree->GetObjectsInView(cam);
+	if(player) player->Update(dt, &nearbyPlayerObjects);
 
 	for (auto effect : effects)
 		effect->Update(dt);
@@ -190,26 +206,42 @@ void CPlayScene::Render()
 
 void CPlayScene::AddObject(CGameObject* obj)
 {
-	quadtree->Insert(obj);
+	objects.push_back(obj);
 }
 
 void CPlayScene::AddHiddenObject(CGameObject* obj)
 {
-	hiddenObjects.insert(obj);
+	objects.push_back(obj);
 }
 
 void CPlayScene::ClearObjects()
 {
-	auto allObjects = quadtree->GetAllObjects();
-	for (auto obj : allObjects)
+	std::vector<CGameObject*> objectsDeleted;
+
+	for (auto obj : objects)
 	{
 		if (obj && obj->IsDeleted())
 		{
-			//DebugOut(L"clear %d\n", obj->GetType());
 			quadtree->Remove(obj);
-			obj = nullptr;
-			delete obj;
+			objectsDeleted.push_back(obj);
 		}
+	}
+
+	for (auto obj : objectsDeleted)
+	{
+		objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
+		delete obj;
+	}
+
+	//clear hiden objects set
+	for (auto it = hiddenObjects.begin(); it != hiddenObjects.end(); )
+	{
+		if ((*it)->IsDeleted())
+		{
+			delete* it;
+			it = hiddenObjects.erase(it);
+		}
+		else ++it;
 	}
 }
 

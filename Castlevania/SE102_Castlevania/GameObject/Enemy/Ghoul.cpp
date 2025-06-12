@@ -27,7 +27,10 @@ void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (GetTickCount64() - startDeathTime >= ENEMY_DEAD_TIME)
 			isDeleted = true;
 	}
-	else if (this->health <= 0)
+
+	if (!isActived()) return;
+
+	if (this->health <= 0)
 	{
 		this->SetState(GHOUL_STATE_DEAD);
 		this->NormalEnemyDead(ENEMY_DEAD_TIME);
@@ -62,7 +65,7 @@ void CGhoul::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
-		vx = 0.0f;
+		this->nx = this->nx * (-1);
 	}
 }
 

@@ -27,6 +27,7 @@ protected:
 	int mapId;
 	wstring mapFile;
 
+	vector<CGameObject*> objects;
 	std::unordered_set<CGameObject*> hiddenObjects;
 	QuadTree* quadtree = nullptr;
 	vector<CGameEffect*> effects;

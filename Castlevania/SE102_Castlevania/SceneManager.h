@@ -3,17 +3,23 @@
 
 #include "Scene.h"
 #include "GameDefine.h"
+#include "GameSetting.h"
 
 class CSimon;
 
 class CSceneManager
 {
 private:
+
+    DWORD transitionStart = -1;
+
     static CSceneManager* _instance;
 
     CScene* scenes[MAX_SCENES] = {};
+
     CScene* currentScene = nullptr;
     int currentSceneId = -1;
+    int nextSceneEntry = -1;
 
     CSimon* player = nullptr;
 

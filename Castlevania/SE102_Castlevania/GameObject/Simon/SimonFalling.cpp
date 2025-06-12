@@ -4,6 +4,9 @@
 #include "Game.h"
 #include "Simon.h"
 #include "SimonSit.h"
+#include "TriggerZone.h"
+#include "SimonDie.h"
+#include "WaterDeadZone.h"
 
 CSimonFalling::CSimonFalling(CSimon* simon) : CSimonState(simon)
 {
@@ -22,13 +25,23 @@ void CSimonFalling::OnNoCollision(DWORD dt)
 }
 void CSimonFalling::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	/*
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		simon->SetState(new CSimonHurt(simon));
 	}
-	*/
-	if (e->ny > 0 && e->obj->IsBlocking())
+	else if (dynamic_cast<CTriggerZone*>(e->obj))
+	{
+		CTriggerZone* triggerzone = dynamic_cast<CTriggerZone*>(e->obj);
+		triggerzone->Trigger();
+	}
+	else if (dynamic_cast<CWaterDeadZone*>(e->obj))
+	{
+		float l, t, r, b;
+		e->obj->GetBoundingBox(l, t, r, b);
+		simon->TriggerSplashEffect(simon->GetX(), t);
+		simon->StartDrowning();
+	}
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{	
 		simon->SetState(new CSimonSit(simon));
 	}
