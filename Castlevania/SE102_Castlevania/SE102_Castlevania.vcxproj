@@ -81,6 +81,9 @@
     <ClCompile Include="Scene\TileMap\Map.cpp" />
     <ClCompile Include="Scene\TileMap\Tile.cpp" />
     <ClCompile Include="SimonDie.cpp" />
+    <ClCompile Include="SimonStairDownAttack.cpp" />
+    <ClCompile Include="SimonStairUpAttack.cpp" />
+
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -156,6 +159,9 @@
     <ClInclude Include="Scene\TileMap\Tile.h" />
     <ClInclude Include="SimonDie.h" />
     <ClInclude Include="SplashEffect.h" />
+    <ClInclude Include="SimonSitAttack.h" />
+    <ClInclude Include="SimonStairDownAttack.h" />
+    <ClInclude Include="SimonStairUpAttack.h" />
     <ClInclude Include="Utils\debug.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Wall.h" />

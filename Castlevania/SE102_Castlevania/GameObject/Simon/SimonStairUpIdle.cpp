@@ -6,6 +6,7 @@
 #include "SimonWalkingStairUp.h"
 #include "SimonWalkingStairDown.h"
 #include "SimonStairUpIdle.h"
+#include "SimonStairUpAttack.h"
 
 CSimonStairUpIdle::CSimonStairUpIdle(CSimon* simon) : CSimonState(simon)
 {
@@ -35,7 +36,7 @@ void CSimonStairUpIdle::KeyDownHandle(int keyCode)
     }
     else if (keyCode == DIK_A)
     {
-        //simon->SetState(new CSimonAttack(simon));
+		simon->SetState(new CSimonStairUpAttack(simon));
     }
 }
 

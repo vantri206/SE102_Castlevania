@@ -50,4 +50,3 @@ void CSimonFalling::OnCollisionWith(LPCOLLISIONEVENT e)
 		simon->SetVx(0.0f);
 	}
 }
-

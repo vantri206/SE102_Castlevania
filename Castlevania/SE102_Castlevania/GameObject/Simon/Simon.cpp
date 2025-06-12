@@ -29,6 +29,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 		FinishedUntouchable();
+	if (GetTickCount64() - invisible_start > SIMON_INVISIBLE_TIME)
+		FinishedInvisible();
 
 	this->CheckStairNearby(coObjects);
 

@@ -13,9 +13,7 @@
 #include "SimonStairUpIdle.h"
 #include "SimonStairDownIdle.h"
 #include "SimonAutoWalking.h"
-#include "Item.h"
-#include "MorningStar.h"
-#include "SimonPowerUp.h"
+#include <Item.h>
 #include "SimonDie.h"
 #include <TriggerZone.h>
 #include <Fireball.h>
@@ -28,19 +26,19 @@ CSimonIdle::CSimonIdle(CSimon* simon) : CSimonState(simon)
 }
 void CSimonIdle::KeyUpHandle(int keyCode)
 {
-	//DebugOut(L"Keycode: %d\n", keyCode);
+    //DebugOut(L"Keycode: %d\n", keyCode);
 
 }
 
 void CSimonIdle::KeyDownHandle(int keyCode)
 {
-	//DebugOut(L"Keycode: %d\n", keyCode);
+    //DebugOut(L"Keycode: %d\n", keyCode);
     if (keyCode == DIK_RIGHT)
     {
         simon->SetDirectionX(1);
         simon->SetState(new CSimonWalking(simon));
     }
-    else if (keyCode == DIK_LEFT) 
+    else if (keyCode == DIK_LEFT)
     {
         simon->SetDirectionX(-1);
         simon->SetState(new CSimonWalking(simon));
@@ -49,18 +47,18 @@ void CSimonIdle::KeyDownHandle(int keyCode)
     {
         simon->SetState(new CSimonJump(simon));
     }
-    else if (keyCode == DIK_A) 
+    else if (keyCode == DIK_A)
     {
         if (CGame::GetInstance()->IsKeyDown(DIK_UP))
         {
-            if(simon->CanUseSubWeapon())
+            if (simon->CanUseSubWeapon())
                 simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
         }
         else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
     }
     else if (keyCode == DIK_UP && simon->IsNearStairUp())
     {
-		CStair* stair = simon->GetNearbyStair();
+        CStair* stair = simon->GetNearbyStair();
         if (stair != nullptr)
         {
             float stairX, stairY;
@@ -88,11 +86,9 @@ void CSimonIdle::KeyDownHandle(int keyCode)
         simon->SetPosition(simon->GetX(), simon->GetY() - 4.0f);
         simon->SetState(new CSimonSit(simon));
     }
-    else if (keyCode == DIK_G) {
+    else if (keyCode==DIK_G)
 		simon->SetState(new CSimonDie(simon));
-    }
-
-} 
+}
 
 void CSimonIdle::Update(DWORD dt)
 {
@@ -114,10 +110,10 @@ void CSimonIdle::OnNoCollision(DWORD dt)
 void CSimonIdle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CEnemy*>(e->obj))
-	{
+    {
         CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
         simon->OnCollisionWithEnemy(enemy);
-	}
+    }
     else if (dynamic_cast<CItem*>(e->obj))
     {
         CItem* item = dynamic_cast<CItem*>(e->obj);
@@ -140,5 +136,5 @@ void CSimonIdle::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
         simon->SetVx(0.0f);
-	}
+    }
 }

@@ -17,26 +17,22 @@ CSimonJump::CSimonJump(CSimon* simon) : CSimonState(simon)
 	simon->SetAniId(ID_ANI_SIMON_IDLE);
 	simon->SetSize(SIMON_JUMP_WIDTH, SIMON_JUMP_HEIGHT);
 }
-void CSimonJump::KeyDownHandle(int keyCode) {
+void CSimonJump::KeyDownHandle(int keyCode)
+{
 	if (keyCode == DIK_A)
 	{
-		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
-		{
-			if (simon->CanUseSubWeapon())
-				simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
-		}
-		else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
+		simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
 	}
 }
 void CSimonJump::KeyUpHandle(int keyCode)
 {
-    if ((keyCode == DIK_RIGHT && simon->GetDirectionX() > 0) || (keyCode == DIK_LEFT && simon->GetDirectionX() < 0))
-    {
-        simon->SetAx(0.0f);
-        simon->SetVx(0.0f);
-    }
+	if ((keyCode == DIK_RIGHT && simon->GetDirectionX() > 0) || (keyCode == DIK_LEFT && simon->GetDirectionX() < 0))
+	{
+		simon->SetAx(0.0f);
+		simon->SetVx(0.0f);
+	}
 }
-void CSimonJump::Update(DWORD dt) 
+void CSimonJump::Update(DWORD dt)
 {
 	float vx, vy;
 	simon->GetSpeed(vx, vy);
@@ -73,4 +69,3 @@ void CSimonJump::OnCollisionWith(LPCOLLISIONEVENT e)
 		simon->SetVx(0.0f);
 	}
 }
-

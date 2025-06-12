@@ -239,6 +239,12 @@
       <Filter>GameObject\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawn.cpp" />
+    <ClCompile Include="SimonStairUpAttack.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonStairDownAttack.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine\Animation.h">
@@ -438,6 +444,7 @@
     <ClInclude Include="SimonDie.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
+
     <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
@@ -455,6 +462,12 @@
     </ClInclude>
     <ClInclude Include="EnemySpawn.h">
       <Filter>GameObject\Enemy</Filter>
+    <ClInclude Include="SimonSitAttack.h" />
+    <ClInclude Include="SimonStairUpAttack.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonStairDownAttack.h">
+      <Filter>GameObject\Simon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
