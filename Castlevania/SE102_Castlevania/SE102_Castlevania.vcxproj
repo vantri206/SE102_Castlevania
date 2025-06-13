@@ -73,7 +73,8 @@
     <ClCompile Include="GameObject\WorldObject\Portal.cpp" />
     <ClCompile Include="GameObject\WorldObject\Stair.cpp" />
     <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp" />
-    <ClCompile Include="GameSetting\GameSetting.cpp" />
+    <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene\Effect\Effect.cpp" />
@@ -81,9 +82,9 @@
     <ClCompile Include="Scene\TileMap\Map.cpp" />
     <ClCompile Include="Scene\TileMap\Tile.cpp" />
     <ClCompile Include="SimonDie.cpp" />
+    <ClCompile Include="SimonFloat.cpp" />
     <ClCompile Include="SimonStairDownAttack.cpp" />
     <ClCompile Include="SimonStairUpAttack.cpp" />
-
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -150,6 +151,8 @@
     <ClInclude Include="GameObject\WorldObject\TriggerZone.h" />
     <ClInclude Include="GameSetting\GameDefine.h" />
     <ClInclude Include="GameSetting\GameSetting.h" />
+    <ClInclude Include="Gate.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene\Effect\DeadEffect.h" />
@@ -158,6 +161,7 @@
     <ClInclude Include="Scene\TileMap\Map.h" />
     <ClInclude Include="Scene\TileMap\Tile.h" />
     <ClInclude Include="SimonDie.h" />
+    <ClInclude Include="SimonFloat.h" />
     <ClInclude Include="SplashEffect.h" />
     <ClInclude Include="SimonSitAttack.h" />
     <ClInclude Include="SimonStairDownAttack.h" />

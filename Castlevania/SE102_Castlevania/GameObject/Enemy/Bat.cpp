@@ -43,7 +43,7 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += vx * dt;
 		y += vy * dt;
 	}
-	if (!this->isInSceneViewport()) this->Delete();
+	if (!this->isInSceneViewport()) this->SetState(BAT_STATE_DEAD);
 }
 
 void CBat::Render()

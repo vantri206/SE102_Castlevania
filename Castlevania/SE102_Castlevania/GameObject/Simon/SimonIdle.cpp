@@ -26,13 +26,11 @@ CSimonIdle::CSimonIdle(CSimon* simon) : CSimonState(simon)
 }
 void CSimonIdle::KeyUpHandle(int keyCode)
 {
-    //DebugOut(L"Keycode: %d\n", keyCode);
 
 }
 
 void CSimonIdle::KeyDownHandle(int keyCode)
 {
-    //DebugOut(L"Keycode: %d\n", keyCode);
     if (keyCode == DIK_RIGHT)
     {
         simon->SetDirectionX(1);
@@ -83,7 +81,7 @@ void CSimonIdle::KeyDownHandle(int keyCode)
     }
     else if (keyCode == DIK_DOWN)
     {
-        simon->SetPosition(simon->GetX(), simon->GetY() - 4.0f);
+        simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
         simon->SetState(new CSimonSit(simon));
     }
     else if (keyCode==DIK_G)
@@ -96,7 +94,6 @@ void CSimonIdle::Update(DWORD dt)
     simon->GetSpeed(vx, vy);
     if (vy < 0)
     {
-        simon->SetPosition(simon->GetX(), simon->GetY() - 4.0f);
         simon->SetState(new CSimonFalling(simon));
     }
 }

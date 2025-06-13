@@ -16,29 +16,7 @@
 #include "Stair.h"
 
 #include "Weapon.h"
-#include <Item.h>
-
-
-#define SIMON_MAX_WHIP_LEVEL 3
-
-#define UNTOUCHABLE 1
-#define NOT_UNTOUCHABLE 0
-
-#define SIMON_BLINK_TIME 120
-
-#define SIMON_WALKING_SPEED 0.3f
-#define SIMON_ACCEL_WALK_X	0.0005f
-
-#define SIMON_WALKING_STAIR_SPEED 0.075f
-#define SIMON_AUTO_WALKING_STAIR_SPEED 0.03f
-
-#define SIMON_HURT_VX 0.1f    
-#define SIMON_HURT_VY 0.3f   
-#define SIMON_HURT_TIME 500  
-#define SIMON_UNTOUCHABLE_TIME 2000 
-#define SIMON_INVISIBLE_TIME 4000
-
-#define SIMON_JUMP_SPEED 0.5f
+#include "Item.h"
 
 #define SIMON_STATE_IDLE	0
 #define SIMON_STATE_WALK	1
@@ -89,7 +67,7 @@ protected:
 	ULONGLONG invisible_start;
 
 	CStair* nearbyStair;	
-	bool isOnStair = false;
+	int isOnStair = 0;
 
 	CWeapon* currentWeapon;
 	int currentSubWeaponType;
@@ -104,7 +82,6 @@ protected:
 	int isDrowning;
 
 	int whipLevel;
-
 
 public:
 
@@ -127,10 +104,12 @@ public:
 		subWeaponLimit = 1;
 		activeSubWeaponList = vector<CWeapon*>();
 
+		nearbyStair = nullptr;
+
 		whipLevel = 1;
 		
-		health = 5;
-		heartCount = 50;
+		health = 16;
+		heartCount = 5;
 
 		isDrowning = 0;
 
@@ -177,16 +156,21 @@ public:
 	int CanOverlapWithObj(LPGAMEOBJECT objDests);
 
 	//for untouchable mode
-	void SetUntouchable(int untouchable) { this->untouchable = untouchable; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void FinishedUntouchable() { untouchable = 0; untouchable_start = 0; }
-	int GetUntouchable() { return untouchable; }
+	int IsUntouchable() { return untouchable; }
+
+	//for invisible mode
+	int IsInvisible() { return invisible; }
+	void StartInvisible() { invisible = 1; invisible_start = GetTickCount64(); }
+	void FinishedInvisible() { invisible = 0; invisible_start = 0; }
 
 	//for go stair
 	bool IsNearStairUp();
 	bool IsNearStairDown();
 	void CheckStairNearby(vector<LPGAMEOBJECT>* coObjects);
 	CStair* GetNearbyStair() { return nearbyStair; }
+	void SetNearbyStair(CStair* stair) { nearbyStair = stair; }
 	void SetOnStair(bool isonstair) { this->isOnStair = isonstair; }
 	bool GetOnStair() { return isOnStair; }
 

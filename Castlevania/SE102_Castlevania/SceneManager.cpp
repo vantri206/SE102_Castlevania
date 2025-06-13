@@ -13,6 +13,12 @@ CSceneManager* CSceneManager::GetInstance()
     return _instance;
 }
 
+CSceneManager::CSceneManager()
+{
+    hud = new CHUD(CGame::GetInstance()->GetDirect3DDevice());
+    transitionStart = -1;
+}
+
 void CSceneManager::LoadPlayer()
 {
     this->player = new CSimon();
@@ -60,6 +66,13 @@ void CSceneManager::LoadAllScenes(LPCWSTR filepath)
     f.close();
 }
 
+void CSceneManager::RequestChangeScene(int id, int entry)
+{
+    nextSceneId = id;
+    nextSceneEntry = entry;
+    isRequestedChangeScene = 1;
+}
+
 void CSceneManager::ChangeScene(int id, int entry)
 {
     if (id < 0 || id >= MAX_SCENES || scenes[id] == nullptr)
@@ -68,6 +81,8 @@ void CSceneManager::ChangeScene(int id, int entry)
         return;
     }
 
+    currentSceneState = SCENE_STATE_LOADING;
+
     if (currentScene)
     {
         currentScene->UnloadResources();
@@ -75,7 +90,7 @@ void CSceneManager::ChangeScene(int id, int entry)
     
     currentScene = nullptr;
     currentSceneId = id;
-    nextSceneEntry = entry;
+    currentSceneEntry = entry;
 
     transitionStart = GetTickCount64();
 
@@ -86,23 +101,30 @@ void CSceneManager::ChangeScene(int id, int entry)
 void CSceneManager::Update(DWORD dt)
 {
     DWORD now = GetTickCount64();
-    if (currentScene)
-            currentScene->Update(dt);
-     if (transitionStart != - 1 && GetTickCount64() - transitionStart >= TRANSITION_SCENE_TIME)
-     {
+    if (currentScene && currentSceneState != SCENE_STATE_LOADING)
+        currentScene->Update(dt);
+    else if (transitionStart != -1 && GetTickCount64() - transitionStart >= TRANSITION_SCENE_TIME)
+    {
         currentScene = scenes[currentSceneId];
-        currentScene->LoadResources();
         CPlayScene* playScene = dynamic_cast<CPlayScene*>(currentScene);
         if (playScene)
-            playScene->SetCurrentEntry(nextSceneEntry);
+            playScene->SetCurrentEntry(currentSceneEntry);
+        currentScene->LoadResources();
         transitionStart = -1;
-     }
+    }
+    if (isRequestedChangeScene)
+    {
+        isRequestedChangeScene = 0;
+        ChangeScene(nextSceneId, nextSceneEntry);
+    }
 }
 
 void CSceneManager::Render()
 {
     if (currentScene)
         currentScene->Render();
+    if (transitionStart == -1)
+        hud->Render();
 }
 
 void CSceneManager::Clear()

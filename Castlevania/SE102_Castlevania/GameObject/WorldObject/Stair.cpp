@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Stair.h"
+#include "Simon.h"
 
 CStair::CStair()
 {
 	width = STAIR_WIDTH;
 	height = STAIR_HEIGHT;
 }
+
 void CStair::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)
@@ -24,4 +26,11 @@ int CStair::GetStairDirection()
 int CStair::GetHorizontalDirection()
 {
 	return horizontal_direction;
+}
+
+CStair::~CStair()
+{
+	CSimon* player = CSceneManager::GetInstance()->GetPlayer();
+	if (this == player->GetNearbyStair())
+		player->SetNearbyStair(nullptr);
 }

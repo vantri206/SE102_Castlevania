@@ -1,6 +1,6 @@
 #list potision simon entry to map
 
-ENTRY 48 48
+ENTRY 48 49
 
 #object_id object_type x y extra_setting...
 
@@ -47,23 +47,21 @@ ENTRY 48 48
 
 22 6 992 152 
 
-#Portal, extra setting: scene will be changed to
-
-23 5 1528 160 3
-
 #Ghoul, extra setting: direction when start
 
-24 7 252 48 -1
+24 7 320 48
 
-25 7 284 48 -1
+25 7 344 48 
 
-26 7 316 48 -1
+26 7 368 48
 
-27 7 1200 48 -1
+23 7 528 48
 
-28 7 1232 48 -1
+27 7 1200 48
 
-29 7 1280 48 -1
+28 7 1232 48 
+
+29 7 1280 48
 
 #Brick, extra setting: width, height
 
@@ -97,19 +95,19 @@ ENTRY 48 48
 
 #Panther, extra setting: direction when start
 
-44 8 700 104 -1
+44 8 700 104
 
-45 8 892 136 -1
+45 8 892 136
 
-46 8 956 104 -1
+46 8 956 104
 
 #Breakable brick, extra setting: type brick, item drop when break
 
 47 18 1016 88 1 9 400
 
-#Portal, extra setting: width, height, scene will be changed to, entry id postition when change
+#Gate portal, scene will be changed to, entry id postition when change
 
-48 5 153 36 24 8 3 0
+48 24 1532 152 3 0
 
 #Wall, extra setting: width, height
 

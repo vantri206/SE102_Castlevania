@@ -22,11 +22,13 @@
 #include "SplashEffect.h"
 #include "Bat.h"
 #include "EnemySpawn.h"
+#include "Gate.h"
+
 #define ID_TEX_BBOX 999
 
 CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int> extra_settings)
 {
-	CGameObject* obj = NULL;
+	CGameObject* obj = nullptr;
 	switch (objectType)
 	{
 	case TORCH:
@@ -70,6 +72,9 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case WATERDEADZONE:
 		obj = new CWaterDeadZone();
+		break;
+	case GATEPORTAL:
+		obj = new CGate();
 		break;
 	case GHOUL:
 	case PANTHER:

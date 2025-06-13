@@ -29,10 +29,12 @@ void CEnemySpawn::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     if (IsCanSpawn())
     {
         CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+        CSimon* player = CSceneManager::GetInstance()->GetPlayer();
         currentEnemy = SpawnEnemy();
         if (currentEnemy)
         {
             currentEnemy->SetPosition(x, y);
+            currentEnemy->SetDirectionX(player->GetX() < x ? -1 : 1);
             currentPlayScene->AddObject(currentEnemy);
             isActive = true;
         }

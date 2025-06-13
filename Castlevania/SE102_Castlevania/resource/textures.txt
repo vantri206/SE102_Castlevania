@@ -29,6 +29,10 @@
 65 resource/Objects/Brick.png
 66 resource/Objects/BrickPiece.png
 67 resource/Characters/SimonInvincible.png
+68 resource/Objects/GatePortal.png
+69 resource/Objects/Gate.png
+70 resource/Scene/StatusBar.png
+998 resource/Scene/Transition.png
 999 resource/Scene/bbox.png
 2 
 #----MAP----#

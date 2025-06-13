@@ -12,6 +12,7 @@ private:
 	int horizontal_direction;
 public:
 	CStair();
+	~CStair();
 
 	void Render() {}
 	void Update(DWORD dt) {}

@@ -19,5 +19,10 @@ void CPortal::LoadExtraSetting(vector<int> extra_settings)
 
 void CPortal::ChangeScene()
 {
-	CSceneManager::GetInstance()->ChangeScene(this->sceneId, this->sceneEntryId);
+	CSceneManager::GetInstance()->RequestChangeScene(this->sceneId, this->sceneEntryId);
+}
+
+void CPortal::Active()
+{
+	this->ChangeScene();
 }

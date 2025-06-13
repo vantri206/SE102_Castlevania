@@ -91,7 +91,7 @@ void CPlayScene::LoadResources()
 		if (entry)
 		{
 			player->SetPosition(entry->entryX, entry->entryY);
-			//DebugOut(L"[INFO] Player position in new scene: %f %f %s\n", entry->entryX, entry->entryY, entry->entry_state);
+			DebugOut(L"[INFO] Player position in new scene: %f %f \n", entry->entryX, entry->entryY);
 		}
 	}
 	else
@@ -99,15 +99,16 @@ void CPlayScene::LoadResources()
 		DebugOut(L"Cant find entry posittion %d\n", currentEntry);
 	}
 	quadtree->PrintTree();
+	CSceneManager::GetInstance()->SetCurrentSceneState(SCENE_STATE_RUNNING);
 	f.close();
 }
 
 void CPlayScene::UnloadResources()
 {
-    if (quadtree)
+    if (objects.size() > 0)
     {
-        auto allObjects = quadtree->GetAllObjects();
-        for (auto obj : allObjects)
+        for (auto obj : objects)
+		if(obj && obj->IsDeleted())
         {
 			quadtree->Remove(obj);
 			delete obj;
@@ -115,6 +116,7 @@ void CPlayScene::UnloadResources()
         }
         delete quadtree;
         quadtree = nullptr;
+		objects.clear();
     }
 
     for (auto e : effects) 
@@ -153,6 +155,7 @@ void CPlayScene::Update(DWORD dt)
 
 	RECT cam = CCamera::GetInstance()->GetCamRect();
 	auto nearbyPlayerObjects = quadtree->GetObjectsInView(cam);
+
 	if(player) player->Update(dt, &nearbyPlayerObjects);
 
 	for (auto effect : effects)
@@ -161,6 +164,7 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+
 	RECT cam = CCamera::GetInstance()->GetCamRect();
 	auto activeObjects = quadtree->GetObjectsInView(cam);
 	vector<LPGAMEOBJECT> hiddenObj, normalObj, enemyObj;
@@ -212,36 +216,35 @@ void CPlayScene::AddObject(CGameObject* obj)
 void CPlayScene::AddHiddenObject(CGameObject* obj)
 {
 	objects.push_back(obj);
+	hiddenObjects.insert(obj);
 }
 
 void CPlayScene::ClearObjects()
 {
-	std::vector<CGameObject*> objectsDeleted;
+	std::unordered_set<CGameObject*> objectsDeleted;
 
 	for (auto obj : objects)
-	{
 		if (obj && obj->IsDeleted())
-		{
-			quadtree->Remove(obj);
-			objectsDeleted.push_back(obj);
-		}
-	}
+			objectsDeleted.insert(obj);
 
-	for (auto obj : objectsDeleted)
-	{
-		objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
-		delete obj;
-	}
-
-	//clear hiden objects set
 	for (auto it = hiddenObjects.begin(); it != hiddenObjects.end(); )
 	{
 		if ((*it)->IsDeleted())
 		{
-			delete* it;
+			objectsDeleted.insert(*it);
 			it = hiddenObjects.erase(it);
 		}
 		else ++it;
+	}
+
+	for (auto obj : objectsDeleted)
+	{
+		if (obj)
+		{
+			quadtree->Remove(obj);
+			objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
+			delete obj;
+		}
 	}
 }
 
@@ -265,19 +268,5 @@ void CPlayScene::ClearEffects()
 
 CPlayScene::~CPlayScene()
 {
-    delete SceneBG;
-	auto allObjects = quadtree->GetAllObjects();
-	for (auto obj : allObjects)
-	{
-		if (obj != nullptr && obj->IsDeleted())
-		{
-			quadtree->Remove(obj);
-			delete obj;
-		}
-	}
-    delete quadtree;
-    delete player;
-    for (auto effect : effects)
-        delete effect;
-	effects.clear();
+    
 }

@@ -30,7 +30,7 @@ public:
     void Render(){}
 
     void SetType(int enemytype);
-    int GetEnemyType() const { return enemyType; }
+    int GetEnemyType() { return enemyType; }
 
     int IsBlocking() { return 0; }
 };

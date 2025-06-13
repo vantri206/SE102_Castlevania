@@ -5,8 +5,7 @@
 
 CSimonSit::CSimonSit(CSimon* simon) : CSimonState(simon)
 {
-	simon->SetSpeed(0.0f, 0.0f);
-	simon->SetAccel(0.0f, SIMON_GRAVITY);
+	simon->SetPhysical(0.0f, 0.0f, 0.0f, SIMON_GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_SIT);
 	simon->SetSize(SIMON_SIT_WIDTH, SIMON_SIT_HEIGHT);
 }
@@ -38,6 +37,7 @@ void CSimonSit::Update(DWORD dt)
 	simon->GetSpeed(vx, vy);
 	if (vy < 0.0f)
 	{
+		simon->SetPosition(simon->GetX(), simon->GetY() + (SIMON_FALLING_HEIGHT - SIMON_SIT_HEIGHT) / 2);
 		simon->SetState(new CSimonFalling(simon));
 	}
 }

@@ -11,12 +11,13 @@ protected:
 	int sceneEntryId;
 public:
 	CPortal();
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {}
-	void Render() {}
-	void LoadExtraSetting(vector<int> extra_settings);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {}
+	virtual void Render() {}
+	virtual void LoadExtraSetting(vector<int> extra_settings);
 
 	int IsBlocking() { return 0; }
 	int IsOverlappable() { return 1; }
 
 	void ChangeScene();
+	virtual void Active();
 };

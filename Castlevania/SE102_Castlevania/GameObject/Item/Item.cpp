@@ -3,13 +3,15 @@
 
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+    if (IsDeleted()) return;
 	vy += ay * dt;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CItem::Render()
 {
-    animation_set->at(ani_id)->Render(x, y, nx, width, height);
+    if (IsDeleted()) return;
+        animation_set->at(ani_id)->Render(x, y, nx, width, height);
 }
 
 void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)

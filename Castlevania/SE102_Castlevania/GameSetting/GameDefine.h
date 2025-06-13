@@ -66,6 +66,7 @@ enum OBJECT_TYPE
 	WATERDEADZONE = 21,
 	FISHMAN = 22,
 	ENEMYSPAWN = 23,
+	GATEPORTAL = 24
 };
 
 /*---- Animation Set ----*/
@@ -85,6 +86,7 @@ enum ANIMATION_SET_ID
 	TORCH_ANI_SET_ID = 300,
 	CANDLE_ANI_SET_ID = 301,
 	BREAKABLEBRICK_ANI_SET_ID = 302,
+	GATEPORTAL_ANI_SET_ID = 303,
 	BIGHEART_ANI_SET_ID = 400,
 	SMALLHEART_ANI_SET_ID = 401,
 	MONEYBAG_ANI_SET_ID = 410,
@@ -94,6 +96,16 @@ enum ANIMATION_SET_ID
 	BREAKBRICKEFFECT_ANI_SET_ID = 901,
 	SPLASHEFFECT_ANI_SET_ID = 902,
 };
+
+#define HUD_WIDTH 270.0f
+#define HUD_HEIGHT 32.0f
+#define HUD_HP_WIDTH 4.0f
+#define HUD_HP_HEIGHT 8.0f
+
+#define SPRITES_STATUSBAR_ID 80000
+#define SPRITES_PLAYERHP_ID 80001
+#define SPIRTES_ENEMYHP_ID 80002
+#define SPRITES_LOSTHP_ID 80003
 
 /*----Scene---*/
 
@@ -109,17 +121,6 @@ enum ANIMATION_SET_ID
 #define ANIMATIONS_PATH L"./resource/animations.txt"
 #define SPRITES_PATH L"./resource/sprites.txt"
 #define ANIMATIONS_SET_PATH L"./resource/animations_set.txt"
-
-#define STAGE1_FILE_PATH L"./resource/Map/Stage1.txt"
-#define STAGE1_OBJECT_FILE_PATH L"./resource/Map/Stage1Objects.txt"
-#define STAGE2_FILE_PATH L"./resource/Map/Stage2.txt"
-#define STAGE2_OBJECT_FILE_PATH L"./resource/Map/Stage2Objects.txt"
-#define STAGE3_FILE_PATH L"./resource/Map/Stage3.txt"
-#define STAGE3_OBJECT_FILE_PATH L"./resource/Map/Stage3Objects.txt"
-#define STAGE4_FILE_PATH L"./resource/Map/Stage4.txt"
-#define STAGE5_OBJECT_FILE_PATH L"./resource/Map/Stage4Objects.txt"
-#define STAGE5_FILE_PATH L"./resource/Map/Stage5.txt"
-#define STAGE5_OBJECT_FILE_PATH L"./resource/Map/Stage5Objects.txt"
 
 #define ALL_SCENES_PATH L"./resource/scenes.txt"
 

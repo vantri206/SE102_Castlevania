@@ -134,6 +134,13 @@
 #breakable brick 2
 40021 0 0 31 31 64
 
+#----GATE PORTAL---#
+#idle
+40030 0 0 7 47 68
+#open
+40031 0 0 15 47 69
+40032 17 0 40 47 69
+
 #####----ITEMS----#####
 
 #--BIG HEART--#
@@ -150,7 +157,7 @@
 50012 0 0 31 31 50
 
 #----MORNING STAR---#
-#normal
+#normalS
 50020 0 0 31 31 51
 
 #---SUBWEAPON ITEM---#
@@ -160,6 +167,17 @@
 50031 60 0 89 27 40
 #holy water bottle
 50032 0 0 31 31 62
+
+#####----HUD----#####
+#--STATUS BAR--#
+#status
+80000 0 6 269 37 70
+#player hp
+80001 123 69 126 76 70
+#boss hp
+80002 142 69 145 76 70
+#lost hp
+80003 132 69 135 76 70
 
 #####----EFFECT----#####
 #--DIE--# 	#effect when object can break (torch, candle,...) and enemies dead
@@ -173,3 +191,6 @@
 #---SPLASH WATER EFFECT---#
 #effect
 90020 115 209 122 216 30
+
+####----BLACK-----#
+99990 0 0 0 0 998

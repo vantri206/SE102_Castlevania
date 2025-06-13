@@ -44,7 +44,9 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else
 	{
 		if (this->isActived())
-			vx = PANTHER_RUN_SPEED * nx;
+			if (isHovering())
+				vx = PANTHER_RUN_SPEED * 2 * nx;
+			else vx = PANTHER_RUN_SPEED * nx;
 		if (vy < 0 && !isHovering())
 		{
 			this->SetState(PANTHER_STATE_HOVERING);

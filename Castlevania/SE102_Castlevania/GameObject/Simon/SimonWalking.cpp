@@ -88,7 +88,7 @@ void CSimonWalking::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPortal*>(e->obj))
 	{
 		CPortal* portal = dynamic_cast<CPortal*>(e->obj);
-		portal->ChangeScene();
+		portal->Active();
 	}
 	else if (e->ny > 0 && e->obj->IsBlocking())
 	{

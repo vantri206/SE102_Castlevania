@@ -19,6 +19,7 @@
 #include "Bat.h"
 #include "Fireball.h"
 #include "SimonDie.h"
+#include <SimonFloat.h>
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -115,6 +116,9 @@ void CSimon::OnCollisionWithItem(CItem* item)
 		case MONEYBAG:
 		{
 			CMoneyBag* moneybag = dynamic_cast<CMoneyBag*>(item);
+			int score = moneybag->GetScore();
+			CHUD* hud = CSceneManager::GetInstance()->GetHUD();
+			hud->SetScore(hud->GetScore() + score);
 			break;
 		}
 	}
@@ -295,7 +299,7 @@ int CSimon::CanCollisionWithObj(LPGAMEOBJECT objDests)
 	if (dynamic_cast<CEnemy*>(objDests))
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(objDests);
-		if (enemy->isDead() || !enemy->isActived() || this->GetUntouchable())
+		if (enemy->isDead() || !enemy->isActived() || this->IsUntouchable() || this->IsInvisible())
 			return 0;
 	}
 	return 1;
