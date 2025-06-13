@@ -2,12 +2,12 @@
 #include "Simon.h"
 #include "SimonFalling.h"
 #include "GameDefine.h"
+#include "SimonAttack.h"
 
 CSimonFloat::CSimonFloat(CSimon* simon) : CSimonState(simon)
 {
 	float vx, vy, ax, ay;
 	simon->GetPhysical(vx, vy, ax, ay);
-	simon->SetPhysical(vx, 0.0f, ax, 0.0f);
 	simon->SetSize(SIMON_SIT_WIDTH, SIMON_SIT_HEIGHT);
 	simon->SetAniId(ID_ANI_SIMON_SIT);
 
@@ -16,13 +16,26 @@ CSimonFloat::CSimonFloat(CSimon* simon) : CSimonState(simon)
 
 void CSimonFloat::Update(DWORD dt)
 {
-	if (GetTickCount64() - floatStart >= SIMON_FLOATING_TIME)
+	float vx, vy, ax, ay;
+	simon->GetPhysical(vx, vy, ax, ay);
+	if (vy<0.0f)
 	{
 		simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
 		simon->SetState(new CSimonFalling(simon));
 	}
 }
-
+void CSimonFloat::KeyDownHandle(int keyCode) {
+	if (keyCode == DIK_A)
+	{
+		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
+		{
+			if (simon->CanUseSubWeapon())
+				simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
+		}
+		else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
+	}
+}
+void CSimonFloat::KeyUpHandle(int keyCode){}
 void CSimonFloat::OnNoCollision(DWORD dt)
 {
 	simon->UpdateMoving(dt);

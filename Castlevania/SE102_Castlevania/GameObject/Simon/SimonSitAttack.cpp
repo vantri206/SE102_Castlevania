@@ -50,7 +50,13 @@ CSimonSitAttack::~CSimonSitAttack()
 }
 
 void CSimonSitAttack::KeyDownHandle(int keyCode) {}
-void CSimonSitAttack::KeyUpHandle(int keyCode) {}
+void CSimonSitAttack::KeyUpHandle(int keyCode) {
+    if (keyCode == DIK_DOWN)
+    {
+        simon->SetPosition(simon->GetX(), simon->GetY() + (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
+        simon->SetState(new CSimonIdle(simon));
+    }
+}
 
 void CSimonSitAttack::Update(DWORD dt)
 {

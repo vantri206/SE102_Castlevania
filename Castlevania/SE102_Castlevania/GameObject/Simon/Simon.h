@@ -76,6 +76,8 @@ protected:
 	int subWeaponLimit;
 	vector<CWeapon*> activeSubWeaponList;
 
+
+
 	bool isAutoWalking;
 
 	int health;
