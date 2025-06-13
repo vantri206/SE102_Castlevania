@@ -124,6 +124,32 @@ void CHUD::Render()
     text.str(L"");
     text << std::setw(2) << std::setfill(L'0') << life;
     font->DrawText(spriteHandler, text.str().c_str(), -1, &rect, DT_LEFT, D3DXCOLOR(1, 1, 1, 1));
+
+    int subweaponSpritesId;
+    float spriteWidth, spriteHeight;
+    switch (subweapontype)
+    {
+    case DAGGER:
+        subweaponSpritesId = DAGGER_SPRITES_ID;
+        spriteWidth = 16;
+        spriteHeight = 10;
+        break;
+    case AXE:
+        subweaponSpritesId = AXE_SPRITES_ID;
+        spriteWidth = 15;
+        spriteHeight = 14;
+        break;
+    case HOLYWATERBOTTLE:
+        subweaponSpritesId = HOLYWATER_BOTTLE_SPRITES_ID;
+        spriteWidth = 16;
+        spriteHeight = 16;
+        break;
+    default:
+        subweaponSpritesId = 0;
+        spriteWidth = 0;
+        spriteHeight = 0;
+    }
+    CSprites::GetInstance()->Get(subweaponSpritesId)->Draw(statusbarX + 28, statusbarY - 1, 1, spriteWidth, spriteHeight);
 }
 
 void CHUD::SetPlayerHP(int hp)
@@ -167,4 +193,9 @@ void CHUD::SetHeart(int h)
 void CHUD::SetLife(int l)
 {
     life = l;
+}
+
+void CHUD::SetSubWeapon(int subweapon)
+{
+    this->subweapontype = subweapon;
 }

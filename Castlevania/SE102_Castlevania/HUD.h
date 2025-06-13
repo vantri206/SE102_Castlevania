@@ -3,6 +3,11 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
+#define DAGGER_SPRITES_ID 50030
+#define AXE_SPRITES_ID 50031
+#define HOLYWATER_BOTTLE_SPRITES_ID 50032
+
+
 class CHUD
 {
 private:
@@ -20,7 +25,7 @@ private:
 	int stage;
 	int hearts;
 	int life;
-
+	int subweapontype;
 	int displayedScore;
 
 public:
@@ -39,4 +44,5 @@ public:
 	void SetStage(int s);
 	void SetHeart(int h);
 	void SetLife(int l);
+	void SetSubWeapon(int subweapon);
 };

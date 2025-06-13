@@ -84,8 +84,8 @@ void CSimonIdle::KeyDownHandle(int keyCode)
         simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
         simon->SetState(new CSimonSit(simon));
     }
-    else if (keyCode==DIK_G)
-		simon->SetState(new CSimonDie(simon));
+    else if (keyCode == DIK_G)
+        simon->SetState(new CSimonDie(simon));
 }
 
 void CSimonIdle::Update(DWORD dt)
@@ -126,12 +126,12 @@ void CSimonIdle::OnCollisionWith(LPCOLLISIONEVENT e)
         CTriggerZone* triggerzone = dynamic_cast<CTriggerZone*>(e->obj);
         triggerzone->Trigger();
     }
-	else if (e->ny > 0 && e->obj->IsBlocking())
-	{
-		simon->SetVy(0.0f);
-	}
-	else if (e->nx != 0 && e->obj->IsBlocking())
-	{
+    else if (e->ny > 0 && e->obj->IsBlocking())
+    {
+        simon->SetVy(0.0f);
+    }
+    else if (e->nx != 0 && e->obj->IsBlocking())
+    {
         simon->SetVx(0.0f);
     }
 }

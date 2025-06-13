@@ -50,12 +50,11 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
     CGameObject::Update(dt);
     CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
-    if (!active) return;
 	DebugOut(L"[PHANTOMBAT] Update: x = %f, y = %f, state = %d\n", x, y, state);
     switch (state)
     {
     case PHANTOMBAT_STATE_SLEEPING:
-        if (active == true)
+        if (isActived())
         {
             currentGroupIndex = rand() % pointGroups.size();
             BatPointGroup& group = pointGroups[currentGroupIndex];
@@ -284,10 +283,6 @@ bool CPhantomBat::SimonInAttackZone()
 {
     CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
     return abs(simon->GetX() - x) < 50.0f && abs(simon->GetY() - y) < 50.0f;
-}
-void CPhantomBat::ActiveEnemy()
-{
-    active = true;
 }
 NearestInPointGroupsInfo CPhantomBat::FindNearestPointInfoInGroups(D3DXVECTOR2 from)
 {

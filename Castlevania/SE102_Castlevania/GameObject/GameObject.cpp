@@ -25,6 +25,7 @@
 #include "Gate.h"
 #include "HolyCross.h"
 #include "PhantomBat.h"
+#include "Porkchop.h"
 
 #define ID_TEX_BBOX 999
 
@@ -39,7 +40,6 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 	case CANDLE:
 		obj = new CCandle();
 		break;
-
 	case BRICK:
 		obj = new CBrick();
 		break;
@@ -81,6 +81,9 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case HOLYCROSS:
 		obj = new CHolyCross();
+		break;
+	case PORKCHOP:
+		obj = new CPorkChop();
 		break;
 	case GHOUL:
 	case PANTHER:

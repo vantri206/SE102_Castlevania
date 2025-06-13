@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Simon.h"
+#include "SimonIntro.h"
 #include "SimonAutoWalking.h"
 #include "SimonStairUpIdle.h"
 #include "SimonStairDownIdle.h"
@@ -71,6 +72,8 @@ void CSimonAutoWalking::ChangeState()
 		break;
 	case SIMON_STATE_WALKING_DOWN:
 		simon->SetState(new CSimonWalkingStairDown(simon));
+	case SIMON_STATE_INTRO:
+		simon->SetState(new CSimonIntro(simon));
 		break;
 	}
 }

@@ -36,7 +36,6 @@ class CPhantomBat : public CEnemy
 protected:
     int state;
 	bool isFlying = false;
-    bool active = false;
 	bool isattacked = false;
     vector<BatPointGroup> pointGroups;
     vector< D3DXVECTOR2> backPoints;
@@ -58,7 +57,6 @@ public:
     void OnCollisionWith(LPCOLLISIONEVENT e);
     void SetState(int state);
     void LoadExtraSetting(vector<int> extra_settings);
-    void ActiveEnemy();
     int isDead();
 
 	void SetAttackTarget(D3DXVECTOR2 target) { attackTarget = target; }

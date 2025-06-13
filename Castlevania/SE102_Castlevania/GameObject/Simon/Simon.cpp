@@ -52,16 +52,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		mapwidth = currentPlayScene->GetCurrentMapWidth();
 		mapheight = currentPlayScene->GetCurrentMapHeight();
+
+		if (x < 0) x = 0;
+		else if (x > mapwidth) x = (float)mapwidth;
+
+		if (y < 0) y = 0;
+		else if (y > mapheight) y = (float)mapheight;
 	}
-
-	float l, t, r, b;
-	this->GetBoundingBox(l, t, r, b);
-
-    if (x < 0) x = 0;
-    else if (x > mapwidth) x = (float)mapwidth;
-
-    if (y < 0) y = 0;
-    else if (y > mapheight) y = (float)mapheight;
 
 	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
 }
@@ -340,6 +337,7 @@ int CSimon::GetScore()
 void CSimon::ReloadToCheckpoint()
 {
 	this->SetState(new CSimonIdle(this));
-	this->health = MAX_HEALTH;
-	this->subWeaponLimit = 2;
+	health = MAX_HEALTH;
+	currentSubWeaponType = 0;
+	isDrowning = 0;
 }

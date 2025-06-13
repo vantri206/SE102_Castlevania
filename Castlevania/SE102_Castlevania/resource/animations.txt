@@ -141,6 +141,10 @@
 #----HOLY CROSS---#
 #normal
 5400 50040 0
+
+#----PORK CHOP---#
+5500 50050 0
+
 #####----BOSS----#####
 #---PHANTOM BAT---#
 #sleep

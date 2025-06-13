@@ -1,0 +1,13 @@
+#list potision simon entry to map
+
+ENTRY 240 48
+ENTRY 172 36
+
+#object_id object_type x y extra_setting...
+
+#brick, extra width height
+1 2 172 24 256 16
+
+#portal, extra setting: width, height, scene changed to, entry id
+
+2 5 172 36 24 8 1 0

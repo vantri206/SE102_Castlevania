@@ -7,6 +7,7 @@
 #include <SimonWalkingStairUp.h>
 #include <SimonWalkingStairDown.h>
 #include <MenuScene.h>
+#include <IntroScene.h>
 
 CSceneManager* CSceneManager::_instance = nullptr;
 
@@ -20,6 +21,8 @@ CSceneManager::CSceneManager()
 {
     hud = new CHUD(CGame::GetInstance()->GetDirect3DDevice());
     transitionStart = -1;
+    remainingTime = MAX_TIME;
+    lastTimerUpdate = 0;
 }
 
 void CSceneManager::LoadPlayer()
@@ -58,6 +61,14 @@ void CSceneManager::LoadAllScenes(LPCWSTR filepath)
 
         switch (typeScene)
         {
+            case INTRO_SCENE:
+            {
+                int sceneId = atoi(tokens[1].c_str());
+                wstring objectFile = ToWSTR(tokens[2]);
+                CIntroScene* scene = new CIntroScene(objectFile);
+                this->AddScene(scene);
+                break;
+            }
             case MENU_SCENE:
             {
                 int sceneId = atoi(tokens[1].c_str());
@@ -118,9 +129,10 @@ void CSceneManager::ChangeScene(int id, int entry)
 
 void CSceneManager::Update(DWORD dt)
 {
+    DWORD now = GetTickCount64();
     if (currentScene && currentSceneState != SCENE_STATE_LOADING)
         currentScene->Update(dt);
-    else if (transitionStart != -1 && GetTickCount64() - transitionStart >= TRANSITION_SCENE_TIME)
+    else if (transitionStart != -1 && now - transitionStart >= TRANSITION_SCENE_TIME)
     {
         currentScene = scenes[currentSceneId];
         CPlayScene* playScene = dynamic_cast<CPlayScene*>(currentScene);
@@ -138,6 +150,15 @@ void CSceneManager::Update(DWORD dt)
     {
         isRequestedChangeScene = 0;
         ChangeScene(nextSceneId, nextSceneEntry);
+    }
+    if (currentScene && currentScene->GetSceneType() == PLAY_SCENE)
+    {
+        if (now - lastTimerUpdate >= 2000)
+        {
+            if (remainingTime > 0)
+                remainingTime--;
+            lastTimerUpdate = now;
+        }
     }
     UpdateHUD();
 }
@@ -189,6 +210,8 @@ void CSceneManager::UpdateHUD()
     hud->SetPlayerHP(player->GetHealth());
     hud->SetStage(this->currentSceneId);
     hud->SetHeart(player->getHeartCount());
+    hud->SetTime(remainingTime);
+    hud->SetSubWeapon(player->GetCurrentSubType());
 }
 
 CSceneManager::~CSceneManager()

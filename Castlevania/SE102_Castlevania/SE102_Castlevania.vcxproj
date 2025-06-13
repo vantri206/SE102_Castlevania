@@ -77,9 +77,11 @@
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="HolyCross.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="PhantomBat.cpp" />
+    <ClCompile Include="PorkChop.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene\Effect\Effect.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
@@ -87,6 +89,7 @@
     <ClCompile Include="Scene\TileMap\Tile.cpp" />
     <ClCompile Include="SimonDie.cpp" />
     <ClCompile Include="SimonFloat.cpp" />
+    <ClCompile Include="SimonIntro.cpp" />
     <ClCompile Include="SimonStairDownAttack.cpp" />
     <ClCompile Include="SimonStairUpAttack.cpp" />
     <ClCompile Include="Utils\debug.cpp" />
@@ -162,7 +165,10 @@
     <ClInclude Include="Gate.h" />
     <ClInclude Include="HolyCross.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="PhantomBat.h" />
+    <ClInclude Include="PorkChop.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene\Effect\DeadEffect.h" />
@@ -172,6 +178,7 @@
     <ClInclude Include="Scene\TileMap\Tile.h" />
     <ClInclude Include="SimonDie.h" />
     <ClInclude Include="SimonFloat.h" />
+    <ClInclude Include="SimonIntro.h" />
     <ClInclude Include="SplashEffect.h" />
     <ClInclude Include="SimonStairDownAttack.h" />
     <ClInclude Include="SimonStairUpAttack.h" />

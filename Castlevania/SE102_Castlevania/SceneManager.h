@@ -38,6 +38,9 @@ protected:
 
     CHUD* hud;
 
+    DWORD remainingTime;
+    DWORD lastTimerUpdate = 0;
+
 public:
     CSceneManager();
     static CSceneManager* GetInstance();
@@ -67,4 +70,7 @@ public:
     ~CSceneManager();
 
     CHUD* GetHUD() { return hud; }
+
+    void ResetTimer() { remainingTime = MAX_TIME; }
+    int GetRemainingTime() { return remainingTime; }
 };

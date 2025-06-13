@@ -109,6 +109,11 @@
 
 #pragma endregion
 
+#define PORKCHOP_HEAL_VALUE 6
+#define PORKCHOP_WIDTH 16
+#define PORKCHOP_HEIGHT 13
+
+#define MAX_TIME 300
 #define HOLYCROSS_WIDTH 16
 #define HOLYCROSS_HEIGHT 16
 
@@ -157,6 +162,7 @@
 #define HOLYWATERBOTTLE_ITEM_WIDTH 16
 #define HOLYWATERBOTTLE_ITEM_HEIGHT 16
 
+#pragma region SIMON_SIZE
 #define SIMON_WIDTH 16
 #define SIMON_HEIGHT 32
 
@@ -196,6 +202,8 @@
 
 #define SIMON_WALKING_WIDTH 15
 #define SIMON_WALKING_HEIGHT 32
+
+#pragma endregion
 
 #define AXE_SPEED 0.1075f
 #define AXE_THROW_VY 0.4f

@@ -2,6 +2,7 @@
 # typeScene	 sceneId 	mapId 		mapFile 	objectFile
 
 1 99
+0 0 resource/Map/IntroSceneObjects.txt
 2 1 1 resource/Map/Stage1.txt resource/Map/Stage1Objects.txt
 2 2 2 resource/Map/Stage2.txt resource/Map/Stage2Objects.txt
 2 3 3 resource/Map/Stage3.txt resource/Map/Stage3Objects.txt

@@ -6,7 +6,7 @@
 #include "ButtonStart.h"
 #include <Windows.h>
 
-#define START_PLAYSCENE 1
+#define START_PLAYSCENE 0
 
 class CMenuScene : public CScene
 {
