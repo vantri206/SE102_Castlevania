@@ -81,4 +81,5 @@ public:
     int GetAttack() { return this->attack; }
     void TriggerBossDieEffect();
     bool SimonInAttackZone();
+    virtual void ActiveEnemy();
 };

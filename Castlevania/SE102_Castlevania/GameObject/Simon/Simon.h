@@ -76,7 +76,7 @@ protected:
 	int subWeaponLimit;
 	vector<CWeapon*> activeSubWeaponList;
 
-
+	bool isCombatWithBoss;
 
 	bool isAutoWalking;
 
@@ -110,6 +110,8 @@ public:
 		currentSubWeaponType = -1;
 		subWeaponLimit = 1;
 		activeSubWeaponList = vector<CWeapon*>();
+
+		isCombatWithBoss = false;
 
 		nearbyStair = nullptr;
 
@@ -218,6 +220,10 @@ public:
 
 	int GetScore();
 	void SetScore(int score) { this->score = score; }
+
+	bool IsCombatWithBoss() { return isCombatWithBoss; }
+	void StartCombatWithBoss() { this->isCombatWithBoss = true; }
+	void FinishCombatWithBoss() { this->isCombatWithBoss = false; }
 
 	void ReloadToCheckpoint();
 };

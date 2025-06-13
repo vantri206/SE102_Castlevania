@@ -96,10 +96,9 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         break;
     }
     case PHANTOMBAT_STATE_FLYING:
-        //if (GetTickCount64() - releaseFireballTime > 4000)
-        //{
-        //    CreateFireball();
-        //}
+		if (GetTickCount64() - releaseFireballTime >= 1000)
+            CreateFireball();
+        
         if (ReachedTarget()) {
             if (!issleeping) {
                 issleeping = true;
@@ -187,7 +186,7 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CPhantomBat::SetState(int newState)
 {
     CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
-    switch (state)
+    switch (newState)
     {
     case PHANTOMBAT_STATE_SLEEPING:
 		this->SetAniId(ANI_ID_PHANTOMBAT_SLEEPING);
@@ -197,8 +196,8 @@ void CPhantomBat::SetState(int newState)
         this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
 		break;
     case PHANTOMBAT_STATE_FLYING:
-        this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
         releaseFireballTime = GetTickCount64();
+        this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
         break;
 
     case PHANTOMBAT_STATE_PATROL:
@@ -369,6 +368,7 @@ int CPhantomBat::FindNearestPointIndex(const D3DXVECTOR2& from, const std::vecto
     return nearestIndex;
 }
 void CPhantomBat::CreateFireball() {
+	releaseFireballTime = GetTickCount64();
 	CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
 	float simonX, simonY;
 	simon->GetPosition(simonX, simonY);
@@ -404,4 +404,9 @@ void CPhantomBat::TriggerBossDieEffect(int duration)
             currentPlayScene->AddEffect(effect);
         }
     }
+}
+void CPhantomBat::ActiveEnemy() {
+	isActive = true;
+    CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
+	simon->StartCombatWithBoss();
 }

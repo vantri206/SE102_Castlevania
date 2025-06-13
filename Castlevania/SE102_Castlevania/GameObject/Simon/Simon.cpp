@@ -58,19 +58,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	int mapwidth = 0, mapheight = 0;
 	CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+
 	if (currentPlayScene)
 	{
 		mapwidth = currentPlayScene->GetCurrentMapWidth();
 		mapheight = currentPlayScene->GetCurrentMapHeight();
+		CCamera* camera = CCamera::GetInstance();
+		RECT rectCam=camera->GetCamRect();
 
-		if (x < 0) x = 0;
-		else if (x > mapwidth) x = (float)mapwidth;
+		if (x < rectCam.left) x = (float)rectCam.left;
+		else if (x > rectCam.right) x = (float)rectCam.right;
 
-		if (y < 0) y = 0;
-		else if (y > mapheight) y = (float)mapheight;
+		if (y < rectCam.bottom) y = (float)rectCam.bottom;
+		else if (y > rectCam.top) y = (float)rectCam.top;
 	}
-
-	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
+	if(!isCombatWithBoss){
+	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);}
 }
 void CSimon::OnNoCollision(DWORD dt)
 {
