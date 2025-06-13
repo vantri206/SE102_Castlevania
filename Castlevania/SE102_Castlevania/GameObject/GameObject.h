@@ -92,6 +92,7 @@ public:
     static CGameObject* CreateObject(int objectId, int objectType, vector<int> extra_settings);
 
     void TriggerSplashEffect(float x, float y);
+    void TriggerPointEffect(int point);
 
     virtual void StartSpawning() {}
     virtual void FinishedSpawning() {}

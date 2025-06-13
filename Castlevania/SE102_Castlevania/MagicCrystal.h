@@ -7,14 +7,13 @@
 #include "Item.h"
 #include "GameSetting.h"
 
-#define ID_ANI_PORKCHOP 0
+#define ID_ANI_DOUBLESHOT 0
+#define ID_ANI_MAGICCRYSTAL 0
 
-class CPorkChop : public CItem
+class CMagicCrystal : public CItem
 {
-protected:
-    int healValue;
+protected: 
     float ay;
 public:
-    CPorkChop();
-    int getHealthValue();
+    CMagicCrystal();
 };

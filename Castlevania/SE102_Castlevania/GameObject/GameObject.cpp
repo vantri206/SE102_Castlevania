@@ -26,6 +26,9 @@
 #include "HolyCross.h"
 #include "PhantomBat.h"
 #include "Porkchop.h"
+#include "DoubleShot.h"
+#include "MagicCrystal.h"
+#include <PointEffect.h>
 
 #define ID_TEX_BBOX 999
 
@@ -85,6 +88,12 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 	case PORKCHOP:
 		obj = new CPorkChop();
 		break;
+	case DOUBLESHOT:
+		obj = new CDoubleShot();
+		break;
+	case MAGICCRYSTAL:
+		obj = new CMagicCrystal();
+		break;
 	case GHOUL:
 	case PANTHER:
 	case BAT:
@@ -109,13 +118,18 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 
 void CGameObject::TriggerSplashEffect(float x, float y)
 {
-	DebugOut(L"trigger\n");
 	vector <CSplashEffect*>splasheffects;
 	splasheffects.push_back(new CSplashEffect(x, y, -0.025f, 0.15f, SPLASHEFFECT_GRAVITY));
 	splasheffects.push_back(new CSplashEffect(x, y, 0, 0.2f, SPLASHEFFECT_GRAVITY));
 	splasheffects.push_back(new CSplashEffect(x, y, 0.025f, 0.15f, SPLASHEFFECT_GRAVITY));
 	for (auto splasheffect : splasheffects)
 		CGame::GetInstance()->GetCurrentPlayScene()->AddEffect(splasheffect);
+}
+
+void CGameObject::TriggerPointEffect(int point)
+{
+	CPointEffect* pointeffect = new CPointEffect(this->x, this->y, point);
+	CGame::GetInstance()->GetCurrentPlayScene()->AddEffect(pointeffect);
 }
 
 CGameObject::CGameObject()

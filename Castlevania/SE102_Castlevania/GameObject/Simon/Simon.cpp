@@ -23,6 +23,9 @@
 #include "SimonWalkingStairUp.h"
 #include "SimonWalkingStairDown.h"
 #include <HolyCross.h>
+#include <DoubleShot.h>
+#include <MagicCrystal.h>
+#include <PorkChop.h>
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -120,12 +123,31 @@ void CSimon::OnCollisionWithItem(CItem* item)
 			CMoneyBag* moneybag = dynamic_cast<CMoneyBag*>(item);
 			int score = moneybag->GetScore();
 			this->score += score;
+			moneybag->TriggerPointEffect(score);
 			break;
 		}
 		case HOLYCROSS:
 		{
 			CHolyCross* holycross = dynamic_cast<CHolyCross*>(item);
 			holycross->TriggerCrossEffect();
+			break;
+		}
+		case PORKCHOP:
+		{
+			CPorkChop* porkchop = dynamic_cast<CPorkChop*>(item);
+			this->health += porkchop->getHealthValue();
+			break;
+		}
+		case DOUBLESHOT:
+		{
+			CDoubleShot* doubleshot = dynamic_cast<CDoubleShot*>(item);
+			this->subWeaponLimit = 2;
+			break;
+		}
+		case MAGICCRYSTAL:
+		{
+			CMagicCrystal* magiccrystal = dynamic_cast<CMagicCrystal*>(item);
+			this->health = MAX_HEALTH;
 		}
 	}
 	item->Delete();

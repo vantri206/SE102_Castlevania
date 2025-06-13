@@ -45,4 +45,8 @@ void CSmallHeart::OnCollisionWith(LPCOLLISIONEVENT e)
     {
         this->SetSpeed(0.0f, 0.0f);
     }
+    else if (e->nx != 0 && e->obj->IsBlocking())
+    {
+        this->SetVx(0.0f);
+    }
 }

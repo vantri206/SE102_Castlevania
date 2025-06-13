@@ -12,7 +12,7 @@ CAxe::CAxe(float x, float y, int directionX)
 	nx = directionX;
 	vx = AXE_SPEED * nx;
 	vy = AXE_THROW_VY;
-	ay = DEFAULT_GRAVITY;
+	ay = AXE_GRAVITY;
 	heartCost = 1;
 	damage = 2;
 

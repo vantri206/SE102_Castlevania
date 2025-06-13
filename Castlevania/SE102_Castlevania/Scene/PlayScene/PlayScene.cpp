@@ -9,6 +9,7 @@
 #include "SimonWalkingStairUp.h"
 #include "SimonWalkingStairDown.h"
 #include <fstream>
+#include "Phantombat.h"
 
 CPlayScene::CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile)
 {
@@ -23,6 +24,8 @@ CPlayScene::CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile)
 	this->quadtree = new QuadTree(0, 0);
 
 	this->typeScene = PLAY_SCENE;
+
+	boss = nullptr;
 }
 
 void CPlayScene::LoadResources() 
@@ -99,6 +102,11 @@ void CPlayScene::LoadResources()
 	else
 	{
 		DebugOut(L"Cant find entry posittion %d\n", currentEntry);
+	}
+	for (auto obj : objects)
+	{
+		if (dynamic_cast<CPhantomBat*>(obj))
+			boss = dynamic_cast<CEnemy*>(obj);
 	}
 	quadtree->PrintTree();
 	CSceneManager::GetInstance()->SetCurrentSceneState(SCENE_STATE_RUNNING);

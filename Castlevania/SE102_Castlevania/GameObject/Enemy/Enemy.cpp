@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Simon.h"
 #include "DeadEffect.h"
+#include <BreakableBrick.h>
 
 void CEnemy::LoadExtraSetting(vector<int> extra_settings)
 {
@@ -51,4 +52,13 @@ void CEnemy::EnemyKillByPlayer()
 {
 	CSimon* player = CSceneManager::GetInstance()->GetPlayer();
 	player->SetScore(player->GetScore() + this->score);
+}
+
+int CEnemy::CanOverlapWithObj(LPGAMEOBJECT objDests)
+{
+	if (dynamic_cast<CBreakableBrick*>(objDests))
+	{
+		return 0;
+	}
+	return 1;
 }

@@ -205,12 +205,13 @@
 
 #pragma endregion
 
-#define AXE_SPEED 0.1075f
+#define AXE_SPEED 0.0875f
 #define AXE_THROW_VY 0.4f
 
 #define AXE_WIDTH 15
 #define AXE_HEIGHT 14
 
+#define AXE_GRAVITY -0.001f
 
 #define DAGGER_SPEED 0.1f
 #define DAGGER_WIDTH 16

@@ -212,6 +212,16 @@ void CSceneManager::UpdateHUD()
     hud->SetHeart(player->getHeartCount());
     hud->SetTime(remainingTime);
     hud->SetSubWeapon(player->GetCurrentSubType());
+    if (currentScene && currentScene->GetSceneType() == PLAY_SCENE)
+    {
+        CPlayScene* playscene = dynamic_cast<CPlayScene*>(currentScene);
+        if (playscene)
+        {
+            CEnemy* enemy = playscene->GetBoss();
+            if(enemy)
+                hud->SetEnemyHP(enemy->GetHealth());
+        }
+    }
 }
 
 CSceneManager::~CSceneManager()

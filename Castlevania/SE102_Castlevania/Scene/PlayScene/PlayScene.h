@@ -11,6 +11,7 @@ class CGameObject;
 class CGameEffect;
 class QuadTree;
 class CSimon;
+class CEnemy;
 
 struct sceneEntry
 {
@@ -36,6 +37,7 @@ protected:
 	int currentEntry;
 
 	CSimon* player;
+	CEnemy* boss;
 public:
 	CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile);
 	
@@ -61,6 +63,7 @@ public:
 	CMap* GetSceneMap() { return SceneBG; }
 	wstring GetObjectFile() { return objectFile; }
 
+	CEnemy* GetBoss() { return boss; }
 	vector<CGameObject*> GetAllObjects() { return objects; }
 	~CPlayScene();
 };

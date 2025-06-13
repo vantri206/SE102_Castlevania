@@ -57,4 +57,6 @@ public:
 	virtual void ActiveEnemy() { isActive = 1; }
 
 	virtual void EnemyKillByPlayer();
+
+	virtual int CanOverlapWithObj(CGameObject* objDest);
 };

@@ -7,14 +7,15 @@
 #include "Item.h"
 #include "GameSetting.h"
 
-#define ID_ANI_PORKCHOP 0
+#define ID_ANI_DOUBLESHOT 0
 
-class CPorkChop : public CItem
+#define DOUBLESHOT_WIDTH 16
+#define DOUBLESHOT_HEIGHT 16
+
+class CDoubleShot : public CItem
 {
-protected:
-    int healValue;
+protected: 
     float ay;
 public:
-    CPorkChop();
-    int getHealthValue();
+    CDoubleShot();
 };

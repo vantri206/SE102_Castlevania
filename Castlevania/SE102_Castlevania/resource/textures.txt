@@ -32,6 +32,10 @@
 68 resource/Objects/GatePortal.png
 69 resource/Objects/Gate.png
 70 resource/Scene/StatusBar.png
+71 resource/Items/DoubleShot.png
+72 resource/Effect/400.png
+73 resource/Effect/700.png
+74 resource/Effect/1000.png
 200 resource/Enemies/PhantomBat.png
 998 resource/Scene/WhiteFlash.png
 999 resource/Scene/bbox.png

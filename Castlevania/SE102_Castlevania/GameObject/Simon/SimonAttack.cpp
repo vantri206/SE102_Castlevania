@@ -20,8 +20,6 @@ CSimonAttack::CSimonAttack(CSimon* simon, int weaponType) : CSimonState(simon)
         CWeapon* subWeapon = nullptr;
         float x, y;
         simon->GetPosition(x, y);
-        x += simon->GetWidth() / 2;
-        y += simon->GetHeight() / 3;
         switch (simon->GetCurrentSubType())
         {
         case DAGGER:

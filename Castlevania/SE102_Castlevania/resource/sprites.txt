@@ -176,6 +176,14 @@
 #pork
 50050 0 0 31 25 52
 
+#----DOUBLE SHOT---#
+#double shot
+50060 0 0 31 31 71
+
+#----MAGIC CRYSTAL---#
+#crystal
+50070 28 0 55 31 49
+
 #####----HUD----#####
 #--STATUS BAR--#
 #status
@@ -199,6 +207,11 @@
 #---SPLASH WATER EFFECT---#
 #effect
 90020 115 209 122 216 30
+#----POINT EFFECT---#
+#effect
+90030 0 1 28 16 72
+90031 1 1 28 16 73
+90032 0 1 36 16 74 
 
 ####----FLASH-----#####
 99990 0 0 0 1 998

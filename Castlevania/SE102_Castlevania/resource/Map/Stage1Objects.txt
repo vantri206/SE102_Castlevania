@@ -18,7 +18,7 @@ ENTRY 648 48
 
 #Brick, extra setting: width, height
 
-6 2 384 23 768 16
+6 2 384 24 768 16
 
 #Portal, extra setting: width, height, scene will be changed to, entry id postition when change
 

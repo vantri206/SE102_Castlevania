@@ -36,9 +36,10 @@ void CBreakableBrick::OnHit()
 
 void CBreakableBrick::LoadExtraSetting(vector<int> extra_settings)
 {
+	if(extra_settings.size() > 0)
+		this->type = extra_settings[0];
 	if (extra_settings.size() > 1)
 	{
-		this->type = extra_settings[0];
 		this->itemdropId = extra_settings[1];
 		this->itemDropExtraSettings = vector<int>(extra_settings.begin() + 2, extra_settings.end());
 	}

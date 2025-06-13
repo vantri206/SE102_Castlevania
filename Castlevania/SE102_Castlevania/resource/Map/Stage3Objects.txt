@@ -1,6 +1,6 @@
 #list potision simon can entry to map
 
-ENTRY 480 145
+ENTRY 48 144
 
 ENTRY 72 24
 
@@ -26,7 +26,7 @@ ENTRY 368 48
 
 #Wall, extra setting: width, height
 
-8 19 264 88 16 47
+8 19 264 89 16 46
 
 9 19 296 64 48 96
 
@@ -42,9 +42,9 @@ ENTRY 368 48
 
 #Breakable brick, extra setting: type brick, item drop when break
 
-14 18 264 56 2 4
+14 18 264 56 2
 
-15 18 264 40 2 4
+15 18 264 40 2 26
 
 #Stair, extra setting: up or down (1: up, -1: down), left or right(1: right, -1: left)
 
@@ -59,6 +59,7 @@ ENTRY 368 48
 20 10 464 36 1 -1
 
 21 10 400 98 -1 1
+
 #Portal, extra setting: width, height, scene will be changed to, entry id postition when change
 
 22 5 80 4 16 8 4 0
@@ -81,4 +82,8 @@ ENTRY 368 48
 
 30 6 312 160 4
 
-31 6 416 176 
+31 6 416 176 25
+
+#Gate portal, scene will be changed to, entry id postition when change
+
+32 24 508 152 5 0

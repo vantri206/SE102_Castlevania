@@ -72,6 +72,7 @@ void CSimonAutoWalking::ChangeState()
 		break;
 	case SIMON_STATE_WALKING_DOWN:
 		simon->SetState(new CSimonWalkingStairDown(simon));
+		break;
 	case SIMON_STATE_INTRO:
 		simon->SetState(new CSimonIntro(simon));
 		break;

@@ -145,6 +145,12 @@
 #----PORK CHOP---#
 5500 50050 0
 
+#---DOUBLE SHOT---#
+5600 50060 0
+
+#----MAGIC CRYSTAL---#
+5700 50070 0
+
 #####----BOSS----#####
 #---PHANTOM BAT---#
 #sleep
