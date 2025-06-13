@@ -79,6 +79,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="PhantomBat.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene\Effect\Effect.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />

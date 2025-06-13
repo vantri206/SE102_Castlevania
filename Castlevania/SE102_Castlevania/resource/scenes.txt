@@ -6,4 +6,4 @@
 2 2 2 resource/Map/Stage2.txt resource/Map/Stage2Objects.txt
 2 3 3 resource/Map/Stage3.txt resource/Map/Stage3Objects.txt
 2 4 4 resource/Map/Stage4.txt resource/Map/Stage4Objects.txt
-2 5 5 resource/Map/Stage1.txt resource/Map/Stage1Objects.txt
+2 5 5 resource/Map/Stage5.txt resource/Map/Stage5Objects.txt

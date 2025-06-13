@@ -24,6 +24,7 @@
 #include "EnemySpawn.h"
 #include "Gate.h"
 #include "HolyCross.h"
+#include "PhantomBat.h"
 
 #define ID_TEX_BBOX 999
 
@@ -38,6 +39,7 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 	case CANDLE:
 		obj = new CCandle();
 		break;
+
 	case BRICK:
 		obj = new CBrick();
 		break;
@@ -85,6 +87,9 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 	case BAT:
 	case FISHMAN:
 		obj = new CEnemySpawn();
+		break;
+	case PHANTOMBAT:
+		obj = new CPhantomBat();
 		break;
 	default:
 		DebugOut(L"[ERROR] Unknown object type: %d\n", objectType);
