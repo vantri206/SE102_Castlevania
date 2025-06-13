@@ -11,6 +11,7 @@ CSimonWalkingStairUp::CSimonWalkingStairUp(CSimon* simon) : CSimonState(simon)
 	simon->SetSpeed(SIMON_WALKING_STAIR_SPEED * dir_x, SIMON_WALKING_STAIR_SPEED * dir_y);
 	simon->SetAccel(0.0f, 0.0f);
 	simon->SetOnStair(true);
+
 }
 void CSimonWalkingStairUp::KeyDownHandle(int keyCode) {}
 void CSimonWalkingStairUp::KeyUpHandle(int keyCode) 
@@ -22,6 +23,7 @@ void CSimonWalkingStairUp::KeyUpHandle(int keyCode)
 }
 void CSimonWalkingStairUp::Update(DWORD dt)
 {
+	
 	CStair* stair = simon->GetNearbyStair();
 	if (stair)
 	{

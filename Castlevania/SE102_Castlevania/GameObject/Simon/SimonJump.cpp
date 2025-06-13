@@ -8,7 +8,7 @@
 #include "SimonFalling.h"
 #include "SimonHurt.h"
 #include "SimonAttack.h"
-
+#define SIMON_FLOATING_CHANGE_SPEED 0.7f
 CSimonJump::CSimonJump(CSimon* simon) : CSimonState(simon)
 {
 	jumpStartTime = GetTickCount64();
@@ -22,23 +22,25 @@ void CSimonJump::KeyDownHandle(int keyCode)
 {
 	if (keyCode == DIK_A)
 	{
-		simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
+		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
+		{
+			if (simon->CanUseSubWeapon())
+				simon->SetState(new CSimonAttack(simon, SUB_WEAPON));
+		}
+		else simon->SetState(new CSimonAttack(simon, PRIMARY_WEAPON));
 	}
 }
 void CSimonJump::KeyUpHandle(int keyCode)
 {
-	if ((keyCode == DIK_RIGHT && simon->GetDirectionX() > 0) || (keyCode == DIK_LEFT && simon->GetDirectionX() < 0))
-	{
-		simon->SetAx(0.0f);
-		simon->SetVx(0.0f);
-	}
 }
 void CSimonJump::Update(DWORD dt)
 {
 	float vx, vy, ax, ay;
 	simon->GetPhysical(vx, vy, ax, ay);
-	if (vy <= 0.0f)	
+	DebugOut(L"vy= %f\n", vy);
+	if (vy <= SIMON_FLOATING_CHANGE_SPEED)
 	{
+		DebugOut(L"vy2= %f\n", vy);
 		simon->SetPosition(simon->GetX(), simon->GetY() + (SIMON_JUMP_HEIGHT - SIMON_SIT_HEIGHT) / 2);
 		simon->SetState(new CSimonFloat(simon));
 	}

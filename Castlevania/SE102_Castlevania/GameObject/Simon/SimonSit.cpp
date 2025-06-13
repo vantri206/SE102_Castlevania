@@ -14,12 +14,15 @@ void CSimonSit::KeyDownHandle(int keyCode)
 {
 	if (keyCode == DIK_A)
 	{
-		if (CGame::GetInstance()->IsKeyDown(DIK_UP))
-		{
-			if (simon->CanUseSubWeapon())
-				simon->SetState(new CSimonSitAttack(simon, SUB_WEAPON));
-		}
+		if (simon->CanUseSubWeapon())
+			simon->SetState(new CSimonSitAttack(simon, SUB_WEAPON));
 		else simon->SetState(new CSimonSitAttack(simon, PRIMARY_WEAPON));
+	}
+	else if (keyCode == DIK_RIGHT) {
+		simon->SetDirectionX(1);
+	}
+	else if (keyCode == DIK_LEFT) {
+		simon->SetDirectionX(-1);
 	}
 }
 void CSimonSit::KeyUpHandle(int keyCode)

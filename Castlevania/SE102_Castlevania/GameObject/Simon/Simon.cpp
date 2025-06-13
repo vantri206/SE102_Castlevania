@@ -28,7 +28,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vx += ax * dt;
 	vy += ay * dt;
-
+	if (GetOnStair())
+	{
+		SetMaxVx(SIMON_WALKING_STAIR_SPEED);
+	}
+	else
+	{
+		SetMaxVx(SIMON_WALKING_SPEED);
+	}
 	if (abs(vx) > abs(maxVx))
 		if (vx < 0) vx = -maxVx;
 		else vx = maxVx;
