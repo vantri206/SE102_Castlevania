@@ -346,3 +346,12 @@ int CPhantomBat::FindNearestPointIndex(const D3DXVECTOR2& from, const std::vecto
 
     return nearestIndex;
 }
+void CPhantomBat::CreateFireball() {
+	CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
+	float simonX, simonY;
+	simon->GetPosition(simonX, simonY);
+	CFireball* fireball = new CFireball(x, y, simonX, simonY);
+    CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+    currentPlayScene->AddObject(fireball);
+	DebugOut(L"[PHANTOMBAT] CreateFireball at (%f, %f)\n", x, y);
+}

@@ -11,7 +11,7 @@ protected:
     int damage;
 public:
     CFireball(float x, float y, int directionX);
-
+    CFireball(float x, float y, float targetX, float targetY);
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
     void OnCollisionWith(LPCOLLISIONEVENT e) {}

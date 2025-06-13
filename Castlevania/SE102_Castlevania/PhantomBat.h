@@ -6,6 +6,7 @@
 #include "GameSetting.h"
 #include "GameDefine.h"
 #include "debug.h"
+#include "Fireball.h"
 
 
 
@@ -61,6 +62,8 @@ public:
     int isDead();
 
 	void SetAttackTarget(D3DXVECTOR2 target) { attackTarget = target; }
+
+    void CreateFireball();
 
     void FlyTo(D3DXVECTOR2 target);
     bool ReachedTarget();

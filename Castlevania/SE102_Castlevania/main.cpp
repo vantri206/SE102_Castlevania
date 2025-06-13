@@ -40,7 +40,7 @@ void LoadResources()
 	CSceneManager* scenes = CSceneManager::GetInstance();
 	scenes->LoadPlayer();
 	scenes->LoadAllScenes(ALL_SCENES_PATH);
-	scenes->ChangeScene(MENU_SCENE_ID);
+	scenes->ChangeScene(5);
 }
 
 void Update(DWORD dt)

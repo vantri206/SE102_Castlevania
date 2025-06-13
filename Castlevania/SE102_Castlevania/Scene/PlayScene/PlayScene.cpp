@@ -192,8 +192,11 @@ void CPlayScene::Render()
 
 	SceneBG->RenderForeground();
 
-	for (auto obj : normalObj)
+
+	for (auto obj : normalObj) {
 		obj->Render();
+		obj->RenderBoundingBox();
+	}
 
 	for (auto obj : enemyObj)
 		obj->Render();

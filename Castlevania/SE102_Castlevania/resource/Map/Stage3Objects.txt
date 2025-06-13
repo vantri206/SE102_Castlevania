@@ -1,6 +1,6 @@
 #list potision simon can entry to map
 
-ENTRY 48 145
+ENTRY 480 145
 
 ENTRY 72 24
 
@@ -50,6 +50,35 @@ ENTRY 368 48
 
 16 10 48 36 -1 1
 
+17 10 368 36 -1 1 
+
+18 10 240 36 1 -1
+
+19 10 176 98 -1 1
+
+20 10 464 36 1 -1
+
+21 10 400 98 -1 1
 #Portal, extra setting: width, height, scene will be changed to, entry id postition when change
 
-18 5 80 4 16 8 4 0
+22 5 80 4 16 8 4 0
+
+23 5 392 4 16 8 4 1
+
+#Candle, extra setting: item's objectid drop when hit
+
+24 6 32 56 9 700
+
+25 6 352 56 16
+
+26 6 224 88 16 
+
+27 6 96 144 4
+
+28 6 480 144 16
+
+29 6 160 160 16
+
+30 6 312 160 4
+
+31 6 416 176 

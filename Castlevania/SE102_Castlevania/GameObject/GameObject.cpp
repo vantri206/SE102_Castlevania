@@ -135,6 +135,7 @@ void CGameObject::RenderBoundingBox()
 {
 	float l, t, r, b;
 	this->GetBoundingBox(l, t, r, b);
+	CGame::GetInstance()->DrawBoundingBox(l, t, r, b);
 }
 int CGameObject::isInSceneViewport()
 {

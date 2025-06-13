@@ -525,6 +525,7 @@
     </ClInclude>
     <ClInclude Include="MenuScene.h">
       <Filter>Scene\MenuScene</Filter>
+	</ClInclude>
     <ClInclude Include="PhantomBat.h">
       <Filter>GameObject\Enemy\Boss</Filter>
     </ClInclude>
