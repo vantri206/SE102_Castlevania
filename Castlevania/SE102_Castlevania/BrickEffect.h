@@ -6,7 +6,7 @@
 #include "Game.h"
 
 #define BRICK_EFFECT_WIDTH 10
-#define BRICK_FRAGMENT_HEIGHT 10
+#define BRICK_EFFECT_HEIGHT 10
 
 #define BRICKBREAK_EFFECT_ANI 0
 
@@ -20,7 +20,7 @@ public:
     {
         this->animation_set = CAnimationSets::GetInstance()->Get(BREAKBRICKEFFECT_ANI_SET_ID);
         this->width = BRICK_EFFECT_WIDTH;
-        this->height = BRICK_FRAGMENT_HEIGHT;
+        this->height = BRICK_EFFECT_HEIGHT;
         
         this->x = x;
         this->y = y;

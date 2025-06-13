@@ -9,8 +9,17 @@ CBreakableBrick::CBreakableBrick()
 }
 int CBreakableBrick::IsDirectionColliable(int nx, int ny)
 {
-	if (nx != 0 || ny > 0) return 1;
-	return 0;
+	switch (this->type)
+	{
+	case 1:
+		if (nx != 0 || ny > 0) return 1;
+		return 0;
+		break;
+	case 2:
+		return 1;
+		break;
+	default: return 1;
+	}
 }
 void CBreakableBrick::Render()
 {

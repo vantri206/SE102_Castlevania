@@ -69,6 +69,7 @@ void CSimonAttack::Update(DWORD dt)
         {
             currentWeapon->Delete();
             delete currentWeapon;
+            currentWeapon = nullptr;
             simon->SetCurrentWeapon(nullptr);
         }
 

@@ -7,7 +7,7 @@ CMoneyBag::CMoneyBag()
 {
 	this->SetSize(MONEYBAG_WIDTH, MONEYBAG_HEIGHT);
 	ay = DEFAULT_GRAVITY;
-	point = 0;
+	score = 0;
 
 	startSpawn = -1;
 	
@@ -17,6 +17,7 @@ CMoneyBag::CMoneyBag()
 
 void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (IsDeleted()) return;
 	if (isSpawning() && GetTickCount64() - startSpawn >= MONEYBAG_SPAWN_DURATION) FinishedSpawning();
 	vy += ay * dt;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -29,7 +30,6 @@ void CMoneyBag::OnNoCollision(DWORD dt)
 
 void CMoneyBag::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	DebugOut(L"has col\n");
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0.0f;
@@ -51,13 +51,13 @@ void CMoneyBag::GetBoundingBox(float& l, float& t, float& r, float& b)
 void CMoneyBag::LoadExtraSetting(vector<int> extra_settings)
 {
 	if (extra_settings.size() > 0)
-		this->point = extra_settings[0];
+		this->score = extra_settings[0];
 	this->SetMoneyBagAni();
 }
 
 void CMoneyBag::SetMoneyBagAni()
 {
-	switch (this->point)
+	switch (this->score)
 	{
 	case 400:
 		this->ani_id = ID_ANI_MONEYBAG_400;
@@ -69,7 +69,7 @@ void CMoneyBag::SetMoneyBagAni()
 		this->ani_id = ID_ANI_MONEYBAG_1000;
 		break;
 	default:
-		this->ani_id = ID_ANI_MONEYBAG_1000;
+		this->ani_id = ID_ANI_MONEYBAG_400;
 	}
 }
 
@@ -86,4 +86,9 @@ void CMoneyBag::FinishedSpawning()
 	ay = DEFAULT_GRAVITY;
 	vy = 0.0f;
 	state = MONEYBAG_STATE_IDLE;
+}
+
+int CMoneyBag::GetScore()
+{
+	return score;
 }

@@ -236,7 +236,6 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int right, int bottom, float width, float height)
 {
 	if (tex == NULL) return;
-
 	int spriteWidth = right - left + 1;
 	int spriteHeight = bottom - top + 1;
 
@@ -267,13 +266,10 @@ void CGame::Draw(float x, float y, int nx, LPTEXTURE tex, int left, int top, int
 	D3DXMATRIX matTranslation;
 	D3DXMatrixTranslation(&matTranslation, round(x - cx), round(y - cy), 0.1f);
 
-
-
 	D3DXMATRIX matScaling;
 	D3DXMatrixScaling(&matScaling, width, height, 1.0f);
 
 	sprite.matWorld = matScaling * matTranslation;
-
 	ID3D10SamplerState* pt = this->GetPointSampler();
 	pD3DDevice->PSSetSamplers(0, 1, &pt);
 	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
@@ -299,7 +295,6 @@ void CGame::DrawBoundingBox(float left, float top, float right, float bottom)
 
 	Draw(right, y, 1, bbox, 0, 0, 1, 1, 1.0f, height);
 }
-
 
 int CGame::IsKeyDown(int KeyCode)
 {

@@ -15,22 +15,22 @@
 #include "SimonAutoWalking.h"
 #include <Item.h>
 #include "SimonDie.h"
+#include <TriggerZone.h>
+#include <Fireball.h>
 
 CSimonIdle::CSimonIdle(CSimon* simon) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_IDLE);
-    simon->SetPhysical(0.0f, 0.0f, 0.0f, DEFAULT_GRAVITY);
+    simon->SetPhysical(0.0f, 0.0f, 0.0f, SIMON_GRAVITY);
     simon->SetSize(SIMON_IDLE_WIDTH, SIMON_IDLE_HEIGHT);
 }
 void CSimonIdle::KeyUpHandle(int keyCode)
 {
-    //DebugOut(L"Keycode: %d\n", keyCode);
 
 }
 
 void CSimonIdle::KeyDownHandle(int keyCode)
 {
-    //DebugOut(L"Keycode: %d\n", keyCode);
     if (keyCode == DIK_RIGHT)
     {
         simon->SetDirectionX(1);
@@ -81,7 +81,7 @@ void CSimonIdle::KeyDownHandle(int keyCode)
     }
     else if (keyCode == DIK_DOWN)
     {
-        simon->SetPosition(simon->GetX(), simon->GetY() - 4.0f);
+        simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_IDLE_HEIGHT - SIMON_SIT_HEIGHT) / 2);
         simon->SetState(new CSimonSit(simon));
     }
     else if (keyCode==DIK_G)
@@ -94,7 +94,6 @@ void CSimonIdle::Update(DWORD dt)
     simon->GetSpeed(vx, vy);
     if (vy < 0)
     {
-        simon->SetPosition(simon->GetX(), simon->GetY() - 4.0f);
         simon->SetState(new CSimonFalling(simon));
     }
 }
@@ -117,12 +116,22 @@ void CSimonIdle::OnCollisionWith(LPCOLLISIONEVENT e)
         CItem* item = dynamic_cast<CItem*>(e->obj);
         simon->OnCollisionWithItem(item);
     }
-    else if (e->ny > 0 && e->obj->IsBlocking())
+    else if (dynamic_cast<CFireball*>(e->obj))
     {
-        simon->SetVy(0.0f);
+        CFireball* fireball = dynamic_cast<CFireball*>(e->obj);
+        simon->OnCollisionWithBullet(fireball);
     }
-    else if (e->nx != 0 && e->obj->IsBlocking())
+    else if (dynamic_cast<CTriggerZone*>(e->obj))
     {
+        CTriggerZone* triggerzone = dynamic_cast<CTriggerZone*>(e->obj);
+        triggerzone->Trigger();
+    }
+	else if (e->ny > 0 && e->obj->IsBlocking())
+	{
+		simon->SetVy(0.0f);
+	}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
         simon->SetVx(0.0f);
     }
 }

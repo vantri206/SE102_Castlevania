@@ -17,7 +17,7 @@
 CSimonWalking::CSimonWalking(CSimon* simon) : CSimonState(simon)
 {
 	simon->SetMaxVx(SIMON_WALKING_SPEED * simon->GetDirectionX());
-	simon->SetAccel(SIMON_ACCEL_WALK_X * simon->GetDirectionX(), DEFAULT_GRAVITY);
+	simon->SetAccel(SIMON_ACCEL_WALK_X * simon->GetDirectionX(), SIMON_GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_WALK);
 	simon->SetSize(SIMON_WALKING_WIDTH, SIMON_WALKING_HEIGHT);
 }
@@ -60,7 +60,7 @@ void CSimonWalking::Update(DWORD dt)
 	simon->GetSpeed(vx, vy);
 	if (vy < 0)
 	{
-		simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_WALKING_HEIGHT - SIMON_FALLING_HEIGHT)/2);
+		simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_WALKING_HEIGHT - SIMON_FALLING_HEIGHT) / 2);
 		simon->SetState(new CSimonFalling(simon));
 	}
 }
@@ -88,9 +88,9 @@ void CSimonWalking::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPortal*>(e->obj))
 	{
 		CPortal* portal = dynamic_cast<CPortal*>(e->obj);
-		portal->ChangeScene();
+		portal->Active();
 	}
-	if (e->ny > 0 && e->obj->IsBlocking())
+	else if (e->ny > 0 && e->obj->IsBlocking())
 	{
 		simon->SetVy(0.0f);
 	}

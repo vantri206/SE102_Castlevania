@@ -49,8 +49,8 @@
     <Filter Include="Scene\SceneManager">
       <UniqueIdentifier>{7d882231-c072-4431-a12f-8e27a98f6995}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Enemy\Boss">
-      <UniqueIdentifier>{29a1e1cd-1f56-4914-9339-4e5044b1822a}</UniqueIdentifier>
+    <Filter Include="Scene\HUD">
+      <UniqueIdentifier>{8fd437e6-efa3-4902-a2e3-3d00a74ecee3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -187,9 +187,6 @@
     <ClCompile Include="GameObject\GameObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="GameSetting\GameSetting.cpp">
-      <Filter>GameSetting</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\debug.cpp">
       <Filter>UItils</Filter>
     </ClCompile>
@@ -226,7 +223,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene\SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="BreakableBrick.cpp" />
     <ClCompile Include="Wall.cpp">
       <Filter>GameObject\WorldObject</Filter>
     </ClCompile>
@@ -236,14 +232,35 @@
     <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp">
       <Filter>GameObject\WorldObject</Filter>
     </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
     <ClCompile Include="SimonStairUpAttack.cpp">
       <Filter>GameObject\Simon</Filter>
     </ClCompile>
     <ClCompile Include="SimonStairDownAttack.cpp">
       <Filter>GameObject\Simon</Filter>
     </ClCompile>
-    <ClCompile Include="PhantomBat.cpp">
-      <Filter>GameObject\Enemy\Boss</Filter>
+    <ClCompile Include="EnemySpawn.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonFloat.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakableBrick.cpp">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterDeadZone.cpp">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FishMan.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Scene\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -436,8 +453,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Scene\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="BreakableBrick.h" />
-    <ClInclude Include="BrickEffect.h" />
     <ClInclude Include="Wall.h">
       <Filter>GameObject\WorldObject</Filter>
     </ClInclude>
@@ -447,12 +462,44 @@
     <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
-    <ClInclude Include="SimonSitAttack.h" />
+    <ClInclude Include="WaterDeadZone.h">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FishMan.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireball.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashEffect.h">
+      <Filter>Scene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawn.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
     <ClInclude Include="SimonStairUpAttack.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
     <ClInclude Include="SimonStairDownAttack.h">
       <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>GameObject\WorldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonFloat.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakableBrick.h">
+      <Filter>GameObject\BreakableObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonSitAttack.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickEffect.h">
+      <Filter>Scene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Scene\HUD</Filter>
     </ClInclude>
     <ClInclude Include="PhantomBat.h">
       <Filter>GameObject\Enemy\Boss</Filter>

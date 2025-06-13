@@ -83,6 +83,8 @@ public:
 
 	int IsCollidable();
 
+    void ResetAnimation();
+
 	void SetOwner(CSimon* simon) { this->owner = simon; }
 	CSimon* GetOwner() { return this->owner; }
 };

@@ -1,7 +1,9 @@
 #list potision simon can entry to map
 
-ENTRY 48 144
-ENTRY 48 24
+ENTRY 48 145
+
+ENTRY 72 24
+
 ENTRY 368 48
 
 #object_id object_type x y extra_setting...
@@ -50,4 +52,4 @@ ENTRY 368 48
 
 #Portal, extra setting: width, height, scene will be changed to, entry id postition when change
 
-18 5 80 8 16 16 4 0
+18 5 80 4 16 8 4 0

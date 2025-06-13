@@ -1,6 +1,9 @@
 #list potision simon can entry to map
-ENTRY 368 192
+
 ENTRY 48 192
+
+ENTRY 368 192
+
 #object_id object_type x y extra_setting...
 
 #Brick, extra seting: width, height
@@ -25,7 +28,7 @@ ENTRY 48 192
 
 10 2 392 88 144 16
 
-#Water death zone, extra setting: width, height
+#Water dead zone, extra setting: width, height
 
 11 21 224 16 448 32
 
@@ -39,7 +42,7 @@ ENTRY 48 192
 
 #TriggerZone, extra setting: width, height, obj id spawn when trigger, spawnX, spawnY, extra setting for obj spawn
 
-14 17 464 24 36 24 9 414 88 1000
+14 17 464 24 36 24 9 414 89 1000
 
 #Portal, extra setting: width, height, scene will be changed to, entry id postition when change
 
@@ -52,3 +55,15 @@ ENTRY 48 192
 17 10 100 132 1 -1
 
 18 10 448 100 1 -1
+
+#Fishman, extra setting: start direction
+
+19 22 8 16 1
+
+20 22 204 16 -1
+
+21 22 252 16 -1
+
+22 22 360 16 1
+
+23 22 472 16 1

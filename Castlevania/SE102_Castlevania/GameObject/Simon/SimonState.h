@@ -24,8 +24,6 @@ public:
     virtual void OnNoCollision(DWORD dt) {}
     virtual void OnCollisionWith(LPCOLLISIONEVENT e) {}
 
-    virtual void OnEnter() {}
-    virtual void OnExit() {}
     virtual void Render() {}
 
     virtual bool IsAutoWalking() { return false; }

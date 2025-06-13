@@ -4,10 +4,14 @@
 #include "Game.h"
 #include "Simon.h"
 #include "SimonSit.h"
+#include "TriggerZone.h"
+#include "SimonDie.h"
+#include "WaterDeadZone.h"
 
 CSimonFalling::CSimonFalling(CSimon* simon) : CSimonState(simon)
 {
-	simon->SetAniId(ID_ANI_SIMON_SIT);
+	simon->SetAy(SIMON_GRAVITY);
+	simon->SetAniId(ID_ANI_SIMON_IDLE);
 	simon->SetSize(SIMON_FALLING_WIDTH, SIMON_FALLING_HEIGHT);
 }
 void CSimonFalling::KeyDownHandle(int keyCode) {}
@@ -22,15 +26,26 @@ void CSimonFalling::OnNoCollision(DWORD dt)
 }
 void CSimonFalling::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	/*
 	if (dynamic_cast<CEnemy*>(e->obj))
 	{
 		simon->SetState(new CSimonHurt(simon));
 	}
-	*/
-	if (e->ny > 0 && e->obj->IsBlocking())
+	else if (dynamic_cast<CTriggerZone*>(e->obj))
 	{
-		simon->SetState(new CSimonSit(simon));
+		CTriggerZone* triggerzone = dynamic_cast<CTriggerZone*>(e->obj);
+		triggerzone->Trigger();
+	}
+	else if (dynamic_cast<CWaterDeadZone*>(e->obj))
+	{
+		float l, t, r, b;
+		e->obj->GetBoundingBox(l, t, r, b);
+		simon->TriggerSplashEffect(simon->GetX(), t);
+		simon->StartDrowning();
+	}
+	else if (e->ny > 0 && e->obj->IsBlocking())
+	{	
+		//simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_FALLING_HEIGHT - SIMON_SIT_HEIGHT) / 2);
+		simon->SetState(new CSimonIdle(simon));
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{

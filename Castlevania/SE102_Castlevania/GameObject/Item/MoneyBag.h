@@ -17,7 +17,7 @@
 class CMoneyBag : public CItem
 {
 protected:
-	int point;
+	int score;
 	float ay;
 
 	DWORD startSpawn;
@@ -38,5 +38,6 @@ public:
 
 	void StartSpawning();
 	void FinishedSpawning();
+	int GetScore();
 	int isSpawning() { return (state == MONEYBAG_STATE_SPAWN); }
 };

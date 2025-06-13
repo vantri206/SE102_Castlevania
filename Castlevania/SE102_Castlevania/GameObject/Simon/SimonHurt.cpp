@@ -9,7 +9,7 @@ CSimonHurt::CSimonHurt(CSimon* simon) : CSimonState(simon)
 	simon->SetSize(SIMON_HURT_WIDTH, SIMON_HURT_HEIGHT);
 	simon->SetAniId(ID_ANI_SIMON_HURT);
 	int nx = simon->GetDirectionX();
-	simon->SetPhysical(SIMON_HURT_VX * (-1) * nx, SIMON_HURT_VY, 0, DEFAULT_GRAVITY);
+	simon->SetPhysical(SIMON_HURT_VX * (-1) * nx, SIMON_HURT_VY, 0, SIMON_GRAVITY);
 	startHurtTime = GetTickCount64();
 }
 void CSimonHurt::KeyUpHandle(int keyCode) { }

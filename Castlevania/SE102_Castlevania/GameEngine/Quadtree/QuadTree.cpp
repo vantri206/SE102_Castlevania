@@ -119,11 +119,11 @@ void QuadTree::Subdivide(QNode* node, int depth)
     node->rb = new QNode(midX, midY, node->x1, node->y1);
 }
 
-void QuadTree::Retrieve(QNode* node, RECT camRect, std::unordered_set<LPGAMEOBJECT>& res)
+void QuadTree::Retrieve(QNode* node, RECT rect, std::unordered_set<LPGAMEOBJECT>& res)
 {
     // Nếu node nằm ngoài vùng camera thì bỏ qua
-    if (node->x1 < camRect.left || node->x0 > camRect.right ||
-        node->y1 < camRect.bottom || node->y0 > camRect.top)
+    if (node->x1 < rect.left || node->x0 > rect.right ||
+        node->y1 < rect.bottom || node->y0 > rect.top)
         return;
 
     // Thêm các object trong node vào danh sách kết quả
@@ -135,18 +135,18 @@ void QuadTree::Retrieve(QNode* node, RECT camRect, std::unordered_set<LPGAMEOBJE
     // Nếu node không phải node lá -> tiếp tục kiểm tra các node con
     if (!node->IsLeaf())
     {
-        Retrieve(node->lt, camRect, res);
-        Retrieve(node->rt, camRect, res);
-        Retrieve(node->lb, camRect, res);
-        Retrieve(node->rb, camRect, res);
+        Retrieve(node->lt, rect, res);
+        Retrieve(node->rt, rect, res);
+        Retrieve(node->lb, rect, res);
+        Retrieve(node->rb, rect, res);
     }
 }
 
-vector<LPGAMEOBJECT> QuadTree::GetObjectsInView(RECT cam)
+vector<LPGAMEOBJECT> QuadTree::GetObjectsInView(RECT rectView)
 {
-    // Trả về danh sách các object trong vùng nhìn thấy (camera)
+    // Trả về danh sách các object trong vùng rect
     std::unordered_set<LPGAMEOBJECT> uniqueRes;
-    Retrieve(root, cam, uniqueRes);
+    Retrieve(root, rectView, uniqueRes);
     vector<LPGAMEOBJECT> res;
     for (auto obj : uniqueRes)
     {
@@ -200,4 +200,20 @@ void QuadTree::PrintTree()
     DebugOut(L"===== QuadTree Structure =====\n");
     PrintNode(root, 0);
     DebugOut(L"==============================\n");
+}
+
+void QuadTree::Update(vector<LPGAMEOBJECT>& Objects)
+{
+    delete root;
+
+    int size = max(mapWidth, mapHeight);
+    int bound = 1;
+    while (bound < size) bound *= 2;
+    root = new QNode(0, 0, bound, bound);
+
+    for (auto obj : Objects)
+    {
+        if (obj && !obj->IsDeleted())
+            Insert(obj);
+    }
 }
