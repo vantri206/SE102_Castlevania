@@ -29,6 +29,7 @@
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (heartCount <= 0) currentSubWeaponType = -1;
 	vx += ax * dt;
 	vy += ay * dt;
 	if (GetOnStair())
@@ -42,7 +43,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (abs(vx) > abs(maxVx))
 		if (vx < 0) vx = -maxVx;
 		else vx = maxVx;
-
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 		FinishedUntouchable();
 	if (GetTickCount64() - invisible_start > SIMON_INVISIBLE_TIME)

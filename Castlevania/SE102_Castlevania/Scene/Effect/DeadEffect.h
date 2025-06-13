@@ -29,6 +29,7 @@ public:
 
     void Update(DWORD dt) 
     {
+        DebugOut(L"%d %d %d\n", GetTickCount64(), startTime, effectDuration);
         if (!isFinished && GetTickCount64() - startTime >= effectDuration)
             isFinished = true;
         CGameEffect::Update(dt);

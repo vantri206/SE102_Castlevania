@@ -24,6 +24,6 @@ ENTRY 648 48
 
 7 5 692 36 24 8 2 0
 
-#TriggerZone, extra setting: width, height, obj id spawn when trigger, spawnX, spawnY, extra setting for obj spawn
+#TriggerZone, extra setting: type, width, height, obj id spawn when trigger, spawnX, spawnY, extra setting for obj spawn
 
-8 17 732 32 36 24 9 572 24 1000
+8 17 732 32 0 36 24 9 572 24 1000

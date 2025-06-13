@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include "SceneManager.h"
 #include "debug.h"
+#include <DeadEffect.h>
 #define PHANTOMBAT_WIDTH 48
 #define PHANTOMBAT_HEIGHT 22
 static bool seeded = false;
@@ -13,7 +14,7 @@ CPhantomBat::CPhantomBat()
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(PHANTOMBAT_ANI_SET_ID));
 	this->SetState(PHANTOMBAT_STATE_SLEEPING);
-	this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
+	this->SetAniId(ANI_ID_PHANTOMBAT_SLEEPING);
 	this->SetSize(PHANTOMBAT_WIDTH, PHANTOMBAT_HEIGHT);
 	attackTarget = D3DXVECTOR2(0.0f, 0.0f);
     if (!seeded) {
@@ -43,12 +44,26 @@ CPhantomBat::CPhantomBat()
 
     pointGroups.push_back(group1);
     pointGroups.push_back(group2);
-	ActiveEnemy();
+
+    this->health = MAX_HEALTH;
+    this->attack = NORMAL_ENEMY_ATTACK;
 }
 
 void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
     CGameObject::Update(dt);
+    if (this->isDead()) return;
+    if (this->health <= 0)
+    {
+        this->SetState(PHANTOMBAT_STATE_DEAD);
+        this->BossEnemyDead(ENEMY_DEAD_TIME);
+        EnemyKillByPlayer();
+    }
+    else if (this->isDead())
+    {
+        if (GetTickCount64() - startDeathTime >= ENEMY_DEAD_TIME)
+            isDeleted = true;
+    }
     CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
 	DebugOut(L"[PHANTOMBAT] Update: x = %f, y = %f, state = %d\n", x, y, state);
     switch (state)
@@ -279,6 +294,10 @@ D3DXVECTOR2 CPhantomBat::GetNearestAboveNonMiddlePoint()
     return D3DXVECTOR2(nearest.x, nearest.y - 32);
 }
 
+void CPhantomBat::TriggerBossDieEffect()
+{
+}
+
 bool CPhantomBat::SimonInAttackZone()
 {
     CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
@@ -349,4 +368,32 @@ void CPhantomBat::CreateFireball() {
     CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
     currentPlayScene->AddObject(fireball);
 	DebugOut(L"[PHANTOMBAT] CreateFireball at (%f, %f)\n", x, y);
+}
+
+void CPhantomBat::BossEnemyDead(int duration)
+{
+    this->startDeathTime = GetTickCount64();
+    this->SetPhysical(0.0f, 0.0f, 0.0f, 0.0f);
+    this->TriggerBossDieEffect(duration);
+    this->isActive = 0;
+}
+
+void CPhantomBat::TriggerBossDieEffect(int duration)
+{
+    DebugOut(L"%d\n", duration);
+    CPlayScene* currentPlayScene = CGame::GetInstance()->GetCurrentPlayScene();
+    if (currentPlayScene)
+    {
+        vector<CDeadEffect*> effects;
+        CDeadEffect* deadEffect1 = new CDeadEffect(this->x - 6, this->y, duration);
+        CDeadEffect* deadEffect2 = new CDeadEffect(this->x, this->y, duration);
+        CDeadEffect* deadEffect3 = new CDeadEffect(this->x + 6, this->y, duration);
+        effects.push_back(deadEffect1);
+        effects.push_back(deadEffect2);
+        effects.push_back(deadEffect3);
+        for (auto effect : effects)
+        {
+            currentPlayScene->AddEffect(effect);
+        }
+    }
 }

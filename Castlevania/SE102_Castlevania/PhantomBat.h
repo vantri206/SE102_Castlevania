@@ -63,6 +63,10 @@ public:
 
     void CreateFireball();
 
+    void TriggerBossDieEffect(int duration);
+
+    void BossEnemyDead(int duration);
+
     void FlyTo(D3DXVECTOR2 target);
     bool ReachedTarget();
     bool ReachedTarget(D3DXVECTOR2 target);
@@ -72,5 +76,7 @@ public:
     NearestInPointGroupsInfo FindNearestPointInfoInGroups(D3DXVECTOR2 from);
     int FindNearestPointIndex(const D3DXVECTOR2& from, const std::vector<D3DXVECTOR2>& points);
 
+    int GetAttack() { return this->attack; }
+    void TriggerBossDieEffect();
     bool SimonInAttackZone();
 };

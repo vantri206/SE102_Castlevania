@@ -42,7 +42,7 @@ ENTRY 368 192
 
 #TriggerZone, extra setting: width, height, obj id spawn when trigger, spawnX, spawnY, extra setting for obj spawn
 
-14 17 464 24 36 24 9 414 89 1000
+14 17 464 24 0 36 24 9 414 89 1000
 
 #Portal, extra setting: width, height, scene will be changed to, entry id postition when change
 

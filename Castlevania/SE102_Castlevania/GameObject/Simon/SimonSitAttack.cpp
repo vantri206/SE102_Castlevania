@@ -31,8 +31,8 @@ CSimonSitAttack::CSimonSitAttack(CSimon* simon, int weaponType) : CSimonState(si
             subWeapon = new CHolyWaterBottle(x, y, simon->GetDirectionX());
             break;
         }
-        simon->AddSubWeapon(subWeapon);
         simon->spendHeart(subWeapon->GetHeartCost());
+        simon->AddSubWeapon(subWeapon);
     }
     else
     {
