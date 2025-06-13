@@ -176,6 +176,12 @@ public:
 	void FinishedUntouchable() { untouchable = 0; untouchable_start = 0; }
 	int GetUntouchable() { return untouchable; }
 
+	//for invisible mode
+	void SetInvisible(int invisible) { this->invisible = invisible; }
+	void StartInvisible() { invisible = 1; invisible_start = GetTickCount64(); }
+	void FinishedInvisible() { invisible = 0; invisible_start = 0; }
+	int GetInvisible() { return invisible; }
+
 	//for go stair
 	bool IsNearStairUp();
 	bool IsNearStairDown();

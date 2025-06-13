@@ -49,6 +49,9 @@
     <Filter Include="Scene\SceneManager">
       <UniqueIdentifier>{7d882231-c072-4431-a12f-8e27a98f6995}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Enemy\Boss">
+      <UniqueIdentifier>{29a1e1cd-1f56-4914-9339-4e5044b1822a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="SimonStairDownAttack.cpp">
       <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="PhantomBat.cpp">
+      <Filter>GameObject\Enemy\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -438,7 +444,6 @@
     <ClInclude Include="SimonDie.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
-
     <ClInclude Include="GameObject\Simon\SimonWalkingStairUp.h">
       <Filter>GameObject\Simon</Filter>
     </ClInclude>
@@ -448,6 +453,9 @@
     </ClInclude>
     <ClInclude Include="SimonStairDownAttack.h">
       <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="PhantomBat.h">
+      <Filter>GameObject\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

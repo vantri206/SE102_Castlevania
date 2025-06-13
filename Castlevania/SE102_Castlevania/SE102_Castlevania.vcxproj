@@ -72,6 +72,7 @@
     <ClCompile Include="GameObject\WorldObject\TriggerZone.cpp" />
     <ClCompile Include="GameSetting\GameSetting.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhantomBat.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene\Effect\Effect.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
@@ -80,7 +81,6 @@
     <ClCompile Include="SimonDie.cpp" />
     <ClCompile Include="SimonStairDownAttack.cpp" />
     <ClCompile Include="SimonStairUpAttack.cpp" />
-
     <ClCompile Include="Utils\debug.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -143,6 +143,7 @@
     <ClInclude Include="GameObject\WorldObject\TriggerZone.h" />
     <ClInclude Include="GameSetting\GameDefine.h" />
     <ClInclude Include="GameSetting\GameSetting.h" />
+    <ClInclude Include="PhantomBat.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene\Effect\DeadEffect.h" />

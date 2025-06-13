@@ -1,0 +1,38 @@
+#list potision simon entry to map
+
+ENTRY 100 48
+
+#list potision simon can entry to map
+
+ENTRY 1000 48
+
+#object_id object_type x y extra_setting...
+
+#Brick, extra setting: width, height
+
+1 2 384 24 768 16
+
+2 2 56 120 112 16
+
+3 2 216 88 176 16
+
+4 2 680 56 16 16
+
+5 2 744 88 48 16
+
+#Stair, extra setting: up or down (1: up, -1: down), left or right(1: right, -1: left)
+
+6 10 112 128 -1 1 
+
+7 10 144 102 1 -1
+
+8 10 368 38 1 -1
+
+9 10 304 98 -1 1
+
+10 10 688 68 1 1
+
+11 10 720 96 -1 -1
+
+#Phantom Bat
+12 22 624 168

@@ -121,6 +121,13 @@
 #holy water bottle
 5302 50032 0
 
+#####----BOSS----#####
+#---PHANTOM BAT---#
+#sleep
+6000 60000 0
+#flying
+6001 60001 150 60002 150
+
 ####----EFFECT----####
 #--DEAD--# 	
 #effect when object can break (torch, candle,...) and enemies dead

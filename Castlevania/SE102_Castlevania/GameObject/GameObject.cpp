@@ -18,6 +18,7 @@
 #include "MoneyBag.h"
 #include "TriggerZone.h"
 #include "Bat.h"
+#include "PhantomBat.h"
 
 #define ID_TEX_BBOX 999
 
@@ -73,6 +74,9 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 		break;
 	case BAT:
 		obj = new CBat();
+		break;
+	case PHANTOMBAT:
+		obj = new CPhantomBat();
 		break;
 	default:
 		DebugOut(L"[ERROR] Unknown object type: %d\n", objectType);
