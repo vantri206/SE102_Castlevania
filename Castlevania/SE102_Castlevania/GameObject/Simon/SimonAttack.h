@@ -7,7 +7,7 @@
 
 class CSimonAttack : public CSimonState {
 private:
-    ULONGLONG attackStartTime;
+    DWORD attackStartTime;
 public:
     CSimonAttack(CSimon* simon, int weaponType);
     ~CSimonAttack();

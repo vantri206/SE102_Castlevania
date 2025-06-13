@@ -32,4 +32,6 @@ public:
     void HolyWaterBreak();
     int isBreaking();
     int GetHeartCost() { return heartCost; }
+
+    virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

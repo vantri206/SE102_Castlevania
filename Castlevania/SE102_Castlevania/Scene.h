@@ -5,6 +5,7 @@
 class CScene 
 {
 protected:
+    int typeScene;
     int SceneId;
 public:
     CScene() {}
@@ -18,5 +19,7 @@ public:
     virtual void Render() = 0;
 
     virtual int GetSceneId() { return SceneId; }
+
+    virtual int GetSceneType() { return typeScene; }
     ~CScene() {}
 };

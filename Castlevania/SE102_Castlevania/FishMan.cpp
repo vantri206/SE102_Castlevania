@@ -16,6 +16,7 @@ CFishMan::CFishMan()
     this->lastAttackTime = -1;
 
     health = FISHMAN_HP;
+    attack = NORMAL_ENEMY_ATTACK;
 }
 
 void CFishMan::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

@@ -60,5 +60,7 @@ public:
 
 	CMap* GetSceneMap() { return SceneBG; }
 	wstring GetObjectFile() { return objectFile; }
+
+	vector<CGameObject*> GetAllObjects() { return objects; }
 	~CPlayScene();
 };

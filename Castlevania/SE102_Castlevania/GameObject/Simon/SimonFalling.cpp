@@ -44,7 +44,6 @@ void CSimonFalling::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->ny > 0 && e->obj->IsBlocking())
 	{	
-		//simon->SetPosition(simon->GetX(), simon->GetY() - (SIMON_FALLING_HEIGHT - SIMON_SIT_HEIGHT) / 2);
 		simon->SetState(new CSimonIdle(simon));
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())

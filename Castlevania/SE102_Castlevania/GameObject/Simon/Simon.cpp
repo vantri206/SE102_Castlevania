@@ -19,14 +19,19 @@
 #include "Bat.h"
 #include "Fireball.h"
 #include "SimonDie.h"
-#include <SimonFloat.h>
+#include "SimonFloat.h"
+#include "SimonWalkingStairUp.h"
+#include "SimonWalkingStairDown.h"
+#include <HolyCross.h>
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vx += ax * dt;
 	vy += ay * dt;
 
-	if (abs(vx) > abs(maxVx)) vx = maxVx;
+	if (abs(vx) > abs(maxVx))
+		if (vx < 0) vx = -maxVx;
+		else vx = maxVx;
 
 	if (GetTickCount64() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 		FinishedUntouchable();
@@ -117,9 +122,13 @@ void CSimon::OnCollisionWithItem(CItem* item)
 		{
 			CMoneyBag* moneybag = dynamic_cast<CMoneyBag*>(item);
 			int score = moneybag->GetScore();
-			CHUD* hud = CSceneManager::GetInstance()->GetHUD();
-			hud->SetScore(hud->GetScore() + score);
+			this->score += score;
 			break;
+		}
+		case HOLYCROSS:
+		{
+			CHolyCross* holycross = dynamic_cast<CHolyCross*>(item);
+			holycross->TriggerCrossEffect();
 		}
 	}
 	item->Delete();
@@ -192,7 +201,7 @@ void CSimon::RenderSubWeapons()
 
 void CSimon::TakenDamage(int damage)
 {
-	health -= damage;
+	this->health -= damage;
 }
 
 void CSimon::UpdateMoving(DWORD dt)
@@ -215,6 +224,16 @@ void CSimon::SetState(CSimonState* state)
 {
 	currentState.reset(state);
 	animation_set->at(ani_id)->Reset();
+}
+
+int CSimon::IsDead()
+{
+	return isDead;
+}
+
+void CSimon::StartDead()
+{
+	isDead = 1;
 }
 
 CSimonState* CSimon::GetSimonState()
@@ -311,4 +330,16 @@ int CSimon::CanOverlapWithObj(LPGAMEOBJECT objDests)
 		return 0;
 	}
 	return 1;
+}
+
+int CSimon::GetScore()
+{
+	return score;
+}
+
+void CSimon::ReloadToCheckpoint()
+{
+	this->SetState(new CSimonIdle(this));
+	this->health = MAX_HEALTH;
+	this->subWeaponLimit = 2;
 }

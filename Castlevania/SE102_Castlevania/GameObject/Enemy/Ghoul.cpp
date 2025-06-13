@@ -14,6 +14,8 @@ CGhoul::CGhoul()
 	this->ay = DEFAULT_GRAVITY;
 
 	health = GHOUL_HP;
+	attack = NORMAL_ENEMY_ATTACK;
+	score = GHOUL_SCORE;
 }
 void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -34,6 +36,7 @@ void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		this->SetState(GHOUL_STATE_DEAD);
 		this->NormalEnemyDead(ENEMY_DEAD_TIME);
+		this->EnemyKillByPlayer();
 	}
 	else
 	{

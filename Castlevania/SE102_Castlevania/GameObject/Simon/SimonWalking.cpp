@@ -16,7 +16,6 @@
 
 CSimonWalking::CSimonWalking(CSimon* simon) : CSimonState(simon)
 {
-	simon->SetMaxVx(SIMON_WALKING_SPEED * simon->GetDirectionX());
 	simon->SetAccel(SIMON_ACCEL_WALK_X * simon->GetDirectionX(), SIMON_GRAVITY);
 	simon->SetAniId(ID_ANI_SIMON_WALK);
 	simon->SetSize(SIMON_WALKING_WIDTH, SIMON_WALKING_HEIGHT);

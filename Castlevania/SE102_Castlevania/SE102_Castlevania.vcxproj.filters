@@ -52,6 +52,9 @@
     <Filter Include="Scene\HUD">
       <UniqueIdentifier>{8fd437e6-efa3-4902-a2e3-3d00a74ecee3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\MenuScene">
+      <UniqueIdentifier>{5cdb07f8-ed1b-4fc8-b9ac-da3efae80361}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -261,6 +264,15 @@
     </ClCompile>
     <ClCompile Include="HUD.cpp">
       <Filter>Scene\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HolyCross.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonStart.cpp">
+      <Filter>Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Scene\MenuScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -492,14 +504,27 @@
     <ClInclude Include="BreakableBrick.h">
       <Filter>GameObject\BreakableObject</Filter>
     </ClInclude>
-    <ClInclude Include="SimonSitAttack.h">
-      <Filter>GameObject\Simon</Filter>
-    </ClInclude>
     <ClInclude Include="BrickEffect.h">
       <Filter>Scene\Effect</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>Scene\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonSitAttack.h" />
+    <ClInclude Include="HolyCross.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashEffect.h">
+      <Filter>Scene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="BatEffect.h">
+      <Filter>Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonStart.h">
+      <Filter>Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Scene\MenuScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

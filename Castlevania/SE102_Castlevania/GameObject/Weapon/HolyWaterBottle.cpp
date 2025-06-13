@@ -14,7 +14,7 @@ CHolyWaterBottle::CHolyWaterBottle(float x, float y, int directionX)
 	nx = directionX;
 	vx = HOLYWATER_BOTTLE_SPEED * nx;
 	vy = HOLYWATER_BOTTLE_THROW_VY;
-	ay = DEFAULT_GRAVITY;
+	ay = HOLYWATER_BOTTLE_GRAVITY;
 	heartCost = 1;
 	damage = 1;
 
@@ -105,4 +105,12 @@ int CHolyWaterBottle::isBreaking()
 void CHolyWaterBottle::Destroy()
 {
 	this->Delete();
+}
+
+void CHolyWaterBottle::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x - width / 2;
+	t = y + height / 2;
+	r = x + width / 2;
+	b = y - height;
 }

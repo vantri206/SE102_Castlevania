@@ -10,6 +10,7 @@
 #include "Brick.h"
 #include "Enemy.h"
 
+#include "SimonDie.h"
 #include "debug.h"
 #include "GameDefine.h"
 #include "GameSetting.h"
@@ -81,8 +82,11 @@ protected:
 
 	int isDrowning;
 
+	int isDead;
+
 	int whipLevel;
 
+	int score;
 public:
 
 	CSimon()
@@ -91,7 +95,7 @@ public:
 		this->SetPhysical(0.0f, 0.0f, 0.0f, 0.0f);
 
 		this->SetSize(SIMON_WIDTH, SIMON_HEIGHT);
-		this->maxVx = 0;
+		this->maxVx = SIMON_WALKING_SPEED;
 
 		untouchable = 0;
 		untouchable_start = -1;
@@ -112,6 +116,10 @@ public:
 		heartCount = 5;
 
 		isDrowning = 0;
+
+		isDead = 0;
+
+		score = 0;
 
 		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID));
 	}
@@ -201,4 +209,12 @@ public:
 	void StartDrowning();
 	int IsDrowning() { return isDrowning; }
 	void SetState(CSimonState* state);
+
+	int IsDead();
+	void StartDead();
+
+	int GetScore();
+	void SetScore(int score) { this->score = score; }
+
+	void ReloadToCheckpoint();
 };

@@ -41,6 +41,9 @@ void CSimonWalkingStairDown::Update(DWORD dt)
 }
 void CSimonWalkingStairDown::OnNoCollision(DWORD dt)
 {
+	float vx, vy;
+	simon->GetSpeed(vx, vy);
+	DebugOut(L"%f\n", vx);
 	simon->UpdateMoving(dt);
 }
 void CSimonWalkingStairDown::OnCollisionWith(LPCOLLISIONEVENT e)

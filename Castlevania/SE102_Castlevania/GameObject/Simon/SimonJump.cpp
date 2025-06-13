@@ -37,7 +37,7 @@ void CSimonJump::Update(DWORD dt)
 {
 	float vx, vy, ax, ay;
 	simon->GetPhysical(vx, vy, ax, ay);
-	if (vy <= -0.02f)	
+	if (vy <= 0.0f)	
 	{
 		simon->SetPosition(simon->GetX(), simon->GetY() + (SIMON_JUMP_HEIGHT - SIMON_SIT_HEIGHT) / 2);
 		simon->SetState(new CSimonFloat(simon));

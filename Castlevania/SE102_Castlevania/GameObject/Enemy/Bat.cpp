@@ -14,6 +14,7 @@ CBat::CBat()
 	lastSwingTime = GetTickCount64();
 	vx = vy = 0;
 	health = BAT_HP;
+	attack = NORMAL_ENEMY_ATTACK;
 }
 void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

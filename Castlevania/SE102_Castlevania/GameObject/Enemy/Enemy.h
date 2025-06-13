@@ -15,7 +15,7 @@ protected:
 	int health, attack;
 	bool isActive;
 	DWORD startDeathTime;
-
+	int score;
 public:
 	CEnemy()
 	{
@@ -55,4 +55,6 @@ public:
 
 	virtual int isActived(){ return isActive; }
 	virtual void ActiveEnemy() { isActive = 1; }
+
+	virtual void EnemyKillByPlayer();
 };

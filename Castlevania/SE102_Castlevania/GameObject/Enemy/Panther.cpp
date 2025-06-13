@@ -17,6 +17,8 @@ CPanther::CPanther()
 	this->ay = DEFAULT_GRAVITY;
 
 	health = PANTHER_HP;
+	attack = NORMAL_ENEMY_ATTACK;
+	score = PANTHER_SCORE;
 }
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -39,6 +41,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		this->SetState(PANTHER_STATE_DEAD);
 		this->NormalEnemyDead(ENEMY_DEAD_TIME);
+		if (this->health <= 0) EnemyKillByPlayer();
 		return;
 	}
 	else

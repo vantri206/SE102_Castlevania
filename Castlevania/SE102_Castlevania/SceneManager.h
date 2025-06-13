@@ -27,6 +27,7 @@ protected:
     int currentSceneId = 0;
     int currentSceneEntry = 0;
 
+    int isRequestedReloadCheckpoint = 0;
     int isRequestedChangeScene = 0;
     int nextSceneId = 0;
     int nextSceneEntry = 0;
@@ -51,6 +52,12 @@ public:
 
     CScene* GetCurrentScene() { return currentScene; }
     void Clear();
+
+    void ReloadToCheckpoint();
+
+    void RequestReloadToCheckpoint();
+
+    void UpdateHUD();
 
 
     CSimon* GetPlayer() { return player; }

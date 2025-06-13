@@ -21,6 +21,8 @@ CPlayScene::CPlayScene(int id, int mapId, wstring mapFile, wstring objectFile)
 	this->mapFile = mapFile;
 
 	this->quadtree = new QuadTree(0, 0);
+
+	this->typeScene = PLAY_SCENE;
 }
 
 void CPlayScene::LoadResources() 
@@ -195,9 +197,6 @@ void CPlayScene::Render()
 
 	for (auto obj : enemyObj)
 		obj->Render();
-	
-	for (auto obj : activeObjects)
-		obj->RenderBoundingBox();
 
 	if (player) player->Render();
 

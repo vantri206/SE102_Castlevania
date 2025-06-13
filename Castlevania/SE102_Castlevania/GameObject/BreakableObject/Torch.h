@@ -17,6 +17,5 @@ protected:
 public:
 	CTorch();
 	void Render();
-	void Update(DWORD dt) {}
 	int IsBlocking() { return 0; }
 };

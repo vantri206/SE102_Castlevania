@@ -23,6 +23,7 @@
 #include "Bat.h"
 #include "EnemySpawn.h"
 #include "Gate.h"
+#include "HolyCross.h"
 
 #define ID_TEX_BBOX 999
 
@@ -76,6 +77,9 @@ CGameObject* CGameObject::CreateObject(int objectId, int objectType, vector<int>
 	case GATEPORTAL:
 		obj = new CGate();
 		break;
+	case HOLYCROSS:
+		obj = new CHolyCross();
+		break;
 	case GHOUL:
 	case PANTHER:
 	case BAT:
@@ -126,7 +130,6 @@ void CGameObject::RenderBoundingBox()
 {
 	float l, t, r, b;
 	this->GetBoundingBox(l, t, r, b);
-	CGame::GetInstance()->DrawBoundingBox(l, t, r, b);
 }
 int CGameObject::isInSceneViewport()
 {

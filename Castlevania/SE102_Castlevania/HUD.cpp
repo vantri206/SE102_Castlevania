@@ -52,7 +52,6 @@ CHUD::~CHUD()
 
 void CHUD::Render()
 {
-    DebugOut(L"%f\n", score);
     float cx = (FLOAT)floor(CCamera::GetInstance()->GetX());
     float cy = (FLOAT)floor(CCamera::GetInstance()->GetY());
 
@@ -68,7 +67,7 @@ void CHUD::Render()
     float healthStartX = statusbarX - 80;
     float healthY = statusbarY - 2;
     for (int i = 0; i < 16; i++)
-        if(i < maxHP)
+        if(i < playerHP)
             sprites->Get(SPRITES_PLAYERHP_ID)->Draw(healthStartX + i * 6 + HUD_HP_WIDTH / 2, healthY + HUD_HP_HEIGHT / 2, 1, HUD_HP_WIDTH, HUD_HP_HEIGHT);
         else
             sprites->Get(SPRITES_LOSTHP_ID)->Draw(healthStartX + i * 6 + HUD_HP_WIDTH / 2, healthY + HUD_HP_HEIGHT / 2, 1, HUD_HP_WIDTH, HUD_HP_HEIGHT);
@@ -76,7 +75,7 @@ void CHUD::Render()
 
     healthY -= 10;
     for (int i = 0; i < 16; i++)
-        if (i < maxHP)
+        if (i < enemyHP)
             sprites->Get(SPIRTES_ENEMYHP_ID)->Draw(healthStartX + i * 6 + HUD_HP_WIDTH / 2, healthY + HUD_HP_HEIGHT / 2, 1, HUD_HP_WIDTH, HUD_HP_HEIGHT);
         else
             sprites->Get(SPRITES_LOSTHP_ID)->Draw(healthStartX + i * 6 + HUD_HP_WIDTH / 2, healthY + HUD_HP_HEIGHT / 2, 1, HUD_HP_WIDTH, HUD_HP_HEIGHT);
@@ -84,10 +83,46 @@ void CHUD::Render()
     float pointX = 75;
     float pointY = -4;
     RECT rect;
-    SetRect(&rect, pointX, pointY, pointX + 64, pointY + 16);
+    SetRect(&rect, pointX, pointY, pointX + 64, pointY + 13);
 
     std::wstringstream text;
     text << std::setw(6) << std::setfill(L'0') << score;
+    font->DrawText(spriteHandler, text.str().c_str(), -1, &rect, DT_LEFT, D3DXCOLOR(1, 1, 1, 1));
+
+    float timeX = 164;
+    float timeY = -4;
+
+    SetRect(&rect, timeX, timeY, timeX + 64, timeY + 13);
+
+    text.str(L"");
+    text << std::setw(3) << std::setfill(L'0') << time;
+    font->DrawText(spriteHandler, text.str().c_str(), -1, &rect, DT_LEFT, D3DXCOLOR(1, 1, 1, 1));
+
+    float stageX = 252;
+    float stageY = -4;
+
+    SetRect(&rect, stageX, stageY, stageX + 64, stageY + 13);
+
+    text.str(L"");
+    text << std::setw(2) << std::setfill(L'0') << stage;
+    font->DrawText(spriteHandler, text.str().c_str(), -1, &rect, DT_LEFT, D3DXCOLOR(1, 1, 1, 1));
+
+    float heartX = 218;
+    float heartY = 6.5;
+
+    SetRect(&rect, heartX, heartY, heartX + 64, heartY + 13);
+
+    text.str(L"");
+    text << std::setw(2) << std::setfill(L'0') << hearts;
+    font->DrawText(spriteHandler, text.str().c_str(), -1, &rect, DT_LEFT, D3DXCOLOR(1, 1, 1, 1));
+
+    float lifeX = 218;
+    float lifeY = 17;
+
+    SetRect(&rect, lifeX, lifeY, lifeX + 64, lifeY + 13);
+
+    text.str(L"");
+    text << std::setw(2) << std::setfill(L'0') << life;
     font->DrawText(spriteHandler, text.str().c_str(), -1, &rect, DT_LEFT, D3DXCOLOR(1, 1, 1, 1));
 }
 

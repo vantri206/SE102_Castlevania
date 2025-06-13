@@ -3,11 +3,13 @@
 
 class CSimonDie : public CSimonState
 {
+protected:
+    DWORD startDead;
 public:
     CSimonDie(CSimon* simon);
-    void KeyDownHandle(int keyCode);
-    void KeyUpHandle(int keyCode);
+    void KeyDownHandle(int keyCode) {}
+    void KeyUpHandle(int keyCode) {}
     void Update(DWORD dt);
-    void OnNoCollision(DWORD dt);
-    void OnCollisionWith(LPCOLLISIONEVENT e);
+    void OnNoCollision(DWORD dt) {}
+    void OnCollisionWith(LPCOLLISIONEVENT e) {}
 };

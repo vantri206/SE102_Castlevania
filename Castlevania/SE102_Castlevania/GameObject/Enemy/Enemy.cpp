@@ -2,6 +2,7 @@
 #include "Weapon.h"
 #include "Effect.h"
 #include "Enemy.h"
+#include "Simon.h"
 #include "DeadEffect.h"
 
 void CEnemy::LoadExtraSetting(vector<int> extra_settings)
@@ -44,4 +45,10 @@ void CEnemy::TriggerNormalEffect(int duration)
 		CDeadEffect* deadEffect = new CDeadEffect(this->x, this->y, duration);
 		currentPlayScene->AddEffect(static_cast<CGameEffect*>(deadEffect));
 	}
+}
+
+void CEnemy::EnemyKillByPlayer()
+{
+	CSimon* player = CSceneManager::GetInstance()->GetPlayer();
+	player->SetScore(player->GetScore() + this->score);
 }

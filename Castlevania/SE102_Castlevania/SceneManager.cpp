@@ -4,6 +4,9 @@
 #include <PlayScene.h>
 #include <fstream>
 #include <Camera.h>
+#include <SimonWalkingStairUp.h>
+#include <SimonWalkingStairDown.h>
+#include <MenuScene.h>
 
 CSceneManager* CSceneManager::_instance = nullptr;
 
@@ -52,16 +55,31 @@ void CSceneManager::LoadAllScenes(LPCWSTR filepath)
         vector<string> tokens = split(line);
 
         int typeScene = atoi(tokens[0].c_str());
-        int sceneId = atoi(tokens[1].c_str());
-        int mapId = atoi(tokens[2].c_str());
-        wstring mapFile = ToWSTR(tokens[3]);
-        wstring objFile = ToWSTR(tokens[4]);
 
-        DebugOut(L"[INFO] Loaded map from file: %s %s \n", mapFile.c_str(), objFile.c_str());
+        switch (typeScene)
+        {
+            case MENU_SCENE:
+            {
+                int sceneId = atoi(tokens[1].c_str());
+                CMenuScene* scene = new CMenuScene();
+                this->AddScene(scene);
+                break;
+            }
+            case PLAY_SCENE:
+            {
+                int sceneId = atoi(tokens[1].c_str());
+                int mapId = atoi(tokens[2].c_str());
+                wstring mapFile = ToWSTR(tokens[3]);
+                wstring objFile = ToWSTR(tokens[4]);
 
-        CPlayScene* scene = new CPlayScene(sceneId, mapId, mapFile.c_str(), objFile.c_str());
+                DebugOut(L"[INFO] Loaded map from file: %s %s \n", mapFile.c_str(), objFile.c_str());
 
-        this->AddScene(scene);
+                CPlayScene* scene = new CPlayScene(sceneId, mapId, mapFile.c_str(), objFile.c_str());
+
+                this->AddScene(scene);
+                break;
+            }
+        }
     }
     f.close();
 }
@@ -100,7 +118,6 @@ void CSceneManager::ChangeScene(int id, int entry)
 
 void CSceneManager::Update(DWORD dt)
 {
-    DWORD now = GetTickCount64();
     if (currentScene && currentSceneState != SCENE_STATE_LOADING)
         currentScene->Update(dt);
     else if (transitionStart != -1 && GetTickCount64() - transitionStart >= TRANSITION_SCENE_TIME)
@@ -112,18 +129,24 @@ void CSceneManager::Update(DWORD dt)
         currentScene->LoadResources();
         transitionStart = -1;
     }
-    if (isRequestedChangeScene)
+    if (isRequestedReloadCheckpoint)
+    {
+        isRequestedReloadCheckpoint = 0;
+        ReloadToCheckpoint();
+    }
+    else if (isRequestedChangeScene)
     {
         isRequestedChangeScene = 0;
         ChangeScene(nextSceneId, nextSceneEntry);
     }
+    UpdateHUD();
 }
 
 void CSceneManager::Render()
 {
     if (currentScene)
         currentScene->Render();
-    if (transitionStart == -1)
+    if (transitionStart == -1 && currentScene->GetSceneType() != MENU_SCENE)
         hud->Render();
 }
 
@@ -146,6 +169,26 @@ void CSceneManager::Clear()
     }
 
     currentSceneId = -1;
+}
+
+void CSceneManager::ReloadToCheckpoint()
+{
+    player->ReloadToCheckpoint();
+   
+    ChangeScene(currentSceneId, currentSceneEntry);
+}
+
+void CSceneManager::RequestReloadToCheckpoint()
+{
+    isRequestedReloadCheckpoint = 1;
+}
+
+void CSceneManager::UpdateHUD()
+{
+    hud->SetScore(player->GetScore());
+    hud->SetPlayerHP(player->GetHealth());
+    hud->SetStage(this->currentSceneId);
+    hud->SetHeart(player->getHeartCount());
 }
 
 CSceneManager::~CSceneManager()

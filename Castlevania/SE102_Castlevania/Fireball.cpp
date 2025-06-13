@@ -10,7 +10,7 @@ CFireball::CFireball(float x, float y, int directionX)
 	nx = directionX;
 	vx = FIREBALL_SPEED * nx;
 	vy = 0;
-	damage = 1;
+	damage = NORMAL_ENEMY_ATTACK;
 	isDeleted = false;
 
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(FIREBALL_ANI_SET_ID));
