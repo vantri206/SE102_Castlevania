@@ -207,11 +207,6 @@ void CPhantomBat::OnNoCollision(DWORD dt) {}
 
 void CPhantomBat::OnCollisionWith(LPCOLLISIONEVENT e) {}
 
-int CPhantomBat::IsCollidable()
-{
-	return !(this->isDead());
-}
-
 void CPhantomBat::LoadExtraSetting(vector<int> extra_settings) {}
 
 int CPhantomBat::isDead()

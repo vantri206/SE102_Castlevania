@@ -55,7 +55,6 @@ public:
     void Render();
     void OnNoCollision(DWORD dt);
     void OnCollisionWith(LPCOLLISIONEVENT e);
-    int IsCollidable();
     void SetState(int state);
     void LoadExtraSetting(vector<int> extra_settings);
     void ActiveEnemy();
