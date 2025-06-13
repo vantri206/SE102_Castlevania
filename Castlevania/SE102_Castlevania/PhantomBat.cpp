@@ -21,9 +21,7 @@ CPhantomBat::CPhantomBat()
         srand((unsigned int)time(NULL));
         seeded = true;
     }
-
-    x = 624.0f;
-    y = 168.0f;
+	currentTarget = D3DXVECTOR2(624,168);
 
 	D3DXVECTOR2 backPoint1(528, 128);
 	D3DXVECTOR2 backPoint2(784, 128);
@@ -31,7 +29,7 @@ CPhantomBat::CPhantomBat()
 	backPoints.push_back(backPoint1);
 	backPoints.push_back(backPoint2);
 	backPoints.push_back(backPoint3);
-    // Khởi tạo 2 nhóm điểm
+
     BatPointGroup group1;
     group1.left = D3DXVECTOR2(536, 128);
     group1.middle = D3DXVECTOR2(620, 96);
@@ -71,13 +69,7 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     case PHANTOMBAT_STATE_SLEEPING:
         if (isActived())
         {
-            currentGroupIndex = rand() % pointGroups.size();
-            BatPointGroup& group = pointGroups[currentGroupIndex];
-            int pick= rand() % 3;
-            if (pick == 0) currentTarget = group.left;
-            else if (pick == 1) currentTarget = group.middle;
-            else currentTarget = group.right;
-            FlyTo(currentTarget);
+            
             SetState(PHANTOMBAT_STATE_FLYING);
         }
         break;
@@ -88,7 +80,7 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             {
                 SetState(PHANTOMBAT_STATE_ATTACK);
             }
-            else if (GetTickCount64() - hovering_start > 2000) // hover 1 giây
+            else if (GetTickCount64() - hovering_start > 1000) // hover 1 giây
             {
                 hovering_start = GetTickCount64();
                 currentGroupIndex = rand() % pointGroups.size();
@@ -104,8 +96,22 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         break;
     }
     case PHANTOMBAT_STATE_FLYING:
+        //if (GetTickCount64() - releaseFireballTime > 4000)
+        //{
+        //    CreateFireball();
+        //}
         if (ReachedTarget()) {
-            if (ReachedTarget(pointGroups[currentGroupIndex].middle)) {
+            if (!issleeping) {
+                issleeping = true;
+                currentGroupIndex = rand() % pointGroups.size();
+                BatPointGroup& group = pointGroups[currentGroupIndex];
+                int pick = rand() % 3;
+                if (pick == 0) currentTarget = group.left;
+                else if (pick == 1) currentTarget = group.middle;
+                else currentTarget = group.right;
+                FlyTo(currentTarget);
+            }
+            else if (ReachedTarget(pointGroups[currentGroupIndex].middle)) {
                 currentTarget = GetRandomNonMiddlePoint();
                 FlyTo(currentTarget);
             }
@@ -114,6 +120,7 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             }
             DebugOut(L"currentGroupIndex = %d", currentGroupIndex);
         }
+        
         break;
 
     case PHANTOMBAT_STATE_PATROL:
@@ -173,7 +180,6 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         }
         break;
     }
-
     x += vx * dt;
     y += vy * dt;
 }
@@ -184,6 +190,7 @@ void CPhantomBat::SetState(int newState)
     switch (state)
     {
     case PHANTOMBAT_STATE_SLEEPING:
+		this->SetAniId(ANI_ID_PHANTOMBAT_SLEEPING);
         break;
 	case PHANTOMBAT_STATE_HOVERING:
 		hovering_start = GetTickCount64(); // Reset hover timer
@@ -191,6 +198,7 @@ void CPhantomBat::SetState(int newState)
 		break;
     case PHANTOMBAT_STATE_FLYING:
         this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
+        releaseFireballTime = GetTickCount64();
         break;
 
     case PHANTOMBAT_STATE_PATROL:

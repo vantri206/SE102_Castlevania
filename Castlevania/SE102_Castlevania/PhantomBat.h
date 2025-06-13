@@ -37,11 +37,13 @@ protected:
     int state;
 	bool isFlying = false;
 	bool isattacked = false;
+    bool issleeping = false;
     vector<BatPointGroup> pointGroups;
     vector< D3DXVECTOR2> backPoints;
 	int directionpoint = 1; // 1 for left, -1 for 
     int patrolcount = 0;
 	DWORD hovering_start = 0;
+	DWORD releaseFireballTime = 0;
     D3DXVECTOR2 currentTarget;
     D3DXVECTOR2 attackTarget;
 	int currentbackPointIndex = 0;
