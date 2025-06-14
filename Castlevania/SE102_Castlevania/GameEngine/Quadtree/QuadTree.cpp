@@ -121,7 +121,7 @@ void QuadTree::Subdivide(QNode* node, int depth)
 
 void QuadTree::Retrieve(QNode* node, RECT rect, std::unordered_set<LPGAMEOBJECT>& res)
 {
-    // Nếu node nằm ngoài vùng camera thì bỏ qua
+    // Nếu node nằm ngoài vùng rect thì bỏ qua
     if (node->x1 < rect.left || node->x0 > rect.right ||
         node->y1 < rect.bottom || node->y0 > rect.top)
         return;

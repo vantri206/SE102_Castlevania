@@ -63,14 +63,18 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mapwidth = currentPlayScene->GetCurrentMapWidth();
 		mapheight = currentPlayScene->GetCurrentMapHeight();
 
-		if (x < 0) x = 0;
-		else if (x > mapwidth) x = (float)mapwidth;
+		RECT cam = CCamera::GetInstance()->GetCamRect();
+		if (x <= cam.left) x = cam.left;
+		else if (x >= cam.right) x = cam.right;
 
 		if (y < 0) y = 0;
 		else if (y > mapheight) y = (float)mapheight;
-	}
 
-	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
+		if (!isBossBattle)
+		{
+			CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
+		}
+	}
 }
 void CSimon::OnNoCollision(DWORD dt)
 {
@@ -154,7 +158,8 @@ void CSimon::OnCollisionWithItem(CItem* item)
 		case MAGICCRYSTAL:
 		{
 			CMagicCrystal* magiccrystal = dynamic_cast<CMagicCrystal*>(item);
-			this->health = MAX_HEALTH;
+			CSceneManager::GetInstance()->EndingBossStage();
+			break;
 		}
 	}
 	item->Delete();

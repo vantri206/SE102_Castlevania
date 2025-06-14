@@ -277,14 +277,24 @@
     <ClCompile Include="MenuScene.cpp">
       <Filter>Scene\MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="PhantomBat.cpp" />
     <ClCompile Include="IntroScene.cpp">
       <Filter>Scene\IntroScene</Filter>
     </ClCompile>
     <ClCompile Include="SimonIntro.cpp">
       <Filter>GameObject\Simon</Filter>
     </ClCompile>
-    <ClCompile Include="PorkChop.cpp" />
+    <ClCompile Include="PhantomBat.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="DoubleShot.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicCrystal.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PorkChop.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine\Animation.h">
@@ -521,7 +531,6 @@
     <ClInclude Include="HUD.h">
       <Filter>Scene\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Simon\SimonSitAttack.h" />
     <ClInclude Include="HolyCross.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
@@ -548,6 +557,18 @@
     </ClInclude>
     <ClInclude Include="PorkChop.h">
       <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleShot.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicCrystal.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PointEffect.h">
+      <Filter>Scene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Simon\SimonSitAttack.h">
+      <Filter>GameObject\Simon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -58,5 +58,6 @@ public:
 
 	virtual void EnemyKillByPlayer();
 
+	virtual void MagicCrystalSpawn();
 	virtual int CanOverlapWithObj(CGameObject* objDest);
 };
