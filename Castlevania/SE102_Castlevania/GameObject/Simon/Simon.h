@@ -76,7 +76,7 @@ protected:
 	int subWeaponLimit;
 	vector<CWeapon*> activeSubWeaponList;
 
-
+	bool isCombatWithBoss;
 
 	bool isAutoWalking;
 
@@ -112,6 +112,8 @@ public:
 		currentSubWeaponType = -1;
 		subWeaponLimit = 1;
 		activeSubWeaponList = vector<CWeapon*>();
+
+		isCombatWithBoss = false;
 
 		nearbyStair = nullptr;
 

@@ -198,8 +198,8 @@ void CPhantomBat::SetState(int newState)
         this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
 		break;
     case PHANTOMBAT_STATE_FLYING:
-        this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
         releaseFireballTime = GetTickCount64();
+        this->SetAniId(ANI_ID_PHANTOMBAT_FLYING);
         break;
 
     case PHANTOMBAT_STATE_PATROL:
@@ -370,7 +370,7 @@ int CPhantomBat::FindNearestPointIndex(const D3DXVECTOR2& from, const std::vecto
     return nearestIndex;
 }
 void CPhantomBat::CreateFireball() {
-    releaseFireballTime = GetTickCount64();
+   releaseFireballTime = GetTickCount64();
 	CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
 	float simonX, simonY;
 	simon->GetPosition(simonX, simonY);

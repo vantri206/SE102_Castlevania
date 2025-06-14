@@ -33,6 +33,7 @@ void CTriggerZone::Trigger()
 			{
 				CEnemy* enemy = dynamic_cast<CEnemy*>(obj);
 				enemy->ActiveEnemy();
+
 			}
 		}
 	}
