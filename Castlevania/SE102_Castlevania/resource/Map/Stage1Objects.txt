@@ -1,6 +1,6 @@
 #list potision simon can entry to map
 
-ENTRY 648 48
+ENTRY 648 49
 
 #object_id object_type x y extra_setting...
 
@@ -26,4 +26,4 @@ ENTRY 648 48
 
 #TriggerZone, extra setting: type, width, height, obj id spawn when trigger, spawnX, spawnY, extra setting for obj spawn
 
-8 17 732 32 0 36 24 9 572 24 1000
+8 17 732 32 0 36 24 9 572 26 1000

@@ -33,7 +33,6 @@ void CTriggerZone::Trigger()
 			{
 				CEnemy* enemy = dynamic_cast<CEnemy*>(obj);
 				enemy->ActiveEnemy();
-
 			}
 		}
 	}
@@ -57,7 +56,7 @@ void CTriggerZone::LoadExtraSetting(vector<int> extra_settings)
 		}
 		if (extra_settings.size() > 6)
 		{
-			this->spawnObjectExtraSettings = vector<int>(extra_settings.begin() + 5, extra_settings.end());
+			this->spawnObjectExtraSettings = vector<int>(extra_settings.begin() + 6, extra_settings.end());
 		}
 		break;
 		case TRIGGER_ZONE_ENEMY:

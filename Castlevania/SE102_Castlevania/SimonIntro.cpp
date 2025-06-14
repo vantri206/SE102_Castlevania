@@ -59,6 +59,7 @@ void CSimonIntro::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (dynamic_cast<CPortal*>(e->obj))
     {
+        simon->SetState(new CSimonIdle(simon));
         CPortal* portal = dynamic_cast<CPortal*>(e->obj);
         portal->Active();
     }
