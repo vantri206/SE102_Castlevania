@@ -4,6 +4,7 @@
 #include "Whip.h"
 #include "Enemy.h"
 #include <cstdlib>
+#include <Wall.h>
 
 CGhoul::CGhoul()
 {
@@ -62,6 +63,10 @@ void CGhoul::OnNoCollision(DWORD dt)
 void CGhoul::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CEnemy*>(e->obj)) return;
+	else if (dynamic_cast<CWall*>(e->obj))
+	{
+		this->SetState(GHOUL_STATE_DEAD);
+	}
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0.0f;

@@ -82,5 +82,6 @@ public:
     void TriggerBossDieEffect();
     bool SimonInAttackZone();
 
+    void Active() { this->ActiveEnemy(); }
     virtual void ActiveEnemy();
 };

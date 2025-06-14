@@ -97,6 +97,8 @@ public:
     virtual void StartSpawning() {}
     virtual void FinishedSpawning() {}
 
+    virtual void Active() {}
+
     CGameObject();
     virtual ~CGameObject();
 

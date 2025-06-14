@@ -1,6 +1,6 @@
 #list potision simon entry to map
 
-ENTRY 600 49
+ENTRY 1400 49
 
 #object_id object_type x y extra_setting...
 

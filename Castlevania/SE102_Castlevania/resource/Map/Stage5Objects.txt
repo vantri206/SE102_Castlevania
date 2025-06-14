@@ -1,10 +1,6 @@
 #list potision simon entry to map
 
-ENTRY 100 48
-
-#list potision simon can entry to map
-
-ENTRY 1000 48
+ENTRY 100 49
 
 #object_id object_type x y extra_setting...
 
@@ -70,10 +66,21 @@ ENTRY 1000 48
 
 #TriggerZone, extra setting type 1: width, height, enemy id trigger
 
-27 17 720 48 1 16 16 26
+27 17 720 48 1 16 16 26 30
 
-#Wall extra setting: width, height
+#Wall, extra setting: width, height, if has extra[3], 0: not blocking
 
 28 19 764 96 8 192
 
 29 19 0 96 2 192
+
+30 19 424 96 2 192 0
+
+#Ghoul, extra setting:
+
+32 7 360 48
+
+33 7 376 48
+
+34 7 404 48
+

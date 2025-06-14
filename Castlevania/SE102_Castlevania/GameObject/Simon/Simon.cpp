@@ -29,6 +29,8 @@
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (health <= 0)
+		this->SetState(new CSimonDie(this));
 	if (heartCount <= 0) currentSubWeaponType = -1;
 	vx += ax * dt;
 	vy += ay * dt;
@@ -63,17 +65,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		mapwidth = currentPlayScene->GetCurrentMapWidth();
 		mapheight = currentPlayScene->GetCurrentMapHeight();
-		CCamera* camera = CCamera::GetInstance();
-		RECT rectCam=camera->GetCamRect();
-
-		if (x < rectCam.left) x = (float)rectCam.left;
-		else if (x > rectCam.right) x = (float)rectCam.right;
-
-		if (y < rectCam.bottom) y = (float)rectCam.bottom;
-		else if (y > rectCam.top) y = (float)rectCam.top;
 	}
-	if(!isCombatWithBoss){
-	CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);}
+	if (x <= 0) x = x;
+	else if (x >= mapwidth) x = mapwidth;
+	if (y <= 0) y = y;
+	else if (y >= mapheight) y = mapheight;
+	if(!isBossBattle)
+		CCamera::GetInstance()->Update(dt, this, mapwidth, mapheight);
 }
 void CSimon::OnNoCollision(DWORD dt)
 {

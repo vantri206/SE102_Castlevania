@@ -27,13 +27,11 @@ void CTriggerZone::Trigger()
 	{
 		CPlayScene* playscene = CGame::GetInstance()->GetCurrentPlayScene();
 		vector<CGameObject*> objects = playscene->GetAllObjects();
+		for(auto objId : objectTriggerId)
 		for (auto obj : objects)
 		{
-			if (obj->GetId() == enemyTriggerId)
-			{
-				CEnemy* enemy = dynamic_cast<CEnemy*>(obj);
-				enemy->ActiveEnemy();
-			}
+			if (obj->GetId() == objId)
+				obj->Active();
 		}
 	}
 	this->Delete();
@@ -64,7 +62,7 @@ void CTriggerZone::LoadExtraSetting(vector<int> extra_settings)
 		{
 			this->width = extra_settings[1];
 			this->height = extra_settings[2];
-			this->enemyTriggerId = extra_settings[3];
+			this->objectTriggerId = vector<int>(extra_settings.begin() + 3, extra_settings.end());
 		}
 		break;
 	}

@@ -11,7 +11,7 @@ protected:
     float spawnX, spawnY;
     int spawnObjectId;
     int isSpawnObjectHidden;
-    int enemyTriggerId;
+    vector<int> objectTriggerId;
     vector<int> spawnObjectExtraSettings;
 public:
     CTriggerZone();

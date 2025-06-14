@@ -1,6 +1,6 @@
 #list potision simon can entry to map
 
-ENTRY 49 144
+ENTRY 48 145
 
 ENTRY 72 24
 
