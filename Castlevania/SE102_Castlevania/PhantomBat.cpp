@@ -43,24 +43,26 @@ CPhantomBat::CPhantomBat()
     pointGroups.push_back(group1);
     pointGroups.push_back(group2);
 
-    this->health = MAX_HEALTH;
+    this->health = 1;
     this->attack = NORMAL_ENEMY_ATTACK;
 }
 
 void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    CGameObject::Update(dt);
-    if (this->isDead()) return;
-    if (this->health <= 0)
+    if (this->health <= 0 && this->state != PHANTOMBAT_STATE_DEAD)
     {
         this->SetState(PHANTOMBAT_STATE_DEAD);
         this->BossEnemyDead(ENEMY_DEAD_TIME);
-        EnemyKillByPlayer();
+        this->EnemyKillByPlayer();
     }
-    else if (this->isDead())
+    if (this->isDead())
     {
         if (GetTickCount64() - startDeathTime >= ENEMY_DEAD_TIME)
+        {
+            this->MagicCrystalSpawn();
             isDeleted = true;
+        }
+        return;
     }
     CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
 	DebugOut(L"[PHANTOMBAT] Update: x = %f, y = %f, state = %d\n", x, y, state);
@@ -69,7 +71,6 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     case PHANTOMBAT_STATE_SLEEPING:
         if (isActived())
         {
-            
             SetState(PHANTOMBAT_STATE_FLYING);
         }
         break;
@@ -96,9 +97,10 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         break;
     }
     case PHANTOMBAT_STATE_FLYING:
-		if (GetTickCount64() - releaseFireballTime >= 1000)
+        if (GetTickCount64() - releaseFireballTime > 2000)
+        {
             CreateFireball();
-        
+        }
         if (ReachedTarget()) {
             if (!issleeping) {
                 issleeping = true;
@@ -368,7 +370,7 @@ int CPhantomBat::FindNearestPointIndex(const D3DXVECTOR2& from, const std::vecto
     return nearestIndex;
 }
 void CPhantomBat::CreateFireball() {
-	releaseFireballTime = GetTickCount64();
+   releaseFireballTime = GetTickCount64();
 	CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
 	float simonX, simonY;
 	simon->GetPosition(simonX, simonY);
@@ -405,8 +407,10 @@ void CPhantomBat::TriggerBossDieEffect(int duration)
         }
     }
 }
-void CPhantomBat::ActiveEnemy() {
-	isActive = true;
-    CSimon* simon = CSceneManager::GetInstance()->GetPlayer();
-	simon->StartCombatWithBoss();
+
+void CPhantomBat::ActiveEnemy()
+{
+    isActive = 1;
+    CSimon* player = CSceneManager::GetInstance()->GetPlayer();
+    player->startBossBattle();
 }

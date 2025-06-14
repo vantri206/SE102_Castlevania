@@ -14,9 +14,7 @@ void CSimonSit::KeyDownHandle(int keyCode)
 {
 	if (keyCode == DIK_A)
 	{
-		if (simon->CanUseSubWeapon())
-			simon->SetState(new CSimonSitAttack(simon, SUB_WEAPON));
-		else simon->SetState(new CSimonSitAttack(simon, PRIMARY_WEAPON));
+		simon->SetState(new CSimonSitAttack(simon, PRIMARY_WEAPON));
 	}
 	else if (keyCode == DIK_RIGHT) {
 		simon->SetDirectionX(1);

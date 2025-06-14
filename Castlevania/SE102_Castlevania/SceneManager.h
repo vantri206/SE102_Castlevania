@@ -41,6 +41,8 @@ protected:
     DWORD remainingTime;
     DWORD lastTimerUpdate = 0;
 
+    int isEndingBossStage = 0;
+    DWORD lastHealTime;
 public:
     CSceneManager();
     static CSceneManager* GetInstance();
@@ -67,10 +69,14 @@ public:
 
     void SetCurrentSceneState(int state) { currentSceneState = state; }
 
+    void EndingBossStage();
+    void UpdateEndingBossStage();
+
     ~CSceneManager();
 
     CHUD* GetHUD() { return hud; }
 
     void ResetTimer() { remainingTime = MAX_TIME; }
     int GetRemainingTime() { return remainingTime; }
+    void SetRemainingTime(DWORD remaintime) { remainingTime = remaintime; }
 };

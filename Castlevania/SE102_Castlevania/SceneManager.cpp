@@ -130,6 +130,14 @@ void CSceneManager::ChangeScene(int id, int entry)
 void CSceneManager::Update(DWORD dt)
 {
     DWORD now = GetTickCount64();
+    if (currentScene && currentScene->GetSceneType() == PLAY_SCENE)
+    {
+        if (isEndingBossStage)
+        {
+            this->UpdateEndingBossStage();
+            return;
+        }
+    }
     if (currentScene && currentSceneState != SCENE_STATE_LOADING)
         currentScene->Update(dt);
     else if (transitionStart != -1 && now - transitionStart >= TRANSITION_SCENE_TIME)
@@ -218,10 +226,46 @@ void CSceneManager::UpdateHUD()
         if (playscene)
         {
             CEnemy* enemy = playscene->GetBoss();
-            if(enemy)
-                hud->SetEnemyHP(enemy->GetHealth());
+            if (enemy)
+                if (enemy->isDead() || enemy->IsDeleted())
+                    hud->SetEnemyHP(0);
+                else
+                    hud->SetEnemyHP(enemy->GetHealth());
+            else hud->SetEnemyHP(0);
         }
     }
+}
+
+void CSceneManager::EndingBossStage()
+{
+    if (!player) return;
+    isEndingBossStage = 1;
+    lastHealTime = GetTickCount64();
+}
+
+void CSceneManager::UpdateEndingBossStage()
+{
+    DWORD now = GetTickCount64();
+    if (player->GetHealth() < MAX_HEALTH)
+    {
+        if (now - lastHealTime >= HEAL_DELAY)
+        {
+            lastHealTime = now;
+            player->SetHealth(player->GetHealth() + 1);
+        }
+    }
+    else if (remainingTime > 0)
+    {
+        remainingTime = remainingTime - 1;
+        player->SetScore(player->GetScore() + POINT_PER_TICK);
+    }
+    else if (player->getHeartCount() > 0)
+    {
+        player->spendHeart(1);
+        player->SetScore(player->GetScore() + POINT_PER_TICK);
+    }
+    else isEndingBossStage = 0;
+    UpdateHUD();
 }
 
 CSceneManager::~CSceneManager()

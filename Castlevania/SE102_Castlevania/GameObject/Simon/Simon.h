@@ -89,6 +89,8 @@ protected:
 
 	int whipLevel;
 
+	int isBossBattle;
+
 	int score;
 public:
 
@@ -125,6 +127,8 @@ public:
 		isDead = 0;
 
 		score = 0;
+
+		isBossBattle = 0;
 
 		this->SetAnimationSet(CAnimationSets::GetInstance()->Get(SIMON_ANI_SET_ID));
 	}
@@ -221,9 +225,8 @@ public:
 	int GetScore();
 	void SetScore(int score) { this->score = score; }
 
-	bool IsCombatWithBoss() { return isCombatWithBoss; }
-	void StartCombatWithBoss() { this->isCombatWithBoss = true; }
-	void FinishCombatWithBoss() { this->isCombatWithBoss = false; }
-
+	void startBossBattle() { isBossBattle = 1; }
+	void finishedBossBattle() { isBossBattle = 0; }
+	int IsInBossBattle() { return isBossBattle; }
 	void ReloadToCheckpoint();
 };

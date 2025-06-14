@@ -157,7 +157,8 @@ void CSimon::OnCollisionWithItem(CItem* item)
 		case MAGICCRYSTAL:
 		{
 			CMagicCrystal* magiccrystal = dynamic_cast<CMagicCrystal*>(item);
-			this->health = MAX_HEALTH;
+			CSceneManager::GetInstance()->EndingBossStage();
+			break;
 		}
 	}
 	item->Delete();

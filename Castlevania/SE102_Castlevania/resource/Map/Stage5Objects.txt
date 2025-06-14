@@ -62,10 +62,18 @@ ENTRY 1000 48
 
 #Breakable brick, extra setting: type brick, item drop when break
 
-14 18 696 56 1 27
+25 18 696 56 1 27
 
 #Phantom Bat
-12 100 624 168
+
+26 100 624 168
 
 #TriggerZone, extra setting type 1: width, height, enemy id trigger
-15 17 720 48 1 16 16 12
+
+27 17 720 48 1 16 16 26
+
+#Wall extra setting: width, height
+
+28 19 764 96 8 192
+
+29 19 0 96 2 192

@@ -7,13 +7,13 @@
 #include "Dagger.h"
 #include "SimonStairDownIdle.h"
 
-#define SIMON_ATTACK_WIDTH 30
-#define SIMON_ATTACK_HEIGHT 32
+#define SIMON_STAIR_DOWN_ATTACK_WIDTH 28
+#define SIMON_STAIR_DOWN_ATTACK_HEIGHT 32
 
 CSimonStairDownAttack::CSimonStairDownAttack(CSimon* simon) : CSimonState(simon)
 {
     simon->SetAniId(ID_ANI_SIMON_ATTACK_DOWN);
-    simon->SetSize(SIMON_ATTACK_WIDTH, SIMON_ATTACK_HEIGHT);
+    simon->SetSize(SIMON_STAIR_DOWN_ATTACK_WIDTH, SIMON_STAIR_DOWN_ATTACK_HEIGHT);
     attackStartTime = GetTickCount64();
     float x, y;
     simon->GetPosition(x, y);

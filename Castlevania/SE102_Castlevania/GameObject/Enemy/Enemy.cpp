@@ -4,7 +4,8 @@
 #include "Enemy.h"
 #include "Simon.h"
 #include "DeadEffect.h"
-#include <BreakableBrick.h>
+#include "BreakableBrick.h"
+#include "MagicCrystal.h"
 
 void CEnemy::LoadExtraSetting(vector<int> extra_settings)
 {
@@ -54,7 +55,18 @@ void CEnemy::EnemyKillByPlayer()
 	player->SetScore(player->GetScore() + this->score);
 }
 
-int CEnemy::CanOverlapWithObj(LPGAMEOBJECT objDests)
+void CEnemy::MagicCrystalSpawn()
+{
+	RECT cam = CCamera::GetInstance()->GetCamRect();
+	float x1, y1;
+	x1 = (cam.left + cam.right) / 2;
+	y1 = (cam.bottom + cam.top) / 2;
+	CGameObject* magicrystal = new CMagicCrystal();
+	magicrystal->SetPosition(x1, y1);
+	CGame::GetInstance()->GetCurrentPlayScene()->AddObject(magicrystal);
+}
+
+int CEnemy::CanOverlapWithObj(CGameObject* objDests)
 {
 	if (dynamic_cast<CBreakableBrick*>(objDests))
 	{

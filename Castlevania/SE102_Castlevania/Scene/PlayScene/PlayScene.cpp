@@ -115,9 +115,10 @@ void CPlayScene::LoadResources()
 
 void CPlayScene::UnloadResources()
 {
+	objects.erase(remove(objects.begin(), objects.end(), nullptr),objects.end());
     if (objects.size() > 0)
     {
-        for (auto obj : objects)
+        for (auto& obj : objects)
 		if(obj && obj->IsDeleted())
         {
 			quadtree->Remove(obj);
@@ -247,12 +248,13 @@ void CPlayScene::ClearObjects()
 		else ++it;
 	}
 
-	for (auto obj : objectsDeleted)
+	for (auto& obj : objectsDeleted)
 	{
 		if (obj)
 		{
 			quadtree->Remove(obj);
 			objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
+			if (obj == boss) boss = nullptr;
 			delete obj;
 		}
 	}
